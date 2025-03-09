@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Manrope:wght@200..800&display=swap');
+
+:root {
+	--ff-main: "Manrope", sans-serif;
+	--primary-main-color: #161D2D;
+	--text-color-secondary: #5D6570;
+	--bl-color: #000000;
+	--signature-color: #D1D4D8;
+	--block-header-color: #D1D4D8;
+	--blue-color: #0474DC;
+	--wh-color: #FFFFFF;
+	--bg-main: #ffffff;
+	--title-span-color: #42B0F9;
+	--fz-title: clamp(26px, 4vw, 80px);
+	--fz-subtitle: 24px;
+	--fz-default: 16px;
+	--fz-second-title: 38px;
+	--lh-default: 150%;
+	--lh-text: 120%;
+	--lh-title: 100%;
+	--fw-default: 400;
+	--fw-title: 500;
+	--btn-border: 1px solid var(--blue-color);
+	--tr-btn: 0.3s color ease, 0.3s border ease, 0.3s background-color ease;
+}

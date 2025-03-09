@@ -1,0 +1,170 @@
+*,
+*::after,
+*::before {
+	box-sizing: border-box;
+
+}
+
+body {
+	margin: 0;
+	background-color: var(--bg-main);
+
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+ol,
+li {
+	margin: 0;
+	padding: 0;
+
+}
+
+a {
+	color: inherit;
+	text-decoration: none;
+}
+
+button,
+input {
+	background-color: transparent;
+	outline: none;
+	border: 0;
+	padding: 0;
+	margin: 0;
+	cursor: pointer;
+	color: currentColor;
+	font-family: inherit;
+	font-size: inherit;
+}
+
+ul,
+ol {
+	list-style: none;
+}
+
+figure {
+	margin: 0;
+	padding: 0;
+	outline: none;
+}
+
+figcaption {
+	margin: 0;
+	outline: none;
+	padding: 0;
+}
+
+svg {
+	position: relative;
+	width: auto;
+	height: auto;
+}
+
+
+main {
+	min-height: 100%;
+	flex: 1 1 100%;
+}
+
+.flex-style-column {
+	display: flex;
+	flex-direction: column;
+}
+
+.flex-style-row {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+}
+
+.main-img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: center;
+}
+
+img {
+	width: 100%;
+	height: auto;
+	object-fit: cover;
+	object-position: center;
+}
+
+.btn-style {
+	display: inline-flex;
+	padding: 16px 24px;
+	transition: var(--tr-btn);
+	text-transform: uppercase;
+	border-radius: 100px;
+	letter-spacing: 0.383px;
+	height: 56px;
+	cursor: pointer;
+}
+
+.btn-color-gray {
+	--btn-border: 1px solid var(--block-header-color);
+	border: var(--btn-border);
+	color: var(--primary-main-color);
+}
+
+.btn-color {
+	border: var(--btn-border);
+	color: var(--blue-color);
+}
+
+.header-btn-color {
+	--btn-border: 1px solid var(--wh-color);
+	border: var(--btn-border);
+	color: var(--wh-color);
+}
+
+.light-btn-hover:hover {
+	--btn-border: 1px solid var(--wh-color);
+	border: var(--btn-border);
+	color: var(--primary-main-color);
+	background-color: var(--wh-color);
+}
+
+.dark-btn-hover:hover {
+	--btn-border: 1px solid var(--primary-main-color);
+	border: var(--btn-border);
+	color: var(--wh-color);
+	background-color: var(--primary-main-color);
+}
+
+.title {
+	font-size: var(--fz-title);
+	line-height: var(--lh-title);
+	letter-spacing: -3px;
+	font-variation-settings: "wght" var(--fw-title);
+}
+
+.tt-up {
+	text-transform: uppercase;
+}
+
+.title-dark {
+	color: var(--primary-main-color);
+}
+
+.text-light {
+	color: var(--wh-color);
+}
+
+.section-relative {
+	position: relative;
+}
+
+.subtitle {
+	font-size: var(--fz-subtitle);
+	line-height: var(--lh-text);
+}
