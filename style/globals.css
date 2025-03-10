@@ -168,3 +168,6 @@ img {
 	font-size: var(--fz-subtitle);
 	line-height: var(--lh-text);
 }
+.block-height{
+	height: 100vh;
+}
