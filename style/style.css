@@ -19,6 +19,12 @@
 	gap: 180px;
 }
 
+.gallery__body {
+	max-inline-size: 1920px;
+	width: 100%;
+	margin: 0 auto;
+}
+
 .section__body,
 .header__body,
 .footer__body {
@@ -62,7 +68,18 @@ header {
 .swiper-statistic {
 	position: relative;
 }
+.swiper-gallery{
+	overflow: hidden;
+}
+.swiper-gallery .swiper-wrapper{
+}
 
+.swiper-gallery .swiper-slide{
+
+}
+.swiper-gallery .swiper-slide img{
+
+}
 .slider-navigation__block {
 	gap: 16px;
 	position: absolute;
