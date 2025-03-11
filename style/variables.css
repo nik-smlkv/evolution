@@ -21,5 +21,6 @@
 	--fw-default: 400;
 	--fw-title: 500;
 	--btn-border: 1px solid var(--blue-color);
+	--hover-arrow-color: var(--primary-main-color);
 	--tr-btn: 0.3s color ease, 0.3s border ease, 0.3s background-color ease;
 }

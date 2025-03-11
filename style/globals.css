@@ -160,6 +160,10 @@ img {
 	color: var(--wh-color);
 }
 
+.text-dark {
+	color: var(--primary-main-color);
+}
+
 .section-relative {
 	position: relative;
 }
@@ -168,6 +172,7 @@ img {
 	font-size: var(--fz-subtitle);
 	line-height: var(--lh-text);
 }
-.block-height{
+
+.block-height {
 	height: 100vh;
 }
