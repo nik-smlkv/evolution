@@ -68,18 +68,25 @@ header {
 .swiper-statistic {
 	position: relative;
 }
-.swiper-gallery{
+
+.swiper-gallery {
 	overflow: hidden;
 }
-.swiper-gallery .swiper-wrapper{
-}
 
-.swiper-gallery .swiper-slide{
+.swiper-gallery .swiper-wrapper {}
 
-}
-.swiper-gallery .swiper-slide img{
+.swiper-gallery .swiper-slide {
 
+	flex: 0 0 1100px;
 }
+.slick-gallery .slick-slide{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 1100px !important;
+}
+.swiper-gallery .swiper-slide img {}
+
 .slider-navigation__block {
 	gap: 16px;
 	position: absolute;
