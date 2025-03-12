@@ -121,25 +121,45 @@ img {
 	color: var(--blue-color);
 }
 
+.bth-blue-light-color {
+	--btn-border: 1px solid var(--blue-light-color);
+	border: var(--btn-border);
+	color: var(--blue-light-color);
+}
+
 .header-btn-color {
 	--btn-border: 1px solid var(--wh-color);
 	border: var(--btn-border);
 	color: var(--wh-color);
 }
 
-.light-btn-hover:hover {
-	--btn-border: 1px solid var(--wh-color);
-	border: var(--btn-border);
-	color: var(--primary-main-color);
-	background-color: var(--wh-color);
+@media (hover:hover) {
+	.blue-btn-hover:hover {
+		background-color: var(--blue-color);
+		border-color: var(--blue-color);
+		color: var(--wh-color);
+	}
+
+	.light-btn-hover:hover {
+		--btn-border: 1px solid var(--wh-color);
+		border: var(--btn-border);
+		color: var(--primary-main-color);
+		background-color: var(--wh-color);
+	}
+
+	.blue-light-btn-hover:hover {
+		background-color: var(--blue-light-color);
+		color: var(--wh-color);
+	}
+
+	.dark-btn-hover:hover {
+		--btn-border: 1px solid var(--primary-main-color);
+		border: var(--btn-border);
+		color: var(--wh-color);
+		background-color: var(--primary-main-color);
+	}
 }
 
-.dark-btn-hover:hover {
-	--btn-border: 1px solid var(--primary-main-color);
-	border: var(--btn-border);
-	color: var(--wh-color);
-	background-color: var(--primary-main-color);
-}
 
 .title {
 	font-size: var(--fz-title);
