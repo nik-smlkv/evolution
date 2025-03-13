@@ -9,11 +9,17 @@
     <link rel="stylesheet" href="./style/variables.css" />
     <link rel="stylesheet" href="./style/style.css" />
     <link rel="stylesheet" href="./style/swiper-bundle.min.css" />
+    <script src="https://raw.githubusercontent.com/locomotivemtl/locomotive-scroll/master/dist/locomotive-scroll.css"></script>
     <script src="./js/swiper-bundle.min.js"></script>
     <script src="./js/jquery-3.6.4.min.js"></script>
     <script src="./js/gsap.min.js"></script>
     <script src="./js/ScrollTrigger.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@latest"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.6.0/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.1.0/dist/locomotive-scroll.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.6.0/gsap.min.js"></script>
+
+    <script src="./js/animation.js" defer></script>
   </head>
 
   <body>
@@ -168,50 +174,52 @@
               </p>
             </div>
           </section>
-          <section class="section-relative flex-style-row">
-            <div class="section__body flex-style-row section-complex">
-              <div class="block-title flex-style-column">
-                <h2 class="title tt-up title-dark">Complex features</h2>
-                <p>
-                  The name of the complex itself reflects a construction
-                  revolution, evident in the complex’s two swimming pools,
-                  modern SPA and fitness centers, making life in the complex
-                  an ideal place for comfort and a modern lifestyle. Each
-                  building will feature a reception with trained staff who will
-                  assist residents with daily tasks and organize welcome
-                  services for guests.
-                </p>
-              </div>
-              <div class="scroll__cards flex-style-row">
-                <div class="scroll-card flex-style-column">
-                  <img src="./images/swimming.jpg" alt="swimming" />
-                  <p class="btn-style btn-color-gray tt-up">swimming pool</p>
-                </div>
-                <div class="scroll-card flex-style-column">
-                  <img src="./images/fitness.jpg" alt="fitness" />
-                  <p class="btn-style btn-color-gray tt-up">fitness center</p>
-                </div>
-                <div class="scroll-card flex-style-column">
-                  <img src="./images/spa.jpg" alt="spa" />
-                  <p class="btn-style btn-color-gray tt-up">spa center</p>
-                </div>
-                <div class="scroll-card flex-style-column">
-                  <img src="./images/lobby.jpg" alt="lobby" />
-                  <p class="btn-style btn-color-gray tt-up">lobby</p>
-                </div>
-                <div class="scroll-card flex-style-column">
-                  <img src="./images/commercial.jpg" alt="commercial" />
-                  <p class="btn-style btn-color-gray tt-up">
-                    commercial premises
+          <div class="container">
+            <section class="section-relative flex-style-row" id="sectionPin">
+              <div class="section__body flex-style-row section-complex">
+                <div class="block-title flex-style-column">
+                  <h2 class="title tt-up title-dark">Complex features</h2>
+                  <p>
+                    The name of the complex itself reflects a construction
+                    revolution, evident in the complex’s two swimming pools,
+                    modern SPA and fitness centers, making life in the complex
+                    an ideal place for comfort and a modern lifestyle. Each
+                    building will feature a reception with trained staff who
+                    will assist residents with daily tasks and organize welcome
+                    services for guests.
                   </p>
                 </div>
-                <div class="scroll-card flex-style-column">
-                  <img src="./images/fitness.jpg" alt="fitness" />
-                  <p class="btn-style btn-color-gray tt-up">Parking</p>
+                <div class="pin-wrap">
+                  <div class="scroll-card flex-style-column">
+                    <img src="./images/swimming.jpg" alt="swimming" />
+                    <p class="btn-style btn-color-gray tt-up">swimming pool</p>
+                  </div>
+                  <div class="scroll-card flex-style-column">
+                    <img src="./images/fitness.jpg" alt="fitness" />
+                    <p class="btn-style btn-color-gray tt-up">fitness center</p>
+                  </div>
+                  <div class="scroll-card flex-style-column">
+                    <img src="./images/spa.jpg" alt="spa" />
+                    <p class="btn-style btn-color-gray tt-up">spa center</p>
+                  </div>
+                  <div class="scroll-card flex-style-column">
+                    <img src="./images/lobby.jpg" alt="lobby" />
+                    <p class="btn-style btn-color-gray tt-up">lobby</p>
+                  </div>
+                  <div class="scroll-card flex-style-column">
+                    <img src="./images/commercial.jpg" alt="commercial" />
+                    <p class="btn-style btn-color-gray tt-up">
+                      commercial premises
+                    </p>
+                  </div>
+                  <div class="scroll-card flex-style-column">
+                    <img src="./images/fitness.jpg" alt="fitness" />
+                    <p class="btn-style btn-color-gray tt-up">Parking</p>
+                  </div>
                 </div>
               </div>
-            </div>
-          </section>
+            </section>
+          </div>
           <section>
             <div class="section__body">
               <div class="flex-style-row gap">
@@ -794,6 +802,5 @@
 
     <script src="./js/slides.js"></script>
     <script src="./js/script.js"></script>
-    <script src="./js/animation.js"></script>
   </body>
 </html>
