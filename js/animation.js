@@ -7,8 +7,8 @@ document.addEventListener("DOMContentLoaded", () => {
 		let tl = gsap.timeline({
 			scrollTrigger: {
 				trigger: triggerElement,
-				start: "0% 0%",
-				end: "100% 0%",
+				start: "center bottom",  // Начинаем анимацию, когда верх триггера достигает низа окна
+				end: "bottom top",    // Заканчиваем, когда низ триггера достигает верха окна
 				scrub: 0
 			}
 		});
@@ -18,6 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
 			{ layer: "3", yPercent: 40 },
 			{ layer: "4", yPercent: 10 }
 		];
+
 		layers.forEach((layerObj, idx) => {
 			tl.to(
 				triggerElement.querySelectorAll(`[data-parallax-layer="${layerObj.layer}"]`),
