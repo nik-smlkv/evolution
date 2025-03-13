@@ -5,7 +5,6 @@
 	font-variation-settings: "wght" var(--fw-default);
 	color: var(--text-color-secondary);
 	background-color: var(--bg-main);
-	overflow: hidden;
 	margin-top: 90px;
 }
 
@@ -19,6 +18,8 @@
 	gap: 180px;
 }
 
+
+
 .video {
 	width: 100%;
 	height: 100%;
@@ -31,6 +32,7 @@
 	width: 100%;
 	margin: 0 auto;
 }
+
 
 .section__body,
 .header__body,
@@ -297,7 +299,7 @@ footer {
 
 .section-complex {
 	align-items: start;
-	position: relative;
+
 	gap: 56px;
 }
 
@@ -320,21 +322,6 @@ footer {
 	font-variation-settings: "wght" var(--fw-default);
 }
 
-.scroll__cards {
-	flex: 1 1 auto;
-	gap: 81px;
-	width: 100%;
-	display: flex;
-	overflow-x: auto;
-	overflow-y: hidden;
-	width: 100%;
-	white-space: nowrap;
-}
-
-.scroll__cards::-webkit-scrollbar {
-	width: 0;
-}
-
 .scroll-card img {
 	width: 720px;
 	height: 480px;
@@ -346,10 +333,10 @@ footer {
 
 .scroll-card {
 	gap: 40px;
-	flex: 0 0 18%;
 	justify-content: start;
 	align-items: start;
 }
+
 
 .swiper-statistic {
 	width: 1180px;
@@ -405,12 +392,16 @@ footer {
 }
 
 .block-title {
-	height: 576px;
+	height: 606px;
 	max-width: 522px;
 	width: 100%;
+	padding-right: 50px;
+	position: sticky;
+	top: 20%;
+	background: white;
 	justify-content: space-between;
+	background-color: var(--wh-color);
 }
-
 .slider-card {
 	height: auto;
 	align-items: center;
@@ -444,7 +435,6 @@ footer {
 	flex: 1 1 50%;
 }
 
-.section__body:has(.scroll__cards),
 .section__body:has(.block-info-adress),
 .section__body:has(.swiper-quality) {
 	padding-right: 0px;
@@ -645,26 +635,25 @@ input.input-event[value=""]+.input-placeholder {
 }
 
 
-#sectionPin {
-	height: 100vh;
+
+
+#panels #panels-container {
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	gap: 56px;
+	-ms-flex-wrap: nowrap;
+	flex-wrap: nowrap;
+	padding: 0;
 	overflow: hidden;
+
+}
+
+#panels #panels-container .panel {
+	position: relative;
+	width: 100%;
+	overflow: hidden;
+	display: -webkit-box;
+	display: -ms-flexbox;
 	display: flex;
-	left: 0;
-	background: var(--text-color);
-	color: var(--bg-color);
 }
-
-.pin-wrap {
-	height: 100vh;
-	display: flex;
-	justify-content: flex-start;
-	align-items: center;
-	padding: 50px 10vw;
-
-}
-
-.pin-wrap>* {
-	min-width: 60vw;
-	padding: 0 5vw;
-}
-

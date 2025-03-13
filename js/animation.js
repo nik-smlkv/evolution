@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		let tl = gsap.timeline({
 			scrollTrigger: {
 				trigger: triggerElement,
-				start: "center bottom",  // Начинаем анимацию, когда верх триггера достигает низа окна
+				start: "-20% 0%",  // Начинаем анимацию, когда верх триггера достигает низа окна
 				end: "bottom top",    // Заканчиваем, когда низ триггера достигает верха окна
 				scrub: 0
 			}
@@ -42,63 +42,48 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 
-document.addEventListener("DOMContentLoaded", () => {
-	gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollToPlugin, ScrollTrigger);
 
-	const pageContainer = document.querySelector(".container");
-
-	/* SMOOTH SCROLL */
-	const scroller = new LocomotiveScroll({
-		el: pageContainer,
-		smooth: true
-	});
-
-	scroller.on("scroll", ScrollTrigger.update);
-
-	ScrollTrigger.scrollerProxy(pageContainer, {
-		scrollTop(value) {
-			return arguments.length
-				? scroller.scrollTo(value, 0, 0)
-				: scroller.scroll.instance.scroll.y;
-		},
-		getBoundingClientRect() {
-			return {
-				left: 0,
-				top: 0,
-				width: window.innerWidth,
-				height: window.innerHeight
-			};
-		},
-		pinType: pageContainer.style.transform ? "transform" : "fixed"
-	});
-
-	////////////////////////////////////
-	////////////////////////////////////
-	window.addEventListener("load", function () {
-		let pinBoxes = document.querySelectorAll(".pin-wrap > *");
-		let pinWrap = document.querySelector(".pin-wrap");
-		let pinWrapWidth = pinWrap.offsetWidth;
-		let horizontalScrollLength = pinWrapWidth - window.innerWidth;
-
-		// Pinning and horizontal scrolling
-
-		gsap.to(".pin-wrap", {
-			scrollTrigger: {
-				scroller: pageContainer, //locomotive-scroll
-				scrub: true,
-				trigger: "#sectionPin",
-				pin: true,
-				// anticipatePin: 1,
-				start: "top top",
-				end: pinWrapWidth
+/* Main navigation */
+let panelsSection = document.querySelector("#panels"),
+	panelsContainer = document.querySelector("#panels-container"),
+	tween;
+document.querySelectorAll(".anchor").forEach((anchor) => {
+	anchor.addEventListener("click", function (e) {
+		console.log("click");
+		e.preventDefault();
+		let targetElem = document.querySelector(e.target.getAttribute("href")),
+			y = targetElem;
+		if (targetElem && panelsContainer.isSameNode(targetElem.parentElement)) {
+			let totalScroll = tween.scrollTrigger.end - tween.scrollTrigger.start,
+				totalMovement = cont.scrollWidth - innerWidth;
+			y = Math.round(
+				tween.scrollTrigger.start +
+				(targetElem.offsetLeft / totalMovement) * totalScroll
+			);
+		}
+		gsap.to(window, {
+			scrollTo: {
+				y: y,
+				autoKill: false
 			},
-			x: -horizontalScrollLength,
-			ease: "none"
+			duration: 1
 		});
-
-		ScrollTrigger.addEventListener("refresh", () => scroller.update()); //locomotive-scroll
-
-		ScrollTrigger.refresh();
 	});
+});
 
+/* Panels */
+const cont = document.querySelector("#panels-container");
+const panels = gsap.utils.toArray("#panels-container .panel");
+
+tween = gsap.to(panels, {
+	x: () => -1 * (cont.scrollWidth - innerWidth),
+	ease: "none",
+	scrollTrigger: {
+		trigger: "#panels-container",
+		pin: true,
+		start: "-50%",
+		scrub: 1,
+		end: () => "+=" + (cont.scrollWidth - innerWidth),
+	}
 });
