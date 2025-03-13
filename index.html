@@ -13,6 +13,7 @@
     <script src="./js/jquery-3.6.4.min.js"></script>
     <script src="./js/gsap.min.js"></script>
     <script src="./js/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@latest"></script>
   </head>
 
   <body>
@@ -149,10 +150,14 @@
               </div>
             </div>
           </section>
-          <section
-            class="section-relative flex-style-row block-parallax"
-          >
-            <div class="parallax-container" id="dream-img" data-depth='0.50'></div>
+          <section class="section-relative flex-style-row block-parallax">
+            <div class="parallax-container" data-parallax-layers="true">
+              <img
+                src="./images/dream.jpg"
+                data-parallax-layer="1"
+                class="parallax__layers"
+              />
+            </div>
             <div class="block-name flex-style-row gap">
               <h2 class="title text-light tt-up">
                 Your dream is our responsibility

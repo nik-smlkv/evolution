@@ -50,27 +50,12 @@
 	justify-content: space-between;
 }
 
-.block-parallax {
-	height: 100vh;
-}
-
-
-#dream-img {
-	background: url('../images/dream.jpg') no-repeat;
-	background-size: 100%;
-	background-position: top;
-	height: 100vh;
+.parallax-container {
 	width: 100%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
+	overflow: hidden;
+	position: relative;
 }
 
-.areas-img {
-	background: url('../images/comfort.jpg')no-repeat;
-	width: 100%;
-	background-size: 100%;
-}
 
 /* .areas-img,
 .dream-img {
@@ -95,9 +80,7 @@
 	gap: 32px;
 }
 
-.parallax-container {
-	width: 100%;
-}
+
 
 header {
 	position: fixed;
