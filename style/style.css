@@ -6,6 +6,7 @@
 	color: var(--text-color-secondary);
 	background-color: var(--bg-main);
 	margin-top: 90px;
+	overflow: hidden;
 }
 
 .wrapper:not(header) {
@@ -31,6 +32,7 @@
 	max-inline-size: 1920px;
 	width: 100%;
 	margin: 0 auto;
+	overflow: hidden;
 }
 
 
@@ -106,35 +108,6 @@ header {
 	position: relative;
 }
 
-.swiper-gallery {
-	overflow: hidden;
-}
-
-.swiper-gallery .swiper-wrapper {}
-
-.swiper-gallery .swiper-slide {
-
-	flex: 0 0 1100px;
-}
-
-.slick-track {
-	display: flex;
-}
-
-.slick-slide {
-	transition: transform 0.3s ease;
-}
-
-.slick-slide.slick-current {
-	transition: transform 0.3s ease;
-}
-
-.slick-gallery .slick-slide {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-}
-
 .slider-navigation__block {
 	gap: 16px;
 	position: absolute;
@@ -151,6 +124,54 @@ header {
 .infra-width {
 	align-self: start;
 	max-width: 225px;
+}
+
+.showcase__items {
+	gap: 56px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+
+.showcase__wrap {
+
+
+
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	width: 200%;
+	margin-left: -50%;
+	margin-right: -50%;
+}
+
+.showcase__items {
+	position: relative;
+	width: 92%;
+	height: 660px;
+	display: flex;
+	align-items: start;
+	justify-content: start;
+	overflow: hidden;
+}
+
+.showcase__item img {
+	height: 100%;
+}
+
+.showcase__item {
+	position: absolute;
+	width: 33.3333%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 1.8em;
+	background: #333;
+	color: #fff;
+	will-change: transform;
+	cursor: grabbing;
 }
 
 .infra-block {
@@ -327,6 +348,10 @@ footer {
 	height: 480px;
 }
 
+.scroll-container {
+	overflow: hidden;
+}
+
 .min-height {
 	min-height: 576px;
 }
@@ -395,13 +420,16 @@ footer {
 	height: 606px;
 	max-width: 522px;
 	width: 100%;
-	padding-right: 50px;
-	position: sticky;
-	top: 20%;
-	background: white;
 	justify-content: space-between;
+	position: relative;
+	z-index: 2;
+}
+
+.block-title-scroll {
+	padding-right: 50px;
 	background-color: var(--wh-color);
 }
+
 .slider-card {
 	height: auto;
 	align-items: center;
@@ -635,8 +663,6 @@ input.input-event[value=""]+.input-placeholder {
 }
 
 
-
-
 #panels #panels-container {
 	display: -webkit-box;
 	display: -ms-flexbox;
@@ -645,8 +671,12 @@ input.input-event[value=""]+.input-placeholder {
 	-ms-flex-wrap: nowrap;
 	flex-wrap: nowrap;
 	padding: 0;
-	overflow: hidden;
 
+	overflow: hidden;
+}
+
+.panels-overflow {
+	overflow: hidden;
 }
 
 #panels #panels-container .panel {
