@@ -57,3 +57,49 @@ document.addEventListener("DOMContentLoaded", () => {
 
 const video = document.querySelector('.video');
 video.pause();
+
+/* GSAP COUNTER */
+document.addEventListener("DOMContentLoaded", () => {
+	// Получаем все элементы счетчиков
+	const counters = document.querySelectorAll(".counter");
+	const countersFloat = document.querySelectorAll(".counter-float");
+
+	counters.forEach(counter => {
+		const endValue = counter.getAttribute("data-end-value"); // Получаем конечное значение из атрибута
+		const triggerCounter = document.querySelector('.trig-counter');
+		let tl = gsap.timeline({
+			scrollTrigger: {
+				trigger: triggerCounter,
+				start: "120% 120%",  // START ANIMATION TRIGGER
+			}
+		});
+		// Анимация счетчика
+		tl.to({ value: 0 }, {
+			value: endValue,
+			duration: 3, // Длительность анимации в секундах
+			onUpdate: function () {
+				counter.innerText = Math.ceil(this.targets()[0].value);
+			},
+			ease: "power1.out" // Эффект easing
+		});
+	});
+	countersFloat.forEach(countersFloat => {
+		const endValue = countersFloat.getAttribute("data-end-value"); // Получаем конечное значение из атрибута
+		const triggerCounter = document.querySelector('.trig-counter');
+		// Анимация счетчика
+		let tl = gsap.timeline({
+			scrollTrigger: {
+				trigger: triggerCounter,
+				start: "120% 120%",  // START ANIMATION TRIGGER
+			}
+		});
+		tl.to({ value: 0 }, {
+			value: endValue,
+			duration: 3, // Длительность анимации в секундах
+			onUpdate: function () {
+				countersFloat.innerText = this.targets()[0].value.toFixed(3);
+			},
+			ease: "power1.out" // Эффект easing
+		});
+	});
+});

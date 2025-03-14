@@ -196,3 +196,4 @@ const swiperQuality = new Swiper('.swiper-quality', {
 		prevEl: '.swiper-button-prev',
 	},
 });
+

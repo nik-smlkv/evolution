@@ -456,11 +456,11 @@ footer {
 }
 
 .slider-card {
-	flex: 1 1 50%;
+	flex: 0 0 50%;
 }
 
 .slider-card-img {
-	flex: 1 1 50%;
+	flex: 0 0 50%;
 }
 
 .section__body:has(.block-info-adress),
@@ -686,4 +686,17 @@ input.input-event[value=""]+.input-placeholder {
 	display: -webkit-box;
 	display: -ms-flexbox;
 	display: flex;
+}
+
+.change-title {
+	overflow: hidden;
+	height: 60px;
+}
+
+.change-text {
+	overflow: hidden;
+	height: 260px;
+}
+.slider-card-body {
+	justify-content: start;
 }
