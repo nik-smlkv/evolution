@@ -122,8 +122,16 @@ header::before {
 
 .block-image {
 	position: absolute;
+	right: 0;
+	top: 0;
+	transform: translate(-35%, -100%);
 }
-
+.video{
+	visibility: hidden;
+}
+.video.visible{
+	visibility: visible;
+}
 .swiper-statistic {
 	position: relative;
 }
@@ -204,7 +212,9 @@ header::before {
 	font-weight: 500;
 	font-variation-settings: "wght" var(--fw-title);
 }
-
+.section-relative{
+	position: relative;
+}
 .position-img {
 	position: relative;
 	display: flex;
@@ -474,7 +484,7 @@ h1::before {
 	position: absolute;
 	z-index: 3;
 	left: 0;
-	transform: translate(415%, 40%);
+	transform: translate(415%, 80%);
 }
 
 .gap-button {
