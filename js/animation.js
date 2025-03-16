@@ -21,13 +21,14 @@ document.addEventListener("DOMContentLoaded", () => {
 		});
 		const layers = [
 			{ layer: "1", yPercent: 20 },
-			{ layer: "2", yPercent: 15 },
+			{ layer: "2", yPercent: 10 },
 			{ layer: "3", yPercent: 20 },
 			{ layer: "4", yPercent: 10 }
 		];
 		layers.forEach((layerObj, idx) => {
 			tl.to(
 				triggerElement.querySelectorAll(`[data-parallax-layer="${layerObj.layer}"]`),
+
 				{
 					yPercent: layerObj.yPercent,
 					ease: "none"
@@ -103,3 +104,46 @@ document.addEventListener("DOMContentLoaded", () => {
 		});
 	});
 });
+
+
+/*  gsap.from(childSplit.lines, {
+	scrollTrigger: ".rise-animation",
+	duration: 2,
+	delay: 0.3,
+	yPercent: 100,
+	ease: "power4",
+	stagger: 0.1
+ });
+ */
+document.addEventListener('DOMContentLoaded', () => {
+	const splitTexts = document.querySelectorAll('.split-text');
+
+	splitTexts.forEach((textElement) => {
+		console.log(textElement)
+		let typeSplit = new SplitText(textElement, {
+			types: 'lines',
+			lineClass: "split"
+		});
+		var childSplit = new SplitText(textElement, {
+			type: "lines",
+			linesClass: "split-child"
+		});
+		var parentSplit = new SplitText(textElement, {
+			type: "lines",
+			linesClass: "split-parent"
+		});
+		const words = typeSplit.lines;
+		gsap.from(words, {
+			y: '200%',
+			opacity: 1,
+			duration: 1,
+			ease: 'power2.out',
+			stagger: 0.2,
+			scrollTrigger: {
+				trigger: textElement.closest('section'), // Используем ближайший section
+				start: 'top bottom',
+			}
+		});
+	});
+});
+gsap.config({ trialWarn: false });

@@ -182,7 +182,34 @@ const swiperStatistic = new Swiper('.swiper-statistic', {
 	},
 });
 
+
+
+const titles = document.querySelectorAll('.title-slide');
+const texts = document.querySelectorAll('.text-slide');
+function updateTitle(index) {
+	titles.forEach((title, i) => {
+		if (i === index) {
+			title.classList.remove('hide');
+			title.classList.add('show');
+		} else {
+			title.classList.remove('show');
+			title.classList.add('hide');
+		}
+	});
+	texts.forEach((text, i) => {
+		if (i === index) {
+			text.classList.remove('hide');
+			text.classList.add('show');
+		} else {
+			text.classList.remove('show');
+			text.classList.add('hide');
+		}
+	});
+}
+
+
 const swiperQuality = new Swiper('.swiper-quality', {
+	slidesPerView: 1,
 	loop: true,
 	cssMode: true,
 	direction: 'horizontal',
@@ -195,5 +222,17 @@ const swiperQuality = new Swiper('.swiper-quality', {
 		nextEl: '.swiper-button-next',
 		prevEl: '.swiper-button-prev',
 	},
+
 });
 
+swiperQuality.on('slideChange', function () {
+	const currentIndex = swiperQuality.realIndex;
+	const previousIndex = (currentIndex === 0) ? titles.length - 1 : currentIndex - 1;
+	titles[previousIndex].classList.remove('show');
+	titles[previousIndex].classList.add('hide');
+	texts[previousIndex].classList.remove('show');
+	texts[previousIndex].classList.add('hide');
+	updateTitle(currentIndex);
+});
+
+updateTitle(swiperQuality.activeIndex);
