@@ -18,14 +18,13 @@
 	gap: 180px;
 }
 
-
-
 .video {
 	width: 100%;
 	height: 100vh;
+	clip-path: polygon(0px 100%, 100% 100%, 100% 100%, 0px 100%);
 	object-fit: cover;
 	object-position: center;
-	visibility: hidden;
+	visibility: visible;
 }
 
 .gallery__body {
@@ -124,9 +123,24 @@ header::before {
 }
 
 .block-image {
-	position: absolute;
 	z-index: 2;
 }
+
+.scale-image {
+	overflow: hidden;
+	position: absolute;
+}
+
+.scale-image img {
+	width: 100%;
+	height: auto;
+	transition: clip-path 0.3s ease, scale 1s ease;
+	clip-path: polygon(0 70%, 100% 70%, 100% 100%, 0 100%);
+	object-fit: cover;
+	object-position: center;
+	scale: 1.7;
+}
+
 
 .swiper-statistic {
 	position: relative;

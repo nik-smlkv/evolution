@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
 	// Register GSAP Plugins
-	gsap.registerPlugin(ScrollTrigger, ScrollTrigger);
+	gsap.registerPlugin(ScrollTrigger);
 
 	/* LENIS VERTICAL SCROLL SMOOTH ANIMATION */
 	const lenis = new Lenis();
@@ -139,59 +139,103 @@ document.addEventListener('DOMContentLoaded', () => {
 		});
 	});
 });
+/* document.addEventListener('DOMContentLoaded', () => {
+	const mainBlock = document.querySelector(".section__body-main");
+	const blockImage = document.querySelector(".block-image");
+	const mainBlockWidth = mainBlock.offsetWidth;
+	const centerY = (window.innerHeight - blockImage.offsetHeight) / 2;
+	console.log(centerY)
+	const positionX = mainBlockWidth - blockImage.offsetWidth;
+	gsap.set(blockImage, {
+		x: positionX + 75,
+		y: centerY
+	});
+}); */
 
-const title = document.querySelector(".main-title");
-const mainBlock = document.querySelector(".section__body-main");
-const scrollToVideo = document.querySelector(".scroll-to-video");
-const blockImage = document.querySelector(".block-image");
-const aboutButton = document.querySelector(".about-button");
 
-const mainBlockWidth = mainBlock.offsetWidth;
-const mainBlockHeight = mainBlock.offsetHeight;
-const centerY = (mainBlockHeight - blockImage.offsetHeight) / 2; 
-const positionX = mainBlockWidth - blockImage.offsetWidth / 4; 
-gsap.set(blockImage, {
-	x: positionX,
-	y: centerY
+window.addEventListener("DOMContentLoaded", () => {
+	const blockImage = document.querySelector(".block-image");
+	const mainBlock = document.querySelector(".section__body-main");
+	const mainBlockWidth = mainBlock.offsetWidth;
+	const centerY = (mainBlock.offsetHeight - 783) / 2;
+	const positionX = mainBlockWidth - blockImage.offsetWidth;
+	gsap.set(blockImage, {
+		x: positionX + 70,
+		y: centerY
+	});
+	gsap.to(".scale-image img", {
+		scrollTrigger: {
+			trigger: ".section__body-main",
+			start: "top center",
+			end: "top center",
+			scrub: true,
+			onEnter: () => {
+				gsap.to(".scale-image img", {
+					clipPath: "polygon(0 0%, 100% 0%, 100% 100%, 0 100%)",
+					scale: "1",
+					onComplete: () => {
+						setTimeout(() => {
+							blockImage.style.overflow = "visible";
+						}, 800);
+					},
+				});
+			},
+		},
+	});
 });
+const updateClipPath = () => {
+	const scaleImage = document.querySelector(".scale-image");
+	const scrollToVideo = document.querySelector(".scroll-to-video");
+	const scaleRect = scaleImage.getBoundingClientRect();
+	const viewportWidth = window.innerWidth;
+	const viewportHeight = window.innerHeight;
 
+	// Вычисляем оставшиеся значения
+	const right = viewportWidth - (scaleRect.left + scaleRect.width);
+	const left = scaleRect.left;
+	const bottom = viewportHeight - (scaleRect.top + scaleRect.height);
+	const top = scaleRect.top;
+	console.log(right, left, top, bottom);
+	/* 	gsap.to(".scale-image img", {
+			clipPath: `polygon(${left}px ${top}px, ${viewportWidth - right}px ${top}px, ${viewportWidth - right}px ${viewportHeight - bottom}px, ${left}px ${viewportHeight - bottom}px)`,
+		}); */
+};
 window.addEventListener("scroll", () => {
+	updateClipPath();
+	const title = document.querySelector(".main-title");
+	const aboutButton = document.querySelector(".about-button");
+	const scrollToVideo = document.querySelector(".scroll-to-video");
+	const videoWidth = scrollToVideo.offsetWidth;
+	const videoHeight = scrollToVideo.offsetHeight;
 	const scrollPosition = window.scrollY;
 	const videoPosition = scrollToVideo.offsetTop;
 	const maxScroll = videoPosition - title.offsetHeight;
 	const scrollPercent = Math.min(scrollPosition / maxScroll, 1);
-	const videoWidth = scrollToVideo.offsetWidth; // Ширина
-	const videoHeight = scrollToVideo.offsetHeight; // Высота
+
 
 	gsap.to(title, {
 		y: -scrollPosition,
-		opacity: 1 - scrollPercent,
+		opacity: 1 - scrollPercent * 10,
 		duration: 0.5
 	});
-	if (scrollPosition < maxScroll) {
-		gsap.to(aboutButton, {
-			y: -scrollPosition,
-			opacity: 1 - scrollPercent * 2,
-			duration: 0.5,
-			ease: "power2.out"
-		});
-		gsap.to(blockImage, {
-			y: scrollPosition,
-			width: blockImage.offsetWidth + scrollPercent * (videoWidth - blockImage.offsetWidth), // Увеличиваем ширину
-			height: blockImage.offsetHeight + scrollPercent * (videoHeight - blockImage.offsetHeight), // Увеличиваем высоту
-			duration: 0.1
-		});
-	} else {
-		gsap.to(blockImage, {
-			y: window.innerHeight - blockImage.offsetHeight,
-			width: videoWidth,
-			height: videoHeight,
-			duration: 0.1
-		});
-	}
+	gsap.to(aboutButton, {
+		y: -scrollPosition,
+		opacity: 1 - scrollPercent * 10,
+		duration: 0.5,
+		ease: "power2.out"
+	});
+	gsap.to(".scale-image", {
+		y: () => +window.scrollY,
+		width: "100%",
+		height: "100vh",
+		transform: "translate(0,0)",
+		scrollTrigger: {
+			trigger: ".section__body-main",
+			start: "bottom bottom",
+			scrub: true,
+		},
+	});
 });
-
-
 /* 	//variable
 	const pages = document.querySelectorAll(".scroll-to-video");
 	const containers = document.querySelectorAll(".content-container");
@@ -226,3 +270,55 @@ window.addEventListener("scroll", () => {
 /*wheel for cellfone*/
 //if($(window).width()<768){}
 //} */
+
+/* 
+window.addEventListener("scroll", () => {
+	const title = document.querySelector(".main-title");
+	const aboutButton = document.querySelector(".about-button");
+	const scrollToVideo = document.querySelector(".scroll-to-video");
+	const videoWidth = scrollToVideo.offsetWidth;
+	const videoHeight = scrollToVideo.offsetHeight;
+	const scrollPosition = window.scrollY;
+	const videoPosition = scrollToVideo.offsetTop;
+	const maxScroll = videoPosition - title.offsetHeight;
+	const scrollPercent = Math.min(scrollPosition / maxScroll, 1);
+
+
+	gsap.to(title, {
+		y: -scrollPosition,
+		opacity: 1 - scrollPercent,
+		duration: 0.5
+	});
+	gsap.to(aboutButton, {
+		y: -scrollPosition,
+		opacity: 1 - scrollPercent * 5,
+		duration: 0.5,
+		ease: "power2.out"
+	});
+	gsap.to(".scale-image img", {
+		y: () => +window.scrollY + 100,
+		scrollTrigger: {
+			trigger: ".section__body-main",
+			start: "bottom bottom",
+			scrub: true,
+		},
+	});
+	gsap.to(".scale-image img", {
+		y: () => +window.scrollY + 100,
+		opacity: 1 - scrollPercent * 5,
+		scrollTrigger: {
+			trigger: ".scroll-to-video",
+			start: "top center",
+			scrub: true,
+		},
+	});
+	gsap.to(".video", {
+		clipPath: "polygon(0 0%, 100% 0%, 100% 100%, 0 100%)",
+		scrollTrigger: {
+			trigger: ".scroll-to-video",
+			start: "top center ",
+			scrub: true,
+		},
+	});
+});
+ */
