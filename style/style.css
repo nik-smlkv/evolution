@@ -22,7 +22,7 @@
 
 .video {
 	width: 100%;
-	height: 100%;
+	height: 100vh;
 	object-fit: cover;
 	object-position: center;
 }
@@ -100,9 +100,11 @@ header {
 	margin: 0;
 	min-height: 90px;
 }
-.padding-top{
+
+.padding-top {
 	padding-top: 90px;
 }
+
 .header__body {
 	position: relative;
 	z-index: 11;
@@ -122,16 +124,9 @@ header::before {
 
 .block-image {
 	position: absolute;
-	right: 0;
-	top: 0;
-	transform: translate(-35%, -100%);
+
 }
-.video{
-	visibility: hidden;
-}
-.video.visible{
-	visibility: visible;
-}
+
 .swiper-statistic {
 	position: relative;
 }
@@ -212,9 +207,11 @@ header::before {
 	font-weight: 500;
 	font-variation-settings: "wght" var(--fw-title);
 }
-.section-relative{
+
+.section-relative {
 	position: relative;
 }
+
 .position-img {
 	position: relative;
 	display: flex;
@@ -227,10 +224,6 @@ header::before {
 	bottom: 0;
 	left: 0;
 	z-index: 3;
-}
-
-.about-button {
-	position: absolute;
 }
 
 .footer__body {
@@ -383,11 +376,11 @@ h1::before {
 	justify-content: space-between;
 }
 
+
 .section__body-main {
 	position: relative;
 	display: flex;
 	justify-content: end;
-	min-height: 783px;
 }
 
 .card-name {
@@ -398,7 +391,10 @@ h1::before {
 	overflow: hidden;
 }
 
-
+.content-container {
+	transition: transform 1s ease-in-out;
+	background-color: var(--primary-main-color);
+}
 
 .block-name {
 	position: absolute;
@@ -450,6 +446,12 @@ h1::before {
 	height: 480px;
 }
 
+.scroll-to-video {
+	position: relative;
+	height: 100vh;
+	width: 100%;
+}
+
 .scroll-container {
 	overflow: hidden;
 }
@@ -482,9 +484,9 @@ h1::before {
 	background-color: var(--primary-main-color);
 	letter-spacing: 0.48px;
 	position: absolute;
-	z-index: 3;
+	z-index: 4;
 	left: 0;
-	transform: translate(415%, 80%);
+	transform: translate(415%, 80%) !important;
 }
 
 .gap-button {
@@ -854,4 +856,9 @@ input.input-event[value=""]+.input-placeholder {
 	visibility: visible;
 	height: 100%;
 	opacity: 1;
+}
+
+section {
+	height: 100vh;
+	width: 100%;
 }

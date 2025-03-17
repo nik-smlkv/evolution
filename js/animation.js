@@ -105,21 +105,10 @@ document.addEventListener("DOMContentLoaded", () => {
 	});
 });
 
-
-/*  gsap.from(childSplit.lines, {
-	scrollTrigger: ".rise-animation",
-	duration: 2,
-	delay: 0.3,
-	yPercent: 100,
-	ease: "power4",
-	stagger: 0.1
- });
- */
 document.addEventListener('DOMContentLoaded', () => {
 	const splitTexts = document.querySelectorAll('.split-text');
 
 	splitTexts.forEach((textElement) => {
-		console.log(textElement)
 		let typeSplit = new SplitText(textElement, {
 			types: 'lines',
 			lineClass: "split"
@@ -146,4 +135,64 @@ document.addEventListener('DOMContentLoaded', () => {
 		});
 	});
 });
-gsap.config({ trialWarn: false });
+/* gsap.config({ trialWarn: false }); */
+
+document.addEventListener("DOMContentLoaded", () => {
+	const title = document.querySelector(".main-title");
+
+	// Обработчик события скролла
+	window.addEventListener("wheel", (event) => {
+		if (event.deltaY > 0) {
+			// Анимация заголовка
+			gsap.to(title, {
+				y: -200,
+				opacity: 0,
+				duration: 1,
+				ease: "power2.out",
+				onComplete: () => {
+					// Выполнить скролл после завершения анимации
+					gsap.to(window, {
+						scrollTo: ".scroll-to-video",
+						duration: 1,
+					});
+				}
+			});
+		}
+	});
+});
+
+
+/* 	//variable
+	const pages = document.querySelectorAll(".scroll-to-video");
+	const containers = document.querySelectorAll(".content-container");
+	/* 	const scrollDots = document.querySelectorAll(".scroll > li"); */
+//const numOfPages = pages.length;
+//let pageIndex = 0;
+//////first slideIn
+//$('.scroll-to-video.active').find('div').css("transform", "translateX(0)");
+//////wheel function
+//window.addEventListener("wheel", function (e) {
+//	// Scroll Up
+//	if (0 < pageIndex && e.deltaY < 0) { pageIndex--; }
+//	//// Scroll Down
+//	else if (pageIndex < numOfPages - 1 && e.deltaY > 0) { pageIndex++; }
+//	//// Move container up/down.
+//	var position = "-" + pageIndex * 100;
+//	containers.forEach((container, index) => {
+//		container.style.transform = "translateY(" + position + "vh)";
+//	})
+//	$('.scroll-to-video').eq(pageIndex).children('div').css("transform", "translateX(0)");
+//	//add click nav to change page
+//	/* 		$('.scroll>li').click(function () {
+//	ition that you click
+//				pageIndex = $(this).index();
+//				var position = "-" + pageIndex * 100;
+//				container.style.transform = "translateY(" + position + "vh)";
+//				$('li').removeClass('active');
+//				$(this).addClass('active');
+//			}) */
+//});/*wheel*/
+
+/*wheel for cellfone*/
+//if($(window).width()<768){}
+//} */
