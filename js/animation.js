@@ -135,7 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		});
 	});
 });
-/* gsap.config({ trialWarn: false }); */
+
 
 document.addEventListener("DOMContentLoaded", () => {
 	const title = document.querySelector(".main-title");
