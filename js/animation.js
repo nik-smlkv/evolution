@@ -109,35 +109,38 @@ document.addEventListener('DOMContentLoaded', () => {
 	const splitTexts = document.querySelectorAll('.split-text');
 
 	splitTexts.forEach((textElement) => {
-		let typeSplit = new SplitText(textElement, {
-			types: 'lines',
-			lineClass: "split"
+		const animtextLine = Splitting({
+			target: '.split-text',
+			by: 'lines'
 		});
-		var childSplit = new SplitText(textElement, {
-			type: "lines",
-			linesClass: "split-child"
+
+		animtextLine.forEach((splitResult) => {
+			const wrappedLines = splitResult.lines.map((wordsArr, i) => {
+				const wordsHTML = wordsArr.map((word) => {
+					if (document.querySelector('.main-title') && word.style.getPropertyValue('--word-index') === '1') {
+						return `${word.outerHTML.replace('<span class="word"', '<span class="word title-span"')}<span class="whitespace"></span>`;
+					}
+					return `${word.outerHTML}<span class="whitespace"></span>`;
+				}).join('');
+
+				return `<div class="line" style="--line-index: ${i};">${wordsHTML}</div>`;
+			}).join('');
+			splitResult.el.innerHTML = wrappedLines;
 		});
-		var parentSplit = new SplitText(textElement, {
-			type: "lines",
-			linesClass: "split-parent"
-		});
-		const words = typeSplit.lines;
-		gsap.from(words, {
-			y: '200%',
-			opacity: 1,
-			duration: 1,
-			ease: 'power2.out',
-			stagger: 0.2,
-			scrollTrigger: {
-				trigger: textElement.closest('section'), // Используем ближайший section
-				start: 'top bottom',
+		ScrollTrigger.create({
+			trigger: textElement,
+			start: "120% 120%",
+			onEnter: () => {
+				textElement.classList.add('line-up');
+			},
+			onLeaveBack: () => {
+				textElement.classList.remove('line-up');
 			}
 		});
 	});
 });
 
-
-document.addEventListener("DOMContentLoaded", () => {
+/* document.addEventListener("DOMContentLoaded", () => {
 	const title = document.querySelector(".main-title");
 
 	// Обработчик события скролла
@@ -160,7 +163,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		}
 	});
 });
-
+ */
 
 /* 	//variable
 	const pages = document.querySelectorAll(".scroll-to-video");

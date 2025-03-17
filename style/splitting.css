@@ -1,0 +1,157 @@
+.ezd-animtext .line {
+	display: inline-block;
+	line-height: inherit;
+	overflow: hidden;
+}
+
+.ezd-animtext .word {
+	opacity: 0;
+	margin: 0;
+}
+
+
+.ezd-animtext.line-up .word {
+	opacity: 0;
+	overflow: hidden;
+	animation: none;
+	animation: animtext-up 1s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+	animation-delay: calc(0.075s * var(--line-index));
+}
+
+.ezd-animtext.word-up .word {
+	overflow: hidden;
+	animation: none;
+	opacity: 0;
+	animation: animtext-up 1s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+	animation-delay: calc(0.2s * var(--word-index));
+}
+
+.ezd-animtext.line-left .line {
+	overflow: visible;
+}
+
+.ezd-animtext.line-left .word {
+	animation: animtext-left 1s cubic-bezier(0.33, 1, 0.68, 1) forwards;
+	animation-delay: calc(0.15s * var(--line-index));
+	opacity: 1;
+}
+
+.ezd-animtext.word-left .line {
+	overflow: visible;
+}
+
+.ezd-animtext.word-left .word {
+	overflow: hidden;
+	animation: none;
+	opacity: 0;
+	animation: animtext-left 1s cubic-bezier(0.33, 1, 0.68, 1) forwards;
+	animation-delay: calc(0.2s * var(--word-index));
+}
+
+.ezd-animtext.char-up .word {
+	opacity: 1;
+	margin: 0;
+}
+
+.ezd-animtext.char-up .char {
+	opacity: 0;
+	animation: animtext-up 1s cubic-bezier(0.33, 1, 0.68, 1) forwards;
+	animation-delay: calc(0.5s + (0.015s * var(--char-index)));
+	padding: 0;
+}
+
+.ezd-animtext.char-left .word {
+	opacity: 1;
+	margin: 0;
+}
+
+.ezd-animtext.char-left .char {
+	opacity: 0;
+	animation: animtext-left 1s cubic-bezier(0.33, 1, 0.68, 1) forwards;
+	animation-delay: calc(0.01s * var(--char-index));
+	padding: 0;
+}
+
+@keyframes animtext-left {
+	from {
+		transform: translateX(25vw) translateZ(0);
+		opacity: 0;
+	}
+
+	to {
+		transform: translateX(0) translateZ(0);
+		opacity: 1;
+	}
+}
+
+@keyframes animtext-up {
+	from {
+		transform: translateY(100%) translateZ(0);
+		opacity: 0;
+	}
+
+	to {
+		transform: translateY(0) translateZ(0);
+		opacity: 1;
+	}
+}
+
+/* Recommended styles for Splitting */
+.splitting .word,
+.splitting .char {
+	display: inline-block;
+}
+
+/* Psuedo-element chars */
+.splitting .char {
+	position: relative;
+}
+
+
+.splitting .char::before,
+.splitting .char::after {
+	content: attr(data-char);
+	position: absolute;
+	top: 0;
+	left: 0;
+	visibility: hidden;
+	transition: inherit;
+	user-select: none;
+}
+
+
+.splitting {
+	/* The center word index */
+	--word-center: calc((var(--word-total) - 1) / 2);
+
+	/* The center character index */
+	--char-center: calc((var(--char-total) - 1) / 2);
+
+	/* The center character index */
+	--line-center: calc((var(--line-total) - 1) / 2);
+}
+
+.splitting .word {
+	/* Pecent (0-1) of the word's position */
+	--word-percent: calc(var(--word-index) / var(--word-total));
+
+	/* Pecent (0-1) of the line's position */
+	--line-percent: calc(var(--line-index) / var(--line-total));
+}
+
+.splitting .char {
+	/* Percent (0-1) of the char's position */
+	--char-percent: calc(var(--char-index) / var(--char-total));
+
+	/* Offset from center, positive & negative */
+	--char-offset: calc(var(--char-index) - var(--char-center));
+
+	/* Absolute distance from center, only positive */
+	--distance: calc((var(--char-offset) * var(--char-offset)) / var(--char-center));
+
+	/* Distance from center where -1 is the far left, 0 is center, 1 is far right */
+	--distance-sine: calc(var(--char-offset) / var(--char-center));
+
+	/* Distance from center where 1 is far left/far right, 0 is center */
+	--distance-percent: calc((var(--distance) / var(--char-center)));
+}

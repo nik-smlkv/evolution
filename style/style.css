@@ -278,7 +278,7 @@ footer {
 }
 
 .main-title {
-	overflow: hidden;
+
 	--fz-title: 224px;
 	font-size: var(--fz-title);
 	color: var(--wh-color);
@@ -857,3 +857,4 @@ input.input-event[value=""]+.input-placeholder {
 	height: 100%;
 	opacity: 1;
 }
+
