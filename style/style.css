@@ -25,6 +25,7 @@
 	height: 100vh;
 	object-fit: cover;
 	object-position: center;
+	visibility: hidden;
 }
 
 .gallery__body {
@@ -124,7 +125,7 @@ header::before {
 
 .block-image {
 	position: absolute;
-
+	z-index: 2;
 }
 
 .swiper-statistic {
@@ -215,12 +216,14 @@ header::before {
 .position-img {
 	position: relative;
 	display: flex;
+	width: 100%;
+	height: 100%;
 }
 
 .moving-img {
 	position: absolute;
 	width: 100%;
-	height: 68%;
+	height: auto;
 	bottom: 0;
 	left: 0;
 	z-index: 3;
@@ -376,11 +379,21 @@ h1::before {
 	justify-content: space-between;
 }
 
+.block-relative {
+	position: relative;
+	width: 100%;
+	z-index: 6;
+}
 
 .section__body-main {
-	position: relative;
 	display: flex;
 	justify-content: end;
+	position: relative;
+	overflow: visible;
+}
+
+.section__body-main::-webkit-scrollbar {
+	width: 0;
 }
 
 .card-name {
@@ -448,6 +461,7 @@ h1::before {
 
 .scroll-to-video {
 	position: relative;
+	z-index: 0;
 	height: 100vh;
 	width: 100%;
 }
@@ -485,8 +499,9 @@ h1::before {
 	letter-spacing: 0.48px;
 	position: absolute;
 	z-index: 4;
+	bottom: 0;
 	left: 0;
-	transform: translate(415%, 80%) !important;
+	transform: translate(335%, -30%) !important;
 }
 
 .gap-button {
@@ -857,4 +872,3 @@ input.input-event[value=""]+.input-placeholder {
 	height: 100%;
 	opacity: 1;
 }
-

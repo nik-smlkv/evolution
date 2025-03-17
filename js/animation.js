@@ -140,30 +140,57 @@ document.addEventListener('DOMContentLoaded', () => {
 	});
 });
 
-/* document.addEventListener("DOMContentLoaded", () => {
-	const title = document.querySelector(".main-title");
+const title = document.querySelector(".main-title");
+const mainBlock = document.querySelector(".section__body-main");
+const scrollToVideo = document.querySelector(".scroll-to-video");
+const blockImage = document.querySelector(".block-image");
+const aboutButton = document.querySelector(".about-button");
 
-	// Обработчик события скролла
-	window.addEventListener("wheel", (event) => {
-		if (event.deltaY > 0) {
-			// Анимация заголовка
-			gsap.to(title, {
-				y: -200,
-				opacity: 0,
-				duration: 1,
-				ease: "power2.out",
-				onComplete: () => {
-					// Выполнить скролл после завершения анимации
-					gsap.to(window, {
-						scrollTo: ".scroll-to-video",
-						duration: 1,
-					});
-				}
-			});
-		}
-	});
+const mainBlockWidth = mainBlock.offsetWidth;
+const mainBlockHeight = mainBlock.offsetHeight;
+const centerY = (mainBlockHeight - blockImage.offsetHeight) / 2; 
+const positionX = mainBlockWidth - blockImage.offsetWidth / 4; 
+gsap.set(blockImage, {
+	x: positionX,
+	y: centerY
 });
- */
+
+window.addEventListener("scroll", () => {
+	const scrollPosition = window.scrollY;
+	const videoPosition = scrollToVideo.offsetTop;
+	const maxScroll = videoPosition - title.offsetHeight;
+	const scrollPercent = Math.min(scrollPosition / maxScroll, 1);
+	const videoWidth = scrollToVideo.offsetWidth; // Ширина
+	const videoHeight = scrollToVideo.offsetHeight; // Высота
+
+	gsap.to(title, {
+		y: -scrollPosition,
+		opacity: 1 - scrollPercent,
+		duration: 0.5
+	});
+	if (scrollPosition < maxScroll) {
+		gsap.to(aboutButton, {
+			y: -scrollPosition,
+			opacity: 1 - scrollPercent * 2,
+			duration: 0.5,
+			ease: "power2.out"
+		});
+		gsap.to(blockImage, {
+			y: scrollPosition,
+			width: blockImage.offsetWidth + scrollPercent * (videoWidth - blockImage.offsetWidth), // Увеличиваем ширину
+			height: blockImage.offsetHeight + scrollPercent * (videoHeight - blockImage.offsetHeight), // Увеличиваем высоту
+			duration: 0.1
+		});
+	} else {
+		gsap.to(blockImage, {
+			y: window.innerHeight - blockImage.offsetHeight,
+			width: videoWidth,
+			height: videoHeight,
+			duration: 0.1
+		});
+	}
+});
+
 
 /* 	//variable
 	const pages = document.querySelectorAll(".scroll-to-video");
