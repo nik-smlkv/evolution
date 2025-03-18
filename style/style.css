@@ -940,12 +940,14 @@ input.input-event[value=""]+.input-placeholder {
 
 .apartments__info-block {
 	justify-content: start;
+	align-items: start;
 }
 
 .available-apartments__list {
 	overflow-y: scroll;
 	justify-content: start;
 	gap: 16px;
+	flex-wrap: wrap;
 }
 
 .available-apartments__list::-webkit-scrollbar {
@@ -1019,7 +1021,12 @@ input.input-event[value=""]+.input-placeholder {
 	align-items: center;
 	justify-content: center;
 	background-color: #FAFAFA;
+	max-width: 730px;
+	border-bottom: 1px solid gray;
+}
 
+.apartment__item.active {
+	border-color: #0474DC;
 }
 
 .apartment__item:hover {

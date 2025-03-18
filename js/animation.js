@@ -216,6 +216,7 @@ window.addEventListener("scroll", () => {
 			onLeave: (self) => {
 				self.disable();
 				window.scrollTo(0, self.start);
+				video.play()
 			},
 			once: true,
 		}
@@ -240,7 +241,8 @@ window.addEventListener("scroll", () => {
 				});
 			},
 			[],
-			0.5
+			0.5,
+			
 		)
 		.to({}, {}, 0.5);
 });
