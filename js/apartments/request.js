@@ -9,7 +9,7 @@ console.log(data);
 		`<strong>inserted text</strong>`,
 	);
 } */
-
+/* 
 const getApartmentPlan = (apartmentPlan) => {
 
 }
@@ -37,4 +37,4 @@ const getObject = (objects) => {
 const apartmentsMeters = data.map((num) => num.area);
 const apartmentsImages = data.map((img) => img.apartmentImg);
 getApartmentCards(apartmentsImages, apartmentsMeters);
-//https://codepen.io/GreenSock/pen/LEYzdgw
+ */

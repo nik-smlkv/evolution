@@ -1,3 +1,4 @@
+
 document.addEventListener("DOMContentLoaded", () => {
 	// Register GSAP Plugins
 	gsap.registerPlugin(ScrollTrigger);
@@ -173,34 +174,13 @@ window.addEventListener("DOMContentLoaded", () => {
 				gsap.to(".scale-image img", {
 					clipPath: "polygon(0 0%, 100% 0%, 100% 100%, 0 100%)",
 					scale: "1",
-					onComplete: () => {
-						setTimeout(() => {
-							blockImage.style.overflow = "visible";
-						}, 800);
-					},
 				});
 			},
 		},
 	});
 });
-const updateClipPath = () => {
-	const scaleImage = document.querySelector(".scale-image");
-	const scrollToVideo = document.querySelector(".scroll-to-video");
-	const scaleRect = scaleImage.getBoundingClientRect();
-	const viewportWidth = window.innerWidth;
-	const viewportHeight = window.innerHeight;
 
-	// Вычисляем оставшиеся значения
-	const right = viewportWidth - (scaleRect.left + scaleRect.width);
-	const left = scaleRect.left;
-	const bottom = viewportHeight - (scaleRect.top + scaleRect.height);
-	const top = scaleRect.top;
-	/* 	gsap.to(".scale-image img", {
-			clipPath: `polygon(${left}px ${top}px, ${viewportWidth - right}px ${top}px, ${viewportWidth - right}px ${viewportHeight - bottom}px, ${left}px ${viewportHeight - bottom}px)`,
-		}); */
-};
 window.addEventListener("scroll", () => {
-	updateClipPath();
 	const title = document.querySelector(".main-title");
 	const aboutButton = document.querySelector(".about-button");
 	const scrollToVideo = document.querySelector(".scroll-to-video");
@@ -223,20 +203,46 @@ window.addEventListener("scroll", () => {
 		duration: 0.5,
 		ease: "power2.out"
 	});
-	gsap.to(".scale-image", {
-		y: () => +window.scrollY,
-		width: "100%",
-		height: "100vh",
-		transform: "translate(0,0)",
+	gsap.to(".scale-image img", {
+		y: +scrollPosition * 1.2,
+		opacity: 1 - scrollPercent,
+	});
+	const tl = gsap.timeline({
 		scrollTrigger: {
 			trigger: ".section__body-main",
 			start: "bottom bottom",
+			end: "+=100%",
 			scrub: true,
-			onComplete: () => {
-				blockImage.style.display = "none";
+			onLeave: (self) => {
+				self.disable();
+				window.scrollTo(0, self.start);
 			},
-		},
+			once: true,
+		}
 	});
+	tl.call(
+		() => {
+			gsap.to(".scroll-to-video", {
+				clipPath: "polygon(0% 0%, 100% 0%, 100% 50%, 0% 50%)",
+				duration: 1,
+				ease: "power1.inOut"
+			});
+		},
+		[],
+		0.5
+	)
+		.call(
+			() => {
+				gsap.to(".scroll-to-video", {
+					clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+					duration: 1,
+					ease: "power1.inOut"
+				});
+			},
+			[],
+			0.5
+		)
+		.to({}, {}, 0.5);
 });
 /* 	//variable
 	const pages = document.querySelectorAll(".scroll-to-video");
