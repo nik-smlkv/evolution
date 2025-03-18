@@ -195,7 +195,6 @@ const updateClipPath = () => {
 	const left = scaleRect.left;
 	const bottom = viewportHeight - (scaleRect.top + scaleRect.height);
 	const top = scaleRect.top;
-	console.log(right, left, top, bottom);
 	/* 	gsap.to(".scale-image img", {
 			clipPath: `polygon(${left}px ${top}px, ${viewportWidth - right}px ${top}px, ${viewportWidth - right}px ${viewportHeight - bottom}px, ${left}px ${viewportHeight - bottom}px)`,
 		}); */
@@ -233,6 +232,9 @@ window.addEventListener("scroll", () => {
 			trigger: ".section__body-main",
 			start: "bottom bottom",
 			scrub: true,
+			onComplete: () => {
+				blockImage.style.display = "none";
+			},
 		},
 	});
 });
