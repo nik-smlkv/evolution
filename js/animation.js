@@ -160,10 +160,10 @@ window.addEventListener("DOMContentLoaded", () => {
 	const mainBlockWidth = mainBlock.offsetWidth;
 	const centerY = (mainBlock.offsetHeight - 783) / 2;
 	const positionX = mainBlockWidth - blockImage.offsetWidth;
-	gsap.set(blockImage, {
+/* 	gsap.set(blockImage, {
 		x: positionX + 70,
 		y: centerY
-	});
+	}); */
 	gsap.to(".scale-image img", {
 		scrollTrigger: {
 			trigger: ".section__body-main",

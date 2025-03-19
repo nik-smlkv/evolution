@@ -20,25 +20,31 @@
     <div class="wrapper">
       <header>
         <div class="header__body flex-style-row">
-          <a href="/" class="header__logo flex-style-row"
-            ><img src="./images/logo.png" alt="Logo"
-          /></a>
-          <nav class="header__nav">
-            <ul class="flex-style-row">
-              <li><a href="">About Project</a></li>
-              <li><a href="">Features</a></li>
-              <li><a href="">Infrastructure</a></li>
-              <li><a href="">Apartments</a></li>
-              <li><a href="">Gallery</a></li>
-              <li><a href="">Financing</a></li>
-              <li><a href="">Contact</a></li>
-            </ul>
-          </nav>
+          <div class="header__menu flex-style-row gap">
+            <a href="/" class="header__logo flex-style-row"
+              ><img src="./images/logo.png" alt="Logo"
+            /></a>
+            <nav class="header__nav">
+              <ul class="flex-style-row">
+                <li><a href="">About Project</a></li>
+                <li><a href="">Features</a></li>
+                <li><a href="">Infrastructure</a></li>
+                <li><a href="">Apartments</a></li>
+                <li><a href="">Gallery</a></li>
+                <li><a href="">Financing</a></li>
+                <li><a href="">Contact</a></li>
+              </ul>
+            </nav>
+          </div>
           <div class="header-block flex-style-row">
             <a href="tel:0800012026">0800 012 026</a>
             <a href="" class="btn-style header-btn-color blue-btn-hover"
               >leave a request</a
             >
+            <div class="header__burger">
+              <span class="burger-line"></span>
+              <span class="burger-line"></span>
+            </div>
           </div>
         </div>
       </header>
@@ -86,14 +92,15 @@
                   </svg>
                 </div>
               </div>
+              <div class="block-image scale-image">
+                <img
+                  class="main-img"
+                  src="./images/img_home_bg.png"
+                  alt="Main Image"
+                />
+              </div>
             </div>
-            <div class="block-image scale-image">
-              <img
-                class="main-img"
-                src="./images/img_home_bg.png"
-                alt="Main Image"
-              />
-            </div>
+
             <div
               class="no-gap block-height block-dark block-video scroll-to-video section-relative reveal"
             >
@@ -638,19 +645,17 @@
                 <div class="apartments__info-block flex-style-row">
                   <div class="apartments__affordable flex-style-column">
                     <p class="fw-medium">
-                      Affordable apartments (<span class="js-get-apartments">400</span>)
+                      Affordable apartments (<span class="js-get-apartments"
+                        >400</span
+                      >)
                     </p>
-                    <div class="available-apartments__list flex-style-row">
-                      
-                    </div>
+                    <div
+                      class="available-apartments__list flex-style-row"
+                    ></div>
                   </div>
                   <div class="apartment-card flex-style-row">
                     <div class="apartment-card__content flex-style-row">
-                      <img
-                        src=""
-                        alt="Apartment plan"
-                        class="apartment__img"
-                      />
+                      <img src="" alt="Apartment plan" class="apartment__img" />
                       <div class="apartments__description flex-style-column">
                         <div
                           class="flex-style-column apartment-description__content"
