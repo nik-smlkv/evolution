@@ -160,10 +160,10 @@ window.addEventListener("DOMContentLoaded", () => {
 	const mainBlockWidth = mainBlock.offsetWidth;
 	const centerY = (mainBlock.offsetHeight - 783) / 2;
 	const positionX = mainBlockWidth - blockImage.offsetWidth;
-/* 	gsap.set(blockImage, {
-		x: positionX + 70,
-		y: centerY
-	}); */
+	/* 	gsap.set(blockImage, {
+			x: positionX + 70,
+			y: centerY
+		}); */
 	gsap.to(".scale-image img", {
 		scrollTrigger: {
 			trigger: ".section__body-main",
@@ -179,10 +179,55 @@ window.addEventListener("DOMContentLoaded", () => {
 		},
 	});
 });
+const blockImage = document.querySelector('.block-image');
+const sectionBody = document.querySelector('.section__body-main');
+const scrollToVideo = document.querySelector('.scroll-to-video');
+const movingImg = document.querySelector('.moving-img');
+let isAnimatingScroll = false;
+const title = document.querySelector(".main-title");
+const aboutButton = document.querySelector(".about-button");
+window.addEventListener('wheel', (event) => {
+	if (event.deltaY > 0 && !isAnimatingScroll) { // Прокрутка вниз
+		isAnimatingScroll = true;
+		gsap.to(title, {
+			y: -500,
+			opacity: 0,
+			duration: 0.1,
+			ease: "power2.out"
 
+		});
+		gsap.to(aboutButton, {
+			y: -500,
+			opacity: 0,
+			duration: 0.1,
+			ease: "power2.out"
+		});
+		// Анимация увеличения блока
+		gsap.to([blockImage, movingImg, sectionBody], {
+			width: '100%',
+			right: "0px",
+			duration: 0.6,
+			ease: "linear",
+			scrub: true,
+			onStart: () => {
+				sectionBody.style.maxInlineSize = "100%";
+				blockImage.style.right = "0px";
+			},
+			onEnter: () => {
+				// Прокрутка к блоку scroll-to-video
+				window.scrollTo({
+					top: scrollToVideo.offsetTop,
+					behavior: 'smooth'
+				});
+				isAnimatingScroll = false;
+			}
+		});
+
+
+	}
+});
 window.addEventListener("scroll", () => {
-	const title = document.querySelector(".main-title");
-	const aboutButton = document.querySelector(".about-button");
+
 	const scrollToVideo = document.querySelector(".scroll-to-video");
 	const videoWidth = scrollToVideo.offsetWidth;
 	const videoHeight = scrollToVideo.offsetHeight;
@@ -192,59 +237,8 @@ window.addEventListener("scroll", () => {
 	const scrollPercent = Math.min(scrollPosition / maxScroll, 1);
 
 
-	gsap.to(title, {
-		y: -scrollPosition,
-		opacity: 1 - scrollPercent * 10,
-		duration: 0.5
-	});
-	gsap.to(aboutButton, {
-		y: -scrollPosition,
-		opacity: 1 - scrollPercent * 10,
-		duration: 0.5,
-		ease: "power2.out"
-	});
-	gsap.to(".scale-image img", {
-		y: +scrollPosition * 1.2,
-		opacity: 1 - scrollPercent,
-	});
-	const tl = gsap.timeline({
-		scrollTrigger: {
-			trigger: ".section__body-main",
-			start: "bottom bottom",
-			end: "+=100%",
-			scrub: true,
-			onLeave: (self) => {
-				self.disable();
-				window.scrollTo(0, self.start);
-				video.play()
-			},
-			once: true,
-		}
-	});
-	tl.call(
-		() => {
-			gsap.to(".scroll-to-video", {
-				clipPath: "polygon(0% 0%, 100% 0%, 100% 50%, 0% 50%)",
-				duration: 1,
-				ease: "power1.inOut"
-			});
-		},
-		[],
-		0.5
-	)
-		.call(
-			() => {
-				gsap.to(".scroll-to-video", {
-					clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
-					duration: 1,
-					ease: "power1.inOut"
-				});
-			},
-			[],
-			0.5,
-			
-		)
-		.to({}, {}, 0.5);
+
+
 });
 /* 	//variable
 	const pages = document.querySelectorAll(".scroll-to-video");

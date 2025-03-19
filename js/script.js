@@ -85,31 +85,52 @@ async function authenticate(apiKey) {
 }
 const apiKey = 'e670162bcfb0bedfe52c8339e40921ce';
 authenticate(apiKey); */
-
+let windowsArray = ["1520", "1380", "1280", "1220", "1120", "1000"];
 const burger = document.querySelector('.header__burger');
-const headerMenu = document.querySelector('.header__menu');
+var headerMenu = document.querySelector('.header__menu');
 var headerBody = document.querySelector('.header__body');
-
-window.addEventListener('resize', () => {
-	let windowsArray = ["1520", "1380", "1280", "1220", "1120", "1000"];
-	const headerNav = document.querySelector('.header__nav');
-	const temporalHeaderNav = headerNav.cloneNode(true);
-	if (temporalHeaderNav) {
-		const listItems = headerNav.querySelectorAll('li');
-		const itemsArray = Array.from(listItems);
-		const screenWidth = window.innerWidth;
-		let indexToRemove = windowsArray.findIndex(width => screenWidth < parseInt(width));
-		while (indexToRemove !== -1 && itemsArray.length > 0) {
-			const itemToRemove = itemsArray.pop();
-			headerNav.removeChild(itemToRemove);
-			temporalHeaderNav.querySelector('ul').appendChild(itemToRemove);
-			indexToRemove = windowsArray.findIndex(width => screenWidth < parseInt(width));
+let headerNav = document.querySelector('.header__nav');
+let headerNavList = document.querySelector('.header__nav ul');
+let temporalHeaderNav = headerNav.cloneNode(true);
+temporalHeaderNav.classList.add('nav-clone')
+let checkWidth = window.innerWidth <= 1520 && window.innerWidth >= 768;
+const listItems = temporalHeaderNav.querySelectorAll('li');
+let headerLogo = document.querySelector('.header__logo');
+const getHeaderClone = () => {
+	if (checkWidth) {
+		if (!headerMenu.querySelector('.nav-clone')) {
+			headerMenu.removeChild(headerNav);
+			listItems.forEach(item => {
+				item.remove();
+			});
+			headerBody.insertAdjacentElement("afterbegin", headerNav);
+			headerMenu.insertAdjacentElement("afterbegin", temporalHeaderNav);
 		}
 	}
-})
+}
+const handleHeaderLinks = () => {
+	if (checkWidth && temporalHeaderNav) {
+		let listItems = headerNav.querySelectorAll('li');
+		let screenWidth = window.innerWidth;
+		let itemsArray = Array.from(listItems);
+		console.log(itemsArray.length)
+		windowsArray.map(width => {
+			if (screenWidth < parseInt(width) && itemsArray.length > 0) {
+				let itemToRemove = itemsArray.pop();
+				windowsArray.shift();
+				if (headerNavList.contains(itemToRemove)) {
+					headerNavList.removeChild(itemToRemove);
+				} else {
+					headerNavList.appendChild(itemToRemove);
+				}
+				temporalHeaderNav.querySelector('ul').appendChild(itemToRemove);
+			}
+		});
+	}
+}
+
 burger.addEventListener('click', () => {
 	headerMenu.classList.toggle('active');
-
 	if (headerMenu.classList.contains('active')) {
 		const headerBlock = document.querySelector('.header-block');
 		clonedHeaderBlock = headerBlock.cloneNode(true);
@@ -118,7 +139,6 @@ burger.addEventListener('click', () => {
 			clonedHeaderBlock.removeChild(childToRemove);
 		}
 		headerMenu.appendChild(clonedHeaderBlock);
-
 	} else {
 		if (clonedHeaderBlock) {
 			clonedHeaderBlock.remove();
@@ -126,20 +146,31 @@ burger.addEventListener('click', () => {
 		}
 	}
 });
+const getHeaderLogo = () => {
+	const existingLogo = headerBody.querySelector('.header__logo.clone');
 
-const navElement = document.querySelector('.header__nav');
-const headerLogo = document.querySelector('.header__logo');
-var clonedHeaderLogo = headerLogo.cloneNode(true);
-window.addEventListener('DOMContentLoaded', () => {
-	if (window.innerWidth < 1519.99) {
-		clonedHeaderLogo = headerLogo.cloneNode(true);
-		headerBody.appendChild(clonedHeaderLogo)
-		
+	if (checkWidth) {
+		if (!existingLogo) {
+			const clonedHeaderLogo = headerLogo.cloneNode(true);
+			clonedHeaderLogo.classList.add('clone');
+			headerBody.appendChild(clonedHeaderLogo);
+		}
 	} else {
-		if (clonedHeaderLogo) {
-			clonedHeaderLogo.remove();
-			clonedHeaderLogo = null;
+		if (existingLogo) {
+			existingLogo.remove();
 		}
 	}
+};
 
+window.addEventListener('DOMContentLoaded', () => {
+
+	handleHeaderLinks();
+	getHeaderLogo();
+	getHeaderClone();
+});
+
+window.addEventListener('resize', () => {
+	getHeaderLogo();
+	handleHeaderLinks();
+	getHeaderClone();
 });
