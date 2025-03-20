@@ -166,10 +166,34 @@ window.addEventListener('DOMContentLoaded', () => {
 	handleHeaderLinks();
 	getHeaderLogo();
 	getHeaderClone();
+/* 	getScrollablePanels() */
 });
 
 window.addEventListener('resize', () => {
 	getHeaderLogo();
 	handleHeaderLinks();
 	getHeaderClone();
+
 });
+
+const getScrollablePanels = () => {
+	if (window.innerWidth < 767.99) {
+		const scrollable = document.querySelector('#panels-container');
+		scrollable.addEventListener('touchstart', (event) => {
+			startX = event.touches[0].clientX;
+		});
+
+		scrollable.addEventListener('touchmove', (event) => {
+			event.preventDefault();
+			const touchX = event.touches[0].clientX;
+			const deltaX = startX - touchX;
+
+			scrollable.scrollBy({
+				left: deltaX,
+				behavior: 'smooth'
+			});
+
+			startX = touchX;
+		});
+	}
+}

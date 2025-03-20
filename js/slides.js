@@ -168,6 +168,8 @@ container.addEventListener("mouseleave", (e) => {
 });
 
 const swiperStatistic = new Swiper('.swiper-statistic', {
+	slidesPerView: 4,
+	slidesPerGroup: 4,
 	loop: true,
 	cssMode: true,
 	direction: 'horizontal',
@@ -180,6 +182,18 @@ const swiperStatistic = new Swiper('.swiper-statistic', {
 		nextEl: '.swiper-button-next',
 		prevEl: '.swiper-button-prev',
 	},
+	breakpoints: {
+		320: {
+			slidesPerView: 2,
+			spaceBetween: 2,
+			slideToClickedSlide: true,
+		},
+		768: {
+			slidesPerView: 4,
+			spaceBetween: 4,
+			slideToClickedSlide: true,
+		}
+	}
 });
 
 
