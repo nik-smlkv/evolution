@@ -12,10 +12,10 @@
 	--wh-color: #FFFFFF;
 	--bg-main: #ffffff;
 	--title-span-color: #42B0F9;
-	--fz-title: clamp(26px, 4vw, 80px);
-	--fz-subtitle: 24px;
+	--fz-title: clamp(48px, 4vw, 80px);
+	--fz-subtitle: clamp(16px, 3vw, 24px);
 	--fz-default: 16px;
-	--fz-second-title: 38px;
+	--fz-second-title: clamp(24px, 5vw, 38px);
 	--lh-default: 150%;
 	--lh-text: 120%;
 	--lh-title: 100%;

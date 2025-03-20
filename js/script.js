@@ -163,7 +163,6 @@ const getHeaderLogo = () => {
 };
 
 window.addEventListener('DOMContentLoaded', () => {
-
 	handleHeaderLinks();
 	getHeaderLogo();
 	getHeaderClone();

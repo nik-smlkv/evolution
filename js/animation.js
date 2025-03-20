@@ -39,24 +39,27 @@ document.addEventListener("DOMContentLoaded", () => {
 		});
 	});
 
-
+	scrollPanel();
 	/*  HORIZONTAL SCROLL PANEL  */
-	const cont = document.querySelector("#panels-container");
-	const panels = gsap.utils.toArray("#panels-container .panel");
-	let tween = gsap.to(panels, {
-		x: () => -1 * (cont.scrollWidth - innerWidth),
-		ease: "none",
-		scrollTrigger: {
-			trigger: "#panels-container",
-			pin: true,
-			start: "-50%",
-			scrub: 2,
-			end: () => "+=" + (cont.scrollWidth - innerWidth),
-		}
-	});
 
 });
-
+const scrollPanel = () => {
+	if (window.innerWidth > 768) {
+		const cont = document.querySelector("#panels-container");
+		const panels = gsap.utils.toArray("#panels-container .panel");
+		let tween = gsap.to(panels, {
+			x: () => -1 * (cont.scrollWidth - innerWidth),
+			ease: "none",
+			scrollTrigger: {
+				trigger: "#panels-container",
+				pin: true,
+				start: "-50%",
+				scrub: 2,
+				end: () => "+=" + (cont.scrollWidth - innerWidth),
+			}
+		});
+	}
+}
 const video = document.querySelector('.video');
 video.pause();
 
@@ -179,29 +182,36 @@ window.addEventListener("DOMContentLoaded", () => {
 		},
 	});
 });
-const blockImage = document.querySelector('.block-image');
-const sectionBody = document.querySelector('.section__body-main');
-const scrollToVideo = document.querySelector('.scroll-to-video');
+var blockImage = document.querySelector('.block-image');
+var sectionBody = document.querySelector('.section__body-main');
+var scrollToVideo = document.querySelector('.scroll-to-video');
+const title = document.querySelector(".main-title");
+var scrollPosition = scrollToVideo.offsetTop;
+const handleScrollVideo = () => {
+	const scrollToVideo = document.querySelector('.scroll-to-video');
+	if (scrollToVideo) { // Проверка на существование элемента
+		const scrollPosition = scrollToVideo.offsetTop;
+		window.scrollTo({
+			top: scrollPosition,
+			behavior: 'smooth'
+		});
+	} else {
+		console.warn('Element .scroll-to-video not found');
+	}
+}
 const movingImg = document.querySelector('.moving-img');
 let isAnimatingScroll = false;
-const title = document.querySelector(".main-title");
 const aboutButton = document.querySelector(".about-button");
 window.addEventListener('wheel', (event) => {
 	if (event.deltaY > 0 && !isAnimatingScroll) { // Прокрутка вниз
 		isAnimatingScroll = true;
-		gsap.to(title, {
-			y: -500,
-			opacity: 0,
-			duration: 0.1,
-			ease: "power2.out"
-
-		});
-		gsap.to(aboutButton, {
-			y: -500,
-			opacity: 0,
-			duration: 0.1,
-			ease: "power2.out"
-		});
+		const goToSection = (scrollToVideo) => {
+			gsap.to(window, {
+				scrollTo: { y: scrollToVideo, autoKill: false },
+				duration: 1,
+				scrub: true,
+			});
+		};
 		// Анимация увеличения блока
 		gsap.to([blockImage, movingImg, sectionBody], {
 			width: '100%',
@@ -210,23 +220,24 @@ window.addEventListener('wheel', (event) => {
 			ease: "linear",
 			scrub: true,
 			onStart: () => {
+				movingImg.style.display = "none";
+				var scrollToVideo = document.querySelector('.scroll-to-video');
 				sectionBody.style.maxInlineSize = "100%";
 				blockImage.style.right = "0px";
-			},
-			onEnter: () => {
-				// Прокрутка к блоку scroll-to-video
-				window.scrollTo({
-					top: scrollToVideo.offsetTop,
-					behavior: 'smooth'
-				});
 				isAnimatingScroll = false;
-			}
+				gsap.to(blockImage, {
+					y: () => scrollPosition - window.innerHeight + blockImage.offsetHeight,
+					duration: 0.6,
+					scrub: true,
+
+				});
+				video.play();
+				blockImage.style.display = "none";
+			},
 		});
-
-
 	}
 });
-window.addEventListener("scroll", () => {
+/* window.addEventListener("scroll", () => {
 
 	const scrollToVideo = document.querySelector(".scroll-to-video");
 	const videoWidth = scrollToVideo.offsetWidth;
@@ -239,7 +250,7 @@ window.addEventListener("scroll", () => {
 
 
 
-});
+}); */
 /* 	//variable
 	const pages = document.querySelectorAll(".scroll-to-video");
 	const containers = document.querySelectorAll(".content-container");
@@ -275,7 +286,7 @@ window.addEventListener("scroll", () => {
 //if($(window).width()<768){}
 //} */
 
-/* 
+
 window.addEventListener("scroll", () => {
 	const title = document.querySelector(".main-title");
 	const aboutButton = document.querySelector(".about-button");
@@ -290,39 +301,40 @@ window.addEventListener("scroll", () => {
 
 	gsap.to(title, {
 		y: -scrollPosition,
-		opacity: 1 - scrollPercent,
-		duration: 0.5
+		opacity: 1 - scrollPercent * 10,
+		duration: 0.1
 	});
 	gsap.to(aboutButton, {
 		y: -scrollPosition,
-		opacity: 1 - scrollPercent * 5,
-		duration: 0.5,
+		opacity: 1 - scrollPercent * 10,
+		duration: 0.1,
 		ease: "power2.out"
 	});
-	gsap.to(".scale-image img", {
-		y: () => +window.scrollY + 100,
-		scrollTrigger: {
-			trigger: ".section__body-main",
-			start: "bottom bottom",
-			scrub: true,
-		},
-	});
-	gsap.to(".scale-image img", {
-		y: () => +window.scrollY + 100,
-		opacity: 1 - scrollPercent * 5,
-		scrollTrigger: {
-			trigger: ".scroll-to-video",
-			start: "top center",
-			scrub: true,
-		},
-	});
-	gsap.to(".video", {
-		clipPath: "polygon(0 0%, 100% 0%, 100% 100%, 0 100%)",
-		scrollTrigger: {
-			trigger: ".scroll-to-video",
-			start: "top center ",
-			scrub: true,
-		},
-	});
+	/* 	gsap.to(".scale-image img", {
+			y: () => +window.scrollY + 100,
+			scrollTrigger: {
+				trigger: ".section__body-main",
+				start: "bottom bottom",
+				scrub: true,
+			},
+		});
+		gsap.to(".scale-image img", {
+			y: () => +window.scrollY + 100,
+			opacity: 1 - scrollPercent * 5,
+			scrollTrigger: {
+				trigger: ".scroll-to-video",
+				start: "top center",
+				scrub: true,
+			},
+		});
+		gsap.to(".video", {
+			clipPath: "polygon(0 0%, 100% 0%, 100% 100%, 0 100%)",
+			scrollTrigger: {
+				trigger: ".scroll-to-video",
+				start: "top center ",
+				scrub: true,
+			},
+		}); */
 });
- */
+
+window.addEventListener('resize', scrollPanel)
