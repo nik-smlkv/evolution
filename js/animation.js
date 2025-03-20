@@ -1,23 +1,45 @@
 
+const video = document.querySelector('.video');
+video.pause();
+var blockImage = document.querySelector('.block-image');
+var sectionBody = document.querySelector('.section__body-main');
+var scrollToVideo = document.querySelector('.scroll-to-video');
+const title = document.querySelector(".main-title");
+var scrollPosition = scrollToVideo.offsetTop;
+const movingImg = document.querySelector('.moving-img');
+const aboutButton = document.querySelector(".about-button");
 document.addEventListener("DOMContentLoaded", () => {
 	// Register GSAP Plugins
 	gsap.registerPlugin(ScrollTrigger);
-
-	/* LENIS VERTICAL SCROLL SMOOTH ANIMATION */
-	const lenis = new Lenis();
-	lenis.on('scroll', ScrollTrigger.update);
-	gsap.ticker.add((time) => { lenis.raf(time * 1000); });
-	gsap.ticker.lagSmoothing(0);
-
-
+	const scrollPanel = () => {
+		if (window.innerWidth > 768) {
+			const cont = document.querySelector("#panels-container");
+			const panels = gsap.utils.toArray("#panels-container .panel");
+			let tween = gsap.to(panels, {
+				x: () => -1 * (cont.scrollWidth - innerWidth),
+				ease: "none",
+				scrollTrigger: {
+					trigger: "#panels-container",
+					pin: true,
+					start: "-50%",
+					scrub: 2,
+					end: () => "+=" + (cont.scrollWidth - innerWidth),
+				},
+			});
+		}
+	}
+	scrollPanel();
 	/*  PARALLAX  */
 	document.querySelectorAll('[data-parallax-layers]').forEach((triggerElement) => {
 		let tl = gsap.timeline({
 			scrollTrigger: {
 				trigger: triggerElement,
-				start: "-20% 0%",  // START ANIMATION TRIGGER
-				end: "bottom top",    // END ANIMATION TRIGGER
-				scrub: 0
+				start: "-20% 0%",
+				end: "bottom center",
+				scrub: true,
+				onEnter: () => {
+					console.log("Trigger activated for:", triggerElement);
+				}
 			}
 		});
 		const layers = [
@@ -38,37 +60,12 @@ document.addEventListener("DOMContentLoaded", () => {
 			);
 		});
 	});
-
-	scrollPanel();
-	/*  HORIZONTAL SCROLL PANEL  */
-
 });
-const scrollPanel = () => {
-	if (window.innerWidth > 768) {
-		const cont = document.querySelector("#panels-container");
-		const panels = gsap.utils.toArray("#panels-container .panel");
-		let tween = gsap.to(panels, {
-			x: () => -1 * (cont.scrollWidth - innerWidth),
-			ease: "none",
-			scrollTrigger: {
-				trigger: "#panels-container",
-				pin: true,
-				start: "-50%",
-				scrub: 2,
-				end: () => "+=" + (cont.scrollWidth - innerWidth),
-			}
-		});
-	}
-}
-const video = document.querySelector('.video');
-video.pause();
-
 /* GSAP COUNTER */
 document.addEventListener("DOMContentLoaded", () => {
 	// Получаем все элементы счетчиков
 	const counters = document.querySelectorAll(".counter");
 	const countersFloat = document.querySelectorAll(".counter-float");
-
 	counters.forEach(counter => {
 		const endValue = counter.getAttribute("data-end-value"); // Получаем конечное значение из атрибута
 		const triggerCounter = document.querySelector('.trig-counter');
@@ -108,7 +105,6 @@ document.addEventListener("DOMContentLoaded", () => {
 		});
 	});
 });
-
 document.addEventListener('DOMContentLoaded', () => {
 	const splitTexts = document.querySelectorAll('.split-text');
 
@@ -143,198 +139,108 @@ document.addEventListener('DOMContentLoaded', () => {
 		});
 	});
 });
-/* document.addEventListener('DOMContentLoaded', () => {
-	const mainBlock = document.querySelector(".section__body-main");
-	const blockImage = document.querySelector(".block-image");
-	const mainBlockWidth = mainBlock.offsetWidth;
-	const centerY = (window.innerHeight - blockImage.offsetHeight) / 2;
-	console.log(centerY)
-	const positionX = mainBlockWidth - blockImage.offsetWidth;
-	gsap.set(blockImage, {
-		x: positionX + 75,
-		y: centerY
-	});
-}); */
-
-
-window.addEventListener("DOMContentLoaded", () => {
-	const blockImage = document.querySelector(".block-image");
-	const mainBlock = document.querySelector(".section__body-main");
-	const mainBlockWidth = mainBlock.offsetWidth;
-	const centerY = (mainBlock.offsetHeight - 783) / 2;
-	const positionX = mainBlockWidth - blockImage.offsetWidth;
-	/* 	gsap.set(blockImage, {
-			x: positionX + 70,
-			y: centerY
-		}); */
-	gsap.to(".scale-image img", {
-		scrollTrigger: {
-			trigger: ".section__body-main",
-			start: "top center",
-			end: "top center",
-			scrub: true,
-			onEnter: () => {
-				gsap.to(".scale-image img", {
-					clipPath: "polygon(0 0%, 100% 0%, 100% 100%, 0 100%)",
-					scale: "1",
-				});
-			},
-		},
-	});
-});
-var blockImage = document.querySelector('.block-image');
-var sectionBody = document.querySelector('.section__body-main');
-var scrollToVideo = document.querySelector('.scroll-to-video');
-const title = document.querySelector(".main-title");
-var scrollPosition = scrollToVideo.offsetTop;
-const handleScrollVideo = () => {
-	const scrollToVideo = document.querySelector('.scroll-to-video');
-	if (scrollToVideo) { // Проверка на существование элемента
-		const scrollPosition = scrollToVideo.offsetTop;
-		window.scrollTo({
-			top: scrollPosition,
-			behavior: 'smooth'
-		});
-	} else {
-		console.warn('Element .scroll-to-video not found');
-	}
-}
-const movingImg = document.querySelector('.moving-img');
-let isAnimatingScroll = false;
-const aboutButton = document.querySelector(".about-button");
-window.addEventListener('wheel', (event) => {
-	if (event.deltaY > 0 && !isAnimatingScroll) { // Прокрутка вниз
-		isAnimatingScroll = true;
-		const goToSection = (scrollToVideo) => {
-			gsap.to(window, {
-				scrollTo: { y: scrollToVideo, autoKill: false },
-				duration: 1,
-				scrub: true,
+gsap.to(".scale-image img", {
+	scrollTrigger: {
+		trigger: ".section__body-main",
+		start: "top center",
+		end: "top center",
+		scrub: true,
+		onEnter: () => {
+			gsap.to(".scale-image img", {
+				clipPath: "polygon(0 0%, 100% 0%, 100% 100%, 0 100%)",
+				scale: "1",
 			});
-		};
-		// Анимация увеличения блока
-		gsap.to([blockImage, movingImg, sectionBody], {
-			width: '100%',
-			right: "0px",
-			duration: 0.6,
-			ease: "linear",
-			scrub: true,
-			onStart: () => {
-				movingImg.style.display = "none";
-				var scrollToVideo = document.querySelector('.scroll-to-video');
-				sectionBody.style.maxInlineSize = "100%";
-				blockImage.style.right = "0px";
-				isAnimatingScroll = false;
-				gsap.to(blockImage, {
-					y: () => scrollPosition - window.innerHeight + blockImage.offsetHeight,
-					duration: 0.6,
-					scrub: true,
+		},
+	},
+});
+document.addEventListener('DOMContentLoaded', () => {
+	scrollToVideo.classList.add('js-scrolling');
+	function preventScroll(event) {
+		event.preventDefault();
+		event.stopPropagation();
+	}
+	if (scrollToVideo.classList.contains('js-scrolling')) {
 
-				});
-				video.play();
-				blockImage.style.display = "none";
-			},
+		window.addEventListener("wheel", () => {
+			const title = document.querySelector(".main-title");
+			const aboutButton = document.querySelector(".about-button");
+			const scrollToVideo = document.querySelector(".scroll-to-video");
+			const videoWidth = scrollToVideo.offsetWidth;
+			const videoHeight = scrollToVideo.offsetHeight;
+			const scrollPosition = window.scrollY;
+			const videoPosition = scrollToVideo.offsetTop;
+			const maxScroll = videoPosition - title.offsetHeight;
+			const scrollPercent = Math.min(scrollPosition / maxScroll, 1);
+			let isScrolling = false;
+			gsap.to(title, {
+				y: -scrollPosition,
+				opacity: 1 - scrollPercent * 10,
+				duration: 0.1
+			});
+			gsap.to(aboutButton, {
+				y: -scrollPosition,
+				opacity: 1 - scrollPercent * 10,
+				duration: 0.1,
+				ease: "power2.out"
+			});
+			let isAnimatingScroll = false;
+			gsap.to(blockImage, {
+				width: '100%',
+				height: '100vh',
+				top: "0px",
+				right: "0px",
+				duration: 1,
+				ease: "power1.out",
+				scrollTrigger: {
+					trigger: sectionBody,
+					start: "top center",
+					scrub: false,
+					onEnter: () => {
+						if (!isAnimatingScroll && scrollToVideo.classList.contains('js-scrolling')) {
+							isAnimatingScroll = true;
+							scrollToVideo.classList.add('js-scrolling');
+
+							// Блокируем прокрутку
+							window.addEventListener("wheel", preventScroll, { passive: false });
+							document.body.style.overflow = "hidden"; // Отключаем прокрутку для всего документа
+
+							gsap.to(window, {
+								scrollTo: { y: scrollToVideo, autoKill: true },
+								duration: 1,
+								ease: "power1.out",
+								onComplete: () => {
+									scrollToVideo.classList.remove('js-scrolling');
+
+									// Возвращаем прокрутку
+									window.removeEventListener("wheel", preventScroll);
+									document.body.style.overflow = ""; // Включаем прокрутку обратно
+
+									isAnimatingScroll = false; // Сбрасываем флаг
+								}
+							});
+
+							blockImage.style.position = "fixed";
+							blockImage.style.zIndex = "5";
+							aboutButton.style.zIndex = "2";
+							blockImage.style.display = "block";
+							sectionBody.style.position = "static";
+							sectionBody.style.maxInlineSize = "100%";
+						}
+					},
+					onLeave: () => {
+						// Возвращаем прокрутку при выходе из триггера
+						isAnimatingScroll = false;
+						window.removeEventListener("wheel", preventScroll);
+						document.body.style.overflow = "";
+						blockImage.style.display = "none";
+						video.play();
+						video.style.visibility = "visible";
+					},
+					toggleActions: "play none none none" // Контролируем действия триггера
+				}
+			});
 		});
 	}
-});
-/* window.addEventListener("scroll", () => {
 
-	const scrollToVideo = document.querySelector(".scroll-to-video");
-	const videoWidth = scrollToVideo.offsetWidth;
-	const videoHeight = scrollToVideo.offsetHeight;
-	const scrollPosition = window.scrollY;
-	const videoPosition = scrollToVideo.offsetTop;
-	const maxScroll = videoPosition - title.offsetHeight;
-	const scrollPercent = Math.min(scrollPosition / maxScroll, 1);
-
-
-
-
-}); */
-/* 	//variable
-	const pages = document.querySelectorAll(".scroll-to-video");
-	const containers = document.querySelectorAll(".content-container");
-	/* 	const scrollDots = document.querySelectorAll(".scroll > li"); */
-//const numOfPages = pages.length;
-//let pageIndex = 0;
-//////first slideIn
-//$('.scroll-to-video.active').find('div').css("transform", "translateX(0)");
-//////wheel function
-//window.addEventListener("wheel", function (e) {
-//	// Scroll Up
-//	if (0 < pageIndex && e.deltaY < 0) { pageIndex--; }
-//	//// Scroll Down
-//	else if (pageIndex < numOfPages - 1 && e.deltaY > 0) { pageIndex++; }
-//	//// Move container up/down.
-//	var position = "-" + pageIndex * 100;
-//	containers.forEach((container, index) => {
-//		container.style.transform = "translateY(" + position + "vh)";
-//	})
-//	$('.scroll-to-video').eq(pageIndex).children('div').css("transform", "translateX(0)");
-//	//add click nav to change page
-//	/* 		$('.scroll>li').click(function () {
-//	ition that you click
-//				pageIndex = $(this).index();
-//				var position = "-" + pageIndex * 100;
-//				container.style.transform = "translateY(" + position + "vh)";
-//				$('li').removeClass('active');
-//				$(this).addClass('active');
-//			}) */
-//});/*wheel*/
-
-/*wheel for cellfone*/
-//if($(window).width()<768){}
-//} */
-
-
-window.addEventListener("scroll", () => {
-	const title = document.querySelector(".main-title");
-	const aboutButton = document.querySelector(".about-button");
-	const scrollToVideo = document.querySelector(".scroll-to-video");
-	const videoWidth = scrollToVideo.offsetWidth;
-	const videoHeight = scrollToVideo.offsetHeight;
-	const scrollPosition = window.scrollY;
-	const videoPosition = scrollToVideo.offsetTop;
-	const maxScroll = videoPosition - title.offsetHeight;
-	const scrollPercent = Math.min(scrollPosition / maxScroll, 1);
-
-
-	gsap.to(title, {
-		y: -scrollPosition,
-		opacity: 1 - scrollPercent * 10,
-		duration: 0.1
-	});
-	gsap.to(aboutButton, {
-		y: -scrollPosition,
-		opacity: 1 - scrollPercent * 10,
-		duration: 0.1,
-		ease: "power2.out"
-	});
-	/* 	gsap.to(".scale-image img", {
-			y: () => +window.scrollY + 100,
-			scrollTrigger: {
-				trigger: ".section__body-main",
-				start: "bottom bottom",
-				scrub: true,
-			},
-		});
-		gsap.to(".scale-image img", {
-			y: () => +window.scrollY + 100,
-			opacity: 1 - scrollPercent * 5,
-			scrollTrigger: {
-				trigger: ".scroll-to-video",
-				start: "top center",
-				scrub: true,
-			},
-		});
-		gsap.to(".video", {
-			clipPath: "polygon(0 0%, 100% 0%, 100% 100%, 0 100%)",
-			scrollTrigger: {
-				trigger: ".scroll-to-video",
-				start: "top center ",
-				scrub: true,
-			},
-		}); */
 });
 
-window.addEventListener('resize', scrollPanel)
