@@ -744,7 +744,7 @@ h1::before {
 
 .card-text-content {
 	align-items: end;
-	padding: 50px;
+	padding: clamp(10px, 5vw, 50px);
 	background-color: var(--wh-color);
 	position: absolute;
 	width: 100%;
@@ -1186,7 +1186,7 @@ input.input-event[value=""]+.input-placeholder {
 
 @media(max-width: 1100px) {
 	.slider-materials__content {
-		flex-direction: column;
+		flex-direction: column-reverse;
 	}
 
 	.slider-materials__content .slider-card {
@@ -1216,6 +1216,10 @@ input.input-event[value=""]+.input-placeholder {
 	}
 }
 
+.card-credit {
+	display: flex;
+}
+
 @media(max-width: 1000px) {
 	.block-name {
 		padding: 40px 20px;
@@ -1227,15 +1231,47 @@ input.input-event[value=""]+.input-placeholder {
 		height: 100%;
 	}
 
+	.change-title {
+		height: 60px;
+	}
+
+	.title-slide.hide {
+		transform: translateY(200%);
+	}
+
+	.slider-block-title {
+		padding-top: 56px;
+		padding-bottom: 40px;
+		padding-right: 20px;
+	}
+	.change-text{
+		width: 100%;
+	}
+	.change-text p {
+		position: static;
+	}
+
+	.card-text-content svg {
+		width: 30px;
+	}
+
+	.slider-card {
+		flex: 1 1 100%;
+	}
+
+	.card-cash .card-text-content,
+	.card-credit .card-text-content {
+		transform: translate(-50.6%, 75%);
+	}
+
 	.cards {
 		flex-direction: column;
+		gap: 0;
 	}
 
 	.apartments__affordable {
 		flex: 1 1 100%;
 	}
-
-
 
 	.parallax-container img {
 		height: 100vh;
@@ -1279,7 +1315,6 @@ input.input-event[value=""]+.input-placeholder {
 	.showcase__item {
 		height: auto;
 	}
-
 
 
 	.header-block {
