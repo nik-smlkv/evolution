@@ -297,6 +297,7 @@ header::before {
 	display: flex;
 	overflow: hidden;
 	width: 100%;
+	justify-content: end;
 	height: 100%;
 }
 
@@ -368,7 +369,7 @@ footer {
 }
 
 .main-title {
-
+	display: none;
 	--fz-title: clamp(48px, 12vw, 224px);
 	font-size: var(--fz-title);
 	color: var(--wh-color);
@@ -1454,6 +1455,10 @@ input.input-event[value=""]+.input-placeholder {
 	}
 }
 
+.header-block .content-header {
+	gap: 12px;
+}
+
 @media(max-width: 767.99px) {
 	.section__body-main.block-height {
 		height: 100%;
@@ -1496,7 +1501,6 @@ input.input-event[value=""]+.input-placeholder {
 		gap: 16px;
 		justify-content: space-between;
 	}
-
 
 	.phone-link {
 		font-size: clamp(12px, 2vw, 16px);
