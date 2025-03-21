@@ -143,6 +143,25 @@ header {
 	z-index: 11;
 }
 
+.phone-link,
+.social-link {
+	transition: color 0.3s ease;
+}
+
+.social-link:hover rect {
+	stroke: var(--blue-light-color);
+}
+
+.social-link:last-child:hover path {
+	fill: var(--blue-light-color);
+}
+
+
+
+.phone-link:hover {
+	color: var(--blue-light-color);
+}
+
 header::before {
 	content: '';
 	position: absolute;
@@ -151,7 +170,7 @@ header::before {
 	height: 100%;
 	left: 0;
 	top: 0;
-	background-color: rgba(0, 0, 0, 0.1);
+	background-color: rgba(0, 0, 0, 0.2);
 	backdrop-filter: blur(20px);
 }
 
@@ -293,6 +312,8 @@ header::before {
 .footer-address__content {
 	justify-content: start;
 	align-items: start;
+	width: 100%;
+	flex: 0 0 28%;
 }
 
 .footer__body {
@@ -820,6 +841,7 @@ h1::before {
 }
 
 .input-style {
+	width: 100%;
 	padding: 16px 24px;
 	border: 1px solid var(--signature-color);
 	color: var(--primary-main-color);
@@ -1221,7 +1243,7 @@ input.input-event[value=""]+.input-placeholder {
 
 	.navigatin-translate {
 		transform: translate(0, 0px);
-		background-color: #fff;
+		background-color: #FAFAFA;
 		padding: 20px;
 	}
 
@@ -1537,7 +1559,8 @@ input.input-event[value=""]+.input-placeholder {
 		padding: 0px 20px;
 		padding-bottom: 20px;
 	}
-	.dialog__block{
+
+	.dialog__block {
 		max-height: 100%;
 	}
 
@@ -1578,7 +1601,7 @@ input.input-event[value=""]+.input-placeholder {
 }
 
 .header__nav ul li {
-	transition: all 0.5s ease-in-out;
+	transition: all 0.3s ease-in-out;
 }
 
 @media(min-width: 1520px) {
