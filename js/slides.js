@@ -185,7 +185,12 @@ const swiperStatistic = new Swiper('.swiper-statistic', {
 	breakpoints: {
 		320: {
 			slidesPerView: 2,
-			spaceBetween: 2,
+			spaceBetween: 1,
+			slideToClickedSlide: true,
+		},
+		540: {
+			slidesPerView: 3,
+			spaceBetween: 1,
 			slideToClickedSlide: true,
 		},
 		768: {
@@ -227,8 +232,8 @@ function moveShowToFirst() {
 	const showParagraph = container.querySelector('p.show');
 
 	if (showParagraph) {
-		 // Переместить элемент с классом "show" в начало контейнера
-		 container.insertBefore(showParagraph, container.firstChild);
+		// Переместить элемент с классом "show" в начало контейнера
+		container.insertBefore(showParagraph, container.firstChild);
 	}
 }
 

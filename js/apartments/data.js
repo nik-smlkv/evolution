@@ -10,6 +10,8 @@ const apartments =
 			status: "Available",
 			planImg: "./images/apartments-plans/large-Stan-C72_C77.jpg",
 			apartmentImg: "./images/apartments-plans/apartment/3.png",
+			object: "A3",
+			roomsNumber: 4,
 		},
 		{
 			id: 2,
@@ -20,6 +22,8 @@ const apartments =
 			status: "Available",
 			planImg: "./images/apartments-plans/large-Stan-A11.jpg",
 			apartmentImg: "./images/apartments-plans/apartment/2.png",
+			object: "A3",
+			roomsNumber: 4,
 		},
 		{
 			id: 7,
@@ -30,6 +34,8 @@ const apartments =
 			status: "Available",
 			planImg: "./images/apartments-plans/large-Stan-C73_C76.jpg",
 			apartmentImg: "./images/apartments-plans/apartment/1.png",
+			object: "A3",
+			roomsNumber: 4,
 		},
 		{
 			id: 3,
@@ -40,6 +46,8 @@ const apartments =
 			status: "Available",
 			planImg: "./images/apartments-plans/large-Stan-C71_C78-1.jpg",
 			apartmentImg: "./images/apartments-plans/apartment/1.png",
+			object: "A3",
+			roomsNumber: 4,
 		},
 		{
 			id: 4,
@@ -50,6 +58,8 @@ const apartments =
 			status: "Available",
 			planImg: "./images/apartments-plans/large-Stan-A25_-A26.jpg",
 			apartmentImg: "./images/apartments-plans/apartment/1.png",
+			object: "A3",
+			roomsNumber: 4,
 		},
 		{
 			id: 5,
@@ -60,6 +70,8 @@ const apartments =
 			status: "Available",
 			planImg: "./images/apartments-plans/large-Stan-C63.jpg",
 			apartmentImg: "./images/apartments-plans/apartment/4.png",
+			object: "A3",
+			roomsNumber: 4,
 		},
 		{
 			id: 6,
@@ -70,6 +82,8 @@ const apartments =
 			status: "Available",
 			planImg: "./images/apartments-plans/large-Stan-A23_C56.jpg",
 			apartmentImg: "./images/apartments-plans/apartment/5.png",
+			object: "A3",
+			roomsNumber: 4,
 		},
 	];
 const data = JSON.stringify(apartments);

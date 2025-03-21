@@ -1,8 +1,9 @@
 import apartments from "../apartments/data.js";
 let data = JSON.parse(apartments);
-console.log(data);
 const [firstApartment, ...lastApartment] = data;
+let apartmentFancyBox = document.querySelector('.apartment__fancybox');
 document.querySelector('.apartment__img').src = firstApartment.planImg;
+apartmentFancyBox.setAttribute("href", firstApartment.planImg);
 console.log(firstApartment)
 const getFirstApartment = () => {
 	document.querySelector('.js-apartment-wing').textContent = firstApartment.buldingWing;
@@ -21,7 +22,7 @@ const getApartmentCards = (firstApartment) => {
 		const meter = item.area;
 		apartmentCards.insertAdjacentHTML("beforeend", `
 			 <div class="apartment__item flex-style-column ${firstApartment.id === item.id ? "active" : ""}" data-id="${item.id}">
-				  <div class="apartment__img">
+				  <div class="apartment__img-card">
 						<img src="${img}" alt="apartment" />
 				  </div>
 				  <span class="apartment__meter text-dark">${meter}</span>
@@ -43,7 +44,9 @@ window.addEventListener("DOMContentLoaded", () => {
 			if (currentItem) {
 				// Обновляем данные в секции с информацией
 				const imgElement = document.querySelector('.apartment-card__content .apartment__img');
+				let apartmentFancyBox = document.querySelector('.apartment__fancybox');
 				if (imgElement) {
+					apartmentFancyBox.setAttribute("href", currentItem.planImg);
 					imgElement.src = currentItem.planImg;
 				}
 				document.querySelector('.js-apartment-wing').textContent = currentItem.buldingWing;
@@ -53,9 +56,10 @@ window.addEventListener("DOMContentLoaded", () => {
 			}
 		});
 	});
+
+
+
 });
-
-
 
 const getObjectCount = () => {
 	const objectsCount = data.length;
@@ -67,3 +71,4 @@ const getActiveApartment = () => {
 getObjectCount();
 getApartmentCards(firstApartment);
 window.addEventListener("DOMContentLoaded", getFirstApartment);
+

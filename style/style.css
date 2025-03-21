@@ -18,12 +18,6 @@
 	gap: 180px;
 }
 
-@media(max-width: 767.99px) {
-	.main-gap {
-		gap: clamp(120px, 20vw, 180px);
-	}
-}
-
 .video {
 	width: 100%;
 	height: 100vh;
@@ -51,6 +45,8 @@
 	margin: 0 auto;
 	max-inline-size: 1920px;
 }
+
+
 
 
 .header__burger {
@@ -527,6 +523,11 @@ h1::before {
 	font-variation-settings: "wght" var(--fw-default);
 }
 
+.swiper-statistic .font-about-block-blue {
+	--fz-second-title: clamp(40px, 3vw, 58px);
+	font-size: var(--fz-second-title);
+}
+
 .scroll-card img {
 	width: 720px;
 	height: 480px;
@@ -1001,6 +1002,10 @@ input.input-event[value=""]+.input-placeholder {
 	overflow-x: scroll;
 }
 
+.none {
+	display: none;
+}
+
 .filter__buttons::-webkit-scrollbar {
 	width: 0;
 }
@@ -1256,9 +1261,10 @@ input.input-event[value=""]+.input-placeholder {
 		height: 100%;
 	}
 
-	.change-text{
-		height: 100%;
+	.change-text {
+		height: 300px;
 	}
+
 	.title-slide.hide {
 		transform: translateY(200%);
 	}
@@ -1303,6 +1309,7 @@ input.input-event[value=""]+.input-placeholder {
 
 	.parallax-container img {
 		height: 100vh;
+		object-position: 15%;
 	}
 
 	.text-width {
@@ -1344,14 +1351,111 @@ input.input-event[value=""]+.input-placeholder {
 	}
 }
 
+.apartment__img-card {
+	width: 103px;
+}
+
+.infrastructure__content .section__body {
+	gap: 87px;
+}
+
+@media(max-width: 767.99px) {
+	.main-gap {
+		gap: clamp(120px, 20vw, 180px);
+	}
+
+	.slider-navigation__block {
+		left: unset;
+		right: 0;
+	}
+
+	.slider-materials__content {
+		padding: 0;
+	}
+
+	.title-flex-style {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.slider-materials__content .slider-card {
+		padding: 0px 20px;
+	}
+
+	.video {
+		visibility: visible;
+	}
+
+	#panels {
+		width: 100%;
+		overflow: hidden;
+	}
+
+	.infrastructure__content .section__body {
+		gap: 109px;
+	}
+
+	#panels #panels-container {
+		overflow: visible;
+	}
+
+	.scroll-card-container {
+		overflow-y: hidden;
+		overflow-x: scroll;
+	}
+
+	.scroll-card p {
+		width: 100%;
+		text-align: center;
+		justify-content: center;
+	}
+
+	#panels #panels-container .panel {
+		overflow: visible;
+	}
+
+	.section__body-main {
+		padding: 0;
+	}
+
+	.section__body-main .main-title {
+		padding: 0 20px;
+	}
+
+
+
+	.available-apartments__list {
+		flex-wrap: nowrap;
+		width: 100%;
+		overflow-y: hidden;
+		overflow-x: scroll;
+	}
+}
+
 @media(max-width: 767.99px) {
 	.section__body-main.block-height {
 		height: 100%;
 	}
 
+	.block-title-scroll {
+		gap: 40px;
+	}
+
+	.about-button {
+		left: unset;
+		right: 25px;
+		top: 50%;
+	}
+
 	.form__block {
 		text-align: center;
 	}
+
+	.scroll-card img {
+		width: 250px;
+		height: 185px;
+	}
+
 
 	.form-flex {
 		flex-direction: column;
@@ -1359,7 +1463,7 @@ input.input-event[value=""]+.input-placeholder {
 
 	.card-cash .card-text-content,
 	.card-credit .card-text-content {
-		transform: translate(-50.6%, 75%);
+		transform: translate(-64.6%, 81%);
 	}
 
 	.showcase__item {
@@ -1368,7 +1472,7 @@ input.input-event[value=""]+.input-placeholder {
 
 	.header-block {
 		gap: 16px;
-		justify-content: start;
+		justify-content: space-between;
 	}
 
 
@@ -1376,8 +1480,9 @@ input.input-event[value=""]+.input-placeholder {
 		font-size: clamp(12px, 2vw, 16px);
 	}
 
-	.block-title {
-		max-width: 280px;
+	.panels-container .block-title {
+		width: 100%;
+		max-width: 100%;
 	}
 
 	.block-title-scroll {
@@ -1432,10 +1537,14 @@ input.input-event[value=""]+.input-placeholder {
 		padding: 0px 20px;
 		padding-bottom: 20px;
 	}
+	.dialog__block{
+		max-height: 100%;
+	}
 
 	.dialog__block.active {
 		transition: bottom 0.4s ease-in-out;
-		bottom: -20%;
+		bottom: 0;
+		transform: translateY(5%);
 	}
 
 }
@@ -1453,9 +1562,19 @@ input.input-event[value=""]+.input-placeholder {
 		flex-direction: column-reverse;
 		width: 100%;
 		max-width: 100%;
-		bottom: -224px;
+		bottom: -299px;
 		position: absolute;
 	}
+
+	.card-cash .card-text-content,
+	.card-credit .card-text-content {
+		transform: translate(-49.6%, 79%);
+	}
+}
+
+.swiper-statistic .swiper-wrapper {
+	align-items: center;
+	gap: 16px;
 }
 
 .header__nav ul li {

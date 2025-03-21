@@ -1,6 +1,18 @@
 
 const video = document.querySelector('.video');
-video.pause();
+
+window.addEventListener('resize', () => {
+	if (window.innerWidth >= 768) {
+		video.pause();
+	}
+})
+
+window.addEventListener('DOMContentLoaded', () => {
+	if (window.innerWidth >= 768) {
+		video.pause();
+	}
+})
+
 var blockImage = document.querySelector('.block-image');
 var sectionBody = document.querySelector('.section__body-main');
 var scrollToVideo = document.querySelector('.scroll-to-video');
@@ -30,36 +42,38 @@ document.addEventListener("DOMContentLoaded", () => {
 	}
 	scrollPanel();
 	/*  PARALLAX  */
-	document.querySelectorAll('[data-parallax-layers]').forEach((triggerElement) => {
-		let tl = gsap.timeline({
-			scrollTrigger: {
-				trigger: triggerElement,
-				start: "-20% 0%",
-				end: "bottom center",
-				scrub: true,
-				onEnter: () => {
-					console.log("Trigger activated for:", triggerElement);
+	if (window.innerWidth >= 768) {
+		document.querySelectorAll('[data-parallax-layers]').forEach((triggerElement) => {
+			let tl = gsap.timeline({
+				scrollTrigger: {
+					trigger: triggerElement,
+					start: "-20% 0%",
+					end: "bottom center",
+					scrub: true,
+					onEnter: () => {
+						console.log("Trigger activated for:", triggerElement);
+					}
 				}
-			}
-		});
-		const layers = [
-			{ layer: "1", yPercent: 20 },
-			{ layer: "2", yPercent: 10 },
-			{ layer: "3", yPercent: 20 },
-			{ layer: "4", yPercent: 10 }
-		];
-		layers.forEach((layerObj, idx) => {
-			tl.to(
-				triggerElement.querySelectorAll(`[data-parallax-layer="${layerObj.layer}"]`),
+			});
+			const layers = [
+				{ layer: "1", yPercent: 20 },
+				{ layer: "2", yPercent: 10 },
+				{ layer: "3", yPercent: 20 },
+				{ layer: "4", yPercent: 10 }
+			];
+			layers.forEach((layerObj, idx) => {
+				tl.to(
+					triggerElement.querySelectorAll(`[data-parallax-layer="${layerObj.layer}"]`),
 
-				{
-					yPercent: layerObj.yPercent,
-					ease: "none"
-				},
-				idx === 0 ? undefined : "<"
-			);
+					{
+						yPercent: layerObj.yPercent,
+						ease: "none"
+					},
+					idx === 0 ? undefined : "<"
+				);
+			});
 		});
-	});
+	}
 });
 /* GSAP COUNTER */
 document.addEventListener("DOMContentLoaded", () => {
@@ -154,13 +168,12 @@ gsap.to(".scale-image img", {
 	},
 });
 document.addEventListener('DOMContentLoaded', () => {
-	scrollToVideo.classList.add('js-scrolling');
 	function preventScroll(event) {
 		event.preventDefault();
 		event.stopPropagation();
 	}
-	if (scrollToVideo.classList.contains('js-scrolling') && window.innerWidth <= 1520 && window.innerWidth >= 768) {
-
+	if (window.innerWidth >= 768) {
+		scrollToVideo.classList.add('js-scrolling');
 		window.addEventListener("wheel", () => {
 			const title = document.querySelector(".main-title");
 			const aboutButton = document.querySelector(".about-button");
@@ -184,63 +197,86 @@ document.addEventListener('DOMContentLoaded', () => {
 				ease: "power2.out"
 			});
 			let isAnimatingScroll = false;
-			gsap.to(blockImage, {
-				width: '100%',
-				height: '100vh',
-				top: "0px",
-				right: "0px",
-				duration: 1,
-				ease: "power1.out",
-				scrollTrigger: {
-					trigger: sectionBody,
-					start: "top center",
-					scrub: false,
-					onEnter: () => {
-						if (!isAnimatingScroll && scrollToVideo.classList.contains('js-scrolling')) {
-							isAnimatingScroll = true;
-							scrollToVideo.classList.add('js-scrolling');
-
-							// Блокируем прокрутку
-							window.addEventListener("wheel", preventScroll, { passive: false });
-							document.body.style.overflow = "hidden"; // Отключаем прокрутку для всего документа
-
-							gsap.to(window, {
-								scrollTo: { y: scrollToVideo, autoKill: true },
-								duration: 1,
-								ease: "power1.out",
-								onComplete: () => {
-									scrollToVideo.classList.remove('js-scrolling');
-
-									// Возвращаем прокрутку
-									window.removeEventListener("wheel", preventScroll);
-									document.body.style.overflow = ""; // Включаем прокрутку обратно
-
-									isAnimatingScroll = false; // Сбрасываем флаг
+			if (!scrollToVideo.classList.contains('js-scrolling')) {
+				blockImage.style.display = "block";
+				gsap.to(blockImage, {
+					width: 'auto',
+					height: 'auto',
+					duration: 1,
+					ease: "power1.inOut"
+				});
+			}
+			if (scrollToVideo.classList.contains('js-scrolling')) {
+				gsap.to(blockImage, {
+					width: '100%',
+					height: '100vh',
+					top: "0px",
+					right: "0px",
+					duration: 1,
+					ease: "power1.out",
+					scrollTrigger: {
+						trigger: sectionBody,
+						start: "top center",
+						scrub: false,
+						onEnter: (self) => {
+							if (self.direction === 1) {
+								if (!isAnimatingScroll && scrollToVideo.classList.contains('js-scrolling')) {
+									blockImage.style.position = "fixed";
+									blockImage.style.zIndex = "5";
+									aboutButton.style.zIndex = "2";
+									blockImage.style.display = "block";
+									sectionBody.style.position = "static";
+									sectionBody.style.maxInlineSize = "100%";
+									isAnimatingScroll = true;
+									scrollToVideo.classList.add('js-scrolling');
+									// Блокируем прокрутку
+									window.addEventListener("wheel", preventScroll, { passive: false });
+									gsap.to(window, {
+										scrollTo: { y: scrollToVideo, autoKill: false },
+										duration: 1,
+										ease: "power1.out",
+										onEnter: () => {
+											document.body.style.overflow = "hidden";
+										},
+										onComplete: () => {
+											scrollToVideo.classList.remove('js-scrolling');
+											window.removeEventListener("wheel", preventScroll);
+											document.body.style.overflow = "";
+											isAnimatingScroll = false;
+											blockImage.style.display = "none";
+										},
+										toggleActions: "play none none none"
+									});
 								}
-							});
-
-							blockImage.style.position = "fixed";
-							blockImage.style.zIndex = "5";
-							aboutButton.style.zIndex = "2";
+							}
+						},
+						onLeave: () => {
+							// Возвращаем прокрутку при выходе из триггера
+							isAnimatingScroll = false;
+							window.removeEventListener("wheel", preventScroll);
+							document.body.style.overflow = "";
+							video.play();
+							video.style.visibility = "visible";
+							blockImage.style.position = "absolute";
+							blockImage.style.zIndex = "1";
+							aboutButton.style.zIndex = "5";
+							blockImage.style.height = "auto";
 							blockImage.style.display = "block";
-							sectionBody.style.position = "static";
-							sectionBody.style.maxInlineSize = "100%";
-						}
-					},
-					onLeave: () => {
-						// Возвращаем прокрутку при выходе из триггера
-						isAnimatingScroll = false;
-						window.removeEventListener("wheel", preventScroll);
-						document.body.style.overflow = "";
-						blockImage.style.display = "none";
-						video.play();
-						video.style.visibility = "visible";
-					},
-					toggleActions: "play none none none" // Контролируем действия триггера
-				}
-			});
+							sectionBody.style.position = "relative";
+							sectionBody.style.maxInlineSize = "1920px";
+							gsap.to(blockImage, {
+								width: 'auto',
+								height: 'auto',
+								duration: 1,
+								ease: "power1.inOut"
+							});
+						},
+						toggleActions: "play none none none"
+					}
+				});
+			}
 		});
+
 	}
 
 });
-

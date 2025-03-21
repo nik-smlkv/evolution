@@ -371,7 +371,6 @@ const getScrollablePanels = () => {
 	}
 };
 window.addEventListener('resize', (event) => {
-	if (window.innerWidth <= 1520 && window.innerWidth >= 768) {
 		document.querySelectorAll('.card-text-content').forEach(card => {
 			card.addEventListener('click', function (event) {
 				const wrapper = document.querySelector('.wrapper');
@@ -412,8 +411,7 @@ window.addEventListener('resize', (event) => {
 			});
 		});
 
-
-	}
+			
 })
 
 const priceRequestDialog = document.getElementById('priceRequest');
@@ -433,4 +431,31 @@ closeDialogButton.addEventListener('click', () => {
 	setTimeout(() => {
 		priceRequestDialog.close();
 	}, 400);
+});
+
+$('[data-fancybox="apartment"]').fancybox({
+	buttons: [
+		"slideShow",
+		"thumbs",
+		"zoom",
+		"fullScreen",
+		"share",
+		"close"
+	],
+	loop: false,
+	protect: true
+});
+
+$('[data-fancybox="gallery"]').fancybox({
+	buttons: [
+		"thumbs",
+		"zoom",
+		"fullScreen",
+		"share",
+		"close"
+	],
+	loop: false,
+	slideShow: false,
+
+	protect: true
 });

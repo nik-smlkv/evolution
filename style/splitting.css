@@ -16,6 +16,8 @@
 	animation: none;
 	animation: animtext-up 1s cubic-bezier(0.77, 0, 0.175, 1) forwards;
 	animation-delay: calc(0.075s * var(--line-index));
+	padding: 2px;
+	margin: -2px;
 }
 
 .ezd-animtext.word-up .word {

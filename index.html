@@ -1,789 +1,1108 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Evolution</title>
+    <link rel="stylesheet" href="./style/globals.css" />
+    <link rel="stylesheet" href="./style/font.css" />
+    <link rel="stylesheet" href="./style/variables.css" />
+    <link rel="stylesheet" href="./style/style.css" />
+    <link rel="stylesheet" href="./style/splitting.css" />
+    <link rel="stylesheet" href="./style/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="./style/locomotive.css" />
+    <link rel="stylesheet" href="./style/fancybox.css" />
+    <script src="./js/swiper-bundle.min.js"></script>
+    <script src="./js/jquery-3.6.4.min.js"></script>
+    <script src="./js/gsap.min.js"></script>
+    <script src="./js/fancybox.js"></script>
+  </head>
 
-<head>
-	<meta charset="UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>Evolution</title>
-	<link rel="stylesheet" href="./style/globals.css" />
-	<link rel="stylesheet" href="./style/font.css" />
-	<link rel="stylesheet" href="./style/variables.css" />
-	<link rel="stylesheet" href="./style/style.css" />
-	<link rel="stylesheet" href="./style/splitting.css" />
-	<link rel="stylesheet" href="./style/swiper-bundle.min.css" />
-	<link rel="stylesheet" href="./style/locomotive.css" />
-	<script src="./js/swiper-bundle.min.js"></script>
-	<script src="./js/jquery-3.6.4.min.js"></script>
-	<script src="./js/gsap.min.js"></script>
-</head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <div class="header__body flex-style-row">
+          <div class="header__menu flex-style-row gap">
+            <a href="#main" class="header__logo flex-style-row"
+              ><img src="./images/logo.png" alt="Logo"
+            /></a>
+            <nav class="header__nav">
+              <ul class="flex-style-row">
+                <li><a href="#about-project">About Project</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#infrastructure">Infrastructure</a></li>
+                <li><a href="#apartments">Apartments</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#financing">Financing</a></li>
+                <li><a href="#contact">Contact</a></li>
+              </ul>
+            </nav>
+          </div>
+          <div class="header-block flex-style-row">
+            <div class="flex-style-row title-gap">
+              <a href="tel:0800012026" class="phone-link">0800 012 026</a>
+              <a
+                href="#form"
+                class="btn-style header-btn-color blue-btn-hover js-scroll-form"
+                >leave a request</a
+              >
+            </div>
+            <div class="header__burger">
+              <span class="burger-line"></span>
+              <span class="burger-line"></span>
+            </div>
+          </div>
+        </div>
+      </header>
+      <main class="flex-style-column">
+        <div class="main-gap flex-style-column" id="main">
+          <section
+            class="block-dark no-gap padding-top flex-style-column main-block section-relative"
+          >
+            <div
+              class="section__body section__body-main flex-style-row block-height"
+            >
+              <div class="main-block-relative">
+                <h1
+                  class="title main-title flex-style-column tt-up split-text ezd-animtext"
+                >
+                  Evolution <span class="title-span">residence</span>
+                </h1>
+                <div
+                  class="about-button tt-up text-light flex-style-column gap-button"
+                >
+                  <div class="scale-text">
+                    about <br />
+                    project
+                  </div>
+                  <svg
+                    class="about-arrow"
+                    width="13"
+                    height="13"
+                    viewBox="0 0 13 29"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M6.5 0.999999L6.5 21"
+                      stroke="white"
+                      stroke-linecap="square"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M1.5 17L6.5 22L11.5 17"
+                      stroke="white"
+                      stroke-linecap="square"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </div>
+              </div>
 
-<body>
-	<div class="wrapper">
-		<header>
-			<div class="header__body flex-style-row">
-				<div class="header__menu flex-style-row gap">
-					<a href="#main" class="header__logo flex-style-row"><img src="./images/logo.png" alt="Logo" /></a>
-					<nav class="header__nav">
-						<ul class="flex-style-row">
-							<li><a href="#about-project">About Project</a></li>
-							<li><a href="#features">Features</a></li>
-							<li><a href="#infrastructure">Infrastructure</a></li>
-							<li><a href="#apartments">Apartments</a></li>
-							<li><a href="#gallery">Gallery</a></li>
-							<li><a href="#financing">Financing</a></li>
-							<li><a href="#contact">Contact</a></li>
-						</ul>
-					</nav>
-				</div>
-				<div class="header-block flex-style-row">
-					<a href="tel:0800012026" class="phone-link">0800 012 026</a>
-					<a href="#form" class="btn-style header-btn-color blue-btn-hover js-scroll-form">leave a request</a>
-					<div class="header__burger">
-						<span class="burger-line"></span>
-						<span class="burger-line"></span>
-					</div>
-				</div>
-			</div>
-		</header>
-		<main class="flex-style-column">
-			<div class="main-gap flex-style-column" id="main">
-				<section class="block-dark no-gap padding-top flex-style-column main-block section-relative">
-					<div class="section__body section__body-main flex-style-row block-height">
-						<div class="main-block-relative">
-							<h1 class="title main-title flex-style-column tt-up split-text ezd-animtext">
-								Evolution <span class="title-span">residence</span>
-							</h1>
-							<div class="about-button tt-up text-light flex-style-column gap-button">
-								<div class="scale-text">
-									about <br />
-									project
-								</div>
-								<svg class="about-arrow" width="13" height="13" viewBox="0 0 13 29" fill="none"
-									xmlns="http://www.w3.org/2000/svg">
-									<path d="M6.5 0.999999L6.5 21" stroke="white" stroke-linecap="square"
-										stroke-linejoin="round" />
-									<path d="M1.5 17L6.5 22L11.5 17" stroke="white" stroke-linecap="square"
-										stroke-linejoin="round" />
-								</svg>
-							</div>
-						</div>
+              <div class="block-image scale-image">
+                <div class="position-img">
+                  <img
+                    class="main-img"
+                    src="./images/img_home_bg.png"
+                    alt="Main Image"
+                  />
+                  <img
+                    class="moving-img"
+                    src="./images/img_home_png.svg"
+                    alt=""
+                  />
+                </div>
+              </div>
+            </div>
 
-						<div class="block-image scale-image">
-							<div class="position-img">
-								<img class="main-img" src="./images/img_home_bg.png" alt="Main Image" />
-								<img class="moving-img" src="./images/img_home_png.svg" alt="" />
-							</div>
-						</div>
-					</div>
+            <div
+              class="no-gap block-height block-dark block-video scroll-to-video section-relative reveal"
+              id="about-project"
+            >
+              <video
+                autoplay=""
+                muted=""
+                playsinline=""
+                loop=""
+                poster=""
+                class="video flex-style-row"
+              >
+                <source src="./videos/evolution-video.mp4" type="video/mp4" />
+              </video>
+            </div>
+          </section>
 
-					<div class="no-gap block-height block-dark block-video scroll-to-video section-relative reveal"
-						id="about-project">
-						<video autoplay="" muted="" playsinline="" loop="" poster="" class="video flex-style-row">
-							<source src="./videos/evolution-video.mp4" type="video/mp4" />
-						</video>
-					</div>
-				</section>
+          <section class="white-bg-block">
+            <div class="section__body flex-style-row trig-counter flex-wrap">
+              <p class="card-name subtitle tt-up split-text ezd-animtext">
+                about the project
+              </p>
+              <div class="block-text flex-style-column">
+                <p class="block-text-title font-about-block">
+                  Evolution Residence is one of our most representative projects
+                  and a symbol of our success.
+                </p>
+                <div class="block-description flex-style-row">
+                  <p>
+                    It represents a distinctive and modern residential complex
+                    for individuals, families, and companies, with a commitment
+                    to creating an exceptional environment for living, working,
+                    and leisure. We have created a unique complex that has been
+                    immediately recognized due to high demand and extensive
+                    sales dynamics.
+                  </p>
+                  <p>
+                    The Evolution Residence complex is characterized
+                    by top-quality apartments, commercial spaces, exclusive two
+                    swimming pools, and a spa center, all built with superior
+                    finishing materials, along with a beautiful location
+                    surrounded by greenery, providing direct connectivity to all
+                    parts of the city.
+                  </p>
+                </div>
+                <ul class="block-info__list flex-style-row">
+                  <li class="decoration-underline">
+                    <span
+                      class="font-about-block counter counter-float"
+                      data-end-value="23.762"
+                      >0</span
+                    ><span class="font-about-block">m²</span> of residential
+                    space
+                  </li>
+                  <li class="decoration-underline">
+                    <span class="font-about-block counter" data-end-value="17"
+                      >0</span
+                    >
+                    commercial spaces
+                  </li>
+                  <li class="decoration-underline">
+                    <span class="font-about-block counter" data-end-value="4"
+                      >0</span
+                    >
+                    residential-commercial buildings
+                  </li>
+                  <li class="decoration-underline">
+                    <span class="font-about-block counter" data-end-value="384"
+                      >0</span
+                    >
+                    apartments
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </section>
+          <section class="section-relative flex-style-row block-parallax">
+            <div class="parallax-container" data-parallax-layers="true">
+              <img
+                src="./images/dream.jpg"
+                data-parallax-layer="1"
+                class="parallax__layers"
+              />
+            </div>
+            <div class="block-name flex-style-row gap">
+              <h2
+                class="title text-light tt-up split-text flex-style-column ezd-animtext"
+              >
+                <span>Your dream</span> <span>is responsibility</span>
+              </h2>
+              <p class="subtitle text-light tt-up">
+                The complex brings a revolution in construction, starting with
+                a realistic assessment of your living needs.
+              </p>
+            </div>
+          </section>
+          <section class="scroll-container white-bg-block" id="features">
+            <div class="section__body section-complex flex-style-row">
+              <div id="panels">
+                <div id="panels-container" class="panels-overflow">
+                  <div class="block-title block-title-scroll flex-style-column">
+                    <div class="text-overflow">
+                      <h2
+                        class="title tt-up title-dark split-text ezd-animtext title-flex-style"
+                      >
+                        Complex<span class="whitespace"></span>features
+                      </h2>
+                    </div>
+                    <p>
+                      The name of the complex itself reflects a construction
+                      revolution, evident in the complex’s two swimming pools,
+                      modern SPA and fitness centers, making life in the complex
+                      an ideal place for comfort and a modern lifestyle. Each
+                      building will feature a reception with trained staff who
+                      will assist residents with daily tasks and organize
+                      welcome services for guests.
+                    </p>
+                  </div>
+                  <div class="scroll-card-container flex-style-row">
+                    <div class="scroll-card flex-style-column panel">
+                      <img src="./images/swimming.jpg" alt="swimming" />
+                      <p class="btn-style btn-color-gray tt-up">
+                        swimming pool
+                      </p>
+                    </div>
+                    <div class="scroll-card flex-style-column panel">
+                      <img src="./images/fitness.jpg" alt="fitness" />
+                      <p class="btn-style btn-color-gray tt-up">
+                        fitness center
+                      </p>
+                    </div>
+                    <div class="scroll-card flex-style-column panel">
+                      <img src="./images/spa.jpg" alt="spa" />
+                      <p class="btn-style btn-color-gray tt-up">spa center</p>
+                    </div>
+                    <div class="scroll-card flex-style-column panel">
+                      <img src="./images/lobby.jpg" alt="lobby" />
+                      <p class="btn-style btn-color-gray tt-up">lobby</p>
+                    </div>
+                    <div class="scroll-card flex-style-column panel">
+                      <img src="./images/commercial.jpg" alt="commercial" />
+                      <p class="btn-style btn-color-gray tt-up">
+                        commercial premises
+                      </p>
+                    </div>
+                    <div class="scroll-card flex-style-column panel">
+                      <img src="./images/fitness.jpg" alt="fitness" />
+                      <p class="btn-style btn-color-gray tt-up">Parking</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section
+            class="white-bg-block infrastructure__content"
+            id="infrastructure"
+          >
+            <div class="section__body flex-style-column gap">
+              <div class="flex-style-row gap infra__content">
+                <div class="infra-block">
+                  <p
+                    class="card-name subtitle tt-up infra-width split-text ezd-animtext"
+                  >
+                    infrastructure<span class="whitespace"></span>and<span
+                      class="whitespace"
+                    ></span
+                    >location
+                  </p>
+                </div>
+                <div class="block-text block-text__content  flex-style-column">
+                    <div class="text-overflow">
+                      <h2 class="block-text-title font-about-block">
+                        One of the most important factors when choosing the
+                        right property is location, which must have excellent
+                        infrastructure.
+                      </h2>
+                    </div>
+                    <p>
+                      Evolution Residence is located near all essential
+                      amenities. Within a one-kilometer radius, you will find
+                      several kindergartens, two primary schools, a high school,
+                      an economics school, Singidunum University, numerous
+                      faculties, TC «Stadion», as well as cafes and restaurants.
+                    </p>
+                    <div class="block-description flex-style-row">
+                      <p>
+                        It represents a distinctive and modern residential
+                        complex for individuals, families, and companies, with a
+                        commitment to creating an exceptional environment for
+                        living, working, and leisure. We have created a unique
+                        complex that has been immediately recognized due to high
+                        demand and extensive sales dynamics.
+                      </p>
+                      <p>
+                        The Evolution Residence complex is characterized
+                        by top-quality apartments, commercial spaces, exclusive
+                        two swimming pools, and a spa center, all built with
+                        superior finishing materials, along with a beautiful
+                        location surrounded by greenery, providing direct
+                        connectivity to all parts of the city.
+                      </p>
+                    </div>
+                  <div class="swiper-statistic">
+                    <div class="swiper-wrapper">
+                      <div class="swiper-slide">
+                        <div class="flex-style-column">
+                          <span class="font-about-block font-about-block-blue"
+                            >4.7 km</span
+                          >Primary school <br />
+                          «Veselin Masleša»
+                        </div>
+                      </div>
+                      <div class="swiper-slide">
+                        <div class="flex-style-column">
+                          <span class="font-about-block font-about-block-blue"
+                            >2 km</span
+                          >XII Beograska <br />
+                          Gimnazija
+                        </div>
+                      </div>
+                      <div class="swiper-slide">
+                        <div class="flex-style-column">
+                          <span class="font-about-block font-about-block-blue"
+                            >2.4 km</span
+                          >
+                          University <br />
+                          «Singidunum»
+                        </div>
+                      </div>
+                      <div class="swiper-slide">
+                        <div class="flex-style-column">
+                          <span class="font-about-block font-about-block-blue"
+                            >1.2 km</span
+                          >
+                          Faculty of Transport <br />
+                          and Traffic Engineering
+                        </div>
+                      </div>
+                      <div class="swiper-slide">
+                        <div class="flex-style-column">
+                          <span class="font-about-block font-about-block-blue"
+                            >3.5 km</span
+                          >Faculty of Organizational <br />
+                          Sciences «FON»
+                        </div>
+                      </div>
+                      <div class="swiper-slide">
+                        <div class="flex-style-column">
+                          <span class="font-about-block font-about-block-blue"
+                            >1.6 km</span
+                          >TC «Stadion»
+                        </div>
+                      </div>
+                      <div class="swiper-slide">
+                        <div class="flex-style-column">
+                          <span class="font-about-block font-about-block-blue"
+                            >1.8 km</span
+                          >
+                          Supermarket «Lidl» <br />
+                          Trošarina
+                        </div>
+                      </div>
+                      <div class="swiper-slide">
+                        <div class="flex-style-column">
+                          <span class="font-about-block font-about-block-blue"
+                            >0.9 km</span
+                          >
+                          Supermarket <br />
+                          «Maxi»
+                        </div>
+                      </div>
+                      <div class="swiper-slide">
+                        <div class="flex-style-column">
+                          <span class="font-about-block font-about-block-blue"
+                            >3.7 km</span
+                          >Autokomanda
+                        </div>
+                      </div>
+                      <div class="swiper-slide">
+                        <div class="flex-style-column">
+                          <span class="font-about-block font-about-block-blue"
+                            >4.7 km</span
+                          >Partizan <br />
+                          Stadium
+                        </div>
+                      </div>
+                      <div class="swiper-slide">
+                        <div class="flex-style-column">
+                          <span class="font-about-block font-about-block-blue"
+                            >3.3 km</span
+                          >
+                          Stadium <br />
+                          «Rajko Mitić»
+                        </div>
+                      </div>
+                    </div>
+                    <div class="slider-navigation__block flex-style-row">
+                      <div class="swiper-pagination"></div>
+                      <div
+                        class="swiper-button-prev custom__arrow slide__arrow-hover"
+                      >
+                        <svg
+                          width="7"
+                          height="12"
+                          viewBox="0 0 7 12"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M5.9707 1L0.970703 6L5.9707 11"
+                            stroke="var(--hover-arrow-color)"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          />
+                        </svg>
+                      </div>
+                      <div
+                        class="swiper-button-next custom__arrow slide__arrow-hover"
+                      >
+                        <svg
+                          width="7"
+                          height="12"
+                          viewBox="0 0 7 12"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M0.970703 1L5.9707 6L0.970703 11"
+                            stroke="var(--hover-arrow-color)"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="flex-style-row block-location gap">
+                <div class="text-width flex-style-column">
+                  <img
+                    class="svg-width"
+                    src="./images/location.svg"
+                    alt="location"
+                  />
+                  <div class="flex-style-column gap">
+                    <p class="font-about-block">
+                      Evolution Residence is located in Voždovac,
+                      at Tolminska St. No. 5-9.
+                    </p>
+                    <p>
+                      Evolution Residence is situated in a location chosen with
+                      great care by the investor. It will be close to the city
+                      center while nestled in a green oasis of tranquility. The
+                      complex covers an area of 57,302 m² and will include four
+                      residential-commercial buildings.
+                    </p>
+                  </div>
+                </div>
+                <div class="block-map">
+                  <div class="pointer flex-style-row"></div>
+                  <img src="./images/map-min.png" alt="map" />
+                </div>
+              </div>
+            </div>
+          </section>
+          <section class="section-relative flex-style-row block-parallax">
+            <div class="parallax-container" data-parallax-layers="true">
+              <img
+                src="./images/comfort.jpg"
+                data-parallax-layer="2"
+                class="parallax__layers"
+              />
+            </div>
+            <div class="block-name flex-style-row gap">
+              <h2
+                class="title text-light tt-up split-text flex-style-column ezd-animtext"
+              >
+                <span>Areas of greenery </span> <span> and comfort</span>
+              </h2>
+              <p class="subtitle text-light tt-up">
+                A functional open space with landscaped green areas, trees, and
+                children's playgrounds for relaxation and socializing.
+              </p>
+            </div>
+          </section>
+          <section class="white-bg-block">
+            <div class="section__body section__body-title">
+              <div class="block-title flex-style-column">
+                <p class="card-name subtitle tt-up">materials</p>
+                <h2 class="title title-dark tt-up split-text ezd-animtext">
+                  Top<span class="whitespace"></span>Quality<span
+                    class="whitespace"
+                  ></span
+                  >for<span class="whitespace"></span>Complete<span
+                    class="whitespace"
+                  ></span
+                  >Enjoyment
+                </h2>
+              </div>
+            </div>
+            <div class="background-gray">
+              <div
+                class="section__body flex-style-row slider-materials__content"
+              >
+                <div class="slider-card flex-style-row">
+                  <div class="slider-block-title flex-style-column">
+                    <div class="change-title flex-style-column">
+                      <p
+                        class="font-about-block tt-up title-slide"
+                        data-swiper-slide-quality="0"
+                      >
+                        Aesthetics and Reliability in Every Detail
+                      </p>
+                      <p
+                        class="font-about-block tt-up title-slide"
+                        data-swiper-slide-quality="1"
+                      >
+                        High Quality and Exceptional Comfort
+                      </p>
+                    </div>
+                    <div class="change-text flex-style-column">
+                      <p data-swiper-slide-quality="0" class="text-slide">
+                        The corridors and stairwells of the building are clad
+                        in elegant porcelain tiles, giving them a refined and
+                        modern appearance. Doors of domestic production are
+                        equipped with a Grade III anti-burglary system, ensuring
+                        a high level of security. The interior doors are faced
+                        with MDF and finished with melamine film, combining
+                        durability and aesthetic appeal. The flooring is made
+                        of three-layer oak parquet, complemented by white MDF
+                        baseboards with a height of 6/8 cm, creating
+                        a harmonious and stylish interior. Additionally,
+                        first-class ceramic tiles from a renowned European
+                        manufacturer are used, adding a touch of sophistication
+                        and comfort to the overall atmosphere.
+                      </p>
+                      <p data-swiper-slide-quality="1" class="text-slide">
+                        The facade of the building is clad with high-quality
+                        facing materials that boast excellent aesthetic
+                        characteristics. Modern terraces with geometric shapes
+                        add dynamism to the facade, while high-quality aluminum
+                        railings provide elegance. Aluminum blinds and mosquito
+                        nets enhance comfort. The building is equipped with a
+                        centralized heating system with remote control and
+                        energy consumption measurement through a calorimeter, as
+                        well as aluminum radiators and air conditioning to
+                        ensure an optimal indoor climate.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="swiper-quality section-relative">
+                  <div class="swiper-wrapper">
+                    <div class="slider-card-body flex-style-row swiper-slide">
+                      <img
+                        class="slider-card-img"
+                        src="./images/1.jpg"
+                        alt="Slide image one"
+                      />
+                    </div>
+                    <div class="slider-card-body flex-style-row swiper-slide">
+                      <img
+                        class="slider-card-img"
+                        src="./images/2.jpg"
+                        alt="Slide image one"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    class="slider-navigation__block navigatin-translate flex-style-row"
+                  >
+                    <div class="swiper-pagination"></div>
+                    <div
+                      class="swiper-button-prev custom__arrow slide__arrow-hover"
+                    >
+                      <svg
+                        width="7"
+                        height="12"
+                        viewBox="0 0 7 12"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M5.9707 1L0.970703 6L5.9707 11"
+                          stroke="var(--hover-arrow-color)"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+                    </div>
+                    <div
+                      class="swiper-button-next custom__arrow slide__arrow-hover"
+                    >
+                      <svg
+                        width="7"
+                        height="12"
+                        viewBox="0 0 7 12"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M0.970703 1L5.9707 6L0.970703 11"
+                          stroke="var(--hover-arrow-color)"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section class="white-bg-block" id="apartments">
+            <div class="section__body section__body-title flex-style-column">
+              <div class="block-title flex-style-column">
+                <p class="card-name subtitle tt-up">offer</p>
+                <h2 class="title title-dark tt-up split-text ezd-animtext">
+                  Apartment for sale
+                </h2>
+              </div>
+              <div class="apartments__filter flex-style-column">
+                <div class="filter__buttons flex-style-row gap none">
+                  <div
+                    class="object filter-btn-style flex-style-column gap-title"
+                  >
+                    <p class="fw-medium">Object</p>
+                    <div class="flex-style-row filter-btn-style btns-gap">
+                      <span class="filter__btn active">A3</span>
+                      <span class="filter__btn">A4</span>
+                    </div>
+                  </div>
+                  <div class="rooms__number flex-style-column gap-title">
+                    <p class="fw-medium">Number of rooms</p>
+                    <div
+                      class="flex-style-row filter-btn-style btns-gap gap-title"
+                    >
+                      <span class="filter__btn">1</span>
+                      <span class="filter__btn">2</span>
+                      <span class="filter__btn">3</span>
+                      <span class="filter__btn">4</span>
+                    </div>
+                  </div>
+                  <div class="building__wing flex-style-column gap-title">
+                    <p class="fw-medium">Building wing</p>
+                    <div
+                      class="flex-style-row filter-btn-style btns-gap gap-title"
+                    >
+                      <span class="filter__btn">A</span>
+                      <span class="filter__btn">B</span>
+                      <span class="filter__btn">C</span>
+                      <span class="filter__btn">D</span>
+                    </div>
+                  </div>
+                  <div class="rooms__number flex-style-column gap-title">
+                    <p class="fw-medium">Floor</p>
+                    <div class="flex-style-row filter-btn-style btns-gap">
+                      <span class="filter__btn">1</span>
+                      <span class="filter__btn">2</span>
+                      <span class="filter__btn">3</span>
+                      <span class="filter__btn">4</span>
+                      <span class="filter__btn">5</span>
+                      <span class="filter__btn">6</span>
+                      <span class="filter__btn">7</span>
+                      <span class="filter__btn">8</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="apartments__info-block flex-style-row">
+                  <div class="apartments__affordable flex-style-column">
+                    <p class="fw-medium">
+                      Affordable apartments (<span class="js-get-apartments"
+                        >400</span
+                      >)
+                    </p>
+                    <div
+                      class="available-apartments__list flex-style-row"
+                    ></div>
+                  </div>
+                  <div class="apartment-card flex-style-row">
+                    <div class="apartment-card__content flex-style-row">
+                      <a
+                        data-fancybox="apartment"
+                        href=""
+                        class="apartment__fancybox"
+                      >
+                        <img
+                          src=""
+                          alt="Apartment plan"
+                          class="apartment__img"
+                        />
+                      </a>
+                      <div class="apartments__description flex-style-column">
+                        <div
+                          class="flex-style-column apartment-description__content"
+                        >
+                          <div
+                            class="apartment__number flex-style-column btns-gap"
+                          >
+                            <p>Apartment number</p>
+                            <span class="text-dark js-apartment-number"></span>
+                          </div>
+                          <div class="floor flex-style-column btns-gap">
+                            <p>Floor</p>
+                            <span class="text-dark js-apartment-floor"></span>
+                          </div>
+                          <div class="bulding__wing flex-style-column btns-gap">
+                            <p>Building wing</p>
+                            <span class="text-dark js-apartment-wing"></span>
+                          </div>
+                          <div class="area flex-style-column btns-gap">
+                            <p class="color-gray">Area</p>
+                            <span class="text-dark js-apartment-area"></span>
+                          </div>
+                        </div>
+                        <button
+                          class="btn-style bth-blue-light-color blue-btn-hover button__price-request open-dialog"
+                        >
+                          <span class="tt-up"> price upon request </span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section class="white-bg-block" id="financing">
+            <div class="section__body section__body-title">
+              <div class="block-title flex-style-column">
+                <p class="card-name subtitle tt-up">financing</p>
+                <div class="text-overflow">
+                  <h2 class="title title-dark tt-up split-text ezd-animtext">
+                    How<span class="whitespace"></span>to<span
+                      class="whitespace"
+                    ></span
+                    >buy
+                  </h2>
+                </div>
+              </div>
+              <div class="cards flex-style-row">
+                <div class="card-credit card">
+                  <img src="./images/credit.jpg" alt="Credit image" />
+                  <div class="card-text-content flex-style-column">
+                    <p class="font-about-block flex-style-row">
+                      Credit
+                      <svg
+                        width="40"
+                        height="40"
+                        viewBox="0 0 40 40"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M8 32L30.5 9.5M32 31V8H9"
+                          stroke="black"
+                          stroke-width="3"
+                          stroke-linecap="square"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+                    </p>
+                    <div class="flex-style-column gap text-width">
+                      <p>
+                        Purchasing an apartment in the Evolution Residence
+                        housing complex can become a reality with the help of
+                        various banks offering favorable loans. Understanding
+                        the options available in the market will help you find
+                        the best solution for your financial needs.
+                      </p>
+                      <p>
+                        Buying an apartment on a loan can be a very smart
+                        decision for several reasons. First, a home loan allows
+                        you to become a property owner without the need to have
+                        the entire amount of money upfront. This means you can
+                        take advantage of current market opportunities and move
+                        into your home faster than if you were to wait until you
+                        save the required amount.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-cash card">
+                  <img src="./images/cash.jpg" alt="Cash image" />
+                  <div class="card-text-content flex-style-column">
+                    <p class="font-about-block flex-style-row">
+                      Cash
+                      <svg
+                        width="40"
+                        height="40"
+                        viewBox="0 0 40 40"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M8 32L30.5 9.5M32 31V8H9"
+                          stroke="black"
+                          stroke-width="3"
+                          stroke-linecap="square"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+                    </p>
+                    <div class="flex-style-column gap text-width">
+                      <p>
+                        Purchasing an apartment in the Evolution Residence
+                        housing complex with cash can be an excellent choice for
+                        those who have the means. Paying in cash offers several
+                        advantages, including the ability to avoid interest
+                        payments and the convenience of a straightforward
+                        transaction process.
+                      </p>
+                      <p>
+                        Choosing to buy with cash means that you can enjoy the
+                        benefits of immediate ownership without the need to
+                        manage monthly loan repayments. This method not only
+                        simplifies the purchase process but also often provides
+                        more negotiating power, helping you secure the best
+                        possible deal on your new home.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section class="flex-style-column gap white-bg-block" id="gallery">
+            <div class="section__body flex-style-row">
+              <div class="flex-style-column text-overlflow">
+                <h2 class="title title-dark tt-up split-text ezd-animtext">
+                  Gallery
+                </h2>
+              </div>
+              <div class="flex-style-row gap-button">
+                <div class="count-slides">
+                  <span class="current-slide text-dark"></span>
+                  /
+                  <span class="full-slides"></span>
+                </div>
+                <div id="prevBtn" class="custom__arrow slide__arrow-hover">
+                  <svg
+                    width="7"
+                    height="12"
+                    viewBox="0 0 7 12"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M5.9707 1L0.970703 6L5.9707 11"
+                      stroke="var(--hover-arrow-color)"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </div>
+                <div id="nextBtn" class="custom__arrow slide__arrow-hover">
+                  <svg
+                    width="7"
+                    height="12"
+                    viewBox="0 0 7 12"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M0.970703 1L5.9707 6L0.970703 11"
+                      stroke="var(--hover-arrow-color)"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <div class="gallery__body">
+              <div class="showcase__wrap">
+                <div class="showcase__items" id="carousel">
+                  <div class="showcase__item" data-slide="1">
+                    <a href="./images/gallery1.jpg" data-fancybox="gallery">
+                      <img
+                        class="gallery-image"
+                        src="./images/gallery1.jpg"
+                        alt=""
+                      />
+                    </a>
+                  </div>
+                  <div class="showcase__item" data-slide="2">
+                    <a href="./images/gallery1.jpg" data-fancybox="gallery">
+                      <img
+                        class="gallery-image"
+                        src="./images/gallery2.jpg"
+                        alt=""
+                      />
+                    </a>
+                  </div>
+                  <div class="showcase__item" data-slide="3">
+                    <a href="./images/gallery1.jpg" data-fancybox="gallery">
+                      <img
+                        class="gallery-image"
+                        src="./images/gallery3.jpg"
+                        alt=""
+                      />
+                    </a>
+                  </div>
+                  <div class="showcase__item" data-slide="4">
+                    <a href="./images/gallery1.jpg" data-fancybox="gallery">
+                      <img
+                        class="gallery-image"
+                        src="./images/gallery4.jpg"
+                        alt=""
+                    /></a>
+                  </div>
+                  <div class="showcase__item" data-slide="5">
+                    <a href="./images/gallery1.jpg" data-fancybox="gallery">
+                      <img
+                        class="gallery-image"
+                        src="./images/gallery5.jpg"
+                        alt=""
+                      />
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section class="flex-style-column white-bg-block" id="form">
+            <div class="section__body">
+              <div class="form__block block-center flex-style-column gap">
+                <div class="block-center flex-style-column title-gap">
+                  <p class="title title-dark tt-up split-text ezd-animtext">
+                    Request callback
+                  </p>
+                  <p class="subtitle">
+                    Fill out the form and we will contact you shortly
+                  </p>
+                </div>
+                <div
+                  class="title-gap flex-style-column block-center block-form"
+                >
+                  <form action="#" class="flex-style-row form-flex">
+                    <label for="name" class="placeholder-container">
+                      <input
+                        type="name"
+                        name="name"
+                        class="input__name input-event input-style"
+                      />
+                      <span class="input-placeholder">Name *</span>
+                    </label>
+                    <label for="number" class="placeholder-container"
+                      ><input
+                        type="phone"
+                        name="phone"
+                        class="input__number input-event input-style"
+                      />
+                      <span class="input-placeholder">00 000 - 0000*</span>
+                    </label>
+                    <button
+                      class="btn-style btn-color flex-style-row blue-btn-hover"
+                    >
+                      <span>Leave a request</span>
+                    </button>
+                  </form>
+                  <p>
+                    By clicking the button, you agree to terms of processing
+                    personal data
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </main>
+      <footer>
+        <div class="footer__body flex-style-column" id="contact">
+          <div class="block-info flex-style-column">
+            <div class="flex-style-row flex-wrap gap footer-address__block">
+              <div class="flex-style-column gap footer-address__content">
+                <div class="flex-style-column footer-address">
+                  <span>Phone</span>
+                  <p class="title">0800 012 026</p>
+                </div>
+                <div class="flex-style-column footer-address">
+                  <span>Sales Office</span>
+                  <p class="title">Belgrade</p>
+                  <p class="street">Generala Sturma Street, 1</p>
+                </div>
+                <a
+                  href=""
+                  class="btn-style bth-blue-light-color blue-light-btn-hover"
+                  >get direction</a
+                >
+              </div>
+              <img src="../images/map.png" alt="" />
+            </div>
+          </div>
+          <div class="info flex-style-column">
+            <img src="./images/footer-img.jpg" alt="Footer image interier" />
+            <div class="flex-style-row">
+              <a href="/"><img src="./images/logo.png" alt="" /></a>
+              <div class="block-social flex-style-row">
+                <img src="./images/telegram.svg" alt="telegram" />
+                <img src="./images/instagram.svg" alt="instagram" />
+              </div>
+              <span>All rights reserved © 2025 Evolution Residence</span>
+            </div>
+          </div>
+        </div>
+      </footer>
 
-				<section class="white-bg-block">
-					<div class="section__body flex-style-row trig-counter flex-wrap">
-						<p class="card-name subtitle tt-up split-text ezd-animtext">
-							about the project
-						</p>
-						<div class="block-text flex-style-column">
-							<p class="block-text-title font-about-block">
-								Evolution Residence is one of our most representative projects
-								and a symbol of our success.
-							</p>
-							<div class="block-description flex-style-row">
-								<p>
-									It represents a distinctive and modern residential complex
-									for individuals, families, and companies, with a commitment
-									to creating an exceptional environment for living, working,
-									and leisure. We have created a unique complex that has been
-									immediately recognized due to high demand and extensive
-									sales dynamics.
-								</p>
-								<p>
-									The Evolution Residence complex is characterized
-									by top-quality apartments, commercial spaces, exclusive two
-									swimming pools, and a spa center, all built with superior
-									finishing materials, along with a beautiful location
-									surrounded by greenery, providing direct connectivity to all
-									parts of the city.
-								</p>
-							</div>
-							<ul class="block-info__list flex-style-row">
-								<li class="decoration-underline">
-									<span class="font-about-block counter counter-float" data-end-value="23.762">0</span><span
-										class="font-about-block">m²</span> of residential
-									space
-								</li>
-								<li class="decoration-underline">
-									<span class="font-about-block counter" data-end-value="17">0</span>
-									commercial spaces
-								</li>
-								<li class="decoration-underline">
-									<span class="font-about-block counter" data-end-value="4">0</span>
-									residential-commercial buildings
-								</li>
-								<li class="decoration-underline">
-									<span class="font-about-block counter" data-end-value="384">0</span>
-									apartments
-								</li>
-							</ul>
-						</div>
-					</div>
-				</section>
-				<section class="section-relative flex-style-row block-parallax">
-					<div class="parallax-container" data-parallax-layers="true">
-						<img src="./images/dream.jpg" data-parallax-layer="1" class="parallax__layers" />
-					</div>
-					<div class="block-name flex-style-row gap">
-						<h2 class="title text-light tt-up split-text flex-style-column ezd-animtext">
-							<span>Your dream</span> <span>is responsibility</span>
-						</h2>
-						<p class="subtitle text-light tt-up">
-							The complex brings a revolution in construction, starting with
-							a realistic assessment of your living needs.
-						</p>
-					</div>
-				</section>
-				<section class="scroll-container white-bg-block" id="features">
-					<div class="section__body section-complex flex-style-row">
-						<div id="panels">
-							<div id="panels-container" class="panels-overflow">
-								<div class="block-title block-title-scroll flex-style-column">
-									<div class="text-overflow">
-										<h2 class="title tt-up title-dark split-text ezd-animtext">
-											Complex<span class="whitespace"></span>features
-										</h2>
-									</div>
-									<p>
-										The name of the complex itself reflects a construction
-										revolution, evident in the complex’s two swimming pools,
-										modern SPA and fitness centers, making life in the complex
-										an ideal place for comfort and a modern lifestyle. Each
-										building will feature a reception with trained staff who
-										will assist residents with daily tasks and organize
-										welcome services for guests.
-									</p>
-								</div>
-								<div class="scroll-card-container flex-style-row">
-									<div class="scroll-card flex-style-column panel">
-										<img src="./images/swimming.jpg" alt="swimming" />
-										<p class="btn-style btn-color-gray tt-up">
-											swimming pool
-										</p>
-									</div>
-									<div class="scroll-card flex-style-column panel">
-										<img src="./images/fitness.jpg" alt="fitness" />
-										<p class="btn-style btn-color-gray tt-up">
-											fitness center
-										</p>
-									</div>
-									<div class="scroll-card flex-style-column panel">
-										<img src="./images/spa.jpg" alt="spa" />
-										<p class="btn-style btn-color-gray tt-up">spa center</p>
-									</div>
-									<div class="scroll-card flex-style-column panel">
-										<img src="./images/lobby.jpg" alt="lobby" />
-										<p class="btn-style btn-color-gray tt-up">lobby</p>
-									</div>
-									<div class="scroll-card flex-style-column panel">
-										<img src="./images/commercial.jpg" alt="commercial" />
-										<p class="btn-style btn-color-gray tt-up">
-											commercial premises
-										</p>
-									</div>
-									<div class="scroll-card flex-style-column panel">
-										<img src="./images/fitness.jpg" alt="fitness" />
-										<p class="btn-style btn-color-gray tt-up">Parking</p>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</section>
-				<section class="white-bg-block" id="infrastructure">
-					<div class="section__body flex-style-column gap">
-						<div class="flex-style-row gap infra__content">
-							<div class="infra-block">
-								<p class="card-name subtitle tt-up infra-width split-text ezd-animtext">
-									infrastructure<span class="whitespace"></span>and<span class="whitespace"></span>location
-								</p>
-							</div>
-							<div class="block-text flex-style-column">
-								<div class="text-overflow">
-									<h2 class="block-text-title font-about-block">
-										One of the most important factors when choosing the right
-										property is location, which must have excellent
-										infrastructure.
-									</h2>
-								</div>
-								<p>
-									Evolution Residence is located near all essential amenities.
-									Within a one-kilometer radius, you will find several
-									kindergartens, two primary schools, a high school,
-									an economics school, Singidunum University, numerous
-									faculties, TC «Stadion», as well as cafes and restaurants.
-								</p>
-								<div class="block-description flex-style-row">
-									<p>
-										It represents a distinctive and modern residential complex
-										for individuals, families, and companies, with a
-										commitment to creating an exceptional environment for
-										living, working, and leisure. We have created a unique
-										complex that has been immediately recognized due to high
-										demand and extensive sales dynamics.
-									</p>
-									<p>
-										The Evolution Residence complex is characterized
-										by top-quality apartments, commercial spaces, exclusive
-										two swimming pools, and a spa center, all built with
-										superior finishing materials, along with a beautiful
-										location surrounded by greenery, providing direct
-										connectivity to all parts of the city.
-									</p>
-								</div>
-								<div class="swiper-statistic">
-									<div class="swiper-wrapper">
-										<div class="swiper-slide">
-											<div class="flex-style-column">
-												<span class="font-about-block font-about-block-blue">4.7 km</span>Primary school
-												<br> «Veselin Masleša»
-											</div>
-										</div>
-										<div class="swiper-slide">
-											<div class="flex-style-column">
-												<span class="font-about-block font-about-block-blue">2 km</span>XII Beograska <br>
-												Gimnazija
-											</div>
-										</div>
-										<div class="swiper-slide">
-											<div class="flex-style-column">
-												<span class="font-about-block font-about-block-blue">2.4 km</span>
-												University <br> «Singidunum»
-											</div>
-										</div>
-										<div class="swiper-slide">
-											<div class="flex-style-column">
-												<span class="font-about-block font-about-block-blue">1.2 km</span>
-												Faculty of Transport <br> and Traffic Engineering
-											</div>
-										</div>
-										<div class="swiper-slide">
-											<div class="flex-style-column">
-												<span class="font-about-block font-about-block-blue">3.5 km</span>Faculty of
-												Organizational <br> Sciences «FON»
-											</div>
-										</div>
-										<div class="swiper-slide">
-											<div class="flex-style-column">
-												<span class="font-about-block font-about-block-blue">1.6 km</span>TC «Stadion»
-											</div>
-										</div>
-										<div class="swiper-slide">
-											<div class="flex-style-column">
-												<span class="font-about-block font-about-block-blue">1.8 km</span>
-												Supermarket «Lidl» <br> Trošarina
-											</div>
-										</div>
-										<div class="swiper-slide">
-											<div class="flex-style-column">
-												<span class="font-about-block font-about-block-blue">0.9 km</span>
-												Supermarket <br> «Maxi»
-											</div>
-										</div>
-										<div class="swiper-slide">
-											<div class="flex-style-column">
-												<span class="font-about-block font-about-block-blue">3.7 km</span>Autokomanda
-											</div>
-										</div>
-										<div class="swiper-slide">
-											<div class="flex-style-column">
-												<span class="font-about-block font-about-block-blue">4.7 km</span>Partizan <br>
-												Stadium
-											</div>
-										</div>
-										<div class="swiper-slide">
-											<div class="flex-style-column">
-												<span class="font-about-block font-about-block-blue">3.3 km</span>
-												Stadium <br> «Rajko Mitić»
-											</div>
-										</div>
-									</div>
-									<div class="slider-navigation__block flex-style-row">
-										<div class="swiper-pagination"></div>
-										<div class="swiper-button-prev custom__arrow slide__arrow-hover">
-											<svg width="7" height="12" viewBox="0 0 7 12" fill="none"
-												xmlns="http://www.w3.org/2000/svg">
-												<path d="M5.9707 1L0.970703 6L5.9707 11" stroke="var(--hover-arrow-color)"
-													stroke-linecap="round" stroke-linejoin="round" />
-											</svg>
-										</div>
-										<div class="swiper-button-next custom__arrow slide__arrow-hover">
-											<svg width="7" height="12" viewBox="0 0 7 12" fill="none"
-												xmlns="http://www.w3.org/2000/svg">
-												<path d="M0.970703 1L5.9707 6L0.970703 11" stroke="var(--hover-arrow-color)"
-													stroke-linecap="round" stroke-linejoin="round" />
-											</svg>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="flex-style-row block-location gap">
-							<div class="text-width flex-style-column">
-								<img class="svg-width" src="./images/location.svg" alt="location" />
-								<div class="flex-style-column gap">
-									<p class="font-about-block">
-										Evolution Residence is located in Voždovac,
-										at Tolminska St. No. 5-9.
-									</p>
-									<p>
-										Evolution Residence is situated in a location chosen with
-										great care by the investor. It will be close to the city
-										center while nestled in a green oasis of tranquility. The
-										complex covers an area of 57,302 m² and will include four
-										residential-commercial buildings.
-									</p>
-								</div>
-							</div>
-							<div class="block-map">
-								<div class="pointer flex-style-row"></div>
-								<img src="./images/map-min.png" alt="map" />
-							</div>
-						</div>
-					</div>
-				</section>
-				<section class="section-relative flex-style-row block-parallax">
-					<div class="parallax-container" data-parallax-layers="true">
-						<img src="./images/comfort.jpg" data-parallax-layer="2" class="parallax__layers" />
-					</div>
-					<div class="block-name flex-style-row gap">
-						<h2 class="title text-light tt-up split-text flex-style-column ezd-animtext">
-							<span>Areas of greenery </span> <span> and comfort</span>
-						</h2>
-						<p class="subtitle text-light tt-up">
-							A functional open space with landscaped green areas, trees, and
-							children's playgrounds for relaxation and socializing.
-						</p>
-					</div>
-				</section>
-				<section class="white-bg-block">
-					<div class="section__body section__body-title">
-						<div class="block-title flex-style-column">
-							<p class="card-name subtitle tt-up">materials</p>
-							<h2 class="title title-dark tt-up split-text ezd-animtext">
-								Top<span class="whitespace"></span>Quality<span class="whitespace"></span>for<span
-									class="whitespace"></span>Complete<span class="whitespace"></span>Enjoyment
-							</h2>
-						</div>
-					</div>
-					<div class="background-gray">
-						<div class="section__body flex-style-row slider-materials__content">
-							<div class="slider-card flex-style-row">
-								<div class="slider-block-title flex-style-column">
-									<div class="change-title flex-style-column">
-										<p class="font-about-block tt-up title-slide" data-swiper-slide-quality="0">
-											Aesthetics and Reliability in Every Detail
-										</p>
-										<p class="font-about-block tt-up title-slide" data-swiper-slide-quality="1">
-											High Quality and Exceptional Comfort
-										</p>
-									</div>
-									<div class="change-text flex-style-column">
-										<p data-swiper-slide-quality="0" class="text-slide">
-											The corridors and stairwells of the building are clad
-											in elegant porcelain tiles, giving them a refined and
-											modern appearance. Doors of domestic production are
-											equipped with a Grade III anti-burglary system, ensuring
-											a high level of security. The interior doors are faced
-											with MDF and finished with melamine film, combining
-											durability and aesthetic appeal. The flooring is made
-											of three-layer oak parquet, complemented by white MDF
-											baseboards with a height of 6/8 cm, creating
-											a harmonious and stylish interior. Additionally,
-											first-class ceramic tiles from a renowned European
-											manufacturer are used, adding a touch of sophistication
-											and comfort to the overall atmosphere.
-										</p>
-										<p data-swiper-slide-quality="1" class="text-slide">
-											The facade of the building is clad with high-quality
-											facing materials that boast excellent aesthetic
-											characteristics. Modern terraces with geometric shapes
-											add dynamism to the facade, while high-quality aluminum
-											railings provide elegance. Aluminum blinds and mosquito
-											nets enhance comfort. The building is equipped with a
-											centralized heating system with remote control and
-											energy consumption measurement through a calorimeter, as
-											well as aluminum radiators and air conditioning to
-											ensure an optimal indoor climate.
-										</p>
-									</div>
-								</div>
-							</div>
-							<div class="swiper-quality section-relative">
-								<div class="swiper-wrapper">
-									<div class="slider-card-body flex-style-row swiper-slide">
-										<img class="slider-card-img" src="./images/1.jpg" alt="Slide image one" />
-									</div>
-									<div class="slider-card-body flex-style-row swiper-slide">
-										<img class="slider-card-img" src="./images/2.jpg" alt="Slide image one" />
-									</div>
-								</div>
-								<div class="slider-navigation__block navigatin-translate flex-style-row">
-									<div class="swiper-pagination"></div>
-									<div class="swiper-button-prev custom__arrow slide__arrow-hover">
-										<svg width="7" height="12" viewBox="0 0 7 12" fill="none"
-											xmlns="http://www.w3.org/2000/svg">
-											<path d="M5.9707 1L0.970703 6L5.9707 11" stroke="var(--hover-arrow-color)"
-												stroke-linecap="round" stroke-linejoin="round" />
-										</svg>
-									</div>
-									<div class="swiper-button-next custom__arrow slide__arrow-hover">
-										<svg width="7" height="12" viewBox="0 0 7 12" fill="none"
-											xmlns="http://www.w3.org/2000/svg">
-											<path d="M0.970703 1L5.9707 6L0.970703 11" stroke="var(--hover-arrow-color)"
-												stroke-linecap="round" stroke-linejoin="round" />
-										</svg>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</section>
-				<section class="white-bg-block" id="apartments">
-					<div class="section__body section__body-title flex-style-column">
-						<div class="block-title flex-style-column">
-							<p class="card-name subtitle tt-up">offer</p>
-							<h2 class="title title-dark tt-up split-text ezd-animtext">
-								Apartment for sale
-							</h2>
-						</div>
-						<div class="apartments__filter flex-style-column">
-							<div class="filter__buttons flex-style-row gap">
-								<div class="object filter-btn-style flex-style-column gap-title">
-									<p class="fw-medium">Object</p>
-									<div class="flex-style-row filter-btn-style btns-gap">
-										<span>A3</span>
-										<span>A4</span>
-									</div>
-								</div>
-								<div class="rooms__number flex-style-column gap-title">
-									<p class="fw-medium">Number of rooms</p>
-									<div class="flex-style-row filter-btn-style btns-gap gap-title">
-										<span>1</span>
-										<span>2</span>
-										<span>3</span>
-										<span>4</span>
-									</div>
-								</div>
-								<div class="building__wing flex-style-column gap-title">
-									<p class="fw-medium">Building wing</p>
-									<div class="flex-style-row filter-btn-style btns-gap gap-title">
-										<span>A</span>
-										<span>B</span>
-										<span>C</span>
-										<span>D</span>
-									</div>
-								</div>
-								<div class="rooms__number flex-style-column gap-title">
-									<p class="fw-medium">Floor</p>
-									<div class="flex-style-row filter-btn-style btns-gap">
-										<span>1</span>
-										<span>2</span>
-										<span>3</span>
-										<span>4</span>
-										<span>5</span>
-										<span>6</span>
-										<span>7</span>
-										<span>8</span>
-									</div>
-								</div>
-							</div>
-							<div class="apartments__info-block flex-style-row">
-								<div class="apartments__affordable flex-style-column">
-									<p class="fw-medium">
-										Affordable apartments (<span class="js-get-apartments">400</span>)
-									</p>
-									<div class="available-apartments__list flex-style-row"></div>
-								</div>
-								<div class="apartment-card flex-style-row">
-									<div class="apartment-card__content flex-style-row">
-										<img src="" alt="Apartment plan" class="apartment__img" />
-										<div class="apartments__description flex-style-column">
-											<div class="flex-style-column apartment-description__content">
-												<div class="apartment__number flex-style-column btns-gap">
-													<p>Apartment number</p>
-													<span class="text-dark js-apartment-number"></span>
-												</div>
-												<div class="floor flex-style-column btns-gap">
-													<p>Floor</p>
-													<span class="text-dark js-apartment-floor"></span>
-												</div>
-												<div class="bulding__wing flex-style-column btns-gap">
-													<p>Building wing</p>
-													<span class="text-dark js-apartment-wing"></span>
-												</div>
-												<div class="area flex-style-column btns-gap">
-													<p class="color-gray">Area</p>
-													<span class="text-dark js-apartment-area"></span>
-												</div>
-											</div>
-											<button class="btn-style bth-blue-light-color blue-btn-hover button__price-request open-dialog">
-												<span class="tt-up"> price upon request </span>
-											</button>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</section>
-				<section class="white-bg-block" id="financing">
-					<div class="section__body section__body-title">
-						<div class="block-title flex-style-column">
-							<p class="card-name subtitle tt-up">financing</p>
-							<div class="text-overflow">
-								<h2 class="title title-dark tt-up split-text ezd-animtext">
-									How<span class="whitespace"></span>to<span class="whitespace"></span>buy
-								</h2>
-							</div>
-						</div>
-						<div class="cards flex-style-row">
-							<div class="card-credit card">
-								<img src="./images/credit.jpg" alt="Credit image" />
-								<div class="card-text-content flex-style-column">
-									<p class="font-about-block flex-style-row">
-										Credit
-										<svg width="40" height="40" viewBox="0 0 40 40" fill="none"
-											xmlns="http://www.w3.org/2000/svg">
-											<path d="M8 32L30.5 9.5M32 31V8H9" stroke="black" stroke-width="3"
-												stroke-linecap="square" stroke-linejoin="round" />
-										</svg>
-									</p>
-									<div class="flex-style-column gap text-width">
-										<p>
-											Purchasing an apartment in the Evolution Residence
-											housing complex can become a reality with the help of
-											various banks offering favorable loans. Understanding
-											the options available in the market will help you find
-											the best solution for your financial needs.
-										</p>
-										<p>
-											Buying an apartment on a loan can be a very smart
-											decision for several reasons. First, a home loan allows
-											you to become a property owner without the need to have
-											the entire amount of money upfront. This means you can
-											take advantage of current market opportunities and move
-											into your home faster than if you were to wait until you
-											save the required amount.
-										</p>
-									</div>
-								</div>
-							</div>
-							<div class="card-cash card">
-								<img src="./images/cash.jpg" alt="Cash image" />
-								<div class="card-text-content flex-style-column">
-									<p class="font-about-block flex-style-row">
-										Cash
-										<svg width="40" height="40" viewBox="0 0 40 40" fill="none"
-											xmlns="http://www.w3.org/2000/svg">
-											<path d="M8 32L30.5 9.5M32 31V8H9" stroke="black" stroke-width="3"
-												stroke-linecap="square" stroke-linejoin="round" />
-										</svg>
-									</p>
-									<div class="flex-style-column gap text-width">
-										<p>
-											Purchasing an apartment in the Evolution Residence
-											housing complex with cash can be an excellent choice for
-											those who have the means. Paying in cash offers several
-											advantages, including the ability to avoid interest
-											payments and the convenience of a straightforward
-											transaction process.
-										</p>
-										<p>
-											Choosing to buy with cash means that you can enjoy the
-											benefits of immediate ownership without the need to
-											manage monthly loan repayments. This method not only
-											simplifies the purchase process but also often provides
-											more negotiating power, helping you secure the best
-											possible deal on your new home.
-										</p>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</section>
-				<section class="flex-style-column gap white-bg-block" id="gallery">
-					<div class="section__body flex-style-row">
-						<div class="flex-style-column text-overlflow">
-							<h2 class="title title-dark tt-up split-text ezd-animtext">
-								Gallery
-							</h2>
-						</div>
-						<div class="flex-style-row gap-button">
-							<div class="count-slides">
-								<span class="current-slide text-dark"></span>
-								/
-								<span class="full-slides"></span>
-							</div>
-							<div id="prevBtn" class="custom__arrow slide__arrow-hover">
-								<svg width="7" height="12" viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-									<path d="M5.9707 1L0.970703 6L5.9707 11" stroke="var(--hover-arrow-color)"
-										stroke-linecap="round" stroke-linejoin="round" />
-								</svg>
-							</div>
-							<div id="nextBtn" class="custom__arrow slide__arrow-hover">
-								<svg width="7" height="12" viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-									<path d="M0.970703 1L5.9707 6L0.970703 11" stroke="var(--hover-arrow-color)"
-										stroke-linecap="round" stroke-linejoin="round" />
-								</svg>
-							</div>
-						</div>
-					</div>
-					<div class="gallery__body">
-						<div class="showcase__wrap">
-							<div class="showcase__items" id="carousel">
-								<div class="showcase__item" data-slide="1">
-									<img class="gallery-image" src="./images/gallery1.jpg" alt="" />
-								</div>
-								<div class="showcase__item" data-slide="2">
-									<img class="gallery-image" src="./images/gallery2.jpg" alt="" />
-								</div>
-								<div class="showcase__item" data-slide="3">
-									<img class="gallery-image" src="./images/gallery3.jpg" alt="" />
-								</div>
-								<div class="showcase__item" data-slide="4">
-									<img class="gallery-image" src="./images/gallery4.jpg" alt="" />
-								</div>
-								<div class="showcase__item" data-slide="5">
-									<img class="gallery-image" src="./images/gallery5.jpg" alt="" />
-								</div>
-							</div>
-						</div>
-					</div>
-				</section>
-				<section class="flex-style-column white-bg-block" id="form">
-					<div class="section__body">
-						<div class="form__block block-center flex-style-column gap">
-							<div class="block-center flex-style-column title-gap">
-								<p class="title title-dark tt-up split-text ezd-animtext">
-									Request callback
-								</p>
-								<p class="subtitle">
-									Fill out the form and we will contact you shortly
-								</p>
-							</div>
-							<div class="title-gap flex-style-column block-center block-form">
-								<form action="#" class="flex-style-row form-flex">
-									<label for="name" class="placeholder-container">
-										<input type="name" name="name" class="input__name input-event input-style" />
-										<span class="input-placeholder">Name *</span>
-									</label>
-									<label for="number" class="placeholder-container"><input type="phone" name="phone"
-											class="input__number input-event input-style" />
-										<span class="input-placeholder">00 000 - 0000*</span>
-									</label>
-									<button class="btn-style btn-color flex-style-row blue-btn-hover">
-										<span>Leave a request</span>
-									</button>
-								</form>
-								<p>
-									By clicking the button, you agree to terms of processing
-									personal data
-								</p>
-							</div>
-						</div>
-					</div>
-				</section>
-			</div>
-		</main>
-		<footer>
-			<div class="footer__body flex-style-column" id="contact">
-				<div class="block-info flex-style-column">
-					<div class="flex-style-row flex-wrap gap footer-address__block">
-						<div class="flex-style-column gap footer-address__content">
-							<div class="flex-style-column footer-address">
-								<span>Phone</span>
-								<p class="title">0800 012 026</p>
-							</div>
-							<div class="flex-style-column footer-address">
-								<span>Sales Office</span>
-								<p class="title">Belgrade</p>
-								<p class="street">Generala Sturma Street, 1</p>
-							</div>
-							<a href="" class="btn-style bth-blue-light-color blue-light-btn-hover">get direction</a>
-						</div>
-						<img src="../images/map.png" alt="" />
-					</div>
-				</div>
-				<div class="info flex-style-column">
-					<img src="./images/footer-img.jpg" alt="Footer image interier" />
-					<div class="flex-style-row">
-						<a href="/"><img src="./images/logo.png" alt="" /></a>
-						<div class="block-social flex-style-row">
-							<img src="./images/telegram.svg" alt="telegram" />
-							<img src="./images/instagram.svg" alt="instagram" />
-						</div>
-						<span>All rights reserved © 2025 Evolution Residence</span>
-					</div>
-				</div>
-			</div>
-		</footer>
-
-		<dialog id="priceRequest" class="flex-style dialog__block">
-			<button class="close__dialog" type="button">
-				<span><svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-						<rect x="9" y="30" width="30" height="1.4" transform="rotate(-45 9 30)" fill="#161D2D" />
-						<rect x="10" y="9" width="30" height="1.4" transform="rotate(45 10 9)" fill="#161D2D" />
-					</svg>
-				</span>
-			</button>
-			<div class="form__block block-center flex-style-column gap">
-				<div class="block-center flex-style-column title-gap">
-					<p class="title title-dark tt-up split-text ezd-animtext">
-						Request callback
-					</p>
-					<p class="subtitle">
-						Fill out the form and we will contact you shortly
-					</p>
-				</div>
-				<div class="title-gap flex-style-column block-center block-form">
-					<form action="#" class="flex-style-row form-flex">
-						<label for="name" class="placeholder-container">
-							<input type="name" name="name" class="input__name input-event input-style" />
-							<span class="input-placeholder">Name *</span>
-						</label>
-						<label for="number" class="placeholder-container"><input type="phone" name="phone"
-								class="input__number input-event input-style" />
-							<span class="input-placeholder">00 000 - 0000*</span>
-						</label>
-						<button class="btn-style btn-color flex-style-row blue-btn-hover">
-							<span>Leave a request</span>
-						</button>
-					</form>
-					<p>
-						By clicking the button, you agree to terms of processing personal
-						data
-					</p>
-				</div>
-			</div>
-		</dialog>
-	</div>
-	<script src="./js/ScrollTrigger.min.js"></script>
-	<script src="./js/ScrollToPlugin.min.js"></script>
-	<script src="./js/ScrollToPlugin.js"></script>
-	<script src="./js/lenis.js"></script>
-	<script src="./js/locomotive-scroll.min.js"></script>
-	<script src="./js/splitting.min.js"></script>
-	<script src="./js/animation.js" defer></script>
-	<script src="./js/slides.js"></script>
-	<script src="./js/script.js"></script>
-	<script type="module" src="./js/apartments/request.js"></script>
-	<script type="module" src="./js/apartments/data.js"></script>
-</body>
-
+      <dialog id="priceRequest" class="flex-style dialog__block">
+        <button class="close__dialog" type="button">
+          <span
+            ><svg
+              width="40"
+              height="40"
+              viewBox="0 0 40 40"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                x="9"
+                y="30"
+                width="30"
+                height="1.4"
+                transform="rotate(-45 9 30)"
+                fill="#161D2D"
+              />
+              <rect
+                x="10"
+                y="9"
+                width="30"
+                height="1.4"
+                transform="rotate(45 10 9)"
+                fill="#161D2D"
+              />
+            </svg>
+          </span>
+        </button>
+        <div class="form__block block-center flex-style-column gap">
+          <div class="block-center flex-style-column title-gap">
+            <p class="title title-dark tt-up split-text ezd-animtext">
+              Request callback
+            </p>
+            <p class="subtitle">
+              Fill out the form and we will contact you shortly
+            </p>
+          </div>
+          <div class="title-gap flex-style-column block-center block-form">
+            <form action="#" class="flex-style-row form-flex">
+              <label for="name" class="placeholder-container">
+                <input
+                  type="name"
+                  name="name"
+                  class="input__name input-event input-style"
+                />
+                <span class="input-placeholder">Name *</span>
+              </label>
+              <label for="number" class="placeholder-container"
+                ><input
+                  type="phone"
+                  name="phone"
+                  class="input__number input-event input-style"
+                />
+                <span class="input-placeholder">00 000 - 0000*</span>
+              </label>
+              <button class="btn-style btn-color flex-style-row blue-btn-hover">
+                <span>Leave a request</span>
+              </button>
+            </form>
+            <p>
+              By clicking the button, you agree to terms of processing personal
+              data
+            </p>
+          </div>
+        </div>
+      </dialog>
+    </div>
+    <script src="./js/ScrollTrigger.min.js"></script>
+    <script src="./js/ScrollToPlugin.min.js"></script>
+    <script src="./js/ScrollToPlugin.js"></script>
+    <script src="./js/lenis.js"></script>
+    <script src="./js/locomotive-scroll.min.js"></script>
+    <script src="./js/splitting.min.js"></script>
+    <script src="./js/animation.js" defer></script>
+    <script src="./js/slides.js"></script>
+    <script src="./js/script.js"></script>
+    <script type="module" src="./js/apartments/request.js"></script>
+    <script type="module" src="./js/apartments/data.js"></script>
+  </body>
 </html>
