@@ -145,6 +145,8 @@ document.addEventListener('DOMContentLoaded', () => {
 			trigger: textElement,
 			start: "120% 120%",
 			onEnter: () => {
+				document.querySelector('.main-title').style.display = "flex";
+				document.querySelector('.about-button').style.display = "flex";
 				textElement.classList.add('line-up');
 			},
 			onLeaveBack: () => {
@@ -216,7 +218,7 @@ document.addEventListener('DOMContentLoaded', () => {
 					ease: "power1.out",
 					scrollTrigger: {
 						trigger: sectionBody,
-						start: "top center",
+						start: "top top",
 						scrub: false,
 						onEnter: (self) => {
 							if (self.direction === 1) {
@@ -224,7 +226,6 @@ document.addEventListener('DOMContentLoaded', () => {
 									blockImage.style.position = "fixed";
 									blockImage.style.zIndex = "5";
 									aboutButton.style.zIndex = "2";
-									blockImage.style.display = "block";
 									sectionBody.style.position = "static";
 									sectionBody.style.maxInlineSize = "100%";
 									isAnimatingScroll = true;
@@ -235,15 +236,26 @@ document.addEventListener('DOMContentLoaded', () => {
 										scrollTo: { y: scrollToVideo, autoKill: false },
 										duration: 1,
 										ease: "power1.out",
-										onEnter: () => {
-											document.body.style.overflow = "hidden";
+										onEnter: (self) => {
+											if (self.direction === 1) {
+												document.body.style.overflow = "hidden";
+											}
 										},
 										onComplete: () => {
 											scrollToVideo.classList.remove('js-scrolling');
+											video.play();
 											window.removeEventListener("wheel", preventScroll);
 											document.body.style.overflow = "";
 											isAnimatingScroll = false;
 											blockImage.style.display = "none";
+											blockImage.style.position = "absolute";
+											blockImage.style.zIndex = "1";
+											aboutButton.style.zIndex = "5";
+											blockImage.style.height = "auto";
+											sectionBody.style.position = "relative";
+											sectionBody.style.maxInlineSize = "1920px";
+											scrollToVideo.style.position = "relative";
+											scrollToVideo.style.zIndex = "6";
 										},
 										toggleActions: "play none none none"
 									});
@@ -256,20 +268,22 @@ document.addEventListener('DOMContentLoaded', () => {
 							window.removeEventListener("wheel", preventScroll);
 							document.body.style.overflow = "";
 							video.play();
-							video.style.visibility = "visible";
 							blockImage.style.position = "absolute";
 							blockImage.style.zIndex = "1";
 							aboutButton.style.zIndex = "5";
 							blockImage.style.height = "auto";
-							blockImage.style.display = "block";
 							sectionBody.style.position = "relative";
 							sectionBody.style.maxInlineSize = "1920px";
 							gsap.to(blockImage, {
 								width: 'auto',
 								height: 'auto',
-								duration: 1,
-								ease: "power1.inOut"
+								duration: 0.1,
+								ease: "power3.out",
+								onLeave: () => {
+									blockImage.style.display = "block";
+								}
 							});
+
 						},
 						toggleActions: "play none none none"
 					}
