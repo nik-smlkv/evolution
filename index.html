@@ -37,7 +37,7 @@
 				</div>
 				<div class="header-block flex-style-row">
 					<a href="tel:0800012026" class="phone-link">0800 012 026</a>
-					<a href="" class="btn-style header-btn-color blue-btn-hover">leave a request</a>
+					<a href="#form" class="btn-style header-btn-color blue-btn-hover js-scroll-form">leave a request</a>
 					<div class="header__burger">
 						<span class="burger-line"></span>
 						<span class="burger-line"></span>
@@ -45,7 +45,7 @@
 				</div>
 			</div>
 		</header>
-		<main class="flex-style-column" >
+		<main class="flex-style-column">
 			<div class="main-gap flex-style-column" id="main">
 				<section class="block-dark no-gap padding-top flex-style-column main-block section-relative">
 					<div class="section__body section__body-main flex-style-row block-height">
@@ -531,8 +531,7 @@
 													<span class="text-dark js-apartment-area"></span>
 												</div>
 											</div>
-											<button class="btn-style bth-blue-light-color blue-btn-hover button__price-request"
-												aria-controls="priceRequest" onclick="window['priceRequest'].showModal()">
+											<button class="btn-style bth-blue-light-color blue-btn-hover button__price-request open-dialog">
 												<span class="tt-up"> price upon request </span>
 											</button>
 										</div>
@@ -667,7 +666,7 @@
 						</div>
 					</div>
 				</section>
-				<section class="flex-style-column white-bg-block" id="contact">
+				<section class="flex-style-column white-bg-block" id="form">
 					<div class="section__body">
 						<div class="form__block block-center flex-style-column gap">
 							<div class="block-center flex-style-column title-gap">
@@ -678,7 +677,7 @@
 									Fill out the form and we will contact you shortly
 								</p>
 							</div>
-							<div class="title-gap flex-style-column block-center">
+							<div class="title-gap flex-style-column block-center block-form">
 								<form action="#" class="flex-style-row form-flex">
 									<label for="name" class="placeholder-container">
 										<input type="name" name="name" class="input__name input-event input-style" />
@@ -703,7 +702,7 @@
 			</div>
 		</main>
 		<footer>
-			<div class="footer__body flex-style-column">
+			<div class="footer__body flex-style-column" id="contact">
 				<div class="block-info flex-style-column">
 					<div class="flex-style-row flex-wrap gap footer-address__block">
 						<div class="flex-style-column gap footer-address__content">
@@ -736,7 +735,7 @@
 		</footer>
 
 		<dialog id="priceRequest" class="flex-style dialog__block">
-			<button class="close__dialog" type="button" onclick="window['priceRequest'].close()">
+			<button class="close__dialog" type="button">
 				<span><svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<rect x="9" y="30" width="30" height="1.4" transform="rotate(-45 9 30)" fill="#161D2D" />
 						<rect x="10" y="9" width="30" height="1.4" transform="rotate(45 10 9)" fill="#161D2D" />
@@ -752,7 +751,7 @@
 						Fill out the form and we will contact you shortly
 					</p>
 				</div>
-				<div class="title-gap flex-style-column block-center">
+				<div class="title-gap flex-style-column block-center block-form">
 					<form action="#" class="flex-style-row form-flex">
 						<label for="name" class="placeholder-container">
 							<input type="name" name="name" class="input__name input-event input-style" />

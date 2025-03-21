@@ -11,7 +11,7 @@
 .wrapper:not(header) {
 	display: flex;
 	flex-direction: column;
-	gap: 180px;
+	gap: clamp(120px, 20vw, 180px);
 }
 
 .main-gap {
@@ -742,9 +742,13 @@ h1::before {
 	transform: translate(-68.6%, 80%);
 }
 
-.card-cash .card-text-content:hover,
-.card-credit .card-text-content:hover {
-	transform: translate(0%, 0%);
+@media(hover:hover) {
+
+	.card-cash .card-text-content:hover,
+	.card-credit .card-text-content:hover {
+		transform: translate(0%, 0%);
+	}
+
 }
 
 .card-text-content {
@@ -806,6 +810,10 @@ h1::before {
 	width: 100%;
 }
 
+.block-form {
+	width: 100%;
+}
+
 .placeholder-container {
 	position: relative;
 }
@@ -857,11 +865,12 @@ input.input-event[value=""]+.input-placeholder {
 
 .form-flex {
 	gap: 24px;
-	flex-wrap: wrap;
+	width: 100%;
 }
 
 .form-flex>* {
-	flex: 0 0 351px;
+	width: 100%;
+	max-width: 352px;
 }
 
 .swiper-statistic {
@@ -893,10 +902,13 @@ input.input-event[value=""]+.input-placeholder {
 	transition: border-color 0.3s ease, stroke 0.3s ease;
 }
 
-.slide__arrow-hover:hover {
-	--hover-arrow-color: #0474DC;
-	border-color: var(--blue-color);
+@media(hover:hover) {
+	.slide__arrow-hover:hover {
+		--hover-arrow-color: #0474DC;
+		border-color: var(--blue-color);
+	}
 }
+
 
 .scroll-card-container {
 	gap: 56px;
@@ -1055,8 +1067,8 @@ input.input-event[value=""]+.input-placeholder {
 	outline: none;
 	overflow: hidden;
 	width: 100%;
-	max-width: 780px;
-	max-height: 900px;
+	max-width: 1100px;
+	max-height: 525px;
 	height: 100%;
 	border: none;
 }
@@ -1108,8 +1120,11 @@ input.input-event[value=""]+.input-placeholder {
 	border-color: #0474DC;
 }
 
-.apartment__item:hover {
-	border-color: #0474DC;
+@media(hover:hover) {
+	.apartment__item:hover {
+		border-color: #0474DC;
+	}
+
 }
 
 .apartment__img img {
@@ -1180,7 +1195,7 @@ input.input-event[value=""]+.input-placeholder {
 	}
 
 	.about-button {
-		left: 350px;
+		left: 455px;
 		transform: unset !important;
 	}
 
@@ -1332,6 +1347,14 @@ input.input-event[value=""]+.input-placeholder {
 		height: 100%;
 	}
 
+	.form__block {
+		text-align: center;
+	}
+
+	.form-flex {
+		flex-direction: column;
+	}
+
 	.card-cash .card-text-content,
 	.card-credit .card-text-content {
 		transform: translate(-50.6%, 75%);
@@ -1341,13 +1364,11 @@ input.input-event[value=""]+.input-placeholder {
 		height: auto;
 	}
 
-
 	.header-block {
 		gap: 16px;
 		justify-content: start;
 	}
 
-	.infra__content {}
 
 	.phone-link {
 		font-size: clamp(12px, 2vw, 16px);
@@ -1396,6 +1417,25 @@ input.input-event[value=""]+.input-placeholder {
 	.block-info__list li {
 		width: 100%;
 	}
+
+	.dialog__block {
+		position: fixed;
+		bottom: -200%;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		transition: bottom 0.4s ease-in-out;
+		z-index: 10;
+		border: none;
+		padding: 0px 20px;
+		padding-bottom: 20px;
+	}
+
+	.dialog__block.active {
+		transition: bottom 0.4s ease-in-out;
+		bottom: -20%;
+	}
+
 }
 
 
@@ -1578,4 +1618,67 @@ input.input-event[value=""]+.input-placeholder {
 		justify-content: center;
 	}
 
+}
+
+.clone-container {
+	position: fixed;
+	bottom: -100%;
+	left: 0;
+	width: 100%;
+	height: 90vh;
+	background: white;
+	transition: bottom 0.4s ease-in-out;
+	overflow: hidden;
+	z-index: 7;
+	padding: 40px;
+	align-items: end;
+	gap: 56px;
+}
+
+.clone-container p {
+	text-transform: capitalize;
+}
+
+.clone-container-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.7);
+
+	z-index: 5;
+
+	transition: opacity 0.4s ease-in-out;
+	opacity: 0;
+
+	pointer-events: none;
+
+}
+
+.clone-container-overlay.active {
+	opacity: 1;
+
+	pointer-events: auto;
+
+}
+
+
+
+
+.clone-container svg {
+	width: 22px;
+	height: 22px;
+	margin-left: 7px;
+	transition: transform 0.4s ease-in-out;
+}
+
+
+
+.clone-container.active {
+	bottom: 0;
+}
+
+.clone-container.active svg {
+	transform: rotate(-175deg);
 }

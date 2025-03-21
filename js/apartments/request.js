@@ -16,12 +16,11 @@ const getFirstApartment = () => {
 
 const getApartmentCards = (firstApartment) => {
 	const apartmentCards = document.querySelector(".available-apartments__list");
-
 	data.map((item) => {
 		const img = item.apartmentImg;
 		const meter = item.area;
 		apartmentCards.insertAdjacentHTML("beforeend", `
-			 <div class="apartment__item flex-style-column ${firstApartment.id === item.id ? "active" : ""}">
+			 <div class="apartment__item flex-style-column ${firstApartment.id === item.id ? "active" : ""}" data-id="${item.id}">
 				  <div class="apartment__img">
 						<img src="${img}" alt="apartment" />
 				  </div>
@@ -30,26 +29,33 @@ const getApartmentCards = (firstApartment) => {
 		`);
 	});
 }
+window.addEventListener("DOMContentLoaded", () => {
+	var apartmentCards = document.querySelectorAll(".apartment__item");
+	apartmentCards.forEach(item => {
+		item.addEventListener('click', () => {
+			const apartmentCardsList = document.querySelectorAll(".apartment__item");
+			apartmentCardsList.forEach(item => {
+				item.classList.remove('active');
+			})
+			item.classList.add('active');
+			const apartmentId = item.getAttribute('data-id');
+			let currentItem = data.find(apartment => apartment.id === Number(apartmentId));
+			if (currentItem) {
+				// Обновляем данные в секции с информацией
+				const imgElement = document.querySelector('.apartment-card__content .apartment__img');
+				if (imgElement) {
+					imgElement.src = currentItem.planImg;
+				}
+				document.querySelector('.js-apartment-wing').textContent = currentItem.buldingWing;
+				document.querySelector('.js-apartment-floor').textContent = currentItem.floor;
+				document.querySelector('.js-apartment-area').textContent = currentItem.area + "m²";
+				document.querySelector('.js-apartment-number').textContent = currentItem.apartmentNumber;
+			}
+		});
+	});
+});
 
-const getApartmentPlan = (apartmentPlan) => {
 
-}
-
-const getApartmentDescription = (infos) => {
-
-}
-
-const getRoomsCount = (roomsCount) => {
-
-}
-
-const getBuildingWing = (buildingWing) => {
-
-}
-
-const getFloor = (floors) => {
-
-}
 
 const getObjectCount = () => {
 	const objectsCount = data.length;

@@ -125,6 +125,7 @@ burger.addEventListener('click', (event) => {
 });
 
 // Закрытие меню при клике вне его области
+/* ДОПИСАТЬ */
 document.addEventListener('click', (event) => {
 	const target = event.target;
 	if (!headerMenu.contains(target) && !burger.contains(target)) {
@@ -134,6 +135,19 @@ document.addEventListener('click', (event) => {
 			clonedHeaderBlock = null;
 		}
 	}
+});
+
+document.querySelectorAll('.header__nav a').forEach(link => {
+	link.addEventListener('click', function (event) {
+		const target = event.target;
+		if (headerMenu.contains(target)) {
+			headerMenu.classList.remove('active');
+			if (clonedHeaderBlock) {
+				clonedHeaderBlock.remove();
+				clonedHeaderBlock = null;
+			}
+		}
+	});
 });
 
 // Обновление клона меню
@@ -235,34 +249,88 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 document.addEventListener("DOMContentLoaded", () => {
-	if (window.innerWidth > 768) {
-		const navLinks = document.querySelectorAll(".header__nav li a");
-		const sections = document.querySelectorAll("section");
+	const navLinks = document.querySelectorAll(".header__nav li a");
+	const sections = document.querySelectorAll("section");
 
-		// Проверка: секции и ссылки существуют
-		if (!sections.length || !navLinks.length) {
-			console.error("Секции или ссылки не найдены!");
-			return;
-		}
+	if (!sections.length || !navLinks.length) {
+		console.error("Секции или ссылки не найдены!");
+		return;
+	}
 
-		const observer = new IntersectionObserver((entries) => {
-			entries.forEach((entry) => {
-				const link = document.querySelector(`a[href="#${entry.target.id}"]`);
+	const observer = new IntersectionObserver((entries) => {
+		entries.forEach((entry) => {
+			const link = document.querySelector(`a[href="#${entry.target.id}"]`);
 
-				// Проверка: ссылка существует
-				if (link) {
-					if (entry.isIntersecting) {
-						link.classList.add("active-link");
-					} else {
-						link.classList.remove("active-link");
-					}
+			if (link) {
+				if (entry.isIntersecting) {
+					link.classList.add("active-link");
+				} else {
+					link.classList.remove("active-link");
 				}
-			});
-		}, {
-			threshold: 0.5 // Срабатывание при пересечении 50% секции
+			}
 		});
+	}, {
+		threshold: 0.5
+	});
 
-		sections.forEach((section) => observer.observe(section));
+	sections.forEach((section) => observer.observe(section));
+
+
+	document.querySelectorAll('.header__nav a').forEach(link => {
+		link.addEventListener('click', function (event) {
+			event.preventDefault(); // Отключаем стандартное поведение якоря
+
+			const targetId = this.getAttribute('href').substring(1); // Получаем ID цели
+			const targetElement = document.getElementById(targetId);
+
+			if (targetElement) {
+				// Плавное перемещение к цели
+				const offset = -100; // Сдвиг на -100px
+				const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY + offset;
+
+				window.scrollTo({
+					top: targetPosition,
+					behavior: 'smooth' // Плавный переход
+				});
+
+				// Подсветка активной ссылки
+				document.querySelectorAll('.flex-style-row a').forEach(link => link.classList.remove('active-link'));
+				this.classList.add('active-link');
+			}
+		});
+	});
+	const logo = document.querySelector('.header__logo');
+	if (logo) {
+		logo.addEventListener('click', function (event) {
+			event.preventDefault();
+			window.scrollTo({
+				top: 0,
+				behavior: 'smooth'
+			});
+			document.querySelectorAll('.flex-style-row a').forEach(link => link.classList.remove('active-link'));
+		});
+	}
+	const buttonScrollForm = document.querySelector('.js-scroll-form');
+	if (buttonScrollForm) {
+		buttonScrollForm.addEventListener('click', function (event) {
+			event.preventDefault();
+
+			const targetId = this.getAttribute('href').substring(1); // Получаем ID цели
+			const targetElement = document.getElementById(targetId);
+
+			if (targetElement) {
+				// Плавное перемещение к цели
+				const offset = -100; // Сдвиг на -100px
+				const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY + offset;
+
+				window.scrollTo({
+					top: targetPosition,
+					behavior: 'smooth' // Плавный переход
+				});
+				document.querySelectorAll('.flex-style-row a').forEach(link => link.classList.remove('active-link'));
+				this.classList.add('active-link');
+			}
+		});
 	}
 });
 
@@ -302,3 +370,67 @@ const getScrollablePanels = () => {
 		}, { passive: false });
 	}
 };
+window.addEventListener('resize', (event) => {
+	if (window.innerWidth <= 1520 && window.innerWidth >= 768) {
+		document.querySelectorAll('.card-text-content').forEach(card => {
+			card.addEventListener('click', function (event) {
+				const wrapper = document.querySelector('.wrapper');
+				event.preventDefault();
+
+				let existingClone = document.querySelector('.clone-container');
+				let existingOverlay = document.querySelector('.clone-container-overlay');
+
+				if (existingClone) existingClone.remove();
+				if (existingOverlay) existingOverlay.remove();
+
+				const overlay = document.createElement('div');
+				overlay.classList.add('clone-container-overlay');
+				document.body.appendChild(overlay);
+
+				// Создаём клон
+				const cloneContainer = document.createElement('div');
+				cloneContainer.classList.add('clone-container');
+				cloneContainer.classList.add('flex-style-column');
+				cloneContainer.innerHTML = `
+				  ${this.innerHTML}
+			 `;
+				wrapper.appendChild(cloneContainer);
+
+				// Запускаем анимацию (выезжание)
+				setTimeout(() => {
+					cloneContainer.classList.add('active');
+					overlay.classList.add('active');
+				}, 100);
+
+				// Логика закрытия клона
+				const closeButton = cloneContainer.querySelector('.clone-container p');
+				closeButton.addEventListener('click', () => {
+					cloneContainer.classList.remove('active');
+					overlay.classList.remove('active');
+					setTimeout(() => { cloneContainer.remove(); overlay.remove(); }, 400);
+				});
+			});
+		});
+
+
+	}
+})
+
+const priceRequestDialog = document.getElementById('priceRequest');
+const openDialogButton = document.querySelector('.open-dialog');
+const closeDialogButton = priceRequestDialog.querySelector('.close__dialog');
+
+// Открытие диалога с анимацией
+openDialogButton.addEventListener('click', () => {
+	priceRequestDialog.showModal();
+	priceRequestDialog.classList.add('active');
+});
+
+// Закрытие диалога с анимацией
+closeDialogButton.addEventListener('click', () => {
+	priceRequestDialog.classList.remove('active');
+
+	setTimeout(() => {
+		priceRequestDialog.close();
+	}, 400);
+});

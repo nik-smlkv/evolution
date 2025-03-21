@@ -159,7 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		event.preventDefault();
 		event.stopPropagation();
 	}
-	if (scrollToVideo.classList.contains('js-scrolling')) {
+	if (scrollToVideo.classList.contains('js-scrolling') && window.innerWidth <= 1520 && window.innerWidth >= 768) {
 
 		window.addEventListener("wheel", () => {
 			const title = document.querySelector(".main-title");
