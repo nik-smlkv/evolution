@@ -1256,7 +1256,9 @@ input.input-event[value=""]+.input-placeholder {
 		height: 100%;
 	}
 
-
+	.change-text{
+		height: 100%;
+	}
 	.title-slide.hide {
 		transform: translateY(200%);
 	}

@@ -214,13 +214,23 @@ function updateTitle(index) {
 		if (i === index) {
 			text.classList.remove('hide');
 			text.classList.add('show');
+			moveShowToFirst();
 		} else {
 			text.classList.remove('show');
 			text.classList.add('hide');
+			moveShowToFirst();
 		}
 	});
 }
+function moveShowToFirst() {
+	const container = document.querySelector('.change-text');
+	const showParagraph = container.querySelector('p.show');
 
+	if (showParagraph) {
+		 // Переместить элемент с классом "show" в начало контейнера
+		 container.insertBefore(showParagraph, container.firstChild);
+	}
+}
 
 const swiperQuality = new Swiper('.swiper-quality', {
 	slidesPerView: 1,
