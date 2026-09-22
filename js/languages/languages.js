@@ -1,0 +1,278 @@
+export const langArr = {
+	en: {
+		link_project: `About the project`,
+		link_about_btn: `about project`,
+		h2_represen: `Evolution Residence is one of our most representative projects and a symbol of our success.`,
+		p_recogn: `The complex is a modern and recognizable residential space designed for individuals, 
+		families, and companies, with the goal of creating an exceptional environment for living, working,
+		and leisure. Although still under construction, this unique project has already gained recognition due to high demand and dynamic sales.`,
+		p_quality: `The high-quality apartments, business spaces, exclusive swimming pool, and a spa center will make the Evolution 
+		 Residence complex the ideal place for living and working. The use of top-quality materials for finishing, 
+		 combined with a beautiful location surrounded by greenery, will provide a high-quality living space with excellent connectivity to the city.`,
+		stat_res: `of residential space`,
+		stat_com: `commercial spaces`,
+		stat_build: `residential-commercial buildings`,
+		stat_apr: `apartments`,
+		link_feat: `Features`,
+		p_dream: `LET YOUR LUXURY OASIS BE OUR RESPONSIBILITY`,
+		p_revolut: `THE COMPLEX IS REVOLUTIONIZING CONSTRUCTION, BEGINNING WITH A PRECISE ANALYSIS OF YOUR LIFESTYLE STANDARDS.`,
+		h2_feat: `Complex Features`,
+		p_guest: `The Evolution Residence complex represents a new era in the construction industry, enhancing living standards with luxurious 
+		amenities such as swimming pool, modern SPA and fitness centers, making life in the complex perfect for contemporary and comfortable living. 
+		The complex consists of four buildings, and the reception 
+		will be available to residents for all their daily needs, as well as provide a warm welcome to their guests.`,
+		p_swim: `SWIMMING POOL`,
+		p_fit: `FITNESS CENTER`,
+		p_spa: `SPA CENTER`,
+		p_lob: `LOBBY`,
+		p_prem: `COMMERCIAL PREMISES`,
+		p_park: `PARKING`,
+		h2_infra: `INFRASTRUCTURE AND LOCATION`,
+		h2_crit: `The location is a critical factor when selecting the right property, and the quality of infrastructure is essential.`,
+		p_provides: `The location of the Evolution Residence complex provides easy access to all key amenities. Within 
+		a one-kilometer radius, you will find kindergartens, primary and secondary schools, the Economics School, Singidunum University, 
+		as well as the "Stadion" shopping center and numerous dining establishments.`,
+		p_schl: `Primary school “Veselin Masleša”`,
+		p_gimnaz: `XII Beogradska Gimnazija`,
+		p_univ: `University “Singidunum”`,
+		p_engin: `Faculty of Transport and Traffic Engineering`,
+		p_fon: `Faculty of Organizational Sciences «FON»`,
+		p_stad: `TC «Stadion»`,
+		p_lidl: `Supermarket «Lidl» Trošarina`,
+		p_max: ` Supermarket «Maxi»`,
+		p_kom: `Autokomanda`,
+		p_partstad: `Partizan Stadium`,
+		p_rajk: `Stadium «Rajko Mitić»`,
+		p_located: `Evolution Residence is located in Voždovac, at Tolminska St. № 5-11.`,
+		p_build: `The Evolution Residence complex is located in a carefully selected area, offering easy access to the city 
+		center while being situated in a peaceful green oasis. With a total area of 57,302 m², 
+		the complex will consist of four residential-commercial buildings.`,
+		p_areas: `AREAS OF GREENERY AND COMFORT`,
+		p_space: `FUNCTIONAL OPEN SPACE WITH ABUNDANT GREENERY, TREES, AND CHILDREN'S PLAYGROUNDS – THE PERFECT 
+		ENVIRONMENT FOR RELAXATION, SOCIALIZING, AND CREATING UNFORGETTABLE MOMENTS.`,
+		p_mater: `MATERIALS`,
+		p_quality_comf: `Top quality for complete enjoyment`,
+		h2_aesth2: `Aesthetics and reliability in every detail`,
+		p_porcelain: `The porcelain tiles in the hallways and stairwells will be selected to provide a modern and elegant appearance, 
+		in line with the overall style of the building. The doors to be installed will be of domestic production, equipped with a 
+		Grade III anti-burglary system, ensuring a high level of security for the residents. The interior doors will be MDF, finished with 
+		melamine treatment, combining durability and aesthetic appeal. The three-layer oak parquet, combined with white MDF baseboards of 6/8 cm height, 
+		will create a harmonious and contemporary interior. 
+		The spaces will feature first-class ceramic tiles from renowned European manufacturers, adding sophistication and comfort to every room.`,
+		p_comf: `High quality and exceptional comfort`,
+		p_facade: `The building’s facade will be cladded with high-quality materials that will provide a long-lasting visual effect and an aesthetically 
+		pleasing appearance. Modern terraces with geometric shapes will contribute to the dynamism of the facade, while aluminum railings will add 
+		elegance and sophistication. Mosquito nets installed on the openings will be designed to allow for unobstructed ventilation, thus contributing
+		 to optimal air circulation. The central heating system with remote control and a calorimeter to monitor energy consumption, along with aluminum 
+		 radiators and climate control systems, 
+		will ensure an optimal indoor climate, creating a comfortable atmosphere in all weather conditions.`,
+		p_apart: `Apartments`,
+		p_offer: `Offer`,
+		h2_forsale: `APARTMENT FOR SALE`,
+		p_lamela: `Lamela`,
+		p_floor: `Floor`,
+		p_area: `Area`,
+		p_num: `Apartment number`,
+		p_wing: `Building wing`,
+		p_price: `PRICE UPON REQUEST`,
+		p_gal: `GALLERY`,
+		p_fin: `FINANCING`,
+		p_htb: `HOW TO BUY`,
+		p_credit: `Credit`,
+		p_purch: `Purchasing an apartment in the Evolution Residence housing complex can become a reality with the help of various banks offering favorable loans. 
+		Understanding the options available in the market will help you find the best solution for your financial needs.`,
+		p_solut: `Buying an apartment with a loan is a practical solution that allows you to become a property owner without the 
+		need for large upfront investments. With a favorable mortgage, you can take advantage of 
+		the current market conditions and move into your new home quickly.`,
+		p_cash: `Cash`,
+		p_proc: `Purchasing an apartment in the Evolution Residence housing complex with cash can be an excellent choice for those who have the means. 
+		Paying in cash offers several advantages, including the ability to avoid interest payments and the convenience of a straightforward transaction process.`,
+		p_simplif: `This method not only simplifies the purchase process but also often provides more negotiating power, helping you secure the best possible deal on your new home.`,
+		p_callback: `Request callback`,
+		p_short: `Fill out the form and we will contact you shortly.`,
+		p_name: `Name`,
+		p_mail: `E-mail`,
+		btn_zayav: `Leave a request`,
+		btn_zayav1: `Leave a request`,
+		btn_zayav2: `Leave a request`,
+		p_byclick_1: `By clicking the button, you agree to`,
+		p_byclick_2: `terms of processing personal data`,
+		p_contact: `Contact`,
+		p_phone: `Phone`,
+		p_office: `Sales Office`,
+		p_locat: `Location`,
+		btn_direct: `Get direction`,
+		link_about: `About Project `,
+		link_features: `Features`,
+		link_infrastructure: `Infrastructure`,
+		link_apartments: `Apartments`,
+		link_gallery: `Gallery`,
+		link_financing: `Financing`,
+		link_contact: `Contact`,
+		h2_search_parameter: `Select by parameters`,
+		a_plan: `Select on 3d plan`,
+		p_plan: `Select on 3d plan`,
+		a_parameters: `Select by Parameters`,
+		p_previous: `Previous`,
+		p_floor_plan: `Floor plan`,
+		p_grid_view: `Grid View`,
+		p_street: `Tolminska street, no. 5-11`,
+		p_affordable: `Affordable apartments`,
+		p_text_slide_0: `The porcelain tiles in the hallways and stairwells will
+                        be selected to provide a modern and elegant appearance,
+                        in line with the overall style of the building. The
+                        doors to be installed will be of domestic production,
+                        equipped with a Grade III anti-burglary system, ensuring
+                        a high level of security for the residents. The interior
+                        doors will be MDF, finished with melamine treatment,
+                        combining durability and aesthetic appeal.Quality parquet, combined with white MDF
+                        baseboards of 6/8 cm height, will create a harmonious
+                        and contemporary interior. The spaces will feature
+                        first-class ceramic tiles from renowned European
+                        manufacturers, adding sophistication and comfort to
+                        every room.`,
+		p_text_slide_1: `The building’s facade will be cladded with high-quality materials that will provide a long-lasting visual effect and an aesthetically pleasing appearance. 
+		Modern terraces with geometric shapes will contribute to the dynamism of the facade, while aluminum railings will add elegance and sophistication. 
+		The central heating system with remote control and a calorimeter to monitor energy consumption, 
+		along with aluminum radiators and climate control systems, will ensure an optimal indoor climate, creating a comfortable atmosphere in all weather conditions.`,
+		p_belrg: `Belgrade`,
+	},
+	srb: {
+		p_belrg: `Beograd`,
+		p_locat: `Lokacija`,
+		p_quality_comf: `Vrhunski kvalitet za potpuno uživanje`,
+		p_text_slide_1: `Fasada zgrade biće obložena visokokvalitetnim materijalima koji će obezbediti dugotrajan vizuelni efekat i estetski privlačan izgled. 
+		Moderne terase sa geometrijskim oblicima doprinosiće dinamici fasade, dok će aluminijumske ograde uneti eleganciju i sofisticiranost. 
+		 Centralni sistem grejanja sa daljinskim upravljačem i kalorimetrom za praćenje potrošnje energije, uz aluminijumske radijatore i klimatske sisteme, 
+		 omogućiće optimalnu unutrašnju klimu, stvarajući prijatnu atmosferu u svim vremenskim uslovima.`,
+		p_text_slide_0: `Porcelanske pločice u hodnicima i stepeništima biće odabrane da pruže moderan i elegantan izgled, 
+		u skladu sa celokupnim stilom zgrade. Vrata koja će biti postavljena, biće domaće proizvodnje, sa protivprovalnim sistemom III stepena, 
+		čime će stanarima biti obezbeđeno visoko bezbednosno okruženje. Unutrašnja vrata biće MDF, završena melaminskom obradom, spajajući dugovečnost i lep izgled. 
+		Kvalitetan parket, u kombinaciji sa belim MDF baseboardima visine 6/8 cm, stvoriće harmoničan i savremen enterijer. 
+		U prostorima će se koristiti prvoklasne keramičke pločice od renomiranih evropskih proizvođača, što će dodati sofisticiranost i udobnost svakom prostoru.`,
+		p_grid_view: `Tabela stanova`,
+		p_floor_plan: `Planovi etaža`,
+		p_affordable: `Tabela stanova`,
+		p_previous: `Prethodno`,
+		h2_search_parameter: `Izaberi po parametrima`,
+		a_plan: `Izaberi na 3D Planu`,
+		p_plan: `Izaberi na 3D Planu`,
+		a_parameters: `Izaberi po parametrima`,
+		link_project: `O PROJEKTU`,
+		link_about_btn: `O PROJEKTU`,
+		h2_represen: `Evolution Residence je jedan od naših najreprezentativnijih projekata i simbol našeg uspeha.`,
+		p_recogn: `Kompleks je moderan i prepoznatljiv stambeni prostor namenjen pojedincima, porodicama i kompanijama, sa ciljem 
+		stvaranja izuzetnog okruženja za život, rad i odmor. Iako je još uvek u fazi izgradnje, ovaj
+		 jedinstveni projekat je već stekao prepoznavanje zahvaljujući velikoj potražnji i dinamičnoj prodaji.`,
+		p_quality: `Stanovi vrhunskog kvaliteta, poslovni prostori, ekskluzivan bazen i spa centar učiniće kompleks Evolution 
+		Residence idealnim mestom za život i posao. Korišćenje najkvalitetnijih materijala 
+		za završnu obradu, uz prelepu lokaciju okruženu zelenilom, obezbediće kvalitetan životni prostor sa odličnom povezanošću sa gradom.`,
+		stat_res: `stambenog prostora`,
+		stat_com: `poslovnih prostora`,
+		stat_build: `stambeno-poslovnih prostora`,
+		stat_apr: `stanova`,
+		link_feat: `O nama`,
+		p_dream: `NEKA VAŠA OAZA LUKSUZA BUDE NAŠ ZADATAK`,
+		p_revolut: `KOMPLEKS PRAVI REVOLUCIJU U IZGRADNJI, POČINJUĆI OD PRECIZNE ANALIZE VAŠIH ŽIVOTNIH STANDARDA.`,
+		h2_feat: `OSOBINE KOMPLEKSA`,
+		p_guest: `Kompleks Evolution Residence predstavlja novu eru u građevinskoj industriji, unapređujući standarde stanovanja 
+		kroz luksuzne sadrzaje poput bazena, modernih SPA i fitness centara, čineći život u njemu savršenim za savremene i udobne uslove. 
+		Kompleks se sastoji od četiri lamele, a recepcija će biti na raspolaganju stanarima za 
+		sve njihove svakodnevne potrebe, kao i da pruži gostima prijatan i topao doček.`,
+		p_swim: `BAZEN`,
+		p_fit: `FITNESS CENTAR`,
+		p_spa: `SPA CENTAR`,
+		p_lob: `LOBI`,
+		p_prem: `POSLOVNE PROSTORIJE`,
+		p_park: `PARKING`,
+		h2_infra: `INFRASTRUKTURA I LOKACIJA`,
+		h2_crit: `Pri izboru prave nekretnine, lokacija je od presudne važnosti, a kvalitet infrastrukture igra ključnu ulogu.`,
+		p_provides: `Lokacija kompleksa Evolution Residence pruža lakoću pristupa svim ključnim sadržajima. 
+		U radijusu od jednog kilometra nalaze se vrtići, osnovne i srednje škole, 
+		Ekonomska škola, Univerzitet Singidunum, kao i tržni centar „Stadion“ i mnogi ugostiteljski objekti.`,
+		p_schl: `Osnovna škola “Veselin Masleša”`,
+		p_gimnaz: `Dvanaesta Beogradska gimnazija`,
+		p_univ: `Univerzitet “Singidunum”`,
+		p_engin: `Saobraćajni fakultet`,
+		p_fon: `Fakultet Organizacionih Nauka "FON"`,
+		p_rajk: `Stadion "Rajko Mitić"`,
+		p_partstad: `Stadion FK "Partizan`,
+		p_kom: `Autokomanda`,
+		p_max: `Supermarket «Maxi»`,
+		p_lidl: `Supermarket «Lidl» Trošarina`,
+		p_located: `Evolution Residence se nalazi na Voždovcu, u Tolminskoj ulici br. 5-11.`,
+		p_build: `Kompleks Evolution Residence se nalazi na pažljivo odabranoj lokaciji, koja pruža lak pristup centru grada, dok 
+		je istovremeno smešten u mirnoj zelenoj oazi. 
+		Sa ukupnom površinom od 57.302 m², kompleks će sadržati četiri stambeno-poslovne zgrade.`,
+		p_areas: `KOMFORA`,
+		p_space: `FUNKCIONALAN OTVORENI PROSTOR SA BOGATIM ZELENILOM, DRVEĆEM I IGRALIŠTIMA ZA DECU – 
+		SAVRŠENO OKRUŽENJE ZA OPUŠTANJE, DRUŽENJE I KREIRANJE NEZABORAVNIH TRENUTAKA.`,
+		p_mater: `MATERIJALI`,
+		h2_aesth2: `Estetika i pouzdanost u svakom detalju`,
+		p_porcelain: `Porcelanske pločice u hodnicima i stepeništima biće odabrane da pruže moderan i elegantan izgled, u skladu sa celokupnim stilom zgrade.
+		 Vrata koja će biti postavljena, biće domaće proizvodnje, sa protivprovalnim sistemom III stepena, čime će stanarima biti obezbeđeno visoko bezbednosno okruženje. 
+		 Unutrašnja vrata biće MDF, završena melaminskom obradom, spajajući dugovečnost i lep izgled. Troslojni hrastov parket, u kombinaciji sa belim 
+		 MDF baseboardima visine 6/8 cm, stvoriće harmoničan i savremen enterijer. 
+		U prostorima će se koristiti prvoklasne keramičke pločice od renomiranih evropskih proizvođača, što će dodati sofisticiranost i udobnost svakom prostoru.`,
+		p_comf: `Vrhunski kvalitet i izuzetna`,
+		p_facade: `Fasada zgrade biće obložena visokokvalitetnim materijalima koji će obezbediti dugotrajan vizuelni efekat
+		 i estetski privlačan izgled. Moderne terase sa geometrijskim oblicima doprinosiće dinamici fasade, dok će aluminijumske ograde 
+		 uneti eleganciju i sofisticiranost. Komarnici postavljeni na otvorima biće dizajnirani da omoguće nesmetano provetravanje prostora,
+		  čime će doprineti optimalnoj cirkulaciji vazduha. Centralni sistem grejanja sa daljinskim upravljačem i kalorimetrom za praćenje potrošnje energije,
+		   uz aluminijumske radijatore i klimatske sisteme, omogućiće optimalnu unutrašnju klimu, s
+		tvarajući prijatnu atmosferu u svim vremenskim uslovima.`,
+		p_apart: `Stanovi`,
+		p_offer: `Ponuda`,
+		h2_forsale: `STAN ZA PRODAJU`,
+		p_lamela: `Lamela`,
+		p_floor: `Sprat`,
+		p_area: `Površina`,
+		p_num: `Broj stana`,
+		p_wing: `Lamela`,
+		p_price: `CENA NA ZAHTEV`,
+		p_gal: `GALERIJA`,
+		p_fin: `FINANSIRANJE`,
+		p_htb: `KAKO KUPITI`,
+		p_credit: `Kredit`,
+		p_purch: `Kupovina stana u stambenom kompleksu Evolution Residence može da postane stvarnost uz pomoć različitih banaka koje nude povoljne kredite. 
+		Razumevanje opcija dostupnih na tržištu pomoći će vam da pronađete najbolje rešenje za vaše finansijske potrebe.`,
+		p_solut: `Kupovina stana na kredit je praktično rešenje koje vam omogućava da postanete vlasnik nekretnine bez potrebe
+		 za velikim početnim ulaganjima. Uz povoljan stambeni kredit, 
+		možete iskoristiti prednosti trenutnog tržišta i brzo se -useliti u svoj novi dom.`,
+		p_cash: `Gotovina`,
+		p_proc: `Kupovina stana u stambenom kompleksu Evolution Residence gotovinom može da bude odličan izbor za one koji imaju sredstva. 
+		Plaćanje u gotovini nudi nekoliko prednosti, uključujući mogućnost izbegavanja plaćanja kamata i pogodnost direktnog procesa transakcije.`,
+		p_simplif: `Ova metoda ne samo pojednostavljuje postupak kupovine, već i često pruža veću moć pregovaranja, pružajući vam pomoć
+		 da osigurate najbolju moguću ponudu za svoj novi dom.`,
+		p_callback: `Kontaktirajte naš prodajni tim`,
+		p_short: `Popunite formular i kontaktiraćemo Vas u najkraćem roku`,
+		p_name: `Ime`,
+		p_mail: `E-mail adresa`,
+		btn_zayav: `Pošaljite upit`,
+		btn_zayav1: `Pošaljite upit`,
+		btn_zayav2: `Pošaljite upit`,
+		p_byclick_1: `Klikom na dugme prihvatate`,
+		p_byclick_2: `uslove obrade ličnih podataka`,
+		p_contact: `Kontakt`,
+		p_phone: `Telefon`,
+		p_office: `Prodajna kancelarija`,
+		btn_direct: `Dobijte uputstva`,
+		link_about: `O projektu`,
+		link_about_btn: `O projektu`,
+		link_features: `O nama`,
+		link_infrastructure: `Infrastruktura`,
+		link_apartments: `Stanovi`,
+		link_gallery: `Galerija`,
+		link_financing: `Finansiranje`,
+		link_contact: `Kontakt`,
+		p_street: `Tolminska ulica, br. 5-11`,
+	},
+};
+
+
+
+
+
+
+
+
