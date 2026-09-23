@@ -1,0 +1,131 @@
+.house-menu {
+  position: relative;
+  overflow: visible;
+}
+
+.house-menu__toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  min-height: 52px;
+  padding: 0 20px;
+  color: #fafafa;
+  font: inherit;
+  font-size: 15px;
+  letter-spacing: 0;
+  background: transparent;
+  border: 1px solid rgba(250, 250, 250, 0.88);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: border-color 180ms ease, color 180ms ease, background-color 180ms ease;
+}
+
+.house-menu__toggle img {
+  width: 14px;
+  height: 14px;
+  object-fit: contain;
+  transition: transform 180ms ease, filter 180ms ease;
+}
+
+.house-menu:hover .house-menu__toggle,
+.house-menu[data-open="true"] .house-menu__toggle,
+.house-menu__toggle:focus-visible {
+  color: #42b0f9;
+  border-color: #42b0f9;
+  outline: none;
+}
+
+.house-menu[data-open="true"] .house-menu__toggle img {
+  transform: rotate(180deg);
+  filter: brightness(0) saturate(100%) invert(63%) sepia(65%) saturate(623%) hue-rotate(166deg) brightness(100%) contrast(96%);
+}
+
+.house-menu__list {
+  position: absolute;
+  top: calc(100% + 16px);
+  left: 0;
+  z-index: 30;
+  display: grid;
+  width: max-content;
+  min-width: 260px;
+  margin: 0;
+  padding: 20px 36px;
+  list-style: none;
+  visibility: hidden;
+  opacity: 0;
+  background: #161d2d;
+  transform: translateY(-8px);
+  pointer-events: none;
+  transition: opacity 180ms ease, transform 180ms ease, visibility 180ms ease;
+}
+
+.house-menu[data-open="true"] .house-menu__list {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.house-menu__list a {
+  display: block;
+  padding: 14px 0;
+  color: #fafafa !important;
+  font-size: 24px !important;
+  line-height: 1.2;
+  text-decoration: none;
+  transition: color 180ms ease;
+}
+
+.house-menu__list a:hover,
+.house-menu__list a:focus-visible {
+  color: #42b0f9 !important;
+  outline: none;
+}
+
+body[data-catalog-house="tchaikovsky"] .area-filter {
+  display: none;
+}
+
+body[data-catalog-house="tchaikovsky"] .button__choice[data-key="2"],
+body[data-catalog-house="tchaikovsky"] .houses-plans_container {
+  display: none !important;
+}
+
+@media (hover: hover) and (min-width: 768px) {
+  .house-menu:hover .house-menu__list {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+}
+
+@media (max-width: 767.99px) {
+  .house-menu {
+    height: auto;
+    overflow: visible;
+  }
+
+  .house-menu__toggle {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .house-menu__list {
+    position: static;
+    width: 100%;
+    min-width: 0;
+    margin-top: 12px;
+    padding: 10px 20px;
+    transform: none;
+  }
+
+  .house-menu[data-open="true"] .house-menu__list {
+    transform: none;
+  }
+
+  .house-menu__list a {
+    font-size: 19px !important;
+  }
+}
