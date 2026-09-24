@@ -1,4 +1,4 @@
-import { loadHouse } from "./houses.js?v=1.0.1";
+import { loadHouse } from "./houses.js?v=1.0.4";
 import { openModal } from "../modal.js";
 const requestedHouse = new URLSearchParams(window.location.search).get("house");
 const catalog = await loadHouse(requestedHouse);
@@ -22,6 +22,10 @@ let visibleCards = null;
 const popupCurrentHouse = document.querySelector(".popup.popup_type_house");
 const formatArea = (apartment) =>
   Number.isFinite(apartment.area) ? `${apartment.area}m²` : "—";
+const formatApartmentDetails = (apartment) =>
+  apartment.floor
+    ? `${apartment.floor} <i></i> ${formatArea(apartment)}`
+    : formatArea(apartment);
 const whenDocumentReady = (callback) => {
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", callback, { once: true });
@@ -29,6 +33,179 @@ const whenDocumentReady = (callback) => {
     callback();
   }
 };
+
+const tchaikovskyLifePlans = {
+  A: { P: "2100", 1: "3100", 2: "3200", 3: "3300", 4: "3400", 5: "3500" },
+  B: { VP: "3100", 1: "3200", 2: "3300", 3: "3400", 4: "3500" },
+  C: { P: "2100", VP: "3100", 2: "3200", 3: "3300", 4: "3400", 5: "3500" },
+};
+
+const tchaikovskyLifePlanImages = {
+  2100: "./plans/А3/2100 Osnova Prizemlja (A,C)_Nisko Prizemlje.jpg",
+  3100: "./plans/А3/3100 Osnova 1- Sprata (A,C) Visoko prizemlje (B).jpg",
+  3200: "./plans/А3/3200 Osnova 2- Sprata (A,C)_1-Sprat (B).jpg",
+  3300: "./plans/А3/3300 Osnova 3- Sprata (A,C)_2-Sprat (B).jpg",
+  3400: "./plans/А3/3400 Osnova 4- Sprata (A,C)_3-Sprat (B).jpg",
+  3500: "./plans/А3/3500 Osnova 5- Sprata (A,C)_4-Sprat (B).jpg",
+};
+
+const setTchaikovskyPlanPopup = (apartment) => {
+  const popup = document.querySelector(".popup_type_house");
+  if (!popup || !apartment) return;
+
+  popup.querySelector(".js-apartment-wing").textContent = apartment.buldingWing;
+  popup.querySelector(".js-apartment-floor").textContent = apartment.floor ?? "";
+  popup.querySelector(".js-apartment-area").textContent = formatArea(apartment);
+  popup.querySelector(".js-apartment-number").textContent = apartment.apartmentNumber;
+  popup.querySelector(".apartment__img").src = apartment.planImg;
+  openModal(popup);
+};
+
+const initializeTchaikovskyFloorPlan = async () => {
+  if (house !== "tchaikovsky") return;
+
+  const planContainer = document.querySelector(".houses-plans_container");
+  const planHost = document.querySelector(".houses-plan");
+  const controlHost = planContainer?.querySelector(".floor__filter");
+  if (!planContainer || !planHost || !controlHost) return;
+
+  try {
+    const response = await fetch("./plans/А3/chaikovsky-life.svg");
+    if (!response.ok) throw new Error("Unable to load chaikovsky-life.svg");
+
+    const documentSvg = new DOMParser().parseFromString(
+      await response.text(),
+      "image/svg+xml",
+    );
+    const svg = documentSvg.documentElement;
+    svg.classList.add("floors-res", "tchaikovsky-life-plan");
+    svg.removeAttribute("id");
+
+    Object.entries(tchaikovskyLifePlanImages).forEach(([level, imagePath]) => {
+      const levelGroup = svg.querySelector(`[id="_${level}"]`);
+      const image = levelGroup?.querySelector("image");
+      if (!image) return;
+      image.setAttribute("href", imagePath);
+      image.setAttributeNS("http://www.w3.org/1999/xlink", "href", imagePath);
+    });
+
+    planHost.replaceChildren(svg);
+    controlHost.innerHTML = `
+      <div class="tchaikovsky-plan-controls">
+        <div class="tchaikovsky-plan-controls__group">
+          <p class="fw-medium">Lamela</p>
+          <div class="tchaikovsky-plan-controls__buttons" data-plan-wings></div>
+        </div>
+        <div class="tchaikovsky-plan-controls__group">
+          <p class="fw-medium">Floor</p>
+          <div class="tchaikovsky-plan-controls__buttons" data-plan-floors></div>
+        </div>
+      </div>
+    `;
+
+    let activeWing =
+      selectedLamela && selectedLamela !== "All" ? selectedLamela : "A";
+    let activeFloor = Object.keys(tchaikovskyLifePlans[activeWing])[0];
+    const wingsHost = controlHost.querySelector("[data-plan-wings]");
+    const floorsHost = controlHost.querySelector("[data-plan-floors]");
+    const levelGroups = Array.from(svg.children).filter((element) =>
+      /^_\d+$/.test(element.id),
+    );
+
+    const openApartmentFromPlan = (wing, number) => {
+      const apartment = data.find(
+        (item) => item.apartmentNumber === `STAN ${wing}${pad(Number(number))}`,
+      );
+      setTchaikovskyPlanPopup(apartment);
+    };
+
+    const setPolygonState = (polygon, wing, number, enabled) => {
+      polygon.dataset.planUnit = `${wing}${number}`;
+      polygon.classList.remove("enabled", "disabled");
+      polygon.classList.add(enabled ? "enabled" : "disabled");
+      polygon.removeAttribute("tabindex");
+      polygon.removeAttribute("role");
+      polygon.onkeydown = null;
+      polygon.onclick = null;
+
+      if (!enabled) return;
+
+      polygon.setAttribute("tabindex", "0");
+      polygon.setAttribute("role", "button");
+      polygon.setAttribute("aria-label", `Open apartment ${wing}${pad(Number(number))}`);
+      polygon.onclick = () => openApartmentFromPlan(wing, number);
+      polygon.onkeydown = (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          openApartmentFromPlan(wing, number);
+        }
+      };
+    };
+
+    const renderPlan = () => {
+      const level = tchaikovskyLifePlans[activeWing][activeFloor];
+      levelGroups.forEach((group) => {
+        group.style.display = group.id === `_${level}` ? "block" : "none";
+      });
+
+      const levelGroup = svg.querySelector(`[id="_${level}"]`);
+      const interactivePolygons = [
+        ...levelGroup.querySelectorAll('g[id^="zone_"] > polygon, g[id^="zone_"] > polyline, g[id^="zone_"] > path'),
+        ...levelGroup.querySelectorAll('g[data-name="А"] > polygon'),
+      ];
+
+      interactivePolygons.forEach((polygon) => {
+        const zone = polygon.closest('g[id^="zone_"]');
+        const zoneParts = zone?.id.match(/^zone_\d+_([abc])_(\d+)$/i);
+        const directNumber = polygon.getAttribute("data-name");
+        const wing = zoneParts?.[1]?.toUpperCase() ?? "A";
+        const number = zoneParts?.[2] ?? directNumber;
+        setPolygonState(polygon, wing, number, wing === activeWing);
+      });
+
+      floorsHost.querySelectorAll("button").forEach((button) => {
+        button.classList.toggle("active", button.dataset.planFloor === activeFloor);
+      });
+    };
+
+    const renderControls = () => {
+      wingsHost.innerHTML = Object.keys(tchaikovskyLifePlans)
+        .map(
+          (wing) =>
+            `<button class="filter__btn control ${wing === activeWing ? "active" : ""}" type="button" data-plan-wing="${wing}">${wing}</button>`,
+        )
+        .join("");
+      floorsHost.innerHTML = Object.keys(tchaikovskyLifePlans[activeWing])
+        .map(
+          (floor) =>
+            `<button class="filter__btn control" type="button" data-plan-floor="${floor}">${floor}</button>`,
+        )
+        .join("");
+
+      wingsHost.querySelectorAll("button").forEach((button) => {
+        button.addEventListener("click", () => {
+          activeWing = button.dataset.planWing;
+          activeFloor = Object.keys(tchaikovskyLifePlans[activeWing])[0];
+          renderControls();
+          renderPlan();
+        });
+      });
+      floorsHost.querySelectorAll("button").forEach((button) => {
+        button.addEventListener("click", () => {
+          activeFloor = button.dataset.planFloor;
+          renderPlan();
+        });
+      });
+    };
+
+    renderControls();
+    renderPlan();
+  } catch (error) {
+    console.error("Tchaikovsky floor plan could not be initialized", error);
+  }
+};
+
+whenDocumentReady(initializeTchaikovskyFloorPlan);
 
 const updateSEOTags = (params) => {
   const stanoviDo = params.get("stanovi-do");
@@ -205,7 +382,7 @@ const getFirstApartment = () => {
   document.querySelector(".js-apartment-wing").textContent =
     firstApartment.buldingWing.replace("Lamela", "").trim();
   document.querySelector(".js-apartment-floor").textContent =
-    firstApartment.floor;
+    firstApartment.floor ?? "";
   document.querySelector(".js-apartment-area").textContent = formatArea(firstApartment);
   document.querySelector(".js-apartment-number").textContent =
     firstApartment.apartmentNumber;
@@ -216,9 +393,9 @@ const getApartmentFloors = () => {
   const filterApartmentFloorList = document.querySelector(
     ".apartments__filter .filter__floor_list",
   );
-  const priorityOrder = ["NP", "VP", "P"];
+  const priorityOrder = ["NP", "P", "VP", "1", "2", "3", "4", "5", "6", "PS"];
   const uniqueFloors = [...new Set(data.map((item) => item.floor))]
-    .filter((floor) => floor !== "—")
+    .filter((floor) => floor && floor !== "—")
     .sort(
     (a, b) => {
       const indexA = priorityOrder.indexOf(a);
@@ -229,7 +406,7 @@ const getApartmentFloors = () => {
           ? -1
           : indexB !== -1
             ? 1
-            : a - b;
+            : String(a).localeCompare(String(b), undefined, { numeric: true });
     },
   );
   filterApartmentFloorList.insertAdjacentHTML(
@@ -249,10 +426,10 @@ const getApartmentFloors = () => {
     });
   });
 
-  const filterHouseFloorList = document.querySelectorAll(
+  const filterHouseFloorList = document.querySelector(
     ".floor__list_houses_plans .filter__btn_floor",
-  )[0];
-  filterHouseFloorList.classList.add("active");
+  );
+  filterHouseFloorList?.classList.add("active");
 };
 
 const getLamela = () => {
@@ -282,7 +459,7 @@ const getApartmentCards = (firstApartment) => {
 				<div class="apartment__item apartment-card-item flex-style-column ${firstApartment.id === item.id ? "active" : ""}" data-key="${item.id}" tabindex="0" role="button" aria-label="Open apartment ${item.apartmentNumber}">
 				  <div class="apartment-card-item__meta">
 						<span class="apartment-card-item__name">${item.apartmentNumber}</span>
-						<span class="apartment-card-item__details">${item.floor} <i></i> ${formatArea(item)}</span>
+						<span class="apartment-card-item__details">${formatApartmentDetails(item)}</span>
 				  </div>
 				  <div class="apartment-card-item__image">
 						<img src="${img}?v=3" alt="Plan of ${item.apartmentNumber}" loading="lazy" />
@@ -305,7 +482,7 @@ const handleFilteredCards = (selectedLamela, selectedFloor) => {
       lamelaIsAll ||
       apartment.buldingWing.replace("Lamela", "").trim() === selectedLamela;
     const floorMatch =
-      floorIsAll || apartment.floor.toString() === selectedFloor.toString();
+      floorIsAll || String(apartment.floor ?? "") === String(selectedFloor);
     if (lamelaMatch && floorMatch) {
       card.style.display = "flex";
     } else {
@@ -562,7 +739,7 @@ whenDocumentReady(() => {
 
 whenDocumentReady(() => {
   getFirstApartment();
-  if (catalog.hasFloorPlans) getApartmentFloors();
+  getApartmentFloors();
   getApartmentCards(firstApartment);
   getLamela();
   setupLamelaFilter();
@@ -570,7 +747,7 @@ whenDocumentReady(() => {
   handleFilteredCards();
   getVisibleFlexCards();
   getObjectCount(visibleCards.length);
-  if (catalog.hasFloorPlans) {
+  if (catalog.hasFloorPlans && house !== "tchaikovsky") {
     handleFilteredHousePlans("np");
     getVisiblePolygons(data);
   }
@@ -601,14 +778,14 @@ whenDocumentReady(() => {
         document.querySelector(".js-apartment-wing").textContent =
           currentItem.buldingWing.replace("Lamela", "").trim();
         document.querySelector(".js-apartment-floor").textContent =
-          currentItem.floor;
+          currentItem.floor ?? "";
         document.querySelector(".js-apartment-area").textContent = formatArea(currentItem);
         document.querySelector(".js-apartment-number").textContent =
           currentItem.apartmentNumber;
         document.querySelector(".popup_type_house .js-apartment-wing").textContent =
           currentItem.buldingWing.replace("Lamela", "").trim();
         document.querySelector(".popup_type_house .js-apartment-floor").textContent =
-          currentItem.floor;
+          currentItem.floor ?? "";
         document.querySelector(".popup_type_house .js-apartment-area").textContent =
           formatArea(currentItem);
         document.querySelector(".popup_type_house .js-apartment-number").textContent =

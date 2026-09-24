@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="776" height="888" viewBox="0 0 776 888" fill="none">
+  <rect width="776" height="888" fill="#F7F8FA"/>
+  <rect x="24" y="24" width="728" height="840" stroke="#D6D9DE" stroke-width="2"/>
+  <path d="M340 397h96v70h-96z" stroke="#9AA3B2" stroke-width="3"/>
+  <circle cx="366" cy="421" r="10" fill="#9AA3B2"/>
+  <path d="m346 456 25-25 21 20 17-17 27 29" stroke="#9AA3B2" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="388" y="530" fill="#273247" font-family="Arial, sans-serif" font-size="24" font-weight="600" letter-spacing="2" text-anchor="middle">NO IMAGE</text>
+  <text x="388" y="564" fill="#70798A" font-family="Arial, sans-serif" font-size="16" text-anchor="middle">FLOOR PLAN IS NOT AVAILABLE</text>
+</svg>

@@ -87,9 +87,41 @@ body[data-catalog-house="tchaikovsky"] .area-filter {
   display: none;
 }
 
-body[data-catalog-house="tchaikovsky"] .button__choice[data-key="2"],
-body[data-catalog-house="tchaikovsky"] .houses-plans_container {
-  display: none !important;
+body[data-catalog-house="tchaikovsky"] .tchaikovsky-plan-controls {
+  display: grid;
+  gap: 22px;
+}
+
+body[data-catalog-house="tchaikovsky"] .tchaikovsky-plan-controls__group {
+  display: grid;
+  gap: 10px;
+}
+
+body[data-catalog-house="tchaikovsky"] .tchaikovsky-plan-controls__buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+body[data-catalog-house="tchaikovsky"] .tchaikovsky-life-plan [data-plan-unit] {
+  transition: opacity 160ms ease, fill 160ms ease;
+}
+
+body[data-catalog-house="tchaikovsky"] .tchaikovsky-life-plan [data-plan-unit].enabled {
+  fill: #00509f;
+  opacity: 0.5;
+  cursor: pointer;
+}
+
+body[data-catalog-house="tchaikovsky"] .tchaikovsky-life-plan [data-plan-unit].enabled:hover,
+body[data-catalog-house="tchaikovsky"] .tchaikovsky-life-plan [data-plan-unit].enabled:focus-visible {
+  opacity: 0.82;
+}
+
+body[data-catalog-house="tchaikovsky"] .tchaikovsky-life-plan [data-plan-unit].disabled {
+  fill: #8f95a1;
+  opacity: 0.32;
+  pointer-events: none;
 }
 
 @media (hover: hover) and (min-width: 768px) {
