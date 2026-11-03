@@ -73,71 +73,47 @@ async function getHouses() {
  */
 // Пример использования
 
-let windowsArray = ["1480", "1100", "1000", "900", "800"];
-let originalWindowsArray = [...windowsArray]; // Оригинальная копия массива
 const burger = document.querySelector(".header__burger");
 const headerMenu = document.querySelector(".header__menu");
-
-const headerBody = document.querySelector(".header__body");
-let headerNav = document.querySelector(".header__nav");
-let headerNavList = document.querySelector(".header__nav .header__nav_list");
-let temporalHeaderNav = headerNav.cloneNode(true);
-temporalHeaderNav.classList.add("nav-clone");
-let headerLogo = document.querySelector(".header__logo");
-let clonedHeaderBlock = null;
+const headerBlock = document.querySelector(".header-block");
 const popups = document.querySelectorAll(".popup");
 const updateCheckWidth = () => {
   return window.innerWidth <= 1500 && window.innerWidth >= 768;
 };
 
-// Переключение меню при клике на бургер
-burger.addEventListener("click", (event) => {
-  event.stopPropagation(); // Предотвращаем всплытие
-  headerMenu.classList.toggle("active");
-  const baseHeightItem = 24;
-  document.querySelectorAll(".header__submenu").forEach((el) => {
-    el.classList.remove("submenu-active");
-    el.closest(".menu__item").style.height = `${baseHeightItem}px`;
-  });
-  document.querySelectorAll(".menu__item_link").forEach((el) => {
-    el.classList.remove("active");
-  });
-  document
-    .querySelectorAll(".header__menu .open_submenu img")
-    .forEach((link) => {
-      link.style.transform = "rotate(0deg)";
-    });
-  if (headerMenu.classList.contains("active")) {
-    const headerBlock = document.querySelector(".header-block");
-    clonedHeaderBlock = headerBlock.cloneNode(true);
+const closeHeaderMenu = () => {
+  headerMenu.classList.remove("active");
+  burger.setAttribute("aria-expanded", "false");
+  burger.setAttribute("aria-label", "Open menu");
+  document.body.classList.remove("header-menu-open");
+};
 
-    const childToRemove = clonedHeaderBlock.querySelector(".header__burger");
-    if (childToRemove) {
-      clonedHeaderBlock.removeChild(childToRemove);
-    }
-    headerMenu.appendChild(clonedHeaderBlock);
-  } else {
-    if (clonedHeaderBlock) {
-      clonedHeaderBlock.remove();
-      clonedHeaderBlock = null;
-    }
+burger.addEventListener("click", () => {
+  const isOpen = !headerMenu.classList.contains("active");
+  headerMenu.classList.toggle("active", isOpen);
+  burger.setAttribute("aria-expanded", String(isOpen));
+  burger.setAttribute("aria-label", isOpen ? "Close menu" : "Open menu");
+  document.body.classList.toggle("header-menu-open", isOpen);
+});
+
+headerMenu.querySelectorAll(".menu__item_link, .house-menu__list a").forEach((link) => {
+  link.addEventListener("click", closeHeaderMenu);
+});
+document.querySelector(".header-block .js-scroll-form")?.addEventListener("click", closeHeaderMenu);
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && headerMenu.classList.contains("active")) {
+    closeHeaderMenu();
+    burger.focus();
   }
 });
-
-// Закрытие меню при клике вне его области
-/* ДОПИСАТЬ */
-document.querySelectorAll(".header__menu .menu__item_link").forEach((link) => {
-  link.addEventListener("click", function (event) {
-    const target = event.target;
-    if (headerMenu.contains(target)) {
-      headerMenu.classList.remove("active");
-      if (clonedHeaderBlock) {
-        clonedHeaderBlock.remove();
-        clonedHeaderBlock = null;
-      }
-    }
-  });
+document.addEventListener("click", (event) => {
+  if (headerMenu.classList.contains("active") &&
+      !headerMenu.contains(event.target) &&
+      !headerBlock.contains(event.target)) {
+    closeHeaderMenu();
+  }
 });
+window.matchMedia("(min-width: 1501px)").addEventListener("change", closeHeaderMenu);
 
 const getHeaderSubMenu = () => {
   if (window.innerWidth <= 1000) {
@@ -175,74 +151,6 @@ const getHeaderSubMenu = () => {
   }
 };
 
-// Обновление клона меню
-const getHeaderClone = () => {
-  const checkWidth = updateCheckWidth();
-  if (checkWidth) {
-    if (!headerMenu.querySelector(".nav-clone")) {
-      temporalHeaderNav
-        .querySelectorAll(".menu__item")
-        .forEach((item) => item.remove());
-      headerBody.insertAdjacentElement("afterbegin", headerNav);
-      headerMenu.insertAdjacentElement("afterbegin", temporalHeaderNav);
-    }
-  } else {
-    const existingClone = headerMenu.querySelector(".nav-clone");
-    if (existingClone) {
-      existingClone.remove();
-    }
-  }
-};
-let itemToRemoveArray = [];
-let isResized = false;
-// Обработка адаптивности ссылок
-const handleHeaderLinks = () => {
-  const checkWidth = updateCheckWidth();
-  if (checkWidth && temporalHeaderNav) {
-    let listItems = Array.from(headerNav.querySelectorAll(".menu__item"));
-    let screenWidth = window.innerWidth;
-    windowsArray.map((width) => {
-      windowsArray = windowsArray.filter(
-        (width) => screenWidth >= parseInt(width),
-      );
-      if (screenWidth < parseInt(width) && listItems.length > 0) {
-        let itemToRemove = listItems.pop();
-        if (headerNavList.contains(itemToRemove)) {
-          headerNavList.removeChild(itemToRemove);
-        }
-        temporalHeaderNav.querySelector("ul").appendChild(itemToRemove);
-        itemToRemoveArray.push(itemToRemove);
-      }
-    });
-    isResized = true;
-  } else if (isResized) {
-    headerMenu.insertAdjacentElement("afterend", headerNav);
-    temporalHeaderNav.querySelectorAll(".menu__item").forEach((item) => {
-      headerNavList.appendChild(item);
-    });
-    itemToRemoveArray.forEach((item) => {
-      headerNavList.appendChild(item);
-    });
-    windowsArray = originalWindowsArray;
-  }
-};
-// Обновление логотипа
-const getHeaderLogo = () => {
-  const checkWidth = updateCheckWidth();
-  const existingLogo = headerBody.querySelector(".header__logo.clone");
-
-  if (checkWidth) {
-    if (!existingLogo) {
-      const clonedHeaderLogo = headerLogo.cloneNode(true);
-      clonedHeaderLogo.classList.add("clone");
-      headerBody.appendChild(clonedHeaderLogo);
-    }
-  } else {
-    if (existingLogo) {
-      existingLogo.remove();
-    }
-  }
-};
 
 // Инициализация при загрузке
 
@@ -328,12 +236,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const logo = document.querySelector(".header__logo");
   if (logo) {
     logo.addEventListener("click", function (event) {
-      const currentUrl = window.location.href;
-      if (
-        currentUrl.includes(
-          "https://evolutionresidence.rs/search-by-parameters.html",
-        )
-      ) {
+      if (window.location.pathname.includes("search-by-parameters")) {
         // Со страницы фильтров — сохраняем параметры при переходе на главную
         event.preventDefault();
         const existingParams = new URLSearchParams(window.location.search);
@@ -469,7 +372,6 @@ const popupFormQuarter = document.querySelector(
 openDialogButtons.forEach((openDialogButton) => {
   openDialogButton.addEventListener("click", () => {
     openModal(popupFormQuarter);
-    selectSecondPopup();
   });
 });
 
@@ -606,6 +508,13 @@ function setLanguage(lang) {
 }
 
 function updateLanguage(lang) {
+  const switcher = document.querySelector("#language-switcher");
+  if (switcher) switcher.dataset.active = lang;
+  document.querySelectorAll(".lang__item").forEach((item) => {
+    const isActive = item.dataset.lang === lang;
+    item.classList.toggle("active", isActive);
+    item.setAttribute("aria-pressed", String(isActive));
+  });
   for (let key in langArr[lang]) {
     const elements = document.querySelectorAll(`[data-key="${key}"]`);
     elements.forEach((element) => {
@@ -666,17 +575,12 @@ document
     const lang = event.target.dataset.lang;
     if (lang) {
       setLanguage(lang);
-      updateLanguage(lang);
     }
   });
 
 document.addEventListener("DOMContentLoaded", () => {
   const savedLang = getCookie("language") || "srb";
   updateLanguage(savedLang);
-
-  document.querySelectorAll(".lang__item").forEach((item) => {
-    item.classList.toggle("active", item.dataset.lang === savedLang);
-  });
 });
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -706,40 +610,6 @@ function setDynamicHeight() {
   document.documentElement.style.setProperty("--vh", `${vh}px`);
 }
 
-function cloneButton() {
-  const button = document.querySelector(".header-block .js-scroll-form");
-  const phoneLink = document.querySelector(".header-block .phone-link");
-  const phoneLinkRem = document.querySelector(".header-block .phone-link");
-  const buttonReq = document.querySelector(".header-block .js-scroll-form");
-  const headerBlock = document.querySelector(".header-block");
-  const headerMenu = document.querySelector(".header__menu");
-  const headerLogo = headerMenu.querySelector(".header__menu .header__logo");
-  const mobileHeaderMenuBlock = document.createElement("div");
-  mobileHeaderMenuBlock.classList.add("flex-style-column");
-  mobileHeaderMenuBlock.classList.add("block-header-menu");
-  const clonedButton = button.cloneNode(true);
-  const clonedPhone = phoneLink.cloneNode(true);
-  clonedButton.classList.add("cloned");
-  clonedPhone.classList.add("cloned");
-  const isBurgerMenu = window.innerWidth <= 1500;
-  console.log(isBurgerMenu);
-  if (isBurgerMenu) {
-    mobileHeaderMenuBlock.appendChild(clonedButton);
-    mobileHeaderMenuBlock.appendChild(clonedPhone);
-    headerMenu.appendChild(mobileHeaderMenuBlock);
-    headerBlock.appendChild(headerLogo);
-    handleButtonScroll();
-  } else {
-    headerBlock.appendChild(button);
-    headerBlock.appendChild(phoneLink);
-  }
-  if (clonedButton.classList.contains("cloned")) {
-    phoneLinkRem.remove();
-    buttonReq.remove();
-    handleButtonScroll();
-  }
-}
-
 const blockChoiceButtons = document.querySelector(".buttons__choice_view");
 const apartmentsChoiceButtons = document.querySelectorAll(".button__choice");
 apartmentsChoiceButtons.forEach((choiceButton) => {
@@ -756,24 +626,11 @@ closeButtons.forEach((button) => {
   button.addEventListener("click", () => {
     const popup = button.closest(".popup");
     closeModal(popup);
-    selectSecondPopup();
   });
 });
 
-function selectSecondPopup() {
-  const popupCurrentHouse = document.querySelector(".popup_type_house");
-  if (popupCurrentHouse) {
-    popupCurrentHouse.classList.contains("popup_is-opened")
-      ? (popupCurrentHouse.style.zIndex = "3")
-      : (popupCurrentHouse.style.zIndex = "rever-layer");
-  }
-}
-
 window.addEventListener("resize", () => {
   setDynamicHeight();
-  getHeaderClone();
-  handleHeaderLinks();
-  getHeaderLogo();
   getScrollablePanels();
   getHeaderSubMenu();
 });
@@ -781,13 +638,7 @@ document.addEventListener("DOMContentLoaded", () => {
   getHeaderSubMenu();
 });
 window.addEventListener("DOMContentLoaded", () => {
-  getHeaderClone();
-  getHeaderLogo();
   getScrollablePanels();
-  handleHeaderLinks();
-  if (window.innerWidth <= 1500) {
-    cloneButton();
-  }
 
   popups.forEach((popup) => setModalEventListeners(popup));
 });

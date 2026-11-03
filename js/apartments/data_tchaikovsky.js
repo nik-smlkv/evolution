@@ -1,22 +1,15 @@
+import { tchaikovskyFloorAssignments } from "./tchaikovsky-floors.js?v=1.0.0";
+
 const pad = (number) => String(number).padStart(2, "0");
 
 const range = (from, to) =>
   Array.from({ length: to - from + 1 }, (_, index) => from + index);
 
-/* Only these apartments currently have their own full render in А3. */
+/* Full JPG plans are available for every apartment except C08 and C34. */
 const tchaikovskyRenderedUnits = {
-  A: range(1, 118),
-  B: [
-    ...range(1, 91),
-    94,
-    ...range(96, 100),
-    ...range(103, 111),
-    114,
-    ...range(116, 120),
-    ...range(123, 131),
-    134,
-  ],
-  C: [...range(1, 7), ...range(9, 33), ...range(35, 95), 99],
+  A: range(1, 132),
+  B: range(1, 147),
+  C: [...range(1, 7), ...range(9, 33), ...range(35, 124)],
 };
 
 /* Every apartment from the new official A, B and C tables. */
@@ -27,9 +20,9 @@ const tchaikovskyUnits = {
 };
 
 /*
- * Card plans are stored separately from the full apartment renders. Only the
- * files that actually exist in the supplied 2D folders are listed here; other
- * apartments continue to use their own full render as a safe fallback.
+ * Card plans are stored separately from full apartment sheets. Keep supplied
+ * standalone 2D plans; additional clean plans extracted from PDF image layers
+ * live in card-previews and exclude room-number overlays and sheet labels.
  */
 const createCardPlanPaths = (wing, directory, numbers, extension = "png") =>
   Object.fromEntries(
@@ -412,9 +405,8 @@ const createOfficialEntries = (wing, floor, startNumber, areas) =>
   );
 
 /*
- * Official net areas and floors from the supplied apartment tables.
- * A render without a matching table row keeps its render-badge area and has
- * no floor assigned until an official value is provided.
+ * Official net areas from the supplied apartment tables. Floor assignments
+ * come from tchaikovsky-floors.js, reconciled against all hidden AI layers.
  */
 const tchaikovskyOfficialData = {
   ...createOfficialEntries("A", "P", 1, [53.14, 53.89, 62.68, 68.45, 52.82, 53.37, 52.54, 53.50, 31.28, 31.86, 53.58, 53.34, 53.42, 29.26]),
@@ -434,7 +426,7 @@ const tchaikovskyOfficialData = {
   ...createOfficialEntries("B", "6", 111, [67.85, 53.87, 53.74, 64.47, 92.44, 35.16, 62.55, 61.16, 62.40, 35.32, 96.35, 80.43, 32.23, 49.81, 50.38, 60.77, 52.55, 49.79, 50.37, 27.30]),
   ...createOfficialEntries("B", "POV", 131, [68.10, 54.34, 53.78, 64.46, 76.16, 70.01, 45.03, 70.42, 65.00, 79.56, 40.53, 41.13, 43.11, 52.50, 49.78, 50.35, 28.03]),
   ...createOfficialEntries("C", "P", 1, [53.39, 49.22, 107.62, 101.03, 49.48, 48.80, 49.06, 90.64, 49.70, 50.19, 51.93, 52.09, 50.36, 27.44]),
-  ...createOfficialEntries("C", "VP", 15, [53.39, 49.21, 107.73, 101.74, 49.48, 48.80, 49.06, 97.42, 57.97, 27.44, 50.21, 50.36, 59.88, 51.85, 50.49, 50.38, 27.44]),
+  ...createOfficialEntries("C", "1", 15, [53.39, 49.21, 107.73, 101.74, 49.48, 48.80, 49.06, 97.42, 57.97, 27.44, 50.21, 50.36, 59.88, 51.85, 50.49, 50.38, 27.44]),
   ...createOfficialEntries("C", "2", 32, [53.53, 49.21, 103.01, 101.74, 49.48, 48.80, 49.06, 97.45, 57.97, 32.21, 50.22, 50.36, 59.88, 51.85, 50.53, 50.38, 27.44]),
   ...createOfficialEntries("C", "3", 49, [53.53, 49.21, 90.07, 92.89, 49.48, 48.80, 49.06, 97.46, 57.98, 32.20, 50.21, 50.32, 59.85, 51.85, 50.53, 50.34, 27.44]),
   ...createOfficialEntries("C", "4", 66, [53.53, 106.79, 108.55, 48.80, 49.06, 97.39, 57.97, 32.20, 50.21, 50.36, 59.89, 51.87, 50.53, 50.38, 27.44]),
@@ -450,14 +442,18 @@ const apartments = Object.entries(tchaikovskyUnits).flatMap(([wing, numbers]) =>
     const renderPath = hasRender
       ? `./plans/А3/Lamela ${wing}/${unit}.jpg`
       : noImagePath;
-    const cardPlanPath = tchaikovskyCardPlans[unit] ?? noImagePath;
+    const cardPlanPath = tchaikovskyCardPlans[unit] ??
+      (hasRender ? `./plans/А3/card-previews/${unit}.png` : noImagePath);
     const officialData = tchaikovskyOfficialData[unit];
+    const floorAssignment = tchaikovskyFloorAssignments[unit];
 
     return {
       id: `tchaikovsky-${unit.toLowerCase()}`,
       apartmentNumber: `STAN ${unit}`,
       buldingWing: `Lamela ${wing}`,
-      ...(officialData?.floor && { floor: officialData.floor }),
+      floor: floorAssignment.label,
+      floorLevel: floorAssignment.level,
+      floorInWing: floorAssignment.floor,
       area: officialData?.area ?? tchaikovskyAreas[unit],
       status: "Slobodan",
       planImg: renderPath,

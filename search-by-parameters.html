@@ -60,14 +60,17 @@
     <link rel="stylesheet" href="./style/font.css" />
     <link rel="stylesheet" href="./style/variables.css" />
     <link rel="stylesheet" href="./style/style.min.css" />
-    <link rel="stylesheet" href="./style/house-switcher.css?v=1.0.1" />
-    <link rel="stylesheet" href="./style/catalog-cards.css?v=1.0.0" />
+    <link rel="stylesheet" href="./style/house-switcher.css?v=1.0.3" />
+    <link rel="stylesheet" href="./style/catalog-cards.css?v=1.0.2" />
     <link rel="stylesheet" href="./style/splitting.css" />
     <link rel="stylesheet" href="./style/swiper-bundle.min.css" />
     <link rel="stylesheet" href="./style/locomotive.css" />
     <link rel="stylesheet" href="./style/fancybox.css" />
     <link rel="stylesheet" href="./style/odometer.min.css" />
     <link rel="stylesheet" href="./style/ion.rangeSlider.min.css" />
+    <link rel="stylesheet" href="./style/header-responsive.css?v=1.0.0" />
+    <link rel="stylesheet" href="./style/catalog-plan.css?v=1.0.2" />
+    <link rel="stylesheet" href="./style/catalog-responsive.css?v=1.0.1" />
     <script src="./js/swiper-bundle.min.js"></script>
     <script src="./js/jquery-3.6.4.min.js"></script>
     <script src="./js/printThis.js"></script>
@@ -200,7 +203,7 @@
             <a href="/" class="header__logo flex-style-row"
               ><img src="./images/logo.png" alt="Logo"
             /></a>
-            <nav class="header__nav">
+            <nav class="header__nav" id="site-navigation" aria-label="Main navigation">
               <ul class="flex-style-row header__nav_list">
                 <li class="menu__item">
                   <a
@@ -210,6 +213,16 @@
                     data-target="about-project"
                     >About Project</a
                   >
+                </li>
+                <li class="menu__item house-menu" data-house-menu>
+                  <button class="house-menu__toggle" type="button" aria-expanded="false" aria-controls="house-menu-list">
+                    <span>APARTMENTS</span>
+                    <img src="./images/apartments-arrow.svg" alt="" aria-hidden="true" />
+                  </button>
+                  <ul class="house-menu__list" id="house-menu-list">
+                    <li><a href="/search-by-parameters/tchaikovsky/">Tchaikovsky</a></li>
+                    <li><a href="/search-by-parameters/vivaldi/">Vivaldi</a></li>
+                  </ul>
                 </li>
                 <li class="menu__item">
                   <a
@@ -228,21 +241,6 @@
                     data-target="infrastructure"
                     >Infrastructure</a
                   >
-                </li>
-                <li class="menu__item house-menu" data-house-menu>
-                  <button
-                    class="house-menu__toggle"
-                    type="button"
-                    aria-expanded="false"
-                    aria-controls="house-menu-list"
-                  >
-                    <span>APARTMENTS</span>
-                    <img src="./images/arrow-down.svg" alt="" aria-hidden="true" />
-                  </button>
-                  <ul class="house-menu__list" id="house-menu-list">
-                    <li><a href="/search-by-parameters/tchaikovsky/">Tchaikovsky</a></li>
-                    <li><a href="/search-by-parameters/vivaldi/">Vivaldi</a></li>
-                  </ul>
                 </li>
                 <li class="menu__item">
                   <a
@@ -284,15 +282,14 @@
                 >leave a request</a
               >
               <div id="language-switcher" class="lang_switch_list">
-                <p data-lang="en" class="lang__item link-hover">en</p>
-                <span>/</span>
-                <p data-lang="srb" class="lang__item link-hover">srb</p>
+                <button type="button" data-lang="en" class="lang__item" aria-label="English">EN</button>
+                <button type="button" data-lang="srb" class="lang__item" aria-label="Serbian">SRB</button>
               </div>
             </div>
-            <div class="header__burger">
+            <button class="header__burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="site-navigation">
               <span class="burger-line"></span>
               <span class="burger-line"></span>
-            </div>
+            </button>
           </div>
         </div>
       </header>
@@ -358,18 +355,15 @@
               </div>
               <div class="apartments__filter flex-style-column gap">
                 <div class="catalog-object-filter">
-                  <div>
+                  <div class="catalog-filter-group catalog-filter-group--object">
                     <p class="catalog-filter-label">Object</p>
                     <div class="catalog-object-filter__options" role="group" aria-label="Select object">
                       <a class="catalog-object-filter__option" data-house-option="tchaikovsky" href="/search-by-parameters/tchaikovsky/">Tchaikovsky</a>
                       <a class="catalog-object-filter__option" data-house-option="vivaldi" href="/search-by-parameters/vivaldi/">Vivaldi</a>
                     </div>
                   </div>
-                  <button class="catalog-reset-button" type="button" data-reset-filters>Reset</button>
-                </div>
-                <div class="filter__buttons flex-style-row gap">
                   <div
-                    class="object filter-btn-style flex-style-column gap-title"
+                    class="catalog-filter-group catalog-filter-group--lamela object filter-btn-style flex-style-column gap-title"
                   >
                     <p class="fw-medium" data-key="p_lamela">Lamela</p>
                     <div
@@ -384,14 +378,14 @@
                     </div>
                   </div>
 
-                  <div class="rooms__number flex-style-column gap-title">
+                  <div class="catalog-filter-group catalog-filter-group--floor rooms__number flex-style-column gap-title">
                     <p class="fw-medium" data-key="p_floor">Floor</p>
                     <div
                       class="flex-style-row filter-btn-style btns-gap controls filter__floor_list"
                     ></div>
                   </div>
 
-                  <div class="rooms__number flex-style-column gap-title area-filter">
+                  <div class="catalog-filter-group catalog-filter-group--area rooms__number flex-style-column gap-title area-filter">
                     <p class="fw-medium area-after" data-key="p_area">Area</p>
 
                     <input
@@ -401,6 +395,11 @@
                       value=""
                     />
                   </div>
+                  <button class="catalog-reset-button" type="button" data-reset-filters aria-label="Reset filters" title="Reset filters">
+                    <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                      <path d="M13.6016 7.6001C13.6016 10.6001 11.1016 14.1001 7.10156 14.1001C3.10156 14.1001 0.601562 10.6001 0.601562 7.6001C0.601562 4.6001 3.10156 1.1001 7.10156 1.1001C9.60156 1.1001 11.6016 2.6001 12.6016 4.1001M13.1016 0.600098L12.6016 4.1001L9.10156 4.6001" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" stroke="#161D2D"/>
+                    </svg>
+                  </button>
                 </div>
                 <input
                   id="example_2_input_from"
@@ -3181,11 +3180,14 @@
                   <p class="title">0800 012 026</p>
                 </div>
                 <div class="flex-style-column footer-address">
-                  <span data-key="p_locat">Sales Office</span>
-                  <p class="title tt-up" data-key="p_belrg">Beograd</p>
-                  <p class="street" data-key="p_street">
+                  <span class="catalog-default-address" data-key="p_locat">Sales Office</span>
+                  <span class="catalog-plan-address" data-key="plan_office">Sales Office</span>
+                  <p class="title tt-up catalog-default-address" data-key="p_belrg">Beograd</p>
+                  <p class="title tt-up catalog-plan-address">Novi Beograd</p>
+                  <p class="street catalog-default-address" data-key="p_street">
                     Bulevar Marsala Tolbuhina 8
                   </p>
+                  <p class="street catalog-plan-address" data-key="plan_street">Bulevar maršala Tolbuhina 8, Serbia</p>
                 </div>
                 <a
                   href="https://www.google.com/maps/place/Bulevar+mar%C5%A1ala+Tolbuhina+8,+%D0%91%D0%B5%D0%BE%D0%B3%D1%80%D0%B0%D0%B4,+%D0%A1%D0%B5%D1%80%D0%B1%D0%B8%D1%8F/@44.8312616,20.4129417,17z/data=!3m1!4b1!4m6!3m5!1s0x475a6574956a2209:0xbb7b628a1e6e4124!8m2!3d44.8312578!4d20.4155166!16s%2Fg%2F11sjwg9g0g?hl=RU&entry=ttu&g_ep=EgoyMDI1MDUyMS4wIKXMDSoASAFQAw%3D%3D"
@@ -3376,7 +3378,7 @@
       </div>
       <div class="popup popup_type_house">
         <div class="popup__content">
-          <button class="popup__close" type="button">
+          <button class="popup__close" type="button" aria-label="Close apartment details">
             <span
               ><svg
                 width="40"
@@ -3410,26 +3412,25 @@
               <div class="apartments__description flex-style-column">
                 <div class="flex-style-column apartment-description__content">
                   <div class="apartment__number flex-style-column btns-gap">
-                    <p data-key="p_num" class="text-dark fw-medium">
-                      Apartment number
-                    </p>
                     <span
                       class="text-dark js-apartment-number fw-medium"
                     ></span>
                   </div>
-                  <div class="floor flex-style-column btns-gap">
-                    <p data-key="p_floor" class="text-dark fw-medium">Floor</p>
-                    <span class="text-dark js-apartment-floor fw-medium"></span>
-                  </div>
+                  <div class="apartment-modal__details flex-style-column">
                   <div class="bulding__wing flex-style-column btns-gap">
                     <p data-key="p_wing" class="text-dark fw-medium">
                       Building wing
                     </p>
                     <span class="text-dark js-apartment-wing fw-medium"></span>
                   </div>
+                  <div class="floor flex-style-column btns-gap">
+                    <p data-key="p_floor" class="text-dark fw-medium">Floor</p>
+                    <span class="text-dark js-apartment-floor fw-medium"></span>
+                  </div>
                   <div class="area flex-style-column btns-gap">
                     <p class="text-dark fw-medium" data-key="p_area">Area</p>
                     <span class="text-dark js-apartment-area fw-medium"></span>
+                  </div>
                   </div>
                 </div>
                 <button
@@ -3485,7 +3486,7 @@
     <script type="module" src="./js/validation.js?v=1.0.6"></script>
     <script
       type="module"
-      src="./js/apartments/requestt.js?v=1.0.17"
+      src="./js/apartments/requestt.js?v=1.0.25"
     ></script>
     <script src="./js/ion.rangeSlider.min.js?v=1.0.6"></script>
     <script src="./js/scriptFloor.js?v=1.0.6"></script>

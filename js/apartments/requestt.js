@@ -1,10 +1,17 @@
-import { loadHouse } from "./houses.js?v=1.0.4";
+import { loadHouse } from "./houses.js?v=1.0.8";
+import { tchaikovskyFloorLevels } from "./tchaikovsky-floors.js?v=1.0.0";
 import { openModal } from "../modal.js";
+import { initializeTchaikovskyFloorPlan } from "./floor-plan.js?v=1.0.3";
+import { initializeCatalogFilterControls } from "./catalog-filter-controls.js?v=1.0.1";
 const requestedHouse = new URLSearchParams(window.location.search).get("house");
 const catalog = await loadHouse(requestedHouse);
 const house = catalog.id;
 let data = JSON.parse(catalog.apartments);
 document.body.dataset.catalogHouse = house;
+document.body.dataset.catalogView = "grid";
+document.body.classList.toggle("tchaikovsky-catalog", house === "tchaikovsky");
+document.body.classList.toggle("tchaikovsky-grid-view", house === "tchaikovsky");
+document.documentElement.classList.toggle("tchaikovsky-catalog", house === "tchaikovsky");
 document.title = `${catalog.name} — Apartments`;
 const catalogTitle = document.querySelector("[data-house-title]");
 if (catalogTitle) catalogTitle.textContent = catalog.name;
@@ -18,10 +25,29 @@ document.querySelector(".apartment__img").src = firstApartment.planImg;
 apartmentFancyBox.setAttribute("href", firstApartment.planImg);
 let selectedLamela = null;
 let selectedFloor = null;
-let visibleCards = null;
+const areaValues = data.map((apartment) => apartment.area).filter(Number.isFinite);
+const areaBounds = house === "tchaikovsky"
+  ? { min: Math.floor(Math.min(...areaValues)), max: Math.ceil(Math.max(...areaValues)) }
+  : { min: 30, max: 126 };
+let selectedMinArea = areaBounds.min;
+let selectedMaxArea = areaBounds.max;
+const readAreaRange = (params) => {
+  const read = (key, fallback) => {
+    const raw = params.get(key);
+    const number = raw === null || raw.trim() === "" ? NaN : Number(raw);
+    return Number.isFinite(number) ? Math.min(areaBounds.max, Math.max(areaBounds.min, number)) : fallback;
+  };
+  const from = read("kvadrati-od", areaBounds.min);
+  const to = read("stanovi-do", areaBounds.max);
+  return { from: Math.min(from, to), to: Math.max(from, to) };
+};
 const popupCurrentHouse = document.querySelector(".popup.popup_type_house");
 const formatArea = (apartment) =>
   Number.isFinite(apartment.area) ? `${apartment.area}m²` : "—";
+const formatModalApartmentNumber = (number) =>
+  String(number).replace(/^STAN\s*/i, "").replace(/^([A-Z])\s*(\d+)/i, "$1 $2");
+const formatModalArea = (apartment) =>
+  Number.isFinite(apartment.area) ? `${apartment.area} m²` : "—";
 const formatApartmentDetails = (apartment) =>
   apartment.floor
     ? `${apartment.floor} <i></i> ${formatArea(apartment)}`
@@ -34,178 +60,21 @@ const whenDocumentReady = (callback) => {
   }
 };
 
-const tchaikovskyLifePlans = {
-  A: { P: "2100", 1: "3100", 2: "3200", 3: "3300", 4: "3400", 5: "3500" },
-  B: { VP: "3100", 1: "3200", 2: "3300", 3: "3400", 4: "3500" },
-  C: { P: "2100", VP: "3100", 2: "3200", 3: "3300", 4: "3400", 5: "3500" },
-};
-
-const tchaikovskyLifePlanImages = {
-  2100: "./plans/А3/2100 Osnova Prizemlja (A,C)_Nisko Prizemlje.jpg",
-  3100: "./plans/А3/3100 Osnova 1- Sprata (A,C) Visoko prizemlje (B).jpg",
-  3200: "./plans/А3/3200 Osnova 2- Sprata (A,C)_1-Sprat (B).jpg",
-  3300: "./plans/А3/3300 Osnova 3- Sprata (A,C)_2-Sprat (B).jpg",
-  3400: "./plans/А3/3400 Osnova 4- Sprata (A,C)_3-Sprat (B).jpg",
-  3500: "./plans/А3/3500 Osnova 5- Sprata (A,C)_4-Sprat (B).jpg",
-};
-
 const setTchaikovskyPlanPopup = (apartment) => {
   const popup = document.querySelector(".popup_type_house");
   if (!popup || !apartment) return;
 
-  popup.querySelector(".js-apartment-wing").textContent = apartment.buldingWing;
+  popup.querySelector(".js-apartment-wing").textContent = apartment.buldingWing.replace("Lamela", "").trim();
   popup.querySelector(".js-apartment-floor").textContent = apartment.floor ?? "";
-  popup.querySelector(".js-apartment-area").textContent = formatArea(apartment);
-  popup.querySelector(".js-apartment-number").textContent = apartment.apartmentNumber;
+  popup.querySelector(".js-apartment-area").textContent = formatModalArea(apartment);
+  popup.querySelector(".js-apartment-number").textContent = formatModalApartmentNumber(apartment.apartmentNumber);
   popup.querySelector(".apartment__img").src = apartment.planImg;
   openModal(popup);
 };
 
-const initializeTchaikovskyFloorPlan = async () => {
-  if (house !== "tchaikovsky") return;
-
-  const planContainer = document.querySelector(".houses-plans_container");
-  const planHost = document.querySelector(".houses-plan");
-  const controlHost = planContainer?.querySelector(".floor__filter");
-  if (!planContainer || !planHost || !controlHost) return;
-
-  try {
-    const response = await fetch("./plans/А3/chaikovsky-life.svg");
-    if (!response.ok) throw new Error("Unable to load chaikovsky-life.svg");
-
-    const documentSvg = new DOMParser().parseFromString(
-      await response.text(),
-      "image/svg+xml",
-    );
-    const svg = documentSvg.documentElement;
-    svg.classList.add("floors-res", "tchaikovsky-life-plan");
-    svg.removeAttribute("id");
-
-    Object.entries(tchaikovskyLifePlanImages).forEach(([level, imagePath]) => {
-      const levelGroup = svg.querySelector(`[id="_${level}"]`);
-      const image = levelGroup?.querySelector("image");
-      if (!image) return;
-      image.setAttribute("href", imagePath);
-      image.setAttributeNS("http://www.w3.org/1999/xlink", "href", imagePath);
-    });
-
-    planHost.replaceChildren(svg);
-    controlHost.innerHTML = `
-      <div class="tchaikovsky-plan-controls">
-        <div class="tchaikovsky-plan-controls__group">
-          <p class="fw-medium">Lamela</p>
-          <div class="tchaikovsky-plan-controls__buttons" data-plan-wings></div>
-        </div>
-        <div class="tchaikovsky-plan-controls__group">
-          <p class="fw-medium">Floor</p>
-          <div class="tchaikovsky-plan-controls__buttons" data-plan-floors></div>
-        </div>
-      </div>
-    `;
-
-    let activeWing =
-      selectedLamela && selectedLamela !== "All" ? selectedLamela : "A";
-    let activeFloor = Object.keys(tchaikovskyLifePlans[activeWing])[0];
-    const wingsHost = controlHost.querySelector("[data-plan-wings]");
-    const floorsHost = controlHost.querySelector("[data-plan-floors]");
-    const levelGroups = Array.from(svg.children).filter((element) =>
-      /^_\d+$/.test(element.id),
-    );
-
-    const openApartmentFromPlan = (wing, number) => {
-      const apartment = data.find(
-        (item) => item.apartmentNumber === `STAN ${wing}${pad(Number(number))}`,
-      );
-      setTchaikovskyPlanPopup(apartment);
-    };
-
-    const setPolygonState = (polygon, wing, number, enabled) => {
-      polygon.dataset.planUnit = `${wing}${number}`;
-      polygon.classList.remove("enabled", "disabled");
-      polygon.classList.add(enabled ? "enabled" : "disabled");
-      polygon.removeAttribute("tabindex");
-      polygon.removeAttribute("role");
-      polygon.onkeydown = null;
-      polygon.onclick = null;
-
-      if (!enabled) return;
-
-      polygon.setAttribute("tabindex", "0");
-      polygon.setAttribute("role", "button");
-      polygon.setAttribute("aria-label", `Open apartment ${wing}${pad(Number(number))}`);
-      polygon.onclick = () => openApartmentFromPlan(wing, number);
-      polygon.onkeydown = (event) => {
-        if (event.key === "Enter" || event.key === " ") {
-          event.preventDefault();
-          openApartmentFromPlan(wing, number);
-        }
-      };
-    };
-
-    const renderPlan = () => {
-      const level = tchaikovskyLifePlans[activeWing][activeFloor];
-      levelGroups.forEach((group) => {
-        group.style.display = group.id === `_${level}` ? "block" : "none";
-      });
-
-      const levelGroup = svg.querySelector(`[id="_${level}"]`);
-      const interactivePolygons = [
-        ...levelGroup.querySelectorAll('g[id^="zone_"] > polygon, g[id^="zone_"] > polyline, g[id^="zone_"] > path'),
-        ...levelGroup.querySelectorAll('g[data-name="А"] > polygon'),
-      ];
-
-      interactivePolygons.forEach((polygon) => {
-        const zone = polygon.closest('g[id^="zone_"]');
-        const zoneParts = zone?.id.match(/^zone_\d+_([abc])_(\d+)$/i);
-        const directNumber = polygon.getAttribute("data-name");
-        const wing = zoneParts?.[1]?.toUpperCase() ?? "A";
-        const number = zoneParts?.[2] ?? directNumber;
-        setPolygonState(polygon, wing, number, wing === activeWing);
-      });
-
-      floorsHost.querySelectorAll("button").forEach((button) => {
-        button.classList.toggle("active", button.dataset.planFloor === activeFloor);
-      });
-    };
-
-    const renderControls = () => {
-      wingsHost.innerHTML = Object.keys(tchaikovskyLifePlans)
-        .map(
-          (wing) =>
-            `<button class="filter__btn control ${wing === activeWing ? "active" : ""}" type="button" data-plan-wing="${wing}">${wing}</button>`,
-        )
-        .join("");
-      floorsHost.innerHTML = Object.keys(tchaikovskyLifePlans[activeWing])
-        .map(
-          (floor) =>
-            `<button class="filter__btn control" type="button" data-plan-floor="${floor}">${floor}</button>`,
-        )
-        .join("");
-
-      wingsHost.querySelectorAll("button").forEach((button) => {
-        button.addEventListener("click", () => {
-          activeWing = button.dataset.planWing;
-          activeFloor = Object.keys(tchaikovskyLifePlans[activeWing])[0];
-          renderControls();
-          renderPlan();
-        });
-      });
-      floorsHost.querySelectorAll("button").forEach((button) => {
-        button.addEventListener("click", () => {
-          activeFloor = button.dataset.planFloor;
-          renderPlan();
-        });
-      });
-    };
-
-    renderControls();
-    renderPlan();
-  } catch (error) {
-    console.error("Tchaikovsky floor plan could not be initialized", error);
-  }
-};
-
-whenDocumentReady(initializeTchaikovskyFloorPlan);
+whenDocumentReady(() => {
+  if (house === "tchaikovsky") initializeTchaikovskyFloorPlan(data, setTchaikovskyPlanPopup);
+});
 
 const updateSEOTags = (params) => {
   const stanoviDo = params.get("stanovi-do");
@@ -294,9 +163,15 @@ const applyURLParams = () => {
   const type = params.get("type");
   const kvadratiOd = params.get("kvadrati-od");
   const floor = params.get("floor"); // ← было не объявлено, поэтому падало
+  const normalizedFloor = house === "tchaikovsky" && floor
+    ? (tchaikovskyFloorLevels.find((level) => level.label === floor || level.id === floor)
+      ?? tchaikovskyFloorLevels.find((level) => level.floors[type?.toUpperCase() || "A"] === floor)
+      ?? tchaikovskyFloorLevels.find((level) => floor === "VP" && level.id === "3100"))?.label
+    : floor;
 
-  const minArea = parseInt(kvadratiOd) || 30;
-  const maxArea = parseInt(stanoviDo) || 126;
+  const { from: minArea, to: maxArea } = readAreaRange(params);
+  selectedMinArea = minArea;
+  selectedMaxArea = maxArea;
 
   // Применяем тип квартиры (lamela)
   if (type) {
@@ -316,7 +191,7 @@ const applyURLParams = () => {
       ".apartments__filter .filter__btn_floor",
     );
     floorButtons.forEach((btn) => {
-      if (btn.textContent.trim() === floor) {
+      if (btn.textContent.trim() === normalizedFloor) {
         selectedFloor = btn.textContent.trim();
         floorButtons.forEach((b) => b.classList.remove("active"));
         btn.classList.add("active");
@@ -348,6 +223,7 @@ const applyURLParams = () => {
 const updateURL = () => {
   const params = new URLSearchParams();
   params.set("house", house);
+  if (document.body.dataset.catalogView === "plan") params.set("view", "plan");
 
   if (selectedLamela && selectedLamela !== "All") {
     params.set("type", selectedLamela.toLowerCase());
@@ -360,11 +236,10 @@ const updateURL = () => {
   const inputFrom = document.querySelector("#example_2_input_from");
   const inputTo = document.querySelector("#example_2_input_to");
   if (inputFrom && inputTo) {
-    const min = 30; // дефолтный минимум
-    const max = 126; // дефолтный максимум
-    if (parseInt(inputFrom.value) !== min)
+    const { min, max } = areaBounds;
+    if (Number(inputFrom.value) !== min)
       params.set("kvadrati-od", inputFrom.value);
-    if (parseInt(inputTo.value) !== max)
+    if (Number(inputTo.value) !== max)
       params.set("stanovi-do", inputTo.value);
   }
 
@@ -393,7 +268,9 @@ const getApartmentFloors = () => {
   const filterApartmentFloorList = document.querySelector(
     ".apartments__filter .filter__floor_list",
   );
-  const priorityOrder = ["NP", "P", "VP", "1", "2", "3", "4", "5", "6", "PS"];
+  const priorityOrder = house === "tchaikovsky"
+    ? tchaikovskyFloorLevels.map((level) => level.label)
+    : ["NP", "P", "VP", "1", "2", "3", "4", "5", "6", "PS"];
   const uniqueFloors = [...new Set(data.map((item) => item.floor))]
     .filter((floor) => floor && floor !== "—")
     .sort(
@@ -456,7 +333,7 @@ const getApartmentCards = (firstApartment) => {
     apartmentCards.insertAdjacentHTML(
       "beforeend",
       `
-				<div class="apartment__item apartment-card-item flex-style-column ${firstApartment.id === item.id ? "active" : ""}" data-key="${item.id}" tabindex="0" role="button" aria-label="Open apartment ${item.apartmentNumber}">
+				<div class="apartment__item apartment-card-item flex-style-column ${house !== "tchaikovsky" && firstApartment.id === item.id ? "active" : ""}" data-key="${item.id}" tabindex="0" role="button" aria-label="Open apartment ${item.apartmentNumber}">
 				  <div class="apartment-card-item__meta">
 						<span class="apartment-card-item__name">${item.apartmentNumber}</span>
 						<span class="apartment-card-item__details">${formatApartmentDetails(item)}</span>
@@ -483,15 +360,15 @@ const handleFilteredCards = (selectedLamela, selectedFloor) => {
       apartment.buldingWing.replace("Lamela", "").trim() === selectedLamela;
     const floorMatch =
       floorIsAll || String(apartment.floor ?? "") === String(selectedFloor);
-    if (lamelaMatch && floorMatch) {
+    const areaMatch = !catalog.hasAreaFilter ||
+      (apartment.area >= selectedMinArea && apartment.area <= selectedMaxArea);
+    if (lamelaMatch && floorMatch && areaMatch) {
       card.style.display = "flex";
     } else {
       card.style.display = "none";
     }
   });
-  visibleCards = getVisibleFlexCards();
-  filterAndRenderApartments(30, 126);
-  getObjectCount(visibleCards.length);
+  getObjectCount(getVisibleFlexCards().length);
 };
 
 const getVisibleFlexCards = () => {
@@ -588,10 +465,10 @@ function setEventCurrentPolygon(combined, data) {
         ).textContent = matchedData.floor;
         document.querySelector(
           ".popup_type_house .js-apartment-area",
-        ).textContent = formatArea(matchedData);
+        ).textContent = formatModalArea(matchedData);
         document.querySelector(
           ".popup_type_house .js-apartment-number",
-        ).textContent = matchedData.apartmentNumber;
+        ).textContent = formatModalApartmentNumber(matchedData.apartmentNumber);
         document.querySelector(".popup_type_house .apartment__img").src =
           matchedData.planImg;
       }
@@ -615,33 +492,18 @@ const getObjectCount = (visibleCards) => {
 };
 
 function filterAndRenderApartments(minValue, maxValue) {
-  let filteredCount = 0;
-  visibleCards.forEach((card) => {
-    const cardId = card.getAttribute("data-key");
-    const apartment = data.find((item) => item.id.toString() === cardId);
-
-    if (apartment) {
-      if (!catalog.hasAreaFilter || (apartment.area >= minValue && apartment.area <= maxValue)) {
-        card.style.display = "flex";
-        filteredCount++;
-      } else {
-        card.style.display = "none";
-      }
-    }
-  });
-
-  getObjectCount(filteredCount);
+  selectedMinArea = minValue;
+  selectedMaxArea = maxValue;
+  handleFilteredCards(selectedLamela, selectedFloor);
 }
 const initializeRangeSlider = () => {
   if (!catalog.hasAreaFilter) return;
   const range = document.querySelector(".js-range-slider");
   const inputFrom = document.querySelector("#example_2_input_from");
   const inputTo = document.querySelector("#example_2_input_to");
-  const min = 30;
-  const max = 126;
+  const { min, max } = areaBounds;
   const params = new URLSearchParams(window.location.search);
-  const fromURL = parseInt(params.get("kvadrati-od")) || min;
-  const toURL = parseInt(params.get("stanovi-do")) || max;
+  const { from: fromURL, to: toURL } = readAreaRange(params);
 
   if (!range || !inputFrom || !inputTo) {
     console.error("Ошибка: один из элементов не найден!");
@@ -656,7 +518,11 @@ const initializeRangeSlider = () => {
     from: fromURL, // ← берём из URL
     to: toURL, // ← берём из URL
     onStart: (data) => updateRangeSliderInputs(data, inputFrom, inputTo),
-    onFinish: (data) => updateRangeSliderInputs(data, inputFrom, inputTo),
+    onChange: (data) => updateRangeSliderInputs(data, inputFrom, inputTo),
+    onFinish: (data) => {
+      updateRangeSliderInputs(data, inputFrom, inputTo);
+      updateURL();
+    },
   });
 };
 
@@ -664,9 +530,6 @@ function updateRangeSliderInputs(data, inputFrom, inputTo) {
   inputFrom.value = data.from;
   inputTo.value = data.to;
   filterAndRenderApartments(data.from, data.to);
-  if (data.type === "finish") {
-    updateURL();
-  }
 }
 
 whenDocumentReady(() => {
@@ -700,6 +563,9 @@ whenDocumentReady(() => {
       const targetElement = document.querySelector(targetSelector);
       setupFloorFilter(targetSelector);
       if (targetElement) targetElement.style.display = "flex";
+      document.body.dataset.catalogView = key === "2" ? "plan" : "grid";
+      document.body.classList.toggle("tchaikovsky-plan-view", house === "tchaikovsky" && key === "2");
+      document.body.classList.toggle("tchaikovsky-grid-view", house === "tchaikovsky" && key !== "2");
     });
   });
   function redirectBack() {
@@ -714,27 +580,32 @@ whenDocumentReady(() => {
 whenDocumentReady(() => {
   if (!catalog.hasFloorPlans || !floorPlanButton) return;
 
-  let isFloorPlanView = false;
   const gridButton = document.querySelector('.button__choice[data-key="1"]');
   const planButton = document.querySelector('.button__choice[data-key="2"]');
   const gridView = document.querySelector(".apartments__filter");
   const floorPlanView = document.querySelector(".houses-plans_container");
+  const updateViewButton = () => {
+    const isPlan = document.body.dataset.catalogView === "plan";
+    floorPlanButton.textContent = isPlan
+      ? (house === "tchaikovsky" ? "SELECT BY PARAMETERS" : "BACK TO THE GRID")
+      : "SELECT ON THE FLOOR PLAN";
+    floorPlanButton.setAttribute("aria-pressed", String(isPlan));
+  };
 
   floorPlanButton.addEventListener("click", () => {
-    if (isFloorPlanView) {
+    if (document.body.dataset.catalogView === "plan") {
       gridButton?.click();
-      floorPlanButton.textContent = "SELECT ON THE FLOOR PLAN";
-      floorPlanButton.setAttribute("aria-pressed", "false");
       gridView?.scrollIntoView({ behavior: "smooth", block: "start" });
     } else {
       planButton?.click();
-      floorPlanButton.textContent = "BACK TO THE GRID";
-      floorPlanButton.setAttribute("aria-pressed", "true");
-      floorPlanView?.scrollIntoView({ behavior: "smooth", block: "start" });
+      (house === "tchaikovsky" ? document.querySelector("#apartments") : floorPlanView)
+        ?.scrollIntoView({ behavior: "smooth", block: "start" });
     }
-
-    isFloorPlanView = !isFloorPlanView;
+    updateViewButton();
+    updateURL();
   });
+  if (new URLSearchParams(location.search).get("view") === "plan") planButton?.click();
+  updateViewButton();
 });
 
 whenDocumentReady(() => {
@@ -742,11 +613,10 @@ whenDocumentReady(() => {
   getApartmentFloors();
   getApartmentCards(firstApartment);
   getLamela();
+  if (house === "tchaikovsky") initializeCatalogFilterControls();
   setupLamelaFilter();
   setupFloorFilter(".apartments__filter");
   handleFilteredCards();
-  getVisibleFlexCards();
-  getObjectCount(visibleCards.length);
   if (catalog.hasFloorPlans && house !== "tchaikovsky") {
     handleFilteredHousePlans("np");
     getVisiblePolygons(data);
@@ -787,9 +657,9 @@ whenDocumentReady(() => {
         document.querySelector(".popup_type_house .js-apartment-floor").textContent =
           currentItem.floor ?? "";
         document.querySelector(".popup_type_house .js-apartment-area").textContent =
-          formatArea(currentItem);
+          formatModalArea(currentItem);
         document.querySelector(".popup_type_house .js-apartment-number").textContent =
-          currentItem.apartmentNumber;
+          formatModalApartmentNumber(currentItem.apartmentNumber);
         document.querySelector(".popup_type_house .apartment__img").src =
           currentItem.planImg;
         openModal(popupCurrentHouse);
@@ -809,13 +679,17 @@ whenDocumentReady(() => {
 document.querySelector("[data-reset-filters]")?.addEventListener("click", () => {
   selectedLamela = null;
   selectedFloor = null;
+  selectedMinArea = areaBounds.min;
+  selectedMaxArea = areaBounds.max;
   document.querySelectorAll(".filter__btn_lamela, .filter__btn_floor").forEach((button) => {
     button.classList.toggle("active", button.textContent.trim() === "All");
   });
   handleFilteredCards(selectedLamela, selectedFloor);
   const range = document.querySelector(".js-range-slider");
   const slider = range ? $(range).data("ionRangeSlider") : null;
-  if (slider) slider.update({ from: 30, to: 126 });
+  if (slider) slider.update({ from: areaBounds.min, to: areaBounds.max });
+  document.querySelector("#example_2_input_from").value = areaBounds.min;
+  document.querySelector("#example_2_input_to").value = areaBounds.max;
   const params = new URLSearchParams({ house });
   window.history.replaceState({}, "", `${window.location.pathname}?${params}`);
   updateSEOTags(params);

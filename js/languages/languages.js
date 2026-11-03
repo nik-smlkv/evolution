@@ -1,5 +1,7 @@
 export const langArr = {
 	en: {
+		plan_office: `Sales Office`,
+		plan_street: `Bulevar maršala Tolbuhina 8, Serbia`,
 		link_project: `About the project`,
 		link_about_btn: `about project`,
 		h2_represen: `Evolution Residence is one of our most representative projects and a symbol of our success.`,
@@ -138,6 +140,8 @@ export const langArr = {
 		p_belrg: `Belgrade`,
 	},
 	srb: {
+		plan_office: `Prodajna kancelarija`,
+		plan_street: `Bulevar maršala Tolbuhina 8, Srbija`,
 		p_belrg: `Beograd`,
 		p_locat: `Lokacija`,
 		p_quality_comf: `Vrhunski kvalitet za potpuno uživanje`,

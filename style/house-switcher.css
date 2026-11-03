@@ -36,9 +36,14 @@
   outline: none;
 }
 
+.house-menu:hover .house-menu__toggle img,
+.house-menu[data-open="true"] .house-menu__toggle img,
+.house-menu__toggle:focus-visible img {
+  filter: brightness(0) saturate(100%) invert(63%) sepia(65%) saturate(623%) hue-rotate(166deg) brightness(100%) contrast(96%);
+}
+
 .house-menu[data-open="true"] .house-menu__toggle img {
   transform: rotate(180deg);
-  filter: brightness(0) saturate(100%) invert(63%) sepia(65%) saturate(623%) hue-rotate(166deg) brightness(100%) contrast(96%);
 }
 
 .house-menu__list {
@@ -83,8 +88,58 @@
   outline: none;
 }
 
-body[data-catalog-house="tchaikovsky"] .area-filter {
-  display: none;
+body[data-catalog-house="tchaikovsky"] .houses-plans_container {
+  gap: 32px;
+  scroll-margin-top: 110px;
+}
+
+body[data-catalog-house="tchaikovsky"] .floor__filter {
+  flex: 0 0 180px;
+  gap: 32px;
+}
+
+body[data-catalog-house="tchaikovsky"] .houses-plan {
+  min-width: 0;
+}
+
+.tchaikovsky-plan-types {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.tchaikovsky-plan-types__button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 18px;
+  color: #161d2d;
+  font-size: 16px;
+  line-height: 1.2;
+  text-transform: uppercase;
+  background: #fafafa;
+  border: 1px solid #d1d4d8;
+  border-radius: 999px;
+  transition: color 180ms ease, background-color 180ms ease, border-color 180ms ease;
+}
+
+.tchaikovsky-plan-types__button:hover,
+.tchaikovsky-plan-types__button:focus-visible {
+  color: #0474dc;
+  border-color: #0474dc;
+}
+
+.tchaikovsky-plan-types__button[aria-pressed="true"] {
+  color: #fff;
+  background: #0474dc;
+  border-color: #0474dc;
+}
+
+.tchaikovsky-plan-types__button:focus-visible {
+  outline: 2px solid #42b0f9;
+  outline-offset: 3px;
 }
 
 body[data-catalog-house="tchaikovsky"] .tchaikovsky-plan-controls {
@@ -101,6 +156,14 @@ body[data-catalog-house="tchaikovsky"] .tchaikovsky-plan-controls__buttons {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+}
+
+body[data-catalog-house="tchaikovsky"] .tchaikovsky-plan-controls__group[hidden] {
+  display: none;
+}
+
+body[data-catalog-house="tchaikovsky"] .houses-plan[aria-busy="true"] {
+  opacity: 0.6;
 }
 
 body[data-catalog-house="tchaikovsky"] .tchaikovsky-life-plan [data-plan-unit] {
@@ -124,12 +187,65 @@ body[data-catalog-house="tchaikovsky"] .tchaikovsky-life-plan [data-plan-unit].d
   pointer-events: none;
 }
 
+body[data-catalog-house="tchaikovsky"] .houses-plan[data-plan-type="commercial"] [data-plan-unit].enabled,
+body[data-catalog-house="tchaikovsky"] .houses-plan[data-plan-type="parking"] [data-plan-unit].enabled {
+  cursor: default;
+}
+
+@media (max-width: 1500px) {
+  .tchaikovsky-plan-types__button {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 1000px) {
+  body[data-catalog-house="tchaikovsky"] .houses-plans_container {
+    flex-direction: column;
+  }
+
+  body[data-catalog-house="tchaikovsky"] .floor__filter {
+    flex-basis: auto;
+    width: 100%;
+    overflow: visible;
+    gap: 24px;
+  }
+
+  .tchaikovsky-plan-types {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .tchaikovsky-plan-types__button {
+    flex: 1 1 100px;
+    width: auto;
+    padding-inline: 12px;
+  }
+
+  body[data-catalog-house="tchaikovsky"] .tchaikovsky-plan-controls {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+}
+
 @media (hover: hover) and (min-width: 768px) {
   .house-menu:hover .house-menu__list {
     visibility: visible;
     opacity: 1;
     transform: translateY(0);
     pointer-events: auto;
+  }
+}
+
+@media (hover: hover) and (min-width: 1501px) {
+  .house-menu::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 29;
+    width: max(100%, 260px);
+    height: 16px;
   }
 }
 

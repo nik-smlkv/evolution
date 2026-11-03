@@ -14,6 +14,18 @@ body {
 	scroll-behavior: auto;
 }
 
+html {
+	scrollbar-gutter: stable;
+}
+
+.popup.popup_type_house {
+	z-index: 20;
+}
+
+.popup.popup_type_form_quarter {
+	z-index: 21;
+}
+
 h1,
 h2,
 h3,

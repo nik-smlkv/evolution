@@ -53,6 +53,7 @@
     <link rel="stylesheet" href="./style/fancybox.css?v=1.0.5" />
     <link rel="stylesheet" href="./style/odometer.min.css?v=1.0.5" />
     <link rel="stylesheet" href="./style/ion.rangeSlider.min.css?v=1.0.5" />
+    <link rel="stylesheet" href="./style/header-responsive.css?v=1.0.0" />
     <script src="./js/swiper-bundle.min.js?v=1.0.5"></script>
     <script src="./js/jquery-3.6.4.min.js?v=1.0.5"></script>
     <script src="./js/printThis.js?v=1.0.5"></script>
@@ -200,7 +201,7 @@
             <a href="#main" class="header__logo flex-style-row"
               ><img src="./images/logo.png" alt="Logo"
             /></a>
-            <nav class="header__nav">
+            <nav class="header__nav" id="site-navigation" aria-label="Main navigation">
               <ul class="flex-style-row header__nav_list">
                 <li class="menu__item">
                   <a
@@ -210,6 +211,16 @@
                     data-target="about-project"
                     >About Project</a
                   >
+                </li>
+                <li class="menu__item house-menu" data-house-menu>
+                  <button class="house-menu__toggle" type="button" aria-expanded="false" aria-controls="house-menu-list">
+                    <span>APARTMENTS</span>
+                    <img src="./images/apartments-arrow.svg" alt="" aria-hidden="true" />
+                  </button>
+                  <ul class="house-menu__list" id="house-menu-list">
+                    <li><a href="/search-by-parameters/tchaikovsky/">Tchaikovsky</a></li>
+                    <li><a href="/search-by-parameters/vivaldi/">Vivaldi</a></li>
+                  </ul>
                 </li>
                 <li class="menu__item">
                   <a
@@ -228,21 +239,6 @@
                     data-target="infrastructure"
                     >Infrastructure</a
                   >
-                </li>
-                <li class="menu__item house-menu" data-house-menu>
-                  <button
-                    class="house-menu__toggle"
-                    type="button"
-                    aria-expanded="false"
-                    aria-controls="house-menu-list"
-                  >
-                    <span>APARTMENTS</span>
-                    <img src="./images/arrow-down.svg" alt="" aria-hidden="true" />
-                  </button>
-                  <ul class="house-menu__list" id="house-menu-list">
-                    <li><a href="/search-by-parameters/tchaikovsky/">Tchaikovsky</a></li>
-                    <li><a href="/search-by-parameters/vivaldi/">Vivaldi</a></li>
-                  </ul>
                 </li>
                 <li class="menu__item">
                   <a
@@ -284,15 +280,14 @@
                 >leave a request</a
               >
               <div id="language-switcher" class="lang_switch_list">
-                <p data-lang="en" class="lang__item link-hover">en</p>
-                <span>/</span>
-                <p data-lang="srb" class="lang__item link-hover">srb</p>
+                <button type="button" data-lang="en" class="lang__item" aria-label="English">EN</button>
+                <button type="button" data-lang="srb" class="lang__item" aria-label="Serbian">SRB</button>
               </div>
             </div>
-            <div class="header__burger">
+            <button class="header__burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="site-navigation">
               <span class="burger-line"></span>
               <span class="burger-line"></span>
-            </div>
+            </button>
           </div>
         </div>
       </header>

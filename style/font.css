@@ -1,7 +1,6 @@
 @font-face {
 	font-family: "Manrope-Variable";
-	src: url("./ManropeVariable.woff2") format("woff2 supports variations"),
-		url("./ManropeVariable.woff2") format("woff2-variations");
+	src: url("../fonts/ManropeVariable.woff2") format("woff2");
 	font-style: normal;
 	font-weight: 400 700;
 	font-display: swap;
