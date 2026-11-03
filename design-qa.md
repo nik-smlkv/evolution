@@ -2,6 +2,8 @@
 
 final result: passed
 
+Follow-up (2026-11-03): removed the mobile Zoom/Fit control and its grid row. The mobile plan now always uses the former enlarged 900 px surface with 32 px apartment markers, inside its existing horizontal scroll container. Browser verification at 390 px: 351 px container, 900 px surface, no zoom button, horizontal movement to scrollLeft=375, and no page overflow (375 px content including the reserved scrollbar gutter). At 1366 px the surface continues to match the 1031 px plan container. Evidence: `plan-enlarged-no-button-mobile.jpg`; viewport override reset after checking.
+
 ## Sources and scope
 
 Supplied SVG attachments: `c71c290c-5652-461d-ad66-54416444e959` (604 × 76 floor controls), `4d2d4b71-b908-4d38-b67e-d4cbaba7d2f8` (1920 × 3235), `2bb1642c-700e-491a-863a-246791cea469` (768 × 4303), `e272238a-c45e-4d27-85df-706317bac1b7` (390 × 4071), and `af724d88-a050-4c64-af4e-4c06a32aa307` (360 × 3901), each `Вставленный текст.txt` under `/Users/nikitasmolkov/.codex/attachments/`.

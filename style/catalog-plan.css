@@ -37,7 +37,6 @@ body.tchaikovsky-plan-view .houses-plan {
 body.tchaikovsky-plan-view .plan-canvas svg { display: block; width: 100%; height: auto; }
 body.tchaikovsky-plan-view .plan-canvas { width: 100%; aspect-ratio: 4000 / 3160; }
 .plan-surface { position: relative; width: 100%; }
-.plan-zoom-toggle { display: none; }
 body.tchaikovsky-plan-view .houses-plan [data-unit] { opacity: 0; fill: #0474dc; cursor: pointer; transition: opacity 150ms ease; }
 body.tchaikovsky-plan-view .houses-plan [data-unit]:hover,
 body.tchaikovsky-plan-view .houses-plan [data-unit].is-highlighted { opacity: 0.2; }
@@ -186,18 +185,15 @@ body.tchaikovsky-catalog .info__footer__content > span { flex: 0 0 260px; max-wi
   body.tchaikovsky-catalog .title__content { align-items: start; flex-direction: column; gap: 20px; }
   body.tchaikovsky-catalog .block-search-parameters { height: auto; padding-block: 32px; }
   body.tchaikovsky-catalog .catalog-plan-button { min-height: 44px; }
-  body.tchaikovsky-plan-view .houses-plans_container { grid-template-areas: "tabs compass" "floors floors" "zoom zoom" "plan plan"; grid-template-columns: 1fr 44px; gap: 20px 8px; padding-inline: 12px; }
+  body.tchaikovsky-plan-view .houses-plans_container { grid-template-areas: "tabs compass" "floors floors" "plan plan"; grid-template-columns: 1fr 44px; gap: 20px 8px; padding-inline: 12px; }
   body.tchaikovsky-plan-view .plan-compass { width: 44px; height: 44px; }
   body.tchaikovsky-plan-view .tchaikovsky-plan-types { gap: 4px; }
   body.tchaikovsky-plan-view .tchaikovsky-plan-types__button { min-height: 40px; padding-inline: 5px; font-size: 12px; }
   body.tchaikovsky-plan-view .plan-floor-label { display: none; }
-  body.tchaikovsky-plan-view .plan-unit-marker { width: 14px; height: 14px; font-size: 6px; }
-  body.tchaikovsky-plan-view .houses-plan[data-plan-type="parking"] .plan-unit-marker { width: 10px; height: 10px; font-size: 5px; }
   body.tchaikovsky-plan-view .houses-plan { overflow-x: auto; scrollbar-width: thin; overscroll-behavior-x: contain; }
-  body.tchaikovsky-plan-view .houses-plan.is-zoomed .plan-surface { width: 900px; }
-  body.tchaikovsky-plan-view .houses-plan.is-zoomed .plan-unit-marker { width: 32px; height: 32px; font-size: 12px; }
-  body.tchaikovsky-plan-view .houses-plan.is-zoomed[data-plan-type="parking"] .plan-unit-marker { width: 18px; height: 18px; font-size: 8px; }
-  body.tchaikovsky-plan-view .plan-zoom-toggle { grid-area: zoom; display: inline-flex; justify-self: start; align-items: center; justify-content: center; min-height: 40px; padding: 0 20px; color: #0474dc; font-size: 12px; border: 1px solid #0474dc; border-radius: 999px; }
+  body.tchaikovsky-plan-view .houses-plan .plan-surface { width: 900px; }
+  body.tchaikovsky-plan-view .houses-plan .plan-unit-marker { width: 32px; height: 32px; font-size: 12px; }
+  body.tchaikovsky-plan-view .houses-plan[data-plan-type="parking"] .plan-unit-marker { width: 18px; height: 18px; font-size: 8px; }
   body.tchaikovsky-catalog #form { gap: 32px; padding-inline: 20px; }
   body.tchaikovsky-catalog #form .title { font-size: 36px; }
   body.tchaikovsky-catalog #form .subtitle { text-align: center; }

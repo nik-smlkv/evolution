@@ -1,7 +1,7 @@
 import { loadHouse } from "./houses.js?v=1.0.8";
 import { tchaikovskyFloorLevels } from "./tchaikovsky-floors.js?v=1.0.0";
 import { openModal } from "../modal.js";
-import { initializeTchaikovskyFloorPlan } from "./floor-plan.js?v=1.0.3";
+import { initializeTchaikovskyFloorPlan } from "./floor-plan.js?v=1.0.4";
 import { initializeCatalogFilterControls } from "./catalog-filter-controls.js?v=1.0.1";
 const requestedHouse = new URLSearchParams(window.location.search).get("house");
 const catalog = await loadHouse(requestedHouse);

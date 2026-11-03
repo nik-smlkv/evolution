@@ -76,18 +76,6 @@ export async function initializeTchaikovskyFloorPlan(apartments, onApartment) {
   surface.append(canvas, markers);
   host.append(surface);
   host.setAttribute("data-lenis-prevent", "");
-  const zoom = document.createElement("button");
-  zoom.className = "plan-zoom-toggle";
-  zoom.type = "button";
-  zoom.textContent = "Zoom plan";
-  zoom.setAttribute("aria-pressed", "false");
-  zoom.addEventListener("click", () => {
-    const enlarged = host.classList.toggle("is-zoomed");
-    zoom.setAttribute("aria-pressed", String(enlarged));
-    zoom.textContent = enlarged ? "Fit plan" : "Zoom plan";
-    requestAnimationFrame(renderLevel);
-  });
-  container.append(zoom);
   const list = floorRail.querySelector(".plan-floor-list");
   const previous = floorRail.querySelector(".plan-floor-arrow--up");
   const next = floorRail.querySelector(".plan-floor-arrow--down");
