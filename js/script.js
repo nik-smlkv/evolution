@@ -1,5 +1,6 @@
 import { langArr } from "./languages/languages.js";
 import { openModal, closeModal, setModalEventListeners } from "./modal.js";
+const siteRootUrl = new URL("../", import.meta.url);
 const config = {
   baseUrl: "https://pb17539.profitbase.ru/api/v4/json",
   headers: {
@@ -216,7 +217,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const currentPath = window.location.pathname;
 
-      if (currentPath === "/") {
+      if (currentPath === siteRootUrl.pathname || currentPath === `${siteRootUrl.pathname}index.html`) {
         const targetElement = document.getElementById(targetId);
 
         if (targetElement) {
@@ -228,7 +229,7 @@ document.addEventListener("DOMContentLoaded", () => {
       } else {
         const existingParams = new URLSearchParams(window.location.search);
         existingParams.set("section", targetId);
-        window.location.href = `/?${existingParams.toString()}`;
+        window.location.href = `${siteRootUrl.href}?${existingParams.toString()}`;
       }
     });
   });
@@ -241,8 +242,8 @@ document.addEventListener("DOMContentLoaded", () => {
         event.preventDefault();
         const existingParams = new URLSearchParams(window.location.search);
         window.location.href = existingParams.toString()
-          ? `/?${existingParams.toString()}`
-          : "/";
+          ? `${siteRootUrl.href}?${existingParams.toString()}`
+          : siteRootUrl.href;
       } else {
         event.preventDefault();
         window.scrollTo({ top: 0, behavior: "smooth" });
