@@ -1,5 +1,5 @@
 import { tchaikovskyFloorLevels } from "./tchaikovsky-floors.js?v=1.0.1";
-import { tchaikovskyUpperFloorMarkers } from "./tchaikovsky-plan-markers.js?v=1.0.0";
+import { tchaikovskyUpperFloorMarkers } from "./tchaikovsky-plan-markers.js?v=1.0.1";
 
 const planDirectory = "./plans/А3/";
 const groundImage = `${planDirectory}2100 Osnova Prizemlja (A,C)_Nisko Prizemlje редакт.jpg`;
@@ -147,15 +147,15 @@ export async function initializeTchaikovskyFloorPlan(apartments, onApartment) {
           image.setAttribute("href", level.image);
           image.setAttributeNS("http://www.w3.org/1999/xlink", "href", level.image);
           if (type === "apartments") {
-            (tchaikovskyUpperFloorMarkers[level.id] || []).forEach(({ unit, x, y }) => {
+            (tchaikovskyUpperFloorMarkers[level.id] || []).forEach(({ unit, d, x, y }) => {
               if (group.querySelector(`[data-unit="${unit}"]`)) return;
-              const anchor = documentSvg.createElementNS("http://www.w3.org/2000/svg", "circle");
-              anchor.setAttribute("cx", x);
-              anchor.setAttribute("cy", y);
-              anchor.setAttribute("r", "3");
-              anchor.setAttribute("data-unit", unit);
-              anchor.setAttribute("data-marker-anchor", "true");
-              group.append(anchor);
+              const outline = documentSvg.createElementNS("http://www.w3.org/2000/svg", "path");
+              outline.setAttribute("d", d);
+              outline.setAttribute("data-unit", unit);
+              outline.setAttribute("data-marker-x", x);
+              outline.setAttribute("data-marker-y", y);
+              outline.setAttribute("data-contour-source", "registered-jpg");
+              group.append(outline);
             });
           }
         });
@@ -184,8 +184,8 @@ export async function initializeTchaikovskyFloorPlan(apartments, onApartment) {
       marker.className = "plan-unit-marker";
       marker.dataset.planUnit = unit;
       marker.textContent = unit.replace(/^([A-Z])0(\d)$/, "$1$2");
-      marker.style.left = `${(bounds.x + bounds.width / 2) / width * 100}%`;
-      marker.style.top = `${(bounds.y + bounds.height / 2) / height * 100}%`;
+      marker.style.left = `${Number(shape.dataset.markerX ?? (bounds.x + bounds.width / 2)) / width * 100}%`;
+      marker.style.top = `${Number(shape.dataset.markerY ?? (bounds.y + bounds.height / 2)) / height * 100}%`;
       marker.title = `${categories[activeType].label}: ${unit}`;
       if (apartment) {
         marker.type = "button";

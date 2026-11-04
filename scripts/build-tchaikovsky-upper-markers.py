@@ -1,37 +1,94 @@
-"""Build upper-floor marker positions reviewed against the supplied plan JPGs.
+"""Build registered upper-floor apartment outlines and interior marker positions.
 
-The Illustrator contains unit contours only through level 3500. Its coordinate
-system also matches the upper-floor JPGs. References below identify the room
-locations that were checked against those JPGs and the supplied apartment
-sheets, including the combined apartments on the recessed floors. These are
-marker anchors, not replacement apartment boundary contours.
+Build dependency: Shapely (python -m pip install shapely); the website itself
+does not need it. Illustrator level 3500 supplies the registered coordinate
+system and boundaries shared by the upper floors. Recessed facades and merged
+apartments are adjusted against the corresponding 3600/3700/3800 JPGs and the
+individual apartment sheets. This does not modify the source AI or JPG files.
 """
 from pathlib import Path
 import json
 import re
 import xml.etree.ElementTree as ET
+from itertools import combinations
+
+from shapely.geometry import Polygon, box
+from shapely.ops import polylabel, unary_union
 
 ROOT = Path(__file__).resolve().parents[1]
 NS = {"s": "http://www.w3.org/2000/svg"}
 plan = ET.parse(ROOT / "plans/А3/chaikovsky-life.svg").getroot()
 reference = plan.find("s:g[@id='_3500']", NS)
-centres = {}
+outlines = {}
 for shape in reference.iter():
     unit = shape.get("data-unit")
     if not unit:
         continue
     points = list(map(float, re.findall(r"-?\d+(?:\.\d+)?", shape.get("d"))))
-    xs, ys = points[::2], points[1::2]
-    centres[unit] = ((min(xs) + max(xs)) / 2, (min(ys) + max(ys)) / 2)
+    outlines[unit] = Polygon(zip(points[::2], points[1::2]))
 
-markers = {level: [] for level in ("3600", "3700", "3800")}
+plans = {level: [] for level in ("3600", "3700", "3800")}
+
+
+def below(geometry, slope, intercept):
+    """Clip at a facade line y <= slope * x + intercept in SVG coordinates."""
+    return geometry.intersection(Polygon([
+        (0, 0), (960, 0), (960, slope * 960 + intercept), (0, intercept),
+    ]))
+
+
+def joined(parts):
+    if len(parts) == 1:
+        return parts[0]
+    # Fill only the narrow former party-wall gap; preserve the exterior edges.
+    return unary_union(parts).buffer(1.3, join_style=2).buffer(-1.3, join_style=2)
+
+
+def adjust(level, wing, number, geometry):
+    if level == "3700" and wing == "A":
+        if number == 119:
+            # A119 includes the west dressing-room extension formerly in A86.
+            extension = below(outlines["A86"], 0.31, 489.5)
+            west_facade = Polygon([
+                (280.5, 0), (960, 0), (960, 758.4),
+                (280.5 - 0.31 * 758.4, 758.4),
+            ])
+            extension = extension.intersection(west_facade)
+            geometry = joined([geometry, extension])
+        if 120 <= number <= 127:
+            geometry = below(geometry, 0.304, 548.0)
+    if level == "3700" and wing == "C":
+        if 113 <= number <= 115:
+            geometry = geometry.intersection(box(0, 74, 960, 758.4))
+        if number == 113:
+            geometry = geometry.intersection(box(581.25, 0, 960, 758.4))
+        if number == 116:
+            geometry = geometry.intersection(box(0, 80.5, 960, 758.4))
+        if 116 <= number <= 120:
+            geometry = geometry.intersection(box(0, 0, 823.5, 758.4))
+    if level == "3800" and wing == "B":
+        if 135 <= number <= 139:
+            geometry = below(geometry, -0.185, 807.6)
+        if number == 135:
+            geometry = below(geometry, 0.3125, 544.0)
+        if 139 <= number <= 143:
+            geometry = geometry.intersection(box(0, 0, 823, 758.4))
+    assert geometry.geom_type == "Polygon" and geometry.is_valid
+    assert geometry.area > 300 and not geometry.interiors
+    return geometry
+
+
 def add(level, wing, start, references):
     for number, refs in enumerate(references, start):
         refs = [refs] if isinstance(refs, int) else refs
-        points = [centres[f"{wing}{n}"] for n in refs]
-        markers[level].append({"unit": f"{wing}{number}",
-            "x": round(sum(p[0] for p in points) / len(points), 3),
-            "y": round(sum(p[1] for p in points) / len(points), 3)})
+        geometry = adjust(level, wing, number, joined([outlines[f"{wing}{n}"] for n in refs]))
+        # Use an interior pole rather than a bounding-box centre, which can lie
+        # in the corridor for the concave corner apartments.
+        marker = polylabel(geometry, tolerance=0.25)
+        points = list(geometry.exterior.coords)[:-1]
+        path = "M " + " L ".join(f"{x:.3f} {y:.3f}" for x, y in points) + " Z"
+        plans[level].append({"unit": f"{wing}{number}", "d": path,
+            "x": round(marker.x, 3), "y": round(marker.y, 3), "geometry": geometry})
 
 add("3600", "A", 100, range(83, 100))
 add("3600", "B", 91, range(71, 91))
@@ -44,10 +101,16 @@ add("3700", "C", 111, [81, 82, 83, 84, 85, 86, [87, 88], *range(89, 96)])
 # The B recessed floor combines two pairs on its south side and one on its east side.
 add("3800", "B", 131, [71, 72, 73, 74, 75, [76, 77], 78, [79, 80], 81,
                         [82, 83], 84, 85, 86, 87, 88, 89, 90])
-assert [len(v) for v in markers.values()] == [52, 50, 17]
-assert len({m["unit"] for group in markers.values() for m in group}) == 119
+assert [len(v) for v in plans.values()] == [52, 50, 17]
+assert len({m["unit"] for group in plans.values() for m in group}) == 119
+for level, units in plans.items():
+    for first, second in combinations(units, 2):
+        overlap = first["geometry"].intersection(second["geometry"]).area
+        assert overlap < 0.1, (level, first["unit"], second["unit"], overlap)
+markers = {level: [{k: v for k, v in unit.items() if k != "geometry"} for unit in units]
+           for level, units in plans.items()}
 source = "// Generated by scripts/build-tchaikovsky-upper-markers.py.\n"
-source += "// Reviewed marker anchors for upper-floor JPGs; no inferred unit boundary contours.\n"
+source += "// Registered apartment outlines and interior markers, reviewed against upper-floor JPGs.\n"
 source += "export const tchaikovskyUpperFloorMarkers = " + json.dumps(markers, ensure_ascii=False, indent=2) + ";\n"
 (ROOT / "js/apartments/tchaikovsky-plan-markers.js").write_text(source)
 print({level: len(points) for level, points in markers.items()})
