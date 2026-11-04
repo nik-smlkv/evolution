@@ -271,7 +271,7 @@ body[data-catalog-house="vivaldi"] .catalog-plan-button {
 }
 
 .popup_type_house .popup__close {
-  z-index: 2;
+  z-index: 0;
   top: 0;
   right: 100%;
   width: max(44px, calc(80 * var(--modal-unit)));
@@ -326,6 +326,8 @@ body[data-catalog-house="vivaldi"] .catalog-plan-button {
 }
 
 .popup_type_house .apartment-card {
+  position: relative;
+  z-index: 1;
   display: block;
   width: 100%;
   max-width: none;
@@ -515,6 +517,7 @@ body[data-catalog-house="vivaldi"] .catalog-plan-button {
 
   .popup_type_house .popup__close {
     position: fixed;
+    z-index: 2;
     top: 0;
     right: 0;
     width: 44px;
