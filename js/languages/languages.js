@@ -1,5 +1,6 @@
 export const langArr = {
 	en: {
+		plan_gesture_hint: `Use your fingers to zoom and move the plan`,
 		plan_office: `Sales Office`,
 		plan_street: `Bulevar maršala Tolbuhina 8, Serbia`,
 		link_project: `About the project`,
@@ -140,6 +141,7 @@ export const langArr = {
 		p_belrg: `Belgrade`,
 	},
 	srb: {
+		plan_gesture_hint: `Prstima uvećajte i pomerajte plan`,
 		plan_office: `Prodajna kancelarija`,
 		plan_street: `Bulevar maršala Tolbuhina 8, Srbija`,
 		p_belrg: `Beograd`,

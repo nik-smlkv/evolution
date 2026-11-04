@@ -74,6 +74,16 @@ export async function initializeTchaikovskyFloorPlan(apartments, onApartment, on
   compass.src = "./images/plan-compass.svg";
   compass.alt = "North orientation";
   container.append(compass);
+  const buildingKey = document.createElement("img");
+  buildingKey.className = "plan-building-key";
+  buildingKey.src = "./images/plan-building-key.svg";
+  buildingKey.alt = "Building wings A, B and C";
+  const gestureHint = document.createElement("p");
+  gestureHint.className = "plan-gesture-hint";
+  gestureHint.dataset.key = "plan_gesture_hint";
+  gestureHint.textContent = document.querySelector('header [data-lang="srb"].active')
+    ? "Prstima uvećajte i pomerajte plan" : "Use your fingers to zoom and move the plan";
+  container.append(buildingKey, gestureHint);
   host.replaceChildren();
   const canvas = document.createElement("div");
   canvas.className = "plan-canvas";
@@ -84,6 +94,35 @@ export async function initializeTchaikovskyFloorPlan(apartments, onApartment, on
   surface.append(canvas, markers);
   host.append(surface);
   host.setAttribute("data-lenis-prevent", "");
+  let planScale = 1;
+  let pinch;
+  const touchDistance = (touches) => Math.hypot(
+    touches[0].clientX - touches[1].clientX,
+    touches[0].clientY - touches[1].clientY,
+  );
+  host.addEventListener("touchstart", (event) => {
+    if (event.touches.length !== 2 || !matchMedia("(max-width: 600px)").matches) return;
+    const bounds = host.getBoundingClientRect();
+    const centerX = (event.touches[0].clientX + event.touches[1].clientX) / 2 - bounds.left;
+    const centerY = (event.touches[0].clientY + event.touches[1].clientY) / 2 - bounds.top;
+    pinch = {
+      distance: touchDistance(event.touches), scale: planScale,
+      anchorX: (centerX + host.scrollLeft) / planScale,
+      anchorY: (centerY + host.scrollTop) / planScale,
+    };
+  }, { passive: true });
+  host.addEventListener("touchmove", (event) => {
+    if (!pinch || event.touches.length !== 2) return;
+    event.preventDefault();
+    const bounds = host.getBoundingClientRect();
+    const centerX = (event.touches[0].clientX + event.touches[1].clientX) / 2 - bounds.left;
+    const centerY = (event.touches[0].clientY + event.touches[1].clientY) / 2 - bounds.top;
+    planScale = Math.min(3, Math.max(1, pinch.scale * touchDistance(event.touches) / pinch.distance));
+    surface.style.transform = `scale(${planScale})`;
+    host.scrollLeft = pinch.anchorX * planScale - centerX;
+    host.scrollTop = pinch.anchorY * planScale - centerY;
+  }, { passive: false });
+  host.addEventListener("touchend", (event) => { if (event.touches.length < 2) pinch = null; });
   const list = floorRail.querySelector(".plan-floor-list");
   const previous = floorRail.querySelector(".plan-floor-arrow--up");
   const next = floorRail.querySelector(".plan-floor-arrow--down");
