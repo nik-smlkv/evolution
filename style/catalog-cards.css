@@ -282,18 +282,18 @@ body[data-catalog-house="vivaldi"] .catalog-plan-button {
   pointer-events: none;
   background: #30343a;
   border: 0;
-  transition: transform 280ms cubic-bezier(0.22, 0.78, 0.24, 1), visibility 0s linear 280ms, opacity 300ms ease;
+  transition: transform 280ms cubic-bezier(0.22, 0.78, 0.24, 1), visibility 0s linear 280ms;
 }
 
 .popup_type_house.popup_is-opened .popup__close {
   transform: translateX(0);
   visibility: visible;
   pointer-events: auto;
-  transition-delay: calc(var(--apartment-panel-duration) + 80ms), calc(var(--apartment-panel-duration) + 80ms), 0s;
+  transition-delay: calc(var(--apartment-panel-duration) + 80ms), calc(var(--apartment-panel-duration) + 80ms);
 }
 
 .popup_type_house.popup_is-opened .popup__close:hover {
-  opacity: 0.6;
+  opacity: 1;
 }
 
 .popup_type_house .popup__close:focus-visible {
