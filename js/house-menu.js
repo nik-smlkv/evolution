@@ -10,15 +10,16 @@ document.querySelectorAll('[data-house-menu]').forEach((menu) => {
     setOpen(menu.dataset.open !== 'true');
   });
 
-  menu.addEventListener('mouseleave', () => {
-    if (window.matchMedia('(hover: hover)').matches) setOpen(false);
-  });
-
   menu.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape') {
+    if (event.key === 'Escape' && menu.dataset.open === 'true') {
+      event.stopPropagation();
       setOpen(false);
       toggle.focus();
     }
+  });
+
+  menu.querySelectorAll('.house-menu__list a').forEach((link) => {
+    link.addEventListener('click', () => setOpen(false));
   });
 
   document.addEventListener('click', (event) => {

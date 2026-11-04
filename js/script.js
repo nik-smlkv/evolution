@@ -1,5 +1,6 @@
 import { langArr } from "./languages/languages.js";
 import { openModal, closeModal, setModalEventListeners } from "./modal.js";
+import { initializeHeaderNavigation } from "./header-navigation.js?v=1.0.0";
 const siteRootUrl = new URL("../", import.meta.url);
 const config = {
   baseUrl: "https://pb17539.profitbase.ru/api/v4/json",
@@ -74,47 +75,11 @@ async function getHouses() {
  */
 // Пример использования
 
-const burger = document.querySelector(".header__burger");
-const headerMenu = document.querySelector(".header__menu");
-const headerBlock = document.querySelector(".header-block");
+const closeHeaderMenu = initializeHeaderNavigation();
 const popups = document.querySelectorAll(".popup");
 const updateCheckWidth = () => {
   return window.innerWidth <= 1500 && window.innerWidth >= 768;
 };
-
-const closeHeaderMenu = () => {
-  headerMenu.classList.remove("active");
-  burger.setAttribute("aria-expanded", "false");
-  burger.setAttribute("aria-label", "Open menu");
-  document.body.classList.remove("header-menu-open");
-};
-
-burger.addEventListener("click", () => {
-  const isOpen = !headerMenu.classList.contains("active");
-  headerMenu.classList.toggle("active", isOpen);
-  burger.setAttribute("aria-expanded", String(isOpen));
-  burger.setAttribute("aria-label", isOpen ? "Close menu" : "Open menu");
-  document.body.classList.toggle("header-menu-open", isOpen);
-});
-
-headerMenu.querySelectorAll(".menu__item_link, .house-menu__list a").forEach((link) => {
-  link.addEventListener("click", closeHeaderMenu);
-});
-document.querySelector(".header-block .js-scroll-form")?.addEventListener("click", closeHeaderMenu);
-document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape" && headerMenu.classList.contains("active")) {
-    closeHeaderMenu();
-    burger.focus();
-  }
-});
-document.addEventListener("click", (event) => {
-  if (headerMenu.classList.contains("active") &&
-      !headerMenu.contains(event.target) &&
-      !headerBlock.contains(event.target)) {
-    closeHeaderMenu();
-  }
-});
-window.matchMedia("(min-width: 1721px)").addEventListener("change", closeHeaderMenu);
 
 const getHeaderSubMenu = () => {
   if (window.innerWidth <= 1000) {
@@ -267,7 +232,7 @@ function handleButtonScroll() {
         const offset = -100; // Сдвиг на -100px
         const targetPosition =
           targetElement.getBoundingClientRect().top + window.scrollY + offset;
-        headerMenu.classList.remove("active");
+        closeHeaderMenu();
         window.scrollTo({
           top: targetPosition,
           behavior: "smooth",

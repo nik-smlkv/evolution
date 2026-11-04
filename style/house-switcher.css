@@ -229,30 +229,8 @@ body[data-catalog-house="tchaikovsky"] .houses-plan[data-plan-type="parking"] [d
   }
 }
 
-@media (hover: hover) and (min-width: 768px) {
-  .house-menu:hover .house-menu__list {
-    visibility: visible;
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
-    transition-delay: 0s;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .house-menu__list { transition-duration: 0.01ms; transition-delay: 0s; }
-}
-
-@media (hover: hover) and (min-width: 1501px) {
-  .house-menu::after {
-    content: "";
-    position: absolute;
-    top: 100%;
-    left: 0;
-    z-index: 29;
-    width: max(100%, 260px);
-    height: 16px;
-  }
 }
 
 @media (max-width: 767.99px) {
@@ -262,8 +240,8 @@ body[data-catalog-house="tchaikovsky"] .houses-plan[data-plan-type="parking"] [d
   }
 
   .house-menu__toggle {
-    width: 100%;
-    justify-content: space-between;
+    width: max-content;
+    justify-content: center;
   }
 
   .house-menu__list {

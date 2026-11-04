@@ -1,10 +1,12 @@
 /* One navigation and one set of actions across all viewport sizes. */
+header { min-height: 90px; }
 header .header__body {
-  min-height: 88px;
+  min-height: 90px;
   align-items: center;
   justify-content: space-between;
   flex-direction: row;
   gap: 20px;
+  padding-inline: clamp(32px, calc(21.25vw - 287px), 121px);
 }
 
 header .header__menu {
@@ -36,16 +38,21 @@ header .header__menu .header__logo {
 }
 
 header .header__logo img { width: 100%; height: auto; }
-header .header__menu .header__nav { position: static; display: block; margin: 0; order: 0; }
+header .header__menu .header__nav { position: static; display: block; flex: 0 0 auto; width: auto; height: auto; margin: 0; padding: 0; order: 0; overflow: visible; visibility: visible; transform: none; background: transparent; }
 header .header__nav .header__nav_list {
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: clamp(10px, 1.15vw, 24px);
+  width: max-content;
+  margin: 0;
+  padding: 0;
   white-space: nowrap;
 }
-header .header__menu .header__nav ul { flex-direction: row; align-items: center; gap: clamp(10px, 1.15vw, 24px); }
-header .header__nav .menu__item { width: auto; height: auto; text-align: left; }
+header .header__menu .header__nav .header__nav_list { flex-direction: row; align-items: center; gap: clamp(10px, 1.15vw, 24px); }
+header .header__menu .header__nav .header__nav_list:empty { display: none; }
+header[data-visible-links="0"] .header__menu { gap: 0; }
+header .header__nav .menu__item { display: block; flex: 0 0 auto; width: auto; height: auto; text-align: left; }
 header .menu__item_link { font-size: 16px; text-transform: uppercase; }
 header .house-menu__toggle { min-height: 48px; padding: 0 16px; font-size: 16px; }
 header .house-menu__toggle img { width: 11px; height: 6px; }
@@ -59,7 +66,6 @@ header .header-block .content-header {
   white-space: nowrap;
 }
 header .phone-link, header .js-scroll-form { display: inline-flex; font-size: 16px; }
-header .header__burger { display: none; }
 
 header .lang_switch_list {
   position: relative;
@@ -106,106 +112,99 @@ header .lang__item.active { color: #161d2d; }
 header .lang__item:focus-visible,
 header .header__burger:focus-visible { outline: 2px solid #42b0f9; outline-offset: 4px; }
 
-@media (max-width: 1720px) {
-  header { min-height: 90px; }
-  header .header__body { min-height: 90px; }
-  header .header__menu { flex: 1 1 auto; }
-  header .header__body .header__logo,
-  header .header__menu .header__logo { flex-basis: 140px; }
-  header .header__burger {
-    position: relative;
-    inset: auto;
-    z-index: 3;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    order: 0;
-    width: 44px;
-    height: 44px;
-    padding: 0;
-    color: white;
-    border: 0;
-    border-radius: 0;
-  }
-  header .burger-line { width: 30px; height: 1px; margin: 2.5px 0; }
-  header .header__menu.active ~ .header-block .header__burger .burger-line:first-child {
-    transform: translateY(3px) rotate(45deg);
-    margin: 2.5px 0;
-  }
-  header .header__menu.active ~ .header-block .header__burger .burger-line:nth-child(2) {
-    transform: translateY(-3px) rotate(-45deg);
-    margin: 2.5px 0;
-  }
-  header .header__menu .header__nav {
-    position: fixed;
-    top: 90px;
-    right: 0;
-    z-index: 2;
-    display: block;
-    width: min(420px, 100vw);
-    height: calc(100dvh - 90px);
-    margin: 0;
-    padding: 32px 28px 210px;
-    overflow-y: auto;
-    background: #161d2d;
-    visibility: hidden;
-    transform: translateX(100%);
-    transition: transform .3s ease, visibility .3s;
-  }
-  header .header__menu.active .header__nav { visibility: visible; transform: translateX(0); }
-  header .header__menu .header__nav ul {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 8px;
-  }
-  header .header__nav .menu__item { width: 100%; }
-  header .header__nav .menu__item_link {
-    display: block;
-    padding: 12px 0;
-    font-size: 12px;
-  }
-  header .house-menu__toggle { width: 100%; justify-content: space-between; font-size: 12px; }
-  header .house-menu__list {
-    position: static;
-    width: 100%;
-    min-width: 0;
-    max-height: 0;
-    margin: 0;
-    padding: 0 16px;
-    overflow: hidden;
-    transform: none;
-  }
-  header .house-menu[data-open="true"] .house-menu__list,
-  header .house-menu:hover .house-menu__list {
-    max-height: 180px;
-    padding: 8px 16px;
-    transform: none;
-  }
-  header .house-menu__list a { font-size: 12px !important; }
-  header .header-block .content-header {
-    position: static;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    width: auto;
-    padding: 0;
-    gap: clamp(12px, 1.5vw, 24px);
-    background: transparent;
-    border: 0;
-    visibility: visible;
-    transform: none;
-  }
-  header .header-block { gap: 16px; }
-  body.header-menu-open { overflow: hidden; }
-  body.header-menu-open header::after {
-    content: "";
-    position: fixed;
-    inset: 90px 0 0;
-    z-index: 1;
-    background: rgba(7, 12, 22, .58);
-  }
+header .header__burger {
+  position: relative;
+  inset: auto;
+  z-index: 3;
+  display: flex;
+  flex: 0 0 44px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  order: 0;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  color: white;
+  border: 0;
+  border-radius: 0;
+}
+header:not(.header-has-overflow) .header__burger { display: none; }
+header .burger-line { width: 30px; height: 1px; margin: 2.5px 0; }
+header .header__menu.active ~ .header-block .header__burger .burger-line:first-child {
+  transform: translateY(3px) rotate(45deg);
+  margin: 2.5px 0;
+}
+header .header__menu.active ~ .header-block .header__burger .burger-line:nth-child(2) {
+  transform: translateY(-3px) rotate(-45deg);
+  margin: 2.5px 0;
+}
+header .header__nav .header__overflow_list {
+  position: fixed;
+  top: var(--header-height, 90px);
+  right: 0;
+  z-index: 2;
+  display: block;
+  width: min(420px, 100vw);
+  height: calc(100dvh - var(--header-height, 90px));
+  margin: 0;
+  padding: 32px 28px 210px;
+  overflow-y: auto;
+  background: #161d2d;
+  visibility: hidden;
+  transform: translateX(100%);
+  transition: transform .3s ease, visibility .3s;
+}
+header .header__menu.active .header__overflow_list { visibility: visible; transform: translateX(0); }
+header .header__menu .header__nav .header__overflow_list {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+}
+header .header__overflow_list > .menu__item { width: 100%; }
+header .header__overflow_list .menu__item_link {
+  display: block;
+  padding: 12px 0;
+  font-size: 12px;
+}
+header .header__overflow_list .house-menu__toggle { width: max-content; max-width: 100%; justify-content: center; font-size: 12px; }
+header .header__overflow_list .house-menu__list {
+  position: static;
+  width: max-content;
+  min-width: 0;
+  max-height: 0;
+  margin: 0;
+  padding: 0 16px;
+  overflow: hidden;
+  transform: none;
+}
+header .header__overflow_list .house-menu[data-open="true"] .house-menu__list {
+  max-height: 180px;
+  padding: 8px 16px;
+  transform: none;
+}
+header .header__overflow_list .house-menu__list a { font-size: 12px !important; }
+header .header-block .content-header {
+  position: static;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: auto;
+  padding: 0;
+  gap: clamp(12px, 1.5vw, 24px);
+  background: transparent;
+  border: 0;
+  visibility: visible;
+  transform: none;
+}
+body.header-menu-open { overflow: hidden; }
+body.header-menu-open header::after {
+  content: "";
+  position: fixed;
+  inset: var(--header-height, 90px) 0 0;
+  z-index: 1;
+  background: rgba(7, 12, 22, .58);
 }
 
 @media (max-width: 700px) {
@@ -245,11 +244,11 @@ header .header__burger:focus-visible { outline: 2px solid #42b0f9; outline-offse
   .padding-top { padding-top: 72px; }
   header .header__body .header__logo,
   header .header__menu .header__logo { flex-basis: 124px; width: 124px; max-width: 124px; }
-  header .header__menu .header__nav { top: 72px; width: 100vw; height: calc(100dvh - 72px); padding: 20px 24px 210px; }
+  header .header__nav .header__overflow_list { width: 100vw; padding: 20px 24px 210px; }
   header .header-block .content-header { width: 100vw; }
   body.header-menu-open header::after { inset-block-start: 72px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  header .header__nav, header .content-header, header .burger-line { transition-duration: .01ms; }
+  header .header__overflow_list, header .content-header, header .burger-line { transition-duration: .01ms; }
 }
