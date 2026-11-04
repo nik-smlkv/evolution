@@ -40,6 +40,8 @@ body.tchaikovsky-plan-view .plan-canvas { width: 100%; aspect-ratio: 4000 / 3160
 body.tchaikovsky-plan-view .houses-plan [data-unit] { opacity: 0; fill: #0474dc; cursor: pointer; transition: opacity 150ms ease; }
 body.tchaikovsky-plan-view .houses-plan [data-unit]:hover,
 body.tchaikovsky-plan-view .houses-plan [data-unit].is-highlighted { opacity: 0.2; }
+body.tchaikovsky-plan-view .houses-plan[data-plan-type="apartments"] [data-unit] { fill-opacity: 0.2; stroke: #0474dc; stroke-width: 1px; vector-effect: non-scaling-stroke; }
+body.tchaikovsky-plan-view .houses-plan[data-plan-type="apartments"] [data-unit]:is(:hover, .is-highlighted) { opacity: 1; }
 
 body.tchaikovsky-plan-view .floor__filter {
   position: absolute;
@@ -81,10 +83,13 @@ body.tchaikovsky-plan-view .tchaikovsky-plan-types {
 body.tchaikovsky-plan-view .tchaikovsky-plan-types__button { min-height: 56px; padding: 10px 16px; font-size: 16px; }
 body.tchaikovsky-plan-view .plan-compass { position: absolute; top: 73px; right: var(--plan-inset); width: 92px; height: 91px; }
 .plan-markers { position: absolute; inset: 0; pointer-events: none; }
-.plan-unit-marker { position: absolute; display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; padding: 0; color: #fff; background: #0474dc; border: 0; border-radius: 50%; font-size: 12px; font-weight: 500; line-height: 1; transform: translate(-50%, -50%); pointer-events: auto; transition: background-color 150ms ease, box-shadow 150ms ease; }
+.plan-unit-marker { position: absolute; display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; padding: 0; color: #fff; background: #0474dc; border: 0; border-radius: 50%; font-size: 12px; font-weight: 500; line-height: 1; transform: translate(-50%, -50%); pointer-events: auto; transition: opacity 150ms ease, background-color 150ms ease, box-shadow 150ms ease; }
 .plan-unit-marker:hover,
 .plan-unit-marker.is-highlighted { z-index: 3; background: #00509f; }
 .plan-unit-marker:focus-visible { z-index: 3; background: #00509f; box-shadow: 0 0 0 4px #0474dc26; outline: 2px solid #fafafa; outline-offset: 2px; }
+@media (hover: hover) and (pointer: fine) {
+  .houses-plan[data-plan-type="apartments"] .plan-unit-marker.is-pointer-hovered { opacity: 0; }
+}
 .houses-plan[data-plan-type="parking"] .plan-unit-marker { width: 18px; height: 18px; font-size: 8px; }
 .plan-load-error { display: flex; align-items: center; justify-content: center; padding: 40px; color: #161d2d; }
 

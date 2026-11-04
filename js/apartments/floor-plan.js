@@ -200,6 +200,7 @@ export async function initializeTchaikovskyFloorPlan(apartments, onApartment) {
         const enabled = shapeHovered || markerHovered || markerFocused;
         shape.classList.toggle("is-highlighted", enabled);
         marker.classList.toggle("is-highlighted", enabled);
+        marker.classList.toggle("is-pointer-hovered", shapeHovered || markerHovered);
       };
       shape.onmouseenter = () => { shapeHovered = true; highlight(); };
       shape.onmouseleave = () => { shapeHovered = false; highlight(); };
