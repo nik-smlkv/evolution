@@ -140,7 +140,7 @@ body.tchaikovsky-catalog .info_footer_content_block { flex: 0 0 auto; width: aut
 body.tchaikovsky-catalog .block-social { gap: 24px; }
 body.tchaikovsky-catalog .info__footer__content > span { flex: 0 0 260px; max-width: 260px; margin-left: auto; color: #d1d4d8; font-size: 16px; line-height: 24px; text-align: right; }
 
-@media (min-width: 1501px) {
+@media (min-width: 1721px) {
   body.tchaikovsky-catalog header,
   body.tchaikovsky-catalog header .header__body { height: 88px; min-height: 88px; }
   body.tchaikovsky-catalog header .header__menu { justify-content: flex-start; gap: 50px; }
@@ -157,8 +157,11 @@ body.tchaikovsky-catalog .info__footer__content > span { flex: 0 0 260px; max-wi
   body.tchaikovsky-catalog header .house-menu__list a { display: flex; align-items: center; height: 56px; padding: 0 24px; font-size: 16px !important; line-height: 24px; text-transform: uppercase; }
 }
 
-@media (max-width: 1500px) {
+@media (max-width: 1720px) {
   body.tchaikovsky-catalog #apartments { padding-top: 90px; }
+}
+
+@media (max-width: 1500px) {
   body.tchaikovsky-plan-view .houses-plans_container { min-height: 0; padding-bottom: 80px; }
   body.tchaikovsky-plan-view .tchaikovsky-plan-types { width: 180px; }
   body.tchaikovsky-plan-view .tchaikovsky-plan-types__button { min-height: 44px; font-size: 12px; }
@@ -242,7 +245,7 @@ body.tchaikovsky-catalog .info__footer__content > span { flex: 0 0 260px; max-wi
   body.tchaikovsky-plan-view header .header__body { padding-inline: 32px; }
   body.tchaikovsky-plan-view header .header-block { gap: 22px; }
   body.tchaikovsky-plan-view header .content-header { gap: 25px; }
-  body.tchaikovsky-plan-view header .header__burger { margin-left: -11px; }
+  body.tchaikovsky-plan-view header .header__burger { margin-left: -5px; }
   body.tchaikovsky-plan-view header .header__logo { flex-basis: 160px; width: 160px; max-width: 160px; }
   body.tchaikovsky-plan-view #apartments { padding-top: 88px; }
   body.tchaikovsky-plan-view .block-search-parameters { height: 152px; padding: 0; }

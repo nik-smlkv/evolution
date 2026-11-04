@@ -114,7 +114,7 @@ document.addEventListener("click", (event) => {
     closeHeaderMenu();
   }
 });
-window.matchMedia("(min-width: 1501px)").addEventListener("change", closeHeaderMenu);
+window.matchMedia("(min-width: 1721px)").addEventListener("change", closeHeaderMenu);
 
 const getHeaderSubMenu = () => {
   if (window.innerWidth <= 1000) {

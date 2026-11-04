@@ -13,6 +13,7 @@ header .header__menu {
   flex-direction: row;
   flex: 1 1 auto;
   align-items: center;
+  justify-content: flex-start;
   min-width: 0;
   width: auto;
   height: auto;
@@ -49,7 +50,7 @@ header .menu__item_link { font-size: 16px; text-transform: uppercase; }
 header .house-menu__toggle { min-height: 48px; padding: 0 16px; font-size: 16px; }
 header .house-menu__toggle img { width: 11px; height: 6px; }
 header .house-menu__list a { font-size: 16px !important; }
-header .header-block { position: relative; z-index: 11; display: flex; flex: 0 0 auto; align-items: center; width: auto; gap: 0; }
+header .header-block { position: relative; z-index: 11; display: flex; flex: 0 0 auto; align-items: center; width: auto; gap: 24px; }
 header .header-block .content-header {
   display: flex;
   flex-direction: row;
@@ -65,9 +66,9 @@ header .lang_switch_list {
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
-  flex: 0 0 88px;
-  width: 88px;
-  min-width: 88px;
+  flex: 0 0 82px;
+  width: 82px;
+  min-width: 82px;
   height: 28px;
   padding: 2px;
   gap: 0;
@@ -105,7 +106,7 @@ header .lang__item.active { color: #161d2d; }
 header .lang__item:focus-visible,
 header .header__burger:focus-visible { outline: 2px solid #42b0f9; outline-offset: 4px; }
 
-@media (max-width: 1500px) {
+@media (max-width: 1720px) {
   header { min-height: 90px; }
   header .header__body { min-height: 90px; }
   header .header__menu { flex: 1 1 auto; }
