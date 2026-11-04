@@ -53,9 +53,9 @@ export async function initializeTchaikovskyFloorPlan(apartments, onApartment) {
   const floorArrowIcon = `<svg width="14" height="8" viewBox="0 0 14 8" fill="none" aria-hidden="true"><path d="M1 1L7 7L13 1" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
   floorRail.innerHTML = `
     <p class="plan-floor-label">Floor</p>
-    <button class="plan-floor-arrow plan-floor-arrow--up" type="button" aria-label="Show lower floors">${floorArrowIcon}</button>
+    <button class="plan-floor-arrow plan-floor-arrow--up" type="button" aria-label="Previous floor">${floorArrowIcon}</button>
     <div class="plan-floor-list" role="group" aria-label="Select floor" data-lenis-prevent></div>
-    <button class="plan-floor-arrow plan-floor-arrow--down" type="button" aria-label="Show higher floors">${floorArrowIcon}</button>`;
+    <button class="plan-floor-arrow plan-floor-arrow--down" type="button" aria-label="Next floor">${floorArrowIcon}</button>`;
   const tabs = document.createElement("div");
   tabs.className = "tchaikovsky-plan-types";
   tabs.setAttribute("role", "group");
@@ -96,27 +96,21 @@ export async function initializeTchaikovskyFloorPlan(apartments, onApartment) {
     if (offset) list.scrollBy({ [start]: offset, behavior: "instant" });
   };
   const updateArrows = () => {
-    const horizontal = matchMedia("(max-width: 1000px)").matches;
-    const position = horizontal ? list.scrollLeft : list.scrollTop;
-    const maximum = Math.max(0, horizontal ? list.scrollWidth - list.clientWidth : list.scrollHeight - list.clientHeight);
-    previous.disabled = position < 1;
-    next.disabled = position >= maximum - 1;
+    const levels = categories[activeType].levels;
+    const index = levels.findIndex((level) => level.id === activeLevel);
+    previous.disabled = index <= 0;
+    next.disabled = index >= levels.length - 1;
   };
-  const scrollFloors = (direction) => {
-    const horizontal = matchMedia("(max-width: 1000px)").matches;
-    const item = list.querySelector("button");
-    if (!item) return;
-    const size = horizontal ? item.offsetWidth : item.offsetHeight;
-    const gap = parseFloat(getComputedStyle(list).gap) || 0;
-    const step = (size + gap) * 3;
-    list.scrollBy({
-      [horizontal ? "left" : "top"]: direction * step,
-      behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth",
-    });
+  const moveFloor = (direction) => {
+    const levels = categories[activeType].levels;
+    const index = levels.findIndex((level) => level.id === activeLevel);
+    const level = levels[index + direction];
+    if (!level) return;
+    activeLevel = level.id;
+    renderLevel();
   };
-  previous.addEventListener("click", () => scrollFloors(-1));
-  next.addEventListener("click", () => scrollFloors(1));
-  list.addEventListener("scroll", updateArrows, { passive: true });
+  previous.addEventListener("click", () => moveFloor(-1));
+  next.addEventListener("click", () => moveFloor(1));
   new ResizeObserver(() => {
     keepSelectedFloorVisible();
     updateArrows();
