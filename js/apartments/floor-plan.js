@@ -6,7 +6,7 @@ const categories = {
   apartments: {
     label: "Apartments", file: "chaikovsky-life.svg",
     levels: tchaikovskyFloorLevels.map((level) => ({
-      id: level.id, label: level.id === "2100" ? "P/NPᴮ" : level.label,
+      id: level.id, label: level.id === "2100" ? "P/NPᴮ" : level.id === "3800" ? "Ps" : level.label,
       image: level.id === "2100" ? groundImage : level.image,
     })),
   },
@@ -38,7 +38,9 @@ export async function initializeTchaikovskyFloorPlan(apartments, onApartment) {
   let activeType = categories[params.get("property")] ? params.get("property") : "apartments";
   const requestedFloor = params.get("floor");
   const requestedWing = params.get("type")?.toUpperCase() || "A";
-  const initialLevel = tchaikovskyFloorLevels.find((level) =>
+  const initialLevel = categories[activeType].levels.find((level) =>
+    level.id === requestedFloor || level.label === requestedFloor,
+  ) ?? tchaikovskyFloorLevels.find((level) =>
     level.id === requestedFloor || level.label === requestedFloor,
   ) ?? tchaikovskyFloorLevels.find((level) => level.floors[requestedWing] === requestedFloor);
   let activeLevel = categories[activeType].levels.some((level) => level.id === initialLevel?.id)
@@ -48,11 +50,12 @@ export async function initializeTchaikovskyFloorPlan(apartments, onApartment) {
   let requestVersion = 0;
   let svg;
 
+  const floorArrowIcon = `<svg width="14" height="8" viewBox="0 0 14 8" fill="none" aria-hidden="true"><path d="M1 1L7 7L13 1" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
   floorRail.innerHTML = `
     <p class="plan-floor-label">Floor</p>
-    <button class="plan-floor-arrow plan-floor-arrow--up" type="button" aria-label="Show lower floors"><img src="./images/apartments-arrow.svg" alt=""></button>
+    <button class="plan-floor-arrow plan-floor-arrow--up" type="button" aria-label="Show lower floors">${floorArrowIcon}</button>
     <div class="plan-floor-list" role="group" aria-label="Select floor" data-lenis-prevent></div>
-    <button class="plan-floor-arrow plan-floor-arrow--down" type="button" aria-label="Show higher floors"><img src="./images/apartments-arrow.svg" alt=""></button>`;
+    <button class="plan-floor-arrow plan-floor-arrow--down" type="button" aria-label="Show higher floors">${floorArrowIcon}</button>`;
   const tabs = document.createElement("div");
   tabs.className = "tchaikovsky-plan-types";
   tabs.setAttribute("role", "group");
@@ -80,21 +83,44 @@ export async function initializeTchaikovskyFloorPlan(apartments, onApartment) {
   const previous = floorRail.querySelector(".plan-floor-arrow--up");
   const next = floorRail.querySelector(".plan-floor-arrow--down");
 
+  const keepSelectedFloorVisible = () => {
+    const selected = list.querySelector('[aria-pressed="true"]');
+    if (!selected || !list.clientWidth || !list.clientHeight) return;
+    const horizontal = matchMedia("(max-width: 1000px)").matches;
+    const bounds = list.getBoundingClientRect();
+    const item = selected.getBoundingClientRect();
+    const start = horizontal ? "left" : "top";
+    const end = horizontal ? "right" : "bottom";
+    const offset = item[start] < bounds[start] ? item[start] - bounds[start]
+      : item[end] > bounds[end] ? item[end] - bounds[end] : 0;
+    if (offset) list.scrollBy({ [start]: offset, behavior: "instant" });
+  };
   const updateArrows = () => {
     const horizontal = matchMedia("(max-width: 1000px)").matches;
     const position = horizontal ? list.scrollLeft : list.scrollTop;
-    const maximum = horizontal ? list.scrollWidth - list.clientWidth : list.scrollHeight - list.clientHeight;
+    const maximum = Math.max(0, horizontal ? list.scrollWidth - list.clientWidth : list.scrollHeight - list.clientHeight);
     previous.disabled = position < 1;
     next.disabled = position >= maximum - 1;
   };
   const scrollFloors = (direction) => {
     const horizontal = matchMedia("(max-width: 1000px)").matches;
-    list.scrollBy({ [horizontal ? "left" : "top"]: direction * 144, behavior: "smooth" });
+    const item = list.querySelector("button");
+    if (!item) return;
+    const size = horizontal ? item.offsetWidth : item.offsetHeight;
+    const gap = parseFloat(getComputedStyle(list).gap) || 0;
+    const step = (size + gap) * 3;
+    list.scrollBy({
+      [horizontal ? "left" : "top"]: direction * step,
+      behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth",
+    });
   };
   previous.addEventListener("click", () => scrollFloors(-1));
   next.addEventListener("click", () => scrollFloors(1));
   list.addEventListener("scroll", updateArrows, { passive: true });
-  new ResizeObserver(updateArrows).observe(list);
+  new ResizeObserver(() => {
+    keepSelectedFloorVisible();
+    updateArrows();
+  }).observe(list);
 
   const load = (type) => {
     if (!cache.has(type)) {
@@ -180,6 +206,8 @@ export async function initializeTchaikovskyFloorPlan(apartments, onApartment) {
     });
     host.dataset.planType = activeType;
     host.dataset.planLevel = activeLevel;
+    keepSelectedFloorVisible();
+    updateArrows();
   };
 
   const renderControls = () => {

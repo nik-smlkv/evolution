@@ -59,9 +59,11 @@ body.tchaikovsky-plan-view .floor__filter {
 .plan-floor-arrow { display: flex; align-items: center; justify-content: center; flex: 0 0 40px; width: 66px; min-height: 40px; padding: 0 4px; color: #161d2d; font-size: 16px; line-height: 1; border: 1px solid #d1d4d8; border-radius: 999px; transition: color 150ms ease, border-color 150ms ease; }
 .plan-floor-button:hover,
 .plan-floor-button[aria-pressed="true"],
-.plan-floor-arrow:hover:not(:disabled) { color: #0474dc; border-color: #0474dc; }
-.plan-floor-arrow img { width: 12px; height: 7px; filter: brightness(0) saturate(100%) invert(37%) sepia(9%) saturate(599%) hue-rotate(176deg); }
-.plan-floor-arrow--up img { transform: rotate(180deg); }
+.plan-floor-arrow:is(:hover, :focus-visible):not(:disabled) { color: #0474dc; border-color: #0474dc; }
+.plan-floor-arrow:not(:disabled) { cursor: pointer; }
+.plan-floor-arrow:active:not(:disabled) { background: #0474dc14; }
+.plan-floor-arrow svg { flex: none; width: 14px; height: 8px; }
+.plan-floor-arrow--up svg { transform: rotate(180deg); }
 .plan-floor-arrow:disabled { opacity: 0.45; cursor: default; }
 .plan-floor-button:focus-visible,
 .plan-floor-arrow:focus-visible { outline: 2px solid #42b0f9; outline-offset: -3px; }
@@ -160,8 +162,8 @@ body.tchaikovsky-catalog .info__footer__content > span { flex: 0 0 260px; max-wi
   body.tchaikovsky-plan-view .plan-floor-list { flex: 1 1 auto; flex-direction: row; max-height: none; min-width: 0; overflow-x: auto; overflow-y: hidden; }
   body.tchaikovsky-plan-view .plan-floor-button { flex-basis: 66px; }
   body.tchaikovsky-plan-view .plan-floor-arrow { width: 40px; min-width: 40px; }
-  body.tchaikovsky-plan-view .plan-floor-arrow--up img { transform: rotate(90deg); }
-  body.tchaikovsky-plan-view .plan-floor-arrow--down img { transform: rotate(-90deg); }
+  body.tchaikovsky-plan-view .plan-floor-arrow--up svg { transform: rotate(90deg); }
+  body.tchaikovsky-plan-view .plan-floor-arrow--down svg { transform: rotate(-90deg); }
   body.tchaikovsky-plan-view .houses-plan { grid-area: plan; width: 100%; }
   body.tchaikovsky-plan-view .plan-unit-marker { width: 24px; height: 24px; font-size: 10px; }
   body.tchaikovsky-catalog #form { padding: 80px 24px; }
