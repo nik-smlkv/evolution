@@ -1,4 +1,5 @@
-import { tchaikovskyFloorLevels } from "./tchaikovsky-floors.js?v=1.0.0";
+import { tchaikovskyFloorLevels } from "./tchaikovsky-floors.js?v=1.0.1";
+import { tchaikovskyUpperFloorMarkers } from "./tchaikovsky-plan-markers.js?v=1.0.0";
 
 const planDirectory = "./plans/А3/";
 const groundImage = `${planDirectory}2100 Osnova Prizemlja (A,C)_Nisko Prizemlje редакт.jpg`;
@@ -6,7 +7,7 @@ const categories = {
   apartments: {
     label: "Apartments", file: "chaikovsky-life.svg",
     levels: tchaikovskyFloorLevels.map((level) => ({
-      id: level.id, label: level.id === "2100" ? "P/NPᴮ" : level.id === "3800" ? "Ps" : level.label,
+      id: level.id, label: level.id === "2100" ? "P/NPᴮ" : level.label,
       image: level.id === "2100" ? groundImage : level.image,
     })),
   },
@@ -36,7 +37,8 @@ export async function initializeTchaikovskyFloorPlan(apartments, onApartment) {
 
   const params = new URLSearchParams(location.search);
   let activeType = categories[params.get("property")] ? params.get("property") : "apartments";
-  const requestedFloor = params.get("floor");
+  const rawRequestedFloor = params.get("floor");
+  const requestedFloor = ["Povᴮ", "Ps"].includes(rawRequestedFloor) ? "3800" : rawRequestedFloor;
   const requestedWing = params.get("type")?.toUpperCase() || "A";
   const initialLevel = categories[activeType].levels.find((level) =>
     level.id === requestedFloor || level.label === requestedFloor,
@@ -144,6 +146,18 @@ export async function initializeTchaikovskyFloorPlan(apartments, onApartment) {
           }
           image.setAttribute("href", level.image);
           image.setAttributeNS("http://www.w3.org/1999/xlink", "href", level.image);
+          if (type === "apartments") {
+            (tchaikovskyUpperFloorMarkers[level.id] || []).forEach(({ unit, x, y }) => {
+              if (group.querySelector(`[data-unit="${unit}"]`)) return;
+              const anchor = documentSvg.createElementNS("http://www.w3.org/2000/svg", "circle");
+              anchor.setAttribute("cx", x);
+              anchor.setAttribute("cy", y);
+              anchor.setAttribute("r", "3");
+              anchor.setAttribute("data-unit", unit);
+              anchor.setAttribute("data-marker-anchor", "true");
+              group.append(anchor);
+            });
+          }
         });
         return plan;
       })().catch((error) => { cache.delete(type); throw error; }));
@@ -186,6 +200,7 @@ export async function initializeTchaikovskyFloorPlan(apartments, onApartment) {
         const enabled = shapeHovered || markerHovered || markerFocused;
         shape.classList.toggle("is-highlighted", enabled);
         marker.classList.toggle("is-highlighted", enabled);
+        marker.classList.toggle("is-pointer-hovered", shapeHovered || markerHovered);
       };
       shape.onmouseenter = () => { shapeHovered = true; highlight(); };
       shape.onmouseleave = () => { shapeHovered = false; highlight(); };

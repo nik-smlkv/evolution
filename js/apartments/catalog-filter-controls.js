@@ -11,6 +11,7 @@ export function initializeCatalogFilterControls() {
     span.replaceWith(button);
   });
   const syncSelection = () => {
+    update();
     filter.querySelectorAll("button.filter__btn").forEach((button) => {
       button.setAttribute("aria-pressed", String(button.classList.contains("active")));
     });
@@ -20,12 +21,9 @@ export function initializeCatalogFilterControls() {
       const selected = active.getBoundingClientRect();
       const offset = selected.left < bounds.left ? selected.left - bounds.left
         : selected.right > bounds.right ? selected.right - bounds.right : 0;
-      if (offset) floors.scrollBy({ left: offset, behavior: "auto" });
+      if (offset) floors.scrollBy({ left: offset, behavior: "instant" });
     }
   };
-  syncSelection();
-  new MutationObserver(syncSelection).observe(filter, { subtree: true, attributes: true, attributeFilter: ["class"] });
-
   const navigation = document.createElement("div");
   navigation.className = "catalog-floor-navigation";
   const arrow = (direction, label) => {
@@ -33,38 +31,46 @@ export function initializeCatalogFilterControls() {
     button.type = "button";
     button.className = `catalog-floor-arrow catalog-floor-arrow--${direction}`;
     button.setAttribute("aria-label", label);
-    const image = document.createElement("img");
-    image.src = "./images/apartments-arrow.svg";
-    image.alt = "";
-    button.append(image);
+    button.innerHTML = `<svg width="14" height="8" viewBox="0 0 14 8" fill="none" aria-hidden="true"><path d="M1 1L7 7L13 1" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
     return button;
   };
-  const previous = arrow("previous", "Show previous floor options");
-  const next = arrow("next", "Show more floor options");
+  const previous = arrow("previous", "Previous floor");
+  const next = arrow("next", "Next floor");
   floors.before(navigation);
   navigation.append(previous, floors, next);
   floors.setAttribute("data-lenis-prevent", "");
   floors.setAttribute("role", "group");
   floors.setAttribute("aria-label", "Select floor");
+  floors.tabIndex = 0;
+  floors.addEventListener("wheel", (event) => {
+    if (event.ctrlKey) return;
+    const unit = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? floors.clientWidth : 1;
+    const delta = (Math.abs(event.deltaX) > Math.abs(event.deltaY) ? event.deltaX : event.deltaY) * unit;
+    const maximum = Math.max(0, floors.scrollWidth - floors.clientWidth);
+    const left = Math.max(0, Math.min(maximum, floors.scrollLeft + delta));
+    if (left === floors.scrollLeft) return;
+    event.preventDefault();
+    floors.scrollTo({ left, behavior: "instant" });
+  }, { passive: false });
+  const floorButtons = Array.from(floors.querySelectorAll(".filter__btn_floor"));
   const update = () => {
-    const maximum = floors.scrollWidth - floors.clientWidth;
-    previous.disabled = floors.scrollLeft <= 1;
-    next.disabled = floors.scrollLeft >= maximum - 1;
+    const index = floorButtons.findIndex((button) => button.classList.contains("active"));
+    previous.disabled = index <= 0;
+    next.disabled = index >= floorButtons.length - 1;
     navigation.dataset.atStart = String(previous.disabled);
-    navigation.dataset.overflow = String(maximum > 1);
+    navigation.dataset.hasFloors = String(floorButtons.length > 1);
   };
-  const scroll = (direction) => floors.scrollBy({
-    left: direction * 210,
-    behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
-  });
-  previous.addEventListener("click", () => scroll(-1));
-  next.addEventListener("click", () => scroll(1));
-  floors.addEventListener("scroll", update, { passive: true });
-  new ResizeObserver(() => {
+  const moveFloor = (direction) => {
+    const index = floorButtons.findIndex((button) => button.classList.contains("active"));
+    // Use the same handler as a direct floor choice to retain all other filters and update the URL.
+    floorButtons[index + direction]?.click();
     syncSelection();
-    update();
-  }).observe(floors);
-  update();
+  };
+  previous.addEventListener("click", () => moveFloor(-1));
+  next.addEventListener("click", () => moveFloor(1));
+  syncSelection();
+  new MutationObserver(syncSelection).observe(filter, { subtree: true, attributes: true, attributeFilter: ["class"] });
+  new ResizeObserver(syncSelection).observe(floors);
 
   const social = document.querySelector(".info_footer_content_block .block-social");
   const address = document.querySelector(".footer-address__content");

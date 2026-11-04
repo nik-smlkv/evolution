@@ -60,9 +60,9 @@
   visibility: hidden;
   opacity: 0;
   background: #161d2d;
-  transform: translateY(-8px);
+  transform: translateY(-16px);
   pointer-events: none;
-  transition: opacity 180ms ease, transform 180ms ease, visibility 180ms ease;
+  transition: opacity 280ms ease, transform 360ms cubic-bezier(0.22, 0.78, 0.24, 1), visibility 0s linear 360ms, max-height 360ms cubic-bezier(0.22, 0.78, 0.24, 1), padding 280ms ease;
 }
 
 .house-menu[data-open="true"] .house-menu__list {
@@ -70,6 +70,7 @@
   opacity: 1;
   transform: translateY(0);
   pointer-events: auto;
+  transition-delay: 0s;
 }
 
 .house-menu__list a {
@@ -234,7 +235,12 @@ body[data-catalog-house="tchaikovsky"] .houses-plan[data-plan-type="parking"] [d
     opacity: 1;
     transform: translateY(0);
     pointer-events: auto;
+    transition-delay: 0s;
   }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .house-menu__list { transition-duration: 0.01ms; transition-delay: 0s; }
 }
 
 @media (hover: hover) and (min-width: 1501px) {

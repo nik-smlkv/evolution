@@ -38,8 +38,8 @@ LEVELS = [
     {"id": "3400", "label": "4/3ᴮ", "floors": {"A": "4", "B": "3", "C": "4"}},
     {"id": "3500", "label": "5/4ᴮ", "floors": {"A": "5", "B": "4", "C": "5"}},
     {"id": "3600", "label": "6/5ᴮ", "floors": {"A": "6", "B": "5", "C": "6"}},
-    {"id": "3700", "label": "Ps/6ᴮ", "floors": {"A": "POV", "B": "6", "C": "POV"}},
-    {"id": "3800", "label": "Povᴮ", "floors": {"B": "POV"}},
+    {"id": "3700", "label": "Ps/6ᴮ", "floors": {"A": "PS", "B": "6", "C": "PS"}},
+    {"id": "3800", "label": "PSᴮ", "floors": {"B": "PS"}},
 ]
 
 

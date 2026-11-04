@@ -9,7 +9,7 @@ export const houses = {
   tchaikovsky: {
     id: "tchaikovsky",
     name: "Tchaikovsky",
-    dataModule: "./data_tchaikovsky.js?v=1.0.11",
+    dataModule: "./data_tchaikovsky.js?v=1.0.12",
     hasAreaFilter: true,
     hasFloorPlans: true,
   },

@@ -1,8 +1,8 @@
-import { loadHouse } from "./houses.js?v=1.0.8";
-import { tchaikovskyFloorLevels } from "./tchaikovsky-floors.js?v=1.0.0";
+import { loadHouse } from "./houses.js?v=1.0.9";
+import { tchaikovskyFloorLevels } from "./tchaikovsky-floors.js?v=1.0.1";
 import { openModal } from "../modal.js";
-import { initializeTchaikovskyFloorPlan } from "./floor-plan.js?v=1.0.6";
-import { initializeCatalogFilterControls } from "./catalog-filter-controls.js?v=1.0.1";
+import { initializeTchaikovskyFloorPlan } from "./floor-plan.js?v=1.0.7";
+import { initializeCatalogFilterControls } from "./catalog-filter-controls.js?v=1.0.2";
 const requestedHouse = new URLSearchParams(window.location.search).get("house");
 const catalog = await loadHouse(requestedHouse);
 const house = catalog.id;
@@ -162,7 +162,8 @@ const applyURLParams = () => {
   const stanoviDo = params.get("stanovi-do");
   const type = params.get("type");
   const kvadratiOd = params.get("kvadrati-od");
-  const floor = params.get("floor"); // ← было не объявлено, поэтому падало
+  const rawFloor = params.get("floor");
+  const floor = rawFloor === "Povᴮ" ? "3800" : rawFloor;
   const normalizedFloor = house === "tchaikovsky" && floor
     ? (tchaikovskyFloorLevels.find((level) => level.label === floor || level.id === floor)
       ?? tchaikovskyFloorLevels.find((level) => level.floors[type?.toUpperCase() || "A"] === floor)

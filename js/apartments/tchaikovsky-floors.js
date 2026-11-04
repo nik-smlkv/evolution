@@ -471,9 +471,9 @@ export const tchaikovskyFloorLevels = [
     "id": "3700",
     "label": "Ps/6ᴮ",
     "floors": {
-      "A": "POV",
+      "A": "PS",
       "B": "6",
-      "C": "POV"
+      "C": "PS"
     },
     "image": "./plans/А3/3700 Osnova Povučeni Sprat  (A&C)_6-Sprat (B).jpg",
     "hasContours": false,
@@ -538,9 +538,9 @@ export const tchaikovskyFloorLevels = [
   },
   {
     "id": "3800",
-    "label": "Povᴮ",
+    "label": "PSᴮ",
     "floors": {
-      "B": "POV"
+      "B": "PS"
     },
     "image": "./plans/А3/3800 Osnova Krova (A&C)_Povučeni sprat (B).jpg",
     "hasContours": false,
