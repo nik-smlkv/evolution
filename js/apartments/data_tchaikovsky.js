@@ -1,4 +1,4 @@
-import { tchaikovskyFloorAssignments } from "./tchaikovsky-floors.js?v=1.0.1";
+import { tchaikovskyFloorAssignments } from "./tchaikovsky-floors.js?v=1.0.2";
 
 const pad = (number) => String(number).padStart(2, "0");
 

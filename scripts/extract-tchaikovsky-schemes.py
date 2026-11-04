@@ -31,7 +31,7 @@ SOURCES = {
 
 # A/C and B use different floor names for the same physical level.
 LEVELS = [
-    {"id": "2100", "label": "P", "floors": {"A": "P", "C": "P"}},
+    {"id": "2100", "label": "P/NPᴮ", "floors": {"A": "P", "C": "P"}},
     {"id": "3100", "label": "1/VPᴮ", "floors": {"A": "1", "B": "VP", "C": "1"}},
     {"id": "3200", "label": "2/1ᴮ", "floors": {"A": "2", "B": "1", "C": "2"}},
     {"id": "3300", "label": "3/2ᴮ", "floors": {"A": "3", "B": "2", "C": "3"}},

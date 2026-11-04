@@ -1,4 +1,4 @@
-import { tchaikovskyFloorLevels } from "./tchaikovsky-floors.js?v=1.0.1";
+import { tchaikovskyFloorLevels } from "./tchaikovsky-floors.js?v=1.0.2";
 import { tchaikovskyUpperFloorMarkers } from "./tchaikovsky-plan-markers.js?v=1.0.1";
 
 const planDirectory = "./plans/А3/";
@@ -7,7 +7,7 @@ const categories = {
   apartments: {
     label: "Apartments", file: "chaikovsky-life.svg",
     levels: tchaikovskyFloorLevels.map((level) => ({
-      id: level.id, label: level.id === "2100" ? "P/NPᴮ" : level.label,
+      id: level.id, label: level.label,
       image: level.id === "2100" ? groundImage : level.image,
     })),
   },
@@ -15,7 +15,7 @@ const categories = {
     label: "Commercial", file: "chaikovsky-commercial.svg",
     levels: [
       { id: "2000", label: "Sut", image: `${planDirectory}2000 Osnova Suterena (A,B,C) редакт.jpg` },
-      { id: "2100", label: "P/NPᴮ", image: groundImage },
+      { id: "2100", label: tchaikovskyFloorLevels.find((level) => level.id === "2100").label, image: groundImage },
     ],
   },
   parking: {
@@ -29,7 +29,7 @@ const categories = {
   },
 };
 
-export async function initializeTchaikovskyFloorPlan(apartments, onApartment) {
+export async function initializeTchaikovskyFloorPlan(apartments, onApartment, onFloorChange) {
   const container = document.querySelector(".houses-plans_container");
   const host = container?.querySelector(".houses-plan");
   const floorRail = container?.querySelector(".floor__filter");
@@ -38,7 +38,8 @@ export async function initializeTchaikovskyFloorPlan(apartments, onApartment) {
   const params = new URLSearchParams(location.search);
   let activeType = categories[params.get("property")] ? params.get("property") : "apartments";
   const rawRequestedFloor = params.get("floor");
-  const requestedFloor = ["Povᴮ", "Ps"].includes(rawRequestedFloor) ? "3800" : rawRequestedFloor;
+  const requestedFloor = rawRequestedFloor === "P" ? "2100"
+    : ["Povᴮ", "Ps"].includes(rawRequestedFloor) ? "3800" : rawRequestedFloor;
   const requestedWing = params.get("type")?.toUpperCase() || "A";
   const initialLevel = categories[activeType].levels.find((level) =>
     level.id === requestedFloor || level.label === requestedFloor,
@@ -54,10 +55,12 @@ export async function initializeTchaikovskyFloorPlan(apartments, onApartment) {
 
   const floorArrowIcon = `<svg width="14" height="8" viewBox="0 0 14 8" fill="none" aria-hidden="true"><path d="M1 1L7 7L13 1" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
   floorRail.innerHTML = `
-    <p class="plan-floor-label">Floor</p>
+    <p class="plan-floor-label" data-key="p_floor">Floor</p>
     <button class="plan-floor-arrow plan-floor-arrow--up" type="button" aria-label="Previous floor">${floorArrowIcon}</button>
     <div class="plan-floor-list" role="group" aria-label="Select floor" data-lenis-prevent></div>
     <button class="plan-floor-arrow plan-floor-arrow--down" type="button" aria-label="Next floor">${floorArrowIcon}</button>`;
+  floorRail.querySelector(".plan-floor-label").textContent =
+    document.querySelector('.catalog-filter-group--floor [data-key="p_floor"]')?.textContent || "Floor";
   const tabs = document.createElement("div");
   tabs.className = "tchaikovsky-plan-types";
   tabs.setAttribute("role", "group");
@@ -84,6 +87,11 @@ export async function initializeTchaikovskyFloorPlan(apartments, onApartment) {
   const list = floorRail.querySelector(".plan-floor-list");
   const previous = floorRail.querySelector(".plan-floor-arrow--up");
   const next = floorRail.querySelector(".plan-floor-arrow--down");
+  const notifyFloorChange = () => {
+    if (activeType === "apartments") {
+      onFloorChange?.(tchaikovskyFloorLevels.find((level) => level.id === activeLevel));
+    }
+  };
 
   const keepSelectedFloorVisible = () => {
     const selected = list.querySelector('[aria-pressed="true"]');
@@ -110,6 +118,7 @@ export async function initializeTchaikovskyFloorPlan(apartments, onApartment) {
     if (!level) return;
     activeLevel = level.id;
     renderLevel();
+    notifyFloorChange();
   };
   previous.addEventListener("click", () => moveFloor(-1));
   next.addEventListener("click", () => moveFloor(1));
@@ -224,12 +233,16 @@ export async function initializeTchaikovskyFloorPlan(apartments, onApartment) {
       `<button class="plan-floor-button" type="button" data-plan-level="${level.id}" aria-pressed="${level.id === activeLevel}">${level.label}</button>`,
     ).join("");
     list.querySelectorAll("button").forEach((button) => {
-      button.addEventListener("click", () => { activeLevel = button.dataset.planLevel; renderLevel(); });
+      button.addEventListener("click", () => {
+        activeLevel = button.dataset.planLevel;
+        renderLevel();
+        notifyFloorChange();
+      });
     });
     requestAnimationFrame(updateArrows);
   };
 
-  const selectType = async (type) => {
+  const selectType = async (type, notify = false) => {
     const request = ++requestVersion;
     selections.set(activeType, activeLevel);
     host.setAttribute("aria-busy", "true");
@@ -245,6 +258,7 @@ export async function initializeTchaikovskyFloorPlan(apartments, onApartment) {
       });
       renderControls();
       renderLevel();
+      if (notify) notifyFloorChange();
       canvas.classList.remove("plan-load-error");
     } catch (error) {
       console.error("Floor plan could not be loaded", error);
@@ -257,10 +271,19 @@ export async function initializeTchaikovskyFloorPlan(apartments, onApartment) {
     }
   };
   tabs.querySelectorAll("button").forEach((button) => {
-    button.addEventListener("click", () => selectType(button.dataset.planType));
+    button.addEventListener("click", () => selectType(button.dataset.planType, true));
   });
   new ResizeObserver(() => {
     if (host.clientWidth && svg) renderLevel();
   }).observe(host);
   await selectType(activeType);
+  return {
+    selectFloor(floor) {
+      if (activeType !== "apartments") return;
+      const level = tchaikovskyFloorLevels.find((level) => level.id === floor || level.label === floor);
+      if (!level) return;
+      activeLevel = level.id;
+      renderLevel();
+    },
+  };
 }

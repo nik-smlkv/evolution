@@ -1,7 +1,7 @@
-import { loadHouse } from "./houses.js?v=1.0.9";
-import { tchaikovskyFloorLevels } from "./tchaikovsky-floors.js?v=1.0.1";
+import { loadHouse } from "./houses.js?v=1.0.10";
+import { tchaikovskyFloorLevels } from "./tchaikovsky-floors.js?v=1.0.2";
 import { openModal } from "../modal.js";
-import { initializeTchaikovskyFloorPlan } from "./floor-plan.js?v=1.0.10";
+import { initializeTchaikovskyFloorPlan } from "./floor-plan.js?v=1.0.11";
 import { initializeCatalogFilterControls } from "./catalog-filter-controls.js?v=1.0.2";
 const requestedHouse = new URLSearchParams(window.location.search).get("house");
 const catalog = await loadHouse(requestedHouse);
@@ -25,6 +25,7 @@ document.querySelector(".apartment__img").src = firstApartment.planImg;
 apartmentFancyBox.setAttribute("href", firstApartment.planImg);
 let selectedLamela = null;
 let selectedFloor = null;
+let tchaikovskyFloorPlan;
 const areaValues = data.map((apartment) => apartment.area).filter(Number.isFinite);
 const areaBounds = house === "tchaikovsky"
   ? { min: Math.floor(Math.min(...areaValues)), max: Math.ceil(Math.max(...areaValues)) }
@@ -72,8 +73,18 @@ const setTchaikovskyPlanPopup = (apartment) => {
   openModal(popup);
 };
 
-whenDocumentReady(() => {
-  if (house === "tchaikovsky") initializeTchaikovskyFloorPlan(data, setTchaikovskyPlanPopup);
+whenDocumentReady(async () => {
+  if (house !== "tchaikovsky") return;
+  tchaikovskyFloorPlan = await initializeTchaikovskyFloorPlan(data, setTchaikovskyPlanPopup, (level) => {
+    if (!level || document.body.dataset.catalogView !== "plan") return;
+    selectedFloor = level.label;
+    document.querySelectorAll(".apartments__filter .filter__btn_floor").forEach((button) => {
+      button.classList.toggle("active", button.textContent.trim() === selectedFloor);
+    });
+    handleFilteredCards(selectedLamela, selectedFloor);
+    updateURL();
+  });
+  if (document.body.dataset.catalogView === "plan") tchaikovskyFloorPlan?.selectFloor(selectedFloor);
 });
 
 const updateSEOTags = (params) => {
@@ -163,7 +174,8 @@ const applyURLParams = () => {
   const type = params.get("type");
   const kvadratiOd = params.get("kvadrati-od");
   const rawFloor = params.get("floor");
-  const floor = rawFloor === "Povᴮ" ? "3800" : rawFloor;
+  const floor = house === "tchaikovsky" && rawFloor === "P" ? "2100"
+    : rawFloor === "Povᴮ" ? "3800" : rawFloor;
   const normalizedFloor = house === "tchaikovsky" && floor
     ? (tchaikovskyFloorLevels.find((level) => level.label === floor || level.id === floor)
       ?? tchaikovskyFloorLevels.find((level) => level.floors[type?.toUpperCase() || "A"] === floor)
@@ -567,6 +579,7 @@ whenDocumentReady(() => {
       document.body.dataset.catalogView = key === "2" ? "plan" : "grid";
       document.body.classList.toggle("tchaikovsky-plan-view", house === "tchaikovsky" && key === "2");
       document.body.classList.toggle("tchaikovsky-grid-view", house === "tchaikovsky" && key !== "2");
+      if (key === "2") tchaikovskyFloorPlan?.selectFloor(selectedFloor);
     });
   });
   function redirectBack() {

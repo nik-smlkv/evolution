@@ -3,7 +3,7 @@
 export const tchaikovskyFloorLevels = [
   {
     "id": "2100",
-    "label": "P",
+    "label": "P/NPᴮ",
     "floors": {
       "A": "P",
       "C": "P"
