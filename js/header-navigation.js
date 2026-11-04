@@ -26,6 +26,8 @@ export function initializeHeaderNavigation() {
     frame = null;
     const focused = document.activeElement;
     const focusedItem = items.find((item) => item.contains(focused));
+    const houseMenu = header.querySelector('[data-house-menu]');
+    const houseMenuParent = houseMenu?.parentElement;
     items.forEach((item, index) => {
       if (primary.children[index] !== item) primary.insertBefore(item, primary.children[index] || null);
     });
@@ -50,6 +52,10 @@ export function initializeHeaderNavigation() {
       else while (visible > 0 && requiredWidth(visible) > availableWidth()) visible -= 1;
     }
     items.slice(visible).forEach((item) => overflow.append(item));
+    if (houseMenu && houseMenu.parentElement !== houseMenuParent) {
+      houseMenu.dataset.open = 'false';
+      houseMenu.querySelector('.house-menu__toggle').setAttribute('aria-expanded', 'false');
+    }
     header.dataset.visibleLinks = String(visible);
     header.style.setProperty('--header-height', `${header.getBoundingClientRect().height}px`);
     if (visible === items.length) close();

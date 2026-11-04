@@ -8,9 +8,9 @@ body.tchaikovsky-catalog .wrapper {
 
 body.tchaikovsky-catalog .main-gap { gap: 0; }
 body.tchaikovsky-catalog #apartments { padding-top: 88px; gap: 0; }
-body.tchaikovsky-catalog .previous-link { display: none; }
-body.tchaikovsky-catalog .block-search-parameters { padding: 40px 0 0; height: 176px; justify-content: center; }
-body.tchaikovsky-catalog .title__body { gap: 0; overflow: visible; }
+body.tchaikovsky-catalog .previous-link { display: inline-flex; align-items: center; align-self: flex-start; width: max-content; line-height: 24px; }
+body.tchaikovsky-catalog .block-search-parameters { padding: 40px 0 0; height: 224px; justify-content: center; }
+body.tchaikovsky-catalog .title__body { gap: 24px; overflow: visible; }
 body.tchaikovsky-catalog .title__content { align-items: center; flex-wrap: nowrap; }
 body.tchaikovsky-catalog .title-apartment { font-size: 56px; line-height: 1.2; }
 body.tchaikovsky-catalog .catalog-plan-button { display: inline-flex; align-items: center; justify-content: center; min-height: 56px; min-width: 241px; cursor: pointer; transition: background-color 200ms ease, border-color 200ms ease; }
@@ -178,7 +178,7 @@ body.tchaikovsky-catalog .info__footer__content > span { flex: 0 0 260px; max-wi
 }
 
 @media (max-width: 1000px) {
-  body.tchaikovsky-catalog .block-search-parameters { height: 160px; }
+  body.tchaikovsky-catalog .block-search-parameters { height: 208px; }
   body.tchaikovsky-catalog .title-apartment { font-size: 40px; }
   body.tchaikovsky-catalog .catalog-plan-button { min-width: 0; padding-inline: 18px; }
   body.tchaikovsky-plan-view .houses-plans_container { display: grid !important; grid-template-areas: "tabs compass" "floors floors" "plan plan"; grid-template-columns: 1fr 64px; align-items: start; gap: 24px 16px; padding: 24px 20px 56px; }
@@ -248,7 +248,7 @@ body.tchaikovsky-catalog .info__footer__content > span { flex: 0 0 260px; max-wi
   body.tchaikovsky-plan-view header .header__burger { margin-left: -5px; }
   body.tchaikovsky-plan-view header .header__logo { flex-basis: 160px; width: 160px; max-width: 160px; }
   body.tchaikovsky-plan-view #apartments { padding-top: 88px; }
-  body.tchaikovsky-plan-view .block-search-parameters { height: 152px; padding: 0; }
+  body.tchaikovsky-plan-view .block-search-parameters { height: 200px; padding: 0; }
   body.tchaikovsky-plan-view .title__body { padding-inline: 32px; }
   body.tchaikovsky-plan-view .title-apartment { font-size: 56px; }
   body.tchaikovsky-plan-view .catalog-plan-button { min-width: 241px; min-height: 56px; font-size: 16px; }
@@ -308,7 +308,7 @@ body.tchaikovsky-catalog .info__footer__content > span { flex: 0 0 260px; max-wi
   body.tchaikovsky-plan-view header .lang_switch_list { flex-basis: 80px; width: 80px; min-width: 80px; }
   body.tchaikovsky-plan-view header .header__burger { width: 36px; margin-left: 0; }
   body.tchaikovsky-plan-view #apartments { padding-top: 72px; }
-  body.tchaikovsky-plan-view .block-search-parameters { height: 184px; padding: 40px 0 24px; }
+  body.tchaikovsky-plan-view .block-search-parameters { height: 232px; padding: 40px 0 24px; }
   body.tchaikovsky-plan-view .title__body { padding-inline: 20px; }
   body.tchaikovsky-plan-view .title__content { align-items: center; gap: 16px; }
   body.tchaikovsky-plan-view .title-apartment { font-size: 40px; }

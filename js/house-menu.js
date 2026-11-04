@@ -6,8 +6,21 @@ document.querySelectorAll('[data-house-menu]').forEach((menu) => {
     toggle.setAttribute('aria-expanded', String(isOpen));
   };
 
-  toggle.addEventListener('click', () => {
-    setOpen(menu.dataset.open !== 'true');
+  const isInBurger = () => Boolean(menu.closest('.header__overflow_list'));
+  const canHover = () => window.matchMedia('(hover: hover)').matches;
+
+  toggle.addEventListener('click', (event) => {
+    if (isInBurger() || !canHover() || event.detail === 0) {
+      setOpen(menu.dataset.open !== 'true');
+    }
+  });
+
+  menu.addEventListener('mouseenter', () => {
+    if (!isInBurger() && canHover()) setOpen(true);
+  });
+
+  menu.addEventListener('mouseleave', () => {
+    if (!isInBurger() && canHover()) setOpen(false);
   });
 
   menu.addEventListener('keydown', (event) => {

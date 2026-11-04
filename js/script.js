@@ -1,6 +1,6 @@
 import { langArr } from "./languages/languages.js";
 import { openModal, closeModal, setModalEventListeners } from "./modal.js";
-import { initializeHeaderNavigation } from "./header-navigation.js?v=1.0.0";
+import { initializeHeaderNavigation } from "./header-navigation.js?v=1.0.1";
 const siteRootUrl = new URL("../", import.meta.url);
 const config = {
   baseUrl: "https://pb17539.profitbase.ru/api/v4/json",

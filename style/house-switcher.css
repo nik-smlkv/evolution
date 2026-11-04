@@ -229,6 +229,18 @@ body[data-catalog-house="tchaikovsky"] .houses-plan[data-plan-type="parking"] [d
   }
 }
 
+@media (hover: hover) {
+  .header__nav_list > .house-menu::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 29;
+    width: max(100%, 260px);
+    height: 16px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .house-menu__list { transition-duration: 0.01ms; transition-delay: 0s; }
 }

@@ -45,6 +45,7 @@ const readAreaRange = (params) => {
 const popupCurrentHouse = document.querySelector(".popup.popup_type_house");
 const formatArea = (apartment) =>
   Number.isFinite(apartment.area) ? `${apartment.area}m²` : "—";
+const formatCardApartmentNumber = (number) => String(number).replace(/^STAN\s*/i, "").trim();
 const formatModalApartmentNumber = (number) =>
   String(number).replace(/^STAN\s*/i, "").replace(/^([A-Z])\s*(\d+)/i, "$1 $2");
 const formatModalArea = (apartment) =>
@@ -343,16 +344,17 @@ const getApartmentCards = (firstApartment) => {
   const apartmentCards = document.querySelector(".available-apartments__list");
   data.map((item) => {
     const img = item.apartmentImg;
+    const number = formatCardApartmentNumber(item.apartmentNumber);
     apartmentCards.insertAdjacentHTML(
       "beforeend",
       `
-				<div class="apartment__item apartment-card-item flex-style-column ${house !== "tchaikovsky" && firstApartment.id === item.id ? "active" : ""}" data-key="${item.id}" tabindex="0" role="button" aria-label="Open apartment ${item.apartmentNumber}">
+				<div class="apartment__item apartment-card-item flex-style-column ${house !== "tchaikovsky" && firstApartment.id === item.id ? "active" : ""}" data-key="${item.id}" tabindex="0" role="button" aria-label="Open apartment ${number}">
 				  <div class="apartment-card-item__meta">
-						<span class="apartment-card-item__name">${item.apartmentNumber}</span>
+						<span class="apartment-card-item__name">${number}</span>
 						<span class="apartment-card-item__details">${formatApartmentDetails(item)}</span>
 				  </div>
 				  <div class="apartment-card-item__image">
-						<img src="${img}?v=3" alt="Plan of ${item.apartmentNumber}" loading="lazy" />
+						<img src="${img}?v=3" alt="Plan of ${number}" loading="lazy" />
 				  </div>
 				</div>
 			`,
@@ -381,15 +383,6 @@ const handleFilteredCards = (selectedLamela, selectedFloor) => {
       card.style.display = "none";
     }
   });
-  getObjectCount(getVisibleFlexCards().length);
-};
-
-const getVisibleFlexCards = () => {
-  const allCards = document.querySelectorAll(".apartment__item");
-  const visibleCards = Array.from(allCards).filter((card) => {
-    return getComputedStyle(card).display === "flex";
-  });
-  return visibleCards;
 };
 
 const setupLamelaFilter = () => {
@@ -499,10 +492,6 @@ function handleFilteredHousePlans(selectedFloor) {
       : (card.style.display = "none");
   });
 }
-
-const getObjectCount = (visibleCards) => {
-  document.querySelector(".js-get-apartments").textContent = visibleCards;
-};
 
 function filterAndRenderApartments(minValue, maxValue) {
   selectedMinArea = minValue;

@@ -231,22 +231,23 @@ body.header-menu-open header::after {
   }
   header .header-block .content-header .phone-link,
   header .header-block .content-header .js-scroll-form { display: flex; justify-content: center; text-align: center; width: 100%; }
-  header .header-block .content-header .lang_switch_list {
-    flex: 0 0 auto;
-    align-self: center;
-    height: 28px;
-  }
 }
 
 @media (max-width: 600px) {
   header { min-height: 72px; }
-  header .header__body { min-height: 72px; padding-inline: 20px; }
+  header .header__body { min-height: 72px; padding-inline: 20px; gap: 12px; }
+  header .header-block { gap: 16px; }
   .padding-top { padding-top: 72px; }
   header .header__body .header__logo,
   header .header__menu .header__logo { flex-basis: 124px; width: 124px; max-width: 124px; }
   header .header__nav .header__overflow_list { width: 100vw; padding: 20px 24px 210px; }
   header .header-block .content-header { width: 100vw; }
   body.header-menu-open header::after { inset-block-start: 72px; }
+}
+
+@media (max-width: 380px) {
+  header .header__body { padding-inline: 16px; gap: 8px; }
+  header .header-block { gap: 12px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
