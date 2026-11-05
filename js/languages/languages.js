@@ -1,5 +1,6 @@
 export const langArr = {
 	en: {
+		p_section: `Section`,
 		plan_gesture_hint: `Use your fingers to zoom and move the plan`,
 		plan_office: `Sales Office`,
 		plan_street: `Bulevar maršala Tolbuhina 8, Serbia`,
@@ -141,6 +142,7 @@ export const langArr = {
 		p_belrg: `Belgrade`,
 	},
 	srb: {
+		p_section: `Lamela`,
 		plan_gesture_hint: `Prstima uvećajte i pomerajte plan`,
 		plan_office: `Prodajna kancelarija`,
 		plan_street: `Bulevar maršala Tolbuhina 8, Srbija`,

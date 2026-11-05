@@ -248,6 +248,11 @@ body[data-catalog-house="vivaldi"] .catalog-plan-button {
   transition: visibility 0s, opacity 260ms ease;
 }
 
+body[data-catalog-house="tchaikovsky"] .popup_type_house.popup_is-opened {
+  --apartment-panel-duration: 1100ms;
+  transition: visibility 0s, opacity 420ms ease;
+}
+
 .popup_type_house .popup__content {
   --modal-unit: min(1px, calc(100dvh / 1080));
   font-family: "Manrope-Variable", var(--ff-main);
@@ -323,6 +328,10 @@ body[data-catalog-house="vivaldi"] .catalog-plan-button {
   .popup_type_house .popup__close,
   .popup_type_house .popup__close svg { transition-duration: 0.01ms; }
   .popup_type_house.popup_is-opened .popup__close { transition-delay: 0s; }
+  body[data-catalog-house="tchaikovsky"] .popup_type_house.popup_is-opened {
+    --apartment-panel-duration: 0.01ms;
+    transition-duration: 0.01ms;
+  }
 }
 
 .popup_type_house .apartment-card {
@@ -450,6 +459,32 @@ body[data-catalog-house="vivaldi"] .catalog-plan-button {
   letter-spacing: 0;
   white-space: nowrap;
   border-color: rgba(255, 255, 255, 0.8);
+}
+
+body[data-catalog-house="tchaikovsky"] .popup_type_house .popup__content,
+body[data-catalog-house="tchaikovsky"] .popup_type_house .apartment-card__content,
+body[data-catalog-house="tchaikovsky"] .popup_type_house .apartment__img {
+  background: #f8edd9;
+}
+
+body[data-catalog-house="tchaikovsky"] .popup_type_house .apartments__description {
+  color: #161d2d;
+  background: #f8edd9;
+}
+
+body[data-catalog-house="tchaikovsky"] .popup_type_house .apartment-description__content p {
+  color: rgba(22, 29, 45, 0.3) !important;
+}
+
+body[data-catalog-house="tchaikovsky"] .popup_type_house .button__price-request {
+  color: #161d2d;
+  border-color: rgba(22, 29, 45, 0.3);
+}
+
+body[data-catalog-house="tchaikovsky"] .popup_type_house .button__price-request:is(:hover, :focus-visible) {
+  color: #fff;
+  border-color: #0474dc;
+  background: #0474dc;
 }
 
 @media (max-width: 1200px) {
@@ -584,4 +619,47 @@ body[data-catalog-house="vivaldi"] .catalog-plan-button {
     order: 2;
     height: auto;
   }
+}
+
+body[data-catalog-house="tchaikovsky"] .popup_type_house { right: auto; width: 100vw; background: rgba(0, 0, 0, 0.6); }
+
+body[data-catalog-house="tchaikovsky"] .popup_type_house .popup__content {
+  --modal-unit: 1px;
+  width: min(calc(302px + 100dvh * 763 / 1080), 100%);
+  max-width: 1065px;
+  overflow: visible;
+}
+
+body[data-catalog-house="tchaikovsky"] .popup_type_house .apartment-card { height: 100%; }
+body[data-catalog-house="tchaikovsky"] .popup_type_house .apartment-card__content { display: grid !important; grid-template-columns: 302px minmax(0, 1fr); height: 100%; }
+body[data-catalog-house="tchaikovsky"] .popup_type_house .apartments__description { height: 100%; justify-content: safe center; padding: 0 40px; gap: 80px; overflow-y: auto; }
+body[data-catalog-house="tchaikovsky"] .popup_type_house .apartment-description__content { gap: 72px; }
+body[data-catalog-house="tchaikovsky"] .popup_type_house .apartment-modal__details { display: flex; flex-direction: column; gap: 40px; }
+body[data-catalog-house="tchaikovsky"] .popup_type_house .apartment-modal__details p { font-size: 16px; }
+body[data-catalog-house="tchaikovsky"] .popup_type_house .apartment-modal__details span { font-size: 24px; }
+body[data-catalog-house="tchaikovsky"] .popup_type_house .apartment__number span { font-size: 56px; }
+body[data-catalog-house="tchaikovsky"] .popup_type_house .js-apartment-area { text-transform: none; }
+body[data-catalog-house="tchaikovsky"] .popup_type_house .button__price-request { align-self: stretch; width: 100%; height: 56px; margin-top: 0; font-size: 16px; }
+body[data-catalog-house="tchaikovsky"] .popup_type_house .apartment__img { height: 100%; object-position: center; }
+body[data-catalog-house="tchaikovsky"] .popup_type_house .popup__close { position: absolute; width: 80px; height: 80px; }
+body[data-catalog-house="tchaikovsky"] .popup_type_house .popup__close svg { width: 40px; height: 40px; }
+
+@media (max-width: 1100px) {
+  body[data-catalog-house="tchaikovsky"] .popup_type_house .apartment-description__content { gap: 52px; }
+  body[data-catalog-house="tchaikovsky"] .popup_type_house .popup__close { z-index: 2; right: auto; left: 0; }
+}
+
+@media (max-width: 600px) {
+  body[data-catalog-house="tchaikovsky"] .popup_type_house .popup__content { width: 100%; }
+  body[data-catalog-house="tchaikovsky"] .popup_type_house .apartment-card { overflow-y: auto; overscroll-behavior: contain; }
+  body[data-catalog-house="tchaikovsky"] .popup_type_house .apartment-card__content { display: flex !important; flex-direction: column; height: auto; min-height: 100%; }
+  body[data-catalog-house="tchaikovsky"] .popup_type_house .apartments__description { flex: 0 0 auto; height: 300px; padding: 0 20px 30px; gap: 40px; justify-content: flex-start; overflow: visible; }
+  body[data-catalog-house="tchaikovsky"] .popup_type_house .apartment-description__content { gap: 40px; }
+  body[data-catalog-house="tchaikovsky"] .popup_type_house .apartment__number { height: 80px; flex: 0 0 80px; flex-direction: column; align-items: flex-end; padding: 0; }
+  body[data-catalog-house="tchaikovsky"] .popup_type_house .apartment__number span { width: auto; align-self: flex-end; text-align: right; }
+  body[data-catalog-house="tchaikovsky"] .popup_type_house .apartment-modal__details { flex-direction: row; justify-content: space-between; gap: 16px; }
+  body[data-catalog-house="tchaikovsky"] .popup_type_house .apartment-modal__details > div { flex: 0 0 auto; width: max-content; }
+  body[data-catalog-house="tchaikovsky"] .popup_type_house .apartment-modal__details p { font-size: 14px; }
+  body[data-catalog-house="tchaikovsky"] .popup_type_house .button__price-request { padding-inline: 12px; }
+  body[data-catalog-house="tchaikovsky"] .popup_type_house .apartment__img { height: auto; flex: 0 0 auto; }
 }

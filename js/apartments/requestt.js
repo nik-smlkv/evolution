@@ -1,6 +1,6 @@
 import { loadHouse } from "./houses.js?v=1.0.10";
 import { tchaikovskyFloorLevels } from "./tchaikovsky-floors.js?v=1.0.2";
-import { openModal } from "../modal.js";
+import { openModal } from "../modal.js?v=1.0.1";
 import { initializeTchaikovskyFloorPlan } from "./floor-plan.js?v=1.0.12";
 import { initializeCatalogFilterControls } from "./catalog-filter-controls.js?v=1.0.2";
 const requestedHouse = new URLSearchParams(window.location.search).get("house");
@@ -43,11 +43,18 @@ const readAreaRange = (params) => {
   return { from: Math.min(from, to), to: Math.max(from, to) };
 };
 const popupCurrentHouse = document.querySelector(".popup.popup_type_house");
+if (house === "tchaikovsky") {
+  const sectionLabel = popupCurrentHouse.querySelector('[data-key="p_wing"]');
+  sectionLabel.dataset.key = "p_section";
+  sectionLabel.textContent = document.querySelector('header [data-lang="srb"].active') ? "Lamela" : "Section";
+}
 const formatArea = (apartment) =>
   Number.isFinite(apartment.area) ? `${apartment.area}m²` : "—";
 const formatCardApartmentNumber = (number) => String(number).replace(/^STAN\s*/i, "").trim();
-const formatModalApartmentNumber = (number) =>
-  String(number).replace(/^STAN\s*/i, "").replace(/^([A-Z])\s*(\d+)/i, "$1 $2");
+const formatModalApartmentNumber = (number) => {
+  const cleanNumber = String(number).replace(/^STAN\s*/i, "");
+  return cleanNumber.replace(/^([A-Z])\s*(\d+)/i, house === "tchaikovsky" ? "$1$2" : "$1 $2");
+};
 const formatModalArea = (apartment) =>
   Number.isFinite(apartment.area) ? `${apartment.area} m²` : "—";
 const formatApartmentDetails = (apartment) =>
