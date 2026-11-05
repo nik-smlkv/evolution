@@ -392,13 +392,32 @@ const renderNextApartmentCards = () => {
 						<span class="apartment-card-item__name">${number}</span>
 						<span class="apartment-card-item__details">${formatApartmentDetails(item)}</span>
 				  </div>
-				  <div class="apartment-card-item__image">
+				  <div class="apartment-card-item__image is-loading" aria-busy="true">
 						<img src="${img}?v=3" alt="Plan of ${number}" loading="lazy" decoding="async" />
 				  </div>
 				</div>
 			`;
   }).join("");
-  apartmentCards.insertAdjacentHTML("beforeend", markup);
+  const fragment = document.createElement("template");
+  fragment.innerHTML = markup;
+  const images = Array.from(fragment.content.querySelectorAll("img"));
+  apartmentCards.append(fragment.content);
+  images.forEach((image) => {
+    const frame = image.parentElement;
+    const reveal = () => {
+      frame.classList.remove("is-loading");
+      frame.setAttribute("aria-busy", "false");
+    };
+    const onLoad = () => {
+      if (image.decode && image.naturalWidth) image.decode().then(reveal, reveal);
+      else reveal();
+    };
+    if (image.complete) onLoad();
+    else {
+      image.addEventListener("load", onLoad, { once: true });
+      image.addEventListener("error", reveal, { once: true });
+    }
+  });
   renderedCardCount += batch.length;
   cardsSentinel.hidden = renderedCardCount >= filteredCardApartments.length;
   if (!cardsSentinel.hidden) cardsObserver?.observe(cardsSentinel);

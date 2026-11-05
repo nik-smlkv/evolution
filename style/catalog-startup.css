@@ -14,6 +14,9 @@ html.catalog-load-error .catalog-skeleton { display: none; }
 html.catalog-load-error .catalog-startup__error { display: flex; }
 
 .skeleton-shape { display: block; flex: none; background: linear-gradient(100deg, #e8ebef 25%, #f4f5f7 45%, #e8ebef 65%); background-size: 200% 100%; animation: catalog-skeleton-shimmer 1600ms ease-in-out infinite; }
+.apartment-card-item__image.is-loading { position: relative; }
+.apartment-card-item__image.is-loading::after { content: ""; position: absolute; inset: 0; pointer-events: none; border-radius: 2px; background: linear-gradient(100deg, #e8ebef 25%, #f4f5f7 45%, #e8ebef 65%); background-size: 200% 100%; animation: catalog-skeleton-shimmer 1600ms ease-in-out infinite; }
+.apartment-card-item__image.is-loading img { opacity: 0; }
 .catalog-skeleton__filters { display: grid; grid-template-columns: 195px 184px minmax(250px, 604px) 280px 40px; grid-template-areas: "object lamela floor area reset"; gap: 24px 56px; margin-bottom: 28px; }
 .catalog-skeleton__filter { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
 .catalog-skeleton__object { grid-area: object; }
@@ -98,4 +101,4 @@ body[data-catalog-view="plan"] .catalog-skeleton__plan { display: block; }
 }
 
 @keyframes catalog-skeleton-shimmer { from { background-position: 150% 0; } to { background-position: -50% 0; } }
-@media (prefers-reduced-motion: reduce) { .skeleton-shape { animation: none; } }
+@media (prefers-reduced-motion: reduce) { .skeleton-shape, .apartment-card-item__image.is-loading::after { animation: none; } }
