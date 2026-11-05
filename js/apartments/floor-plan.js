@@ -192,8 +192,11 @@ export async function initializeTchaikovskyFloorPlan(apartments, onApartment, on
             image.setAttribute("height", height);
             group.prepend(image);
           }
-          image.setAttribute("href", level.image);
-          image.setAttributeNS("http://www.w3.org/1999/xlink", "href", level.image);
+          // The repository uses composed filenames; macOS also resolves decomposed
+          // spellings locally, but a static Linux host treats them as different URLs.
+          const imagePath = level.image.normalize("NFC");
+          image.setAttribute("href", imagePath);
+          image.setAttributeNS("http://www.w3.org/1999/xlink", "xlink:href", imagePath);
           if (type === "apartments") {
             (tchaikovskyUpperFloorMarkers[level.id] || []).forEach(({ unit, d, x, y }) => {
               if (group.querySelector(`[data-unit="${unit}"]`)) return;

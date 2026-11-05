@@ -125,7 +125,8 @@ body:has(.popup_type_house.popup_is-opened) .popup.popup_type_form_quarter { bac
   .popup_type_form_quarter .quarter__form > :nth-child(n + 3) { grid-column: 1; }
   .popup_type_form_quarter .form__warn { line-height: 21px; }
   .popup_type_form_quarter .popup__close,
-  .popup_type_form_quarter.popup_is-opened .popup__close { z-index: 2; right: 0; visibility: visible; transform: none; transition-delay: 0s; }
+  .popup_type_form_quarter.popup_is-opened .popup__close { z-index: 2; right: 0; transform: none; transition-delay: 0s; }
+  .popup_type_form_quarter:is(.popup_is-opened, .popup_is-closing) .popup__close { visibility: visible; }
 }
 
 @media (prefers-reduced-motion: reduce) {

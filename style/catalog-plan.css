@@ -213,6 +213,7 @@ body.tchaikovsky-catalog .info__footer__content > span { flex: 0 0 260px; max-wi
 
 @media (max-width: 600px) {
   body.tchaikovsky-catalog .title__content { align-items: start; flex-direction: column; gap: 20px; }
+  body.tchaikovsky-catalog .title-apartment { align-self: center; width: 100%; max-width: 100%; text-align: center; font-weight: 400; font-variation-settings: "wght" 400; letter-spacing: 0; }
   body.tchaikovsky-catalog .block-search-parameters { height: auto; padding-block: 32px; }
   body.tchaikovsky-catalog .catalog-plan-button { min-height: 44px; }
   body.tchaikovsky-plan-view .houses-plans_container { grid-template-areas: "tabs compass" "floors floors" "plan plan"; grid-template-columns: 1fr 44px; gap: 20px 8px; padding-inline: 12px; }
