@@ -1,7 +1,9 @@
 import { loadHouse } from "./houses.js?v=1.0.10";
 import { tchaikovskyFloorLevels } from "./tchaikovsky-floors.js?v=1.0.2";
 import { openModal } from "../modal.js?v=1.0.2";
-import { initializeTchaikovskyFloorPlan } from "./floor-plan.js?v=1.0.15";
+import { openPriceRequest } from "../price-request.js?v=1.0.0";
+import { initializeTchaikovskyFloorPlan } from "./floor-plan.js?v=1.0.16";
+import { isTchaikovskyApartmentAvailable } from "./tchaikovsky-availability.js?v=1.0.0";
 import { initializeCatalogFilterControls } from "./catalog-filter-controls.js?v=1.0.2";
 const requestedHouse = new URLSearchParams(window.location.search).get("house");
 const catalog = await loadHouse(requestedHouse);
@@ -11,6 +13,7 @@ if (house === "vivaldi" && legacyFloorPlans) {
   legacyFloorPlans.parentElement.replaceChildren(legacyFloorPlans.content.cloneNode(true));
 }
 let data = JSON.parse(catalog.apartments);
+if (house === "tchaikovsky") data = data.filter(isTchaikovskyApartmentAvailable);
 document.body.dataset.catalogHouse = house;
 document.body.dataset.catalogView = "grid";
 document.body.classList.toggle("tchaikovsky-catalog", house === "tchaikovsky");
@@ -102,7 +105,7 @@ const floorPlanReady = whenDocumentReady(async () => {
     });
     handleFilteredCards(selectedLamela, selectedFloor);
     updateURL();
-  });
+  }, (property) => openPriceRequest({ ...property, house: catalog.name }));
   if (document.body.dataset.catalogView === "plan") tchaikovskyFloorPlan?.selectFloor(selectedFloor);
 });
 floorPlanReady.catch((error) => console.error("Floor plan could not be initialized", error));

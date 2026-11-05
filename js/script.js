@@ -1,5 +1,6 @@
 import { langArr } from "./languages/languages.js?v=1.0.2";
 import { openModal, closeModal, setModalEventListeners } from "./modal.js?v=1.0.2";
+import { openPriceRequest } from "./price-request.js?v=1.0.0";
 import { initializeHeaderNavigation } from "./header-navigation.js?v=1.0.1";
 const siteRootUrl = new URL("../", import.meta.url);
 const config = {
@@ -328,16 +329,12 @@ if (window.innerWidth <= 768) {
   });
 }
 
-const priceRequestDialog = document.getElementById("priceRequest");
 const openDialogButtons = document.querySelectorAll(
   ".button__price-request.open-dialog",
 );
-const popupFormQuarter = document.querySelector(
-  ".popup.popup_type_form_quarter",
-);
 openDialogButtons.forEach((openDialogButton) => {
   openDialogButton.addEventListener("click", () => {
-    openModal(popupFormQuarter);
+    openPriceRequest();
   });
 });
 

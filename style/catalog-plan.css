@@ -93,6 +93,7 @@ body.tchaikovsky-plan-view .plan-compass { position: absolute; top: 73px; right:
 .plan-unit-marker { position: absolute; display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; padding: 0; color: #fff; background: #0474dc; border: 0; border-radius: 50%; font-size: 12px; font-weight: 500; line-height: 1; transform: translate(-50%, -50%); pointer-events: auto; -webkit-user-select: none; user-select: none; transition: opacity 150ms ease, background-color 150ms ease, box-shadow 150ms ease; }
 .plan-unit-marker:hover,
 .plan-unit-marker.is-highlighted { z-index: 3; background: #00509f; }
+.plan-unit-marker[type="button"] { cursor: pointer; }
 .plan-unit-marker:focus-visible { z-index: 3; background: #00509f; box-shadow: 0 0 0 4px #0474dc26; outline: 2px solid #fafafa; outline-offset: 2px; }
 @media (hover: hover) and (pointer: fine) {
   .houses-plan .plan-unit-marker.is-pointer-hovered { opacity: 0; }

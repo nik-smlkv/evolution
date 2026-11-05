@@ -38,11 +38,14 @@ const categories = {
   },
 };
 
-export async function initializeTchaikovskyFloorPlan(apartments, onApartment, onFloorChange) {
+export async function initializeTchaikovskyFloorPlan(apartments, onApartment, onFloorChange, onRequest) {
   const container = document.querySelector(".houses-plans_container");
   const host = container?.querySelector(".houses-plan");
   const floorRail = container?.querySelector(".floor__filter");
   if (!container || !host || !floorRail) return;
+  const apartmentsByUnit = new Map(apartments.map((apartment) => [
+    apartment.apartmentNumber.replace(/^STAN\s*/i, "").trim(), apartment,
+  ]));
 
   const params = new URLSearchParams(location.search);
   let activeType = categories[params.get("property")] ? params.get("property") : "apartments";
@@ -219,6 +222,11 @@ export async function initializeTchaikovskyFloorPlan(apartments, onApartment, on
             });
           }
         });
+        if (type === "apartments") {
+          plan.querySelectorAll("[data-unit]").forEach((shape) => {
+            if (!apartmentsByUnit.has(shape.dataset.unit)) shape.remove();
+          });
+        }
         return plan;
       })().catch((error) => { cache.delete(type); throw error; }));
     }
@@ -236,22 +244,30 @@ export async function initializeTchaikovskyFloorPlan(apartments, onApartment, on
     group.querySelectorAll('[data-unit]').forEach((shape) => {
       const unit = shape.dataset.unit;
       const apartment = activeType === "apartments"
-        ? apartments.find((item) => item.apartmentNumber === `STAN ${unit}`) : null;
+        ? apartmentsByUnit.get(unit) : null;
+      const request = activeType !== "apartments" && onRequest ? {
+        propertyType: activeType,
+        unit,
+        buildingWing: unit.match(/^[A-Z]+/)?.[0] || "",
+        floor: categories[activeType].levels.find((level) => level.id === activeLevel).label,
+      } : null;
+      const activate = apartment ? () => onApartment(apartment)
+        : request ? () => onRequest(request) : null;
       const bounds = shape.getBBox();
       shape.dataset.planUnit = unit;
       shape.classList.remove("is-highlighted");
-      const marker = document.createElement(apartment ? "button" : "span");
+      const marker = document.createElement(activate ? "button" : "span");
       marker.className = "plan-unit-marker";
       marker.dataset.planUnit = unit;
       marker.textContent = unit.replace(/^([A-Z])0(\d)$/, "$1$2");
       marker.style.left = `${Number(shape.dataset.markerX ?? (bounds.x + bounds.width / 2)) / width * 100}%`;
       marker.style.top = `${Number(shape.dataset.markerY ?? (bounds.y + bounds.height / 2)) / height * 100}%`;
       marker.title = `${categories[activeType].label}: ${unit}`;
-      if (apartment) {
+      if (activate) {
         marker.type = "button";
-        marker.setAttribute("aria-label", `Open apartment ${unit}`);
-        marker.addEventListener("click", () => onApartment(apartment));
-        shape.onclick = () => onApartment(apartment);
+        marker.setAttribute("aria-label", apartment ? `Open apartment ${unit}` : `Request price for ${categories[activeType].label} ${unit}`);
+        marker.addEventListener("click", activate);
+        shape.onclick = activate;
       }
       let shapeHovered = false;
       let markerHovered = false;

@@ -39,14 +39,29 @@ formFeedback.addEventListener("submit", (evt) => {
 		});
 });
 formFlatFeedback.addEventListener("submit", (evt) => {
-	const inputPlaceholders = formFeedback.querySelectorAll('.input-placeholder');
-	const houseInformation = document.querySelector('.popup_type_house.popup_is-opened') || document.querySelector('.apartments__info-block');
-	const apartmentArea = houseInformation.querySelector('.js-apartment-area').textContent;
-	const apartmentWing = houseInformation.querySelector('.js-apartment-wing').textContent;
-	const apartmentFloor = houseInformation.querySelector('.js-apartment-floor').textContent;
-	const apartmentNumber = houseInformation.querySelector('.js-apartment-number').textContent;
-	const apartmentImg = houseInformation.querySelector('.apartment__img').src;
 	evt.preventDefault();
+	const inputPlaceholders = formFeedback.querySelectorAll('.input-placeholder');
+	const selectedProperty = formFlatFeedback.dataset.priceRequestContext;
+	let requestComment;
+	if (selectedProperty) {
+		const { propertyType, unit, buildingWing, floor, house } = JSON.parse(selectedProperty);
+		const propertyLabel = propertyType === "parking" ? "parking mesta" : "poslovnog prostora";
+		const details = [
+			house && `Objekat: ${house}`,
+			buildingWing && `Krilo zgrade: ${buildingWing}`,
+			floor && `Sprat: ${floor}`,
+			unit && `Broj: ${unit}`,
+		].filter(Boolean).join(", ");
+		requestComment = `Saznati cenu ${propertyLabel} '${details}'`;
+	} else {
+		const houseInformation = document.querySelector('.popup_type_house.popup_is-opened') || document.querySelector('.apartments__info-block');
+		const apartmentArea = houseInformation.querySelector('.js-apartment-area').textContent;
+		const apartmentWing = houseInformation.querySelector('.js-apartment-wing').textContent;
+		const apartmentFloor = houseInformation.querySelector('.js-apartment-floor').textContent;
+		const apartmentNumber = houseInformation.querySelector('.js-apartment-number').textContent;
+		const apartmentImg = houseInformation.querySelector('.apartment__img').src;
+		requestComment = `Saznati cenu stana 'Površina:${apartmentArea}, Krilo zgrade:${apartmentWing}, Sprat: ${apartmentFloor}, Broj stana: ${apartmentNumber}. Tlocrt stana na sajtu ${apartmentImg}`;
+	}
 	const submitButton = evt.submitter;
 	console.log(formFeedback.elements["phone"].value.trim());
 	const formData = {
@@ -59,7 +74,7 @@ formFlatFeedback.addEventListener("submit", (evt) => {
 			EMAIL: [
 				{ VALUE: formFlatFeedback.elements["mail"].value.trim(), VALUE_TYPE: "WORK" }
 			],
-			COMMENTS: `Saznati cenu stana 'Površina:${apartmentArea}, Krilo zgrade:${apartmentWing}, Sprat: ${apartmentFloor}, Broj stana: ${apartmentNumber}. Tlocrt stana na sajtu ${apartmentImg}`
+			COMMENTS: requestComment
 		},
 		params: { REGISTER_SONET_EVENT: "Y" }
 	};

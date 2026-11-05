@@ -23,7 +23,7 @@ const waitForImage = (image) => image.decode
   });
 
 try {
-  const { catalogReady } = await import("./requestt.js?v=1.0.42");
+  const { catalogReady } = await import("./requestt.js?v=1.0.43");
   await catalogReady;
   await document.fonts.ready;
 
