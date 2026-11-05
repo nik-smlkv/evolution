@@ -57,11 +57,8 @@ body.tchaikovsky-grid-view .catalog-object-filter .filter__floor_list:focus-visi
 .catalog-floor-arrow:is(:hover, :focus-visible):not(:disabled) { color: #0474dc; border-color: #0474dc; cursor: pointer; }
 .catalog-floor-arrow:active:not(:disabled) { background: #0474dc14; }
 .catalog-floor-arrow:focus-visible { outline: 2px solid #42b0f9; outline-offset: -3px; }
-.catalog-floor-arrow:disabled { display: none; }
+.catalog-floor-arrow:disabled { opacity: 0.4; cursor: default; }
 .catalog-floor-navigation[data-has-floors="false"] .catalog-floor-arrow { display: none; }
-@media (min-width: 1101px) {
-  .catalog-floor-navigation[data-at-start="true"] .catalog-floor-arrow--previous { display: none; }
-}
 
 body.tchaikovsky-grid-view .apartments__affordable { gap: 8px; }
 body.tchaikovsky-grid-view .apartments__affordable > p { height: 20px; margin: 0; font-size: 14px; line-height: 20px; font-weight: 400; }

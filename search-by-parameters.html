@@ -1,8 +1,14 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="catalog-loading">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      html.catalog-loading body .section__body-title > .apartments__filter,
+      html.catalog-loading body .section__body-title > .houses-plans_container { display: none !important; }
+    </style>
+    <link rel="stylesheet" href="./style/catalog-startup.css?v=1.0.0" />
+    <link rel="modulepreload" href="./js/apartments/requestt.js?v=1.0.41" />
     <title>Evolution Residence – Vaš San je Naša Obaveza</title>
     <title>
       Prodaja Stanova u Novogradnji Beograd | Direktno od Investitora |
@@ -69,8 +75,8 @@
     <link rel="stylesheet" href="./style/odometer.min.css" />
     <link rel="stylesheet" href="./style/ion.rangeSlider.min.css" />
     <link rel="stylesheet" href="./style/header-responsive.css?v=1.0.3" />
-    <link rel="stylesheet" href="./style/catalog-plan.css?v=1.0.13" />
-    <link rel="stylesheet" href="./style/catalog-responsive.css?v=1.0.5" />
+    <link rel="stylesheet" href="./style/catalog-plan.css?v=1.0.14" />
+    <link rel="stylesheet" href="./style/catalog-responsive.css?v=1.0.6" />
     <link rel="stylesheet" href="./style/price-request.css?v=1.0.1" />
     <script src="./js/swiper-bundle.min.js"></script>
     <script src="./js/jquery-3.6.4.min.js"></script>
@@ -105,6 +111,19 @@
   </head>
 
   <body>
+    <script>
+      (() => {
+        const params = new URLSearchParams(location.search);
+        const house = params.get("house") === "tchaikovsky" ? "tchaikovsky" : "vivaldi";
+        const view = params.get("view") === "plan" ? "plan" : "grid";
+        document.body.dataset.catalogHouse = house;
+        document.body.dataset.catalogView = view;
+        if (house === "tchaikovsky") {
+          document.body.classList.add("tchaikovsky-catalog", `tchaikovsky-${view}-view`);
+          document.documentElement.classList.add("tchaikovsky-catalog");
+        }
+      })();
+    </script>
     <script data-cfasync="false" data-pagespeed-no-defer type="text/javascript">
       var dataLayer_content = {
         pagePostType: "frontpage",
@@ -197,7 +216,7 @@
       </div>
     </noscript>
     <!-- /Yandex.Metrika counter -->
-    <div class="wrapper">
+    <div class="wrapper" aria-busy="true">
       <header class="dark-bg-block">
         <div class="header__body flex-style-row">
           <div class="header__menu flex-style-row">
@@ -331,7 +350,7 @@
                   >
                     Tchaikovsky
                   </h2>
-                  <button class="catalog-plan-button" type="button">
+                  <button class="catalog-plan-button" type="button" disabled>
                     SELECT ON THE FLOOR PLAN
                   </button>
                 </div>
@@ -340,6 +359,86 @@
             <div
               class="section__body section__body-title flex-style-column block-center gap"
             >
+              <div class="catalog-startup">
+                <p class="catalog-startup__message" data-catalog-loading role="status">Učitavanje apartmana…</p>
+                <div class="catalog-startup__error" role="alert">
+                  <p data-catalog-error>Nije moguće učitati apartmane. Pokušajte ponovo.</p>
+                  <a class="catalog-startup__retry" data-catalog-retry href="">Učitaj ponovo</a>
+                </div>
+                <noscript>
+                  <style>.catalog-skeleton, .catalog-startup__message { display: none !important; }</style>
+                  <p>Enable JavaScript to view the apartment catalog.</p>
+                </noscript>
+              </div>
+              <div class="catalog-skeleton" aria-hidden="true">
+                <div class="catalog-skeleton__grid">
+                  <div class="catalog-skeleton__filters">
+                    <div class="catalog-skeleton__filter catalog-skeleton__object"><span class="catalog-skeleton__label skeleton-shape"></span><div class="catalog-skeleton__chips"><span class="skeleton-shape"></span><span class="skeleton-shape"></span></div></div>
+                    <div class="catalog-skeleton__filter catalog-skeleton__lamela"><span class="catalog-skeleton__label skeleton-shape"></span><div class="catalog-skeleton__chips"><span class="skeleton-shape"></span><span class="skeleton-shape"></span><span class="skeleton-shape"></span><span class="skeleton-shape"></span></div></div>
+                    <div class="catalog-skeleton__filter catalog-skeleton__floor"><span class="catalog-skeleton__label skeleton-shape"></span><div class="catalog-skeleton__chips"><span class="skeleton-shape"></span><span class="skeleton-shape"></span><span class="skeleton-shape"></span><span class="skeleton-shape"></span><span class="skeleton-shape"></span></div></div>
+                    <div class="catalog-skeleton__filter catalog-skeleton__area"><span class="catalog-skeleton__label skeleton-shape"></span><span class="catalog-skeleton__range skeleton-shape"></span></div>
+                    <span class="catalog-skeleton__reset skeleton-shape"></span>
+                  </div>
+                  <div class="catalog-skeleton__cards">
+                  <div class="catalog-skeleton__card">
+                    <div class="catalog-skeleton__meta"><span class="skeleton-shape"></span><span class="skeleton-shape"></span></div>
+                    <div class="catalog-skeleton__image skeleton-shape"></div>
+                  </div>
+                  <div class="catalog-skeleton__card">
+                    <div class="catalog-skeleton__meta"><span class="skeleton-shape"></span><span class="skeleton-shape"></span></div>
+                    <div class="catalog-skeleton__image skeleton-shape"></div>
+                  </div>
+                  <div class="catalog-skeleton__card">
+                    <div class="catalog-skeleton__meta"><span class="skeleton-shape"></span><span class="skeleton-shape"></span></div>
+                    <div class="catalog-skeleton__image skeleton-shape"></div>
+                  </div>
+                  <div class="catalog-skeleton__card">
+                    <div class="catalog-skeleton__meta"><span class="skeleton-shape"></span><span class="skeleton-shape"></span></div>
+                    <div class="catalog-skeleton__image skeleton-shape"></div>
+                  </div>
+                  <div class="catalog-skeleton__card">
+                    <div class="catalog-skeleton__meta"><span class="skeleton-shape"></span><span class="skeleton-shape"></span></div>
+                    <div class="catalog-skeleton__image skeleton-shape"></div>
+                  </div>
+                  <div class="catalog-skeleton__card">
+                    <div class="catalog-skeleton__meta"><span class="skeleton-shape"></span><span class="skeleton-shape"></span></div>
+                    <div class="catalog-skeleton__image skeleton-shape"></div>
+                  </div>
+                  <div class="catalog-skeleton__card">
+                    <div class="catalog-skeleton__meta"><span class="skeleton-shape"></span><span class="skeleton-shape"></span></div>
+                    <div class="catalog-skeleton__image skeleton-shape"></div>
+                  </div>
+                  <div class="catalog-skeleton__card">
+                    <div class="catalog-skeleton__meta"><span class="skeleton-shape"></span><span class="skeleton-shape"></span></div>
+                    <div class="catalog-skeleton__image skeleton-shape"></div>
+                  </div>
+                  <div class="catalog-skeleton__card">
+                    <div class="catalog-skeleton__meta"><span class="skeleton-shape"></span><span class="skeleton-shape"></span></div>
+                    <div class="catalog-skeleton__image skeleton-shape"></div>
+                  </div>
+                  <div class="catalog-skeleton__card">
+                    <div class="catalog-skeleton__meta"><span class="skeleton-shape"></span><span class="skeleton-shape"></span></div>
+                    <div class="catalog-skeleton__image skeleton-shape"></div>
+                  </div>
+                  <div class="catalog-skeleton__card">
+                    <div class="catalog-skeleton__meta"><span class="skeleton-shape"></span><span class="skeleton-shape"></span></div>
+                    <div class="catalog-skeleton__image skeleton-shape"></div>
+                  </div>
+                  <div class="catalog-skeleton__card">
+                    <div class="catalog-skeleton__meta"><span class="skeleton-shape"></span><span class="skeleton-shape"></span></div>
+                    <div class="catalog-skeleton__image skeleton-shape"></div>
+                  </div>
+                  </div>
+                </div>
+                <div class="catalog-skeleton__plan">
+                  <div class="catalog-skeleton__rail"><span class="catalog-skeleton__label skeleton-shape"></span><span class="skeleton-shape"></span><span class="skeleton-shape"></span><span class="skeleton-shape"></span><span class="skeleton-shape"></span><span class="skeleton-shape"></span><span class="skeleton-shape"></span><span class="skeleton-shape"></span></div>
+                  <div class="catalog-skeleton__drawing skeleton-shape"></div>
+                  <div class="catalog-skeleton__types"><span class="skeleton-shape"></span><span class="skeleton-shape"></span><span class="skeleton-shape"></span></div>
+                  <span class="catalog-skeleton__key skeleton-shape"></span>
+                  <span class="catalog-skeleton__hint skeleton-shape"></span>
+                  <span class="catalog-skeleton__compass skeleton-shape"></span>
+                </div>
+              </div>
               <div class="buttons__choice_view">
                 <button
                   class="btn-style button__choice choice-active"
@@ -474,6 +573,7 @@
                   </div>
                 </div>
                 <div class="houses-plan">
+                  <template data-vivaldi-floor-plans>
                   <svg
                     class="floors-res plans-np"
                     xmlns="http://www.w3.org/2000/svg"
@@ -3079,6 +3179,7 @@
                       </g>
                     </g>
                   </svg> -->
+                  </template>
                 </div>
               </div>
             </div>
@@ -3485,7 +3586,8 @@
     <script type="module" src="./js/validation.js?v=1.0.6"></script>
     <script
       type="module"
-      src="./js/apartments/requestt.js?v=1.0.40"
+      src="./js/apartments/catalog-startup.js?v=1.0.0"
+      onerror="document.querySelector('.wrapper').setAttribute('aria-busy', 'false'); document.documentElement.classList.add('catalog-load-error')"
     ></script>
     <script src="./js/ion.rangeSlider.min.js?v=1.0.6"></script>
     <script src="./js/scriptFloor.js?v=1.0.6"></script>

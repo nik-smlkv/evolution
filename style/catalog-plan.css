@@ -42,6 +42,8 @@ body.tchaikovsky-plan-view .houses-plan {
 body.tchaikovsky-plan-view .plan-canvas svg { display: block; width: 100%; height: auto; }
 body.tchaikovsky-plan-view .plan-canvas { width: 100%; aspect-ratio: 4000 / 3160; }
 .plan-surface { position: relative; width: 100%; }
+body.tchaikovsky-plan-view .houses-plan[aria-busy="true"] .plan-surface { opacity: 0; pointer-events: none; }
+body.tchaikovsky-plan-view .houses-plan[aria-busy="true"]::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(100deg, #e8ebef 25%, #f4f5f7 45%, #e8ebef 65%); background-size: 200% 100%; animation: catalog-skeleton-shimmer 1600ms ease-in-out infinite; }
 body.tchaikovsky-plan-view .houses-plan [data-unit] { opacity: 0; fill: #0474dc; cursor: pointer; transition: opacity 150ms ease; }
 body.tchaikovsky-plan-view .houses-plan [data-unit]:hover,
 body.tchaikovsky-plan-view .houses-plan [data-unit].is-highlighted { opacity: 0.2; }
@@ -71,7 +73,7 @@ body.tchaikovsky-plan-view .floor__filter {
 .plan-floor-arrow:active:not(:disabled) { background: #0474dc14; }
 .plan-floor-arrow svg { flex: none; width: 14px; height: 8px; }
 .plan-floor-arrow--up svg { transform: rotate(180deg); }
-.plan-floor-arrow:disabled { display: none; }
+.plan-floor-arrow:disabled { opacity: 0.4; cursor: default; }
 .plan-floor-button:focus-visible,
 .plan-floor-arrow:focus-visible { outline: 2px solid #42b0f9; outline-offset: -3px; }
 
@@ -93,7 +95,10 @@ body.tchaikovsky-plan-view .plan-compass { position: absolute; top: 73px; right:
 .plan-unit-marker.is-highlighted { z-index: 3; background: #00509f; }
 .plan-unit-marker:focus-visible { z-index: 3; background: #00509f; box-shadow: 0 0 0 4px #0474dc26; outline: 2px solid #fafafa; outline-offset: 2px; }
 @media (hover: hover) and (pointer: fine) {
-  .houses-plan[data-plan-type="apartments"] .plan-unit-marker.is-pointer-hovered { opacity: 0; }
+  .houses-plan .plan-unit-marker.is-pointer-hovered { opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  body.tchaikovsky-plan-view .houses-plan[aria-busy="true"]::after { animation: none; }
 }
 .houses-plan[data-plan-type="parking"] .plan-unit-marker { width: 18px; height: 18px; font-size: 8px; }
 .plan-load-error { display: flex; align-items: center; justify-content: center; padding: 40px; color: #161d2d; }
@@ -267,10 +272,6 @@ body.tchaikovsky-catalog .info__footer__content > span { flex: 0 0 260px; max-wi
   body.tchaikovsky-plan-view .plan-floor-arrow--up { grid-column: 1; grid-row: 2; }
   body.tchaikovsky-plan-view .plan-floor-list { grid-column: 2; grid-row: 2; width: 100%; height: 40px; gap: 8px; }
   body.tchaikovsky-plan-view .plan-floor-arrow--down { grid-column: 3; grid-row: 2; }
-  body.tchaikovsky-plan-view .floor__filter:has(.plan-floor-arrow--up:disabled) { grid-template-columns: minmax(0, 1fr) 40px; }
-  body.tchaikovsky-plan-view .floor__filter:has(.plan-floor-arrow--up:disabled) .plan-floor-list { grid-column: 1; }
-  body.tchaikovsky-plan-view .floor__filter:has(.plan-floor-arrow--up:disabled) .plan-floor-arrow--down { grid-column: 2; }
-  body.tchaikovsky-plan-view .floor__filter:has(.plan-floor-arrow--down:disabled) { grid-template-columns: 40px minmax(0, 1fr); }
   body.tchaikovsky-plan-view .houses-plan { grid-area: plan; width: 100%; margin: 24px 0 0; }
   body.tchaikovsky-plan-view .plan-unit-marker { width: 20px; height: 20px; font-size: 8px; }
   body.tchaikovsky-plan-view .plan-building-key { grid-area: key; position: static; width: 120px; height: 105px; margin-top: 24px; }

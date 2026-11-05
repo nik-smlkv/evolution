@@ -1,11 +1,15 @@
 import { loadHouse } from "./houses.js?v=1.0.10";
 import { tchaikovskyFloorLevels } from "./tchaikovsky-floors.js?v=1.0.2";
 import { openModal } from "../modal.js?v=1.0.2";
-import { initializeTchaikovskyFloorPlan } from "./floor-plan.js?v=1.0.14";
+import { initializeTchaikovskyFloorPlan } from "./floor-plan.js?v=1.0.15";
 import { initializeCatalogFilterControls } from "./catalog-filter-controls.js?v=1.0.2";
 const requestedHouse = new URLSearchParams(window.location.search).get("house");
 const catalog = await loadHouse(requestedHouse);
 const house = catalog.id;
+const legacyFloorPlans = document.querySelector("[data-vivaldi-floor-plans]");
+if (house === "vivaldi" && legacyFloorPlans) {
+  legacyFloorPlans.parentElement.replaceChildren(legacyFloorPlans.content.cloneNode(true));
+}
 let data = JSON.parse(catalog.apartments);
 document.body.dataset.catalogHouse = house;
 document.body.dataset.catalogView = "grid";
@@ -61,13 +65,20 @@ const formatApartmentDetails = (apartment) =>
   apartment.floor
     ? `${apartment.floor} <i></i> ${formatArea(apartment)}`
     : formatArea(apartment);
-const whenDocumentReady = (callback) => {
+const whenDocumentReady = (callback) => new Promise((resolve, reject) => {
+  const run = () => {
+    try {
+      resolve(callback());
+    } catch (error) {
+      reject(error);
+    }
+  };
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", callback, { once: true });
+    document.addEventListener("DOMContentLoaded", run, { once: true });
   } else {
-    callback();
+    run();
   }
-};
+});
 
 const setTchaikovskyPlanPopup = (apartment) => {
   const popup = document.querySelector(".popup_type_house");
@@ -81,7 +92,7 @@ const setTchaikovskyPlanPopup = (apartment) => {
   openModal(popup);
 };
 
-whenDocumentReady(async () => {
+const floorPlanReady = whenDocumentReady(async () => {
   if (house !== "tchaikovsky") return;
   tchaikovskyFloorPlan = await initializeTchaikovskyFloorPlan(data, setTchaikovskyPlanPopup, (level) => {
     if (!level || document.body.dataset.catalogView !== "plan") return;
@@ -94,6 +105,7 @@ whenDocumentReady(async () => {
   });
   if (document.body.dataset.catalogView === "plan") tchaikovskyFloorPlan?.selectFloor(selectedFloor);
 });
+floorPlanReady.catch((error) => console.error("Floor plan could not be initialized", error));
 
 const updateSEOTags = (params) => {
   const stanoviDo = params.get("stanovi-do");
@@ -563,7 +575,7 @@ function updateRangeSliderInputs(data, inputFrom, inputTo) {
   filterAndRenderApartments(data.from, data.to);
 }
 
-whenDocumentReady(() => {
+const viewControlsReady = whenDocumentReady(() => {
   const views = {
     1: ".apartments__filter",
     2: ".houses-plans_container",
@@ -609,7 +621,7 @@ whenDocumentReady(() => {
   }
 });
 
-whenDocumentReady(() => {
+const viewButtonReady = whenDocumentReady(() => {
   if (!catalog.hasFloorPlans || !floorPlanButton) return;
 
   const gridButton = document.querySelector('.button__choice[data-key="1"]');
@@ -640,7 +652,7 @@ whenDocumentReady(() => {
   updateViewButton();
 });
 
-whenDocumentReady(() => {
+const filtersReady = whenDocumentReady(() => {
   getFirstApartment();
   getApartmentFloors();
   getLamela();
@@ -656,7 +668,7 @@ whenDocumentReady(() => {
   applyURLParams();
 });
 
-whenDocumentReady(() => {
+const cardEventsReady = whenDocumentReady(() => {
   const openApartment = (item) => {
       const apartmentCardsList = document.querySelectorAll(".apartment__item");
       apartmentCardsList.forEach((item) => {
@@ -739,3 +751,8 @@ if (window.innerWidth <= 767) {
     });
   }
 }
+
+export const catalogReady = Promise.all([viewControlsReady, viewButtonReady, filtersReady, cardEventsReady])
+  .then(async () => {
+    if (house === "tchaikovsky" && document.body.dataset.catalogView === "plan") await floorPlanReady;
+  });

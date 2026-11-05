@@ -1,0 +1,101 @@
+.catalog-startup,
+.catalog-skeleton { display: none; }
+html.catalog-loading .catalog-startup,
+html.catalog-loading .catalog-skeleton { display: block; width: 100%; }
+html.catalog-loading .section__body-title { gap: 0; }
+html.catalog-loading .catalog-plan-button:disabled { opacity: 0.4; cursor: default; }
+.catalog-startup__message { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.catalog-startup__error { display: none; min-height: 320px; flex-direction: column; align-items: center; justify-content: center; gap: 24px; color: #161d2d; text-align: center; }
+.catalog-startup__retry { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 10px 24px; border: 1px solid #d1d4d8; border-radius: 999px; }
+.catalog-startup__retry:is(:hover, :focus-visible) { color: #fff; background: #0474dc; border-color: #0474dc; }
+.catalog-startup__retry:focus-visible { outline: 2px solid #42b0f9; outline-offset: 3px; }
+html.catalog-load-error .catalog-startup__message,
+html.catalog-load-error .catalog-skeleton { display: none; }
+html.catalog-load-error .catalog-startup__error { display: flex; }
+
+.skeleton-shape { display: block; flex: none; background: linear-gradient(100deg, #e8ebef 25%, #f4f5f7 45%, #e8ebef 65%); background-size: 200% 100%; animation: catalog-skeleton-shimmer 1600ms ease-in-out infinite; }
+.catalog-skeleton__filters { display: grid; grid-template-columns: 195px 184px minmax(250px, 604px) 280px 40px; grid-template-areas: "object lamela floor area reset"; gap: 24px 56px; margin-bottom: 28px; }
+.catalog-skeleton__filter { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+.catalog-skeleton__object { grid-area: object; }
+.catalog-skeleton__lamela { grid-area: lamela; }
+.catalog-skeleton__floor { grid-area: floor; }
+.catalog-skeleton__area { grid-area: area; }
+.catalog-skeleton__label { width: 64px; height: 20px; border-radius: 3px; }
+.catalog-skeleton__chips { display: flex; gap: 8px; min-width: 0; overflow: hidden; }
+.catalog-skeleton__chips > span { width: 40px; height: 40px; border-radius: 999px; }
+.catalog-skeleton__object .catalog-skeleton__chips > span:first-child { width: 115px; }
+.catalog-skeleton__object .catalog-skeleton__chips > span:last-child { width: 72px; }
+.catalog-skeleton__floor .catalog-skeleton__chips > span { width: 62px; }
+.catalog-skeleton__range { height: 40px; width: 100%; border-radius: 3px; }
+.catalog-skeleton__reset { grid-area: reset; align-self: end; width: 40px; height: 40px; border-radius: 50%; }
+.catalog-skeleton__cards { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 40px; width: 100%; }
+.catalog-skeleton__card { display: flex; flex-direction: column; width: 100%; padding: 40px; gap: 36px; border: 1px solid transparent; background: #fff; }
+.catalog-skeleton__meta { display: flex; justify-content: space-between; gap: 12px; height: 20px; }
+.catalog-skeleton__meta > span { width: 40px; height: 16px; border-radius: 3px; }
+.catalog-skeleton__meta > span:last-child { width: 110px; }
+.catalog-skeleton__image { width: 100%; aspect-ratio: 1; border-radius: 2px; }
+
+.catalog-skeleton__plan { --plan-width: min(1100px, calc(100% - 320px)); --plan-inset: clamp(20px, 6.302vw, 121px); display: none; position: relative; min-height: 1006px; padding: 22px 0 114px; }
+body[data-catalog-view="plan"] .catalog-skeleton__grid { display: none; }
+body[data-catalog-view="plan"] .catalog-skeleton__plan { display: block; }
+.catalog-skeleton__drawing { width: var(--plan-width); aspect-ratio: 4000 / 3160; margin: 0 auto; border-radius: 4px; }
+.catalog-skeleton__rail { position: absolute; top: 57px; left: var(--plan-inset); display: flex; flex-direction: column; gap: 8px; width: 66px; }
+.catalog-skeleton__rail > span:not(:first-child) { width: 66px; height: 40px; border-radius: 999px; }
+.catalog-skeleton__rail > span:first-child { margin-bottom: 7px; height: 24px; }
+.catalog-skeleton__types { position: absolute; top: 57px; left: calc((100% - var(--plan-width)) / 2); display: flex; flex-direction: column; gap: 8px; width: 230px; }
+.catalog-skeleton__types > span { width: 100%; height: 56px; border-radius: 999px; }
+.catalog-skeleton__key { position: absolute; top: 200px; right: var(--plan-inset); width: 120px; height: 105px; border-radius: 3px; }
+.catalog-skeleton__hint { display: none; }
+.catalog-skeleton__compass { position: absolute; top: 73px; right: var(--plan-inset); width: 92px; height: 92px; border-radius: 50%; }
+
+@media (max-width: 1700px) {
+  .catalog-skeleton__filters { grid-template-columns: 195px 184px minmax(160px, 1fr) 240px 40px; column-gap: 32px; }
+  .catalog-skeleton__cards { gap: 24px; }
+  .catalog-skeleton__card { padding: 24px; gap: 28px; }
+}
+@media (max-width: 1500px) {
+  .catalog-skeleton__plan { min-height: 0; padding-bottom: 80px; }
+  .catalog-skeleton__types { width: 180px; }
+  .catalog-skeleton__types > span { height: 44px; }
+  .catalog-skeleton__compass { width: 72px; height: 72px; }
+}
+@media (max-width: 1200px) {
+  .catalog-skeleton__filters { grid-template-columns: minmax(195px, 1fr) 184px minmax(100px, 1fr) 40px; grid-template-areas: "object lamela area area" "floor floor floor reset"; gap: 24px; margin-bottom: 12px; }
+  .catalog-skeleton__cards { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 1000px) {
+  .catalog-skeleton__cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .catalog-skeleton__card { padding: 23px; }
+  .catalog-skeleton__plan { min-height: 0; padding: 32px 32px 40px; grid-template-columns: 120px minmax(0, 1fr) 92px; grid-template-areas: "types types types" "rail rail rail" "drawing drawing drawing" "key hint compass"; gap: 0 24px; }
+  body[data-catalog-view="plan"] .catalog-skeleton__plan { display: grid; }
+  .catalog-skeleton__types { position: static; grid-area: types; flex-direction: row; width: 100%; height: 56px; gap: 16px; }
+  .catalog-skeleton__types > span { flex: 1; width: auto; height: 56px; }
+  .catalog-skeleton__rail { position: static; grid-area: rail; flex-direction: row; flex-wrap: wrap; width: 100%; margin-top: 24px; gap: 8px; overflow: hidden; height: 76px; }
+  .catalog-skeleton__rail > span:first-child { width: 100%; height: 24px; margin: 0; border-radius: 3px; }
+  .catalog-skeleton__rail > span:not(:first-child) { flex: 0 0 66px; }
+  .catalog-skeleton__drawing { grid-area: drawing; width: 100%; margin-top: 24px; }
+  .catalog-skeleton__key { position: static; grid-area: key; width: 120px; height: 105px; margin-top: 24px; }
+  .catalog-skeleton__hint { display: block; grid-area: hint; align-self: end; width: 100%; height: 32px; margin-top: 24px; border-radius: 3px; }
+  .catalog-skeleton__compass { position: static; grid-area: compass; align-self: end; width: 92px; height: 91px; margin-top: 24px; }
+}
+@media (max-width: 700px) {
+  .catalog-skeleton__filters { grid-template-columns: minmax(0, 1fr) 40px; grid-template-areas: "object object" "lamela lamela" "floor floor" "area reset"; gap: 24px; margin-bottom: 40px; }
+  .catalog-skeleton__object, .catalog-skeleton__lamela { flex-direction: row; align-items: center; height: 40px; }
+  .catalog-skeleton__object > .catalog-skeleton__label, .catalog-skeleton__lamela > .catalog-skeleton__label { width: 60px; }
+  .catalog-skeleton__area > .catalog-skeleton__label { height: 24px; }
+  .catalog-skeleton__range { height: 48px; }
+}
+@media (max-width: 600px) {
+  .catalog-skeleton__cards { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  .catalog-skeleton__plan { padding: 32px 20px 56px; gap: 0 16px; grid-template-columns: 80px minmax(0, 1fr) 64px; }
+  .catalog-skeleton__types { height: 47px; gap: 8px; }
+  .catalog-skeleton__types > span { height: 47px; }
+  .catalog-skeleton__rail { margin-top: 24px; }
+  .catalog-skeleton__drawing { margin-top: 28px; width: calc(100% + 40px); margin-left: -20px; border-radius: 0; }
+  .catalog-skeleton__key { width: 80px; height: 70px; margin-top: 20px; }
+  .catalog-skeleton__hint { align-self: start; margin-top: 32px; }
+  .catalog-skeleton__compass { width: 64px; height: 64px; margin-top: 20px; }
+}
+
+@keyframes catalog-skeleton-shimmer { from { background-position: 150% 0; } to { background-position: -50% 0; } }
+@media (prefers-reduced-motion: reduce) { .skeleton-shape { animation: none; } }

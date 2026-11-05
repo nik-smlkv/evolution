@@ -3,6 +3,15 @@ import { tchaikovskyUpperFloorMarkers } from "./tchaikovsky-plan-markers.js?v=1.
 
 const planDirectory = "./plans/А3/";
 const groundImage = `${planDirectory}2100 Osnova Prizemlja (A,C)_Nisko Prizemlje редакт.jpg`;
+const waitForPlanImage = (path) => {
+  const image = new Image();
+  const loaded = new Promise((resolve, reject) => {
+    image.onload = resolve;
+    image.onerror = () => reject(new Error(`Unable to load ${path}`));
+  });
+  image.src = path.normalize("NFC");
+  return loaded.then(() => image.decode ? image.decode() : undefined);
+};
 const categories = {
   apartments: {
     label: "Apartments", file: "chaikovsky-life.svg",
@@ -291,8 +300,11 @@ export async function initializeTchaikovskyFloorPlan(apartments, onApartment, on
     try {
       const plan = await load(type);
       if (request !== requestVersion) return;
+      const level = selections.get(type) || categories[type].levels[0].id;
+      await waitForPlanImage(categories[type].levels.find((item) => item.id === level).image);
+      if (request !== requestVersion) return;
       activeType = type;
-      activeLevel = selections.get(type) || categories[type].levels[0].id;
+      activeLevel = level;
       svg = plan;
       canvas.replaceChildren(plan);
       tabs.querySelectorAll("button").forEach((button) => {
