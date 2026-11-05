@@ -71,6 +71,7 @@
     <link rel="stylesheet" href="./style/header-responsive.css?v=1.0.3" />
     <link rel="stylesheet" href="./style/catalog-plan.css?v=1.0.11" />
     <link rel="stylesheet" href="./style/catalog-responsive.css?v=1.0.4" />
+    <link rel="stylesheet" href="./style/price-request.css?v=1.0.0" />
     <script src="./js/swiper-bundle.min.js"></script>
     <script src="./js/jquery-3.6.4.min.js"></script>
     <script src="./js/printThis.js"></script>
@@ -3256,9 +3257,9 @@
           </div>
         </div>
       </footer>
-      <div id="priceRequest" class="flex-style popup popup_type_form_quarter">
-        <div class="popup__content popup__content_form_quarter">
-          <button class="popup__close" type="button">
+      <div id="priceRequest" class="flex-style popup popup_type_form_quarter" role="dialog" aria-modal="true" aria-labelledby="price-request-title" tabindex="-1">
+        <div class="popup__content popup__content_form_quarter" data-lenis-prevent>
+          <button class="popup__close" type="button" aria-label="Close price request form">
             <span
               ><svg
                 width="40"
@@ -3291,12 +3292,13 @@
           >
             <div class="block-center flex-style-column title-gap">
               <p
+                id="price-request-title"
                 class="title title-dark tt-up split-text ezd-animtext"
                 data-key="p_callback"
               >
                 Request callback
               </p>
-              <p class="subtitle" data-key="p_short">
+              <p class="subtitle" data-key="p_price_short">
                 Fill out the form and we will contact you shortly
               </p>
             </div>
@@ -3345,7 +3347,7 @@
                     data-error-message="Please enter a valid email  (for example, example@email.com)"
                   />
                   <div class="flex-style-row input-placeholder">
-                    <span data-key="p_mail">Email</span>
+                    <span data-key="p_price_mail">Email</span>
                     <span class="important-span">*</span>
                   </div>
                   <span class="place-email-error"></span>
@@ -3479,11 +3481,11 @@
     <script src="./js/lenis.js?v=1.0.6"></script>
     <script src="./js/locomotive-scroll.min.js?v=1.0.6"></script>
     <script src="./js/splitting.min.js?v=1.0.6"></script>
-    <script type="module" src="./js/script.js?v=1.0.12"></script>
+    <script type="module" src="./js/script.js?v=1.0.13"></script>
     <script type="module" src="./js/validation.js?v=1.0.6"></script>
     <script
       type="module"
-      src="./js/apartments/requestt.js?v=1.0.37"
+      src="./js/apartments/requestt.js?v=1.0.38"
     ></script>
     <script src="./js/ion.rangeSlider.min.js?v=1.0.6"></script>
     <script src="./js/scriptFloor.js?v=1.0.6"></script>

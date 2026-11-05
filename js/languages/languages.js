@@ -1,5 +1,7 @@
 export const langArr = {
 	en: {
+		p_price_short: `Fill out the form and we will contact you shortly`,
+		p_price_mail: `Email`,
 		p_section: `Section`,
 		plan_gesture_hint: `Use your fingers to zoom and move the plan`,
 		plan_office: `Sales Office`,
@@ -142,6 +144,8 @@ export const langArr = {
 		p_belrg: `Belgrade`,
 	},
 	srb: {
+		p_price_short: `Popunite formular i kontaktiraćemo Vas u najkraćem roku`,
+		p_price_mail: `E-mail adresa`,
 		p_section: `Lamela`,
 		plan_gesture_hint: `Prstima uvećajte i pomerajte plan`,
 		plan_office: `Prodajna kancelarija`,

@@ -1,6 +1,6 @@
 import { loadHouse } from "./houses.js?v=1.0.10";
 import { tchaikovskyFloorLevels } from "./tchaikovsky-floors.js?v=1.0.2";
-import { openModal } from "../modal.js?v=1.0.1";
+import { openModal } from "../modal.js?v=1.0.2";
 import { initializeTchaikovskyFloorPlan } from "./floor-plan.js?v=1.0.12";
 import { initializeCatalogFilterControls } from "./catalog-filter-controls.js?v=1.0.2";
 const requestedHouse = new URLSearchParams(window.location.search).get("house");

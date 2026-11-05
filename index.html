@@ -54,6 +54,7 @@
     <link rel="stylesheet" href="./style/odometer.min.css?v=1.0.5" />
     <link rel="stylesheet" href="./style/ion.rangeSlider.min.css?v=1.0.5" />
     <link rel="stylesheet" href="./style/header-responsive.css?v=1.0.3" />
+    <link rel="stylesheet" href="./style/price-request.css?v=1.0.0" />
     <script src="./js/swiper-bundle.min.js?v=1.0.5"></script>
     <script src="./js/jquery-3.6.4.min.js?v=1.0.5"></script>
     <script src="./js/printThis.js?v=1.0.5"></script>
@@ -1374,9 +1375,9 @@
         </div>
       </footer>
 
-      <div id="priceRequest" class="flex-style popup popup_type_form_quarter">
-        <div class="popup__content popup__content_form_quarter">
-          <button class="popup__close" type="button">
+      <div id="priceRequest" class="flex-style popup popup_type_form_quarter" role="dialog" aria-modal="true" aria-labelledby="price-request-title" tabindex="-1">
+        <div class="popup__content popup__content_form_quarter" data-lenis-prevent>
+          <button class="popup__close" type="button" aria-label="Close price request form">
             <span
               ><svg
                 width="40"
@@ -1407,12 +1408,13 @@
           <div class="form__block block-center flex-style-column gap">
             <div class="block-center flex-style-column title-gap">
               <p
+                id="price-request-title"
                 class="title title-dark tt-up split-text ezd-animtext"
                 data-key="p_callback"
               >
                 Request callback
               </p>
-              <p class="subtitle">
+              <p class="subtitle" data-key="p_price_short">
                 Fill out the form and we will contact you shortly
               </p>
             </div>
@@ -1460,7 +1462,7 @@
                     data-error-message="Please enter a valid email  (for example, example@email.com)"
                   />
                   <div class="flex-style-row input-placeholder">
-                    <span data-key="p_mail">Email</span>
+                    <span data-key="p_price_mail">Email</span>
                     <span class="important-span">*</span>
                   </div>
                   <span class="place-email-error"></span>
@@ -1516,6 +1518,6 @@
     <script src="./js/scriptFloor.js?v=1.0.5"></script>
     <script src="./js/form.js?v=1.0.5"></script>
     <script src="./js/house-menu.js?v=1.0.2"></script>
-    <script type="module" src="./js/script.js?v=1.0.12" defer></script>
+    <script type="module" src="./js/script.js?v=1.0.13" defer></script>
   </body>
 </html>

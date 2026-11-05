@@ -1,11 +1,13 @@
 let scrollLock = null;
+const closingModals = new Map();
+const returnFocusTargets = new WeakMap();
 const bodyLockProperties = ["overflow", "position", "top", "left", "width"];
 
 function lockScroll(modal) {
 	if (scrollLock) return;
 	const body = document.body;
 	const root = document.documentElement;
-	const fullViewport = body.dataset.catalogHouse === "tchaikovsky" && modal.classList.contains("popup_type_house");
+	const fullViewport = modal.matches(".popup_type_house, .popup_type_form_quarter");
 	const bodyWidth = body.getBoundingClientRect().width;
 	const header = fullViewport ? document.querySelector("header") : null;
 	const headerWidth = header?.getBoundingClientRect().width;
@@ -51,23 +53,81 @@ function unlockScroll() {
 
 export function openModal(modal) {
 	if (!modal) return;
+	closingModals.get(modal)?.();
+	closingModals.delete(modal);
+	modal.classList.remove("popup_is-closing");
+	if (modal.classList.contains("popup_type_form_quarter") && !modal.contains(document.activeElement)) {
+		returnFocusTargets.set(modal, document.activeElement);
+	}
 	lockScroll(modal);
 	modal.classList.add("popup_is-opened");
+	if (modal.classList.contains("popup_type_form_quarter")) modal.focus({ preventScroll: true });
 	document.addEventListener("keydown", closeModalEsc);
 }
 
+function unlockWhenIdle() {
+	if (document.querySelector('.popup_is-opened') || closingModals.size) return;
+	document.removeEventListener("keydown", closeModalEsc);
+	unlockScroll();
+}
+
 export function closeModal(modal) {
-	if (!modal) return;
-	modal.classList.remove("popup_is-opened");
-	if (!document.querySelector('.popup_is-opened')) {
-		document.removeEventListener("keydown", closeModalEsc);
-		unlockScroll();
+	if (!modal?.classList.contains("popup_is-opened")) return;
+	if (!modal.classList.contains("popup_type_form_quarter")) {
+		modal.classList.remove("popup_is-opened");
+		unlockWhenIdle();
+		return;
 	}
+
+	modal.classList.add("popup_is-closing");
+	modal.classList.remove("popup_is-opened");
+	modal.focus({ preventScroll: true });
+	const panel = modal.querySelector('.popup__content');
+	let timeout;
+	const cancel = () => {
+		clearTimeout(timeout);
+		panel.removeEventListener('transitionend', onTransitionEnd);
+	};
+	const finish = () => {
+		if (closingModals.get(modal) !== cancel) return;
+		cancel();
+		closingModals.delete(modal);
+		const restoreFocus = modal.contains(document.activeElement) || document.activeElement === document.body;
+		modal.classList.remove("popup_is-closing");
+		const trigger = returnFocusTargets.get(modal);
+		if (trigger?.isConnected && restoreFocus) trigger.focus({ preventScroll: true });
+		returnFocusTargets.delete(modal);
+		unlockWhenIdle();
+	};
+	const onTransitionEnd = (event) => {
+		if (event.target === panel && event.propertyName === 'transform') finish();
+	};
+	closingModals.set(modal, cancel);
+	panel.addEventListener('transitionend', onTransitionEnd);
+	const duration = Math.max(...getComputedStyle(panel).transitionDuration.split(',').map((value) => parseFloat(value) * (value.trim().endsWith('ms') ? 1 : 1000)));
+	timeout = setTimeout(finish, duration + 80);
 }
 
 function closeModalEsc(evt) {
+	if (evt.key === "Tab") {
+		if (closingModals.size) { evt.preventDefault(); return; }
+		const form = document.querySelector('.popup_type_form_quarter.popup_is-opened');
+		if (!form) return;
+		const controls = Array.from(form.querySelectorAll('button:not(:disabled), input:not(:disabled), a[href]')).filter((element) => element.getClientRects().length && getComputedStyle(element).visibility !== 'hidden');
+		const first = controls[0];
+		const last = controls[controls.length - 1];
+		if (evt.shiftKey && (document.activeElement === first || document.activeElement === form)) {
+			evt.preventDefault();
+			last?.focus({ preventScroll: true });
+		} else if (!evt.shiftKey && document.activeElement === last) {
+			evt.preventDefault();
+			first?.focus({ preventScroll: true });
+		}
+		return;
+	}
 	if (evt.key === "Escape") {
-		const openedModal = document.querySelector(".popup_is-opened");
+		if (closingModals.size) return;
+		const openedModal = document.querySelector(".popup_type_form_quarter.popup_is-opened") || document.querySelector(".popup_is-opened");
 		closeModal(openedModal);
 	}
 }
