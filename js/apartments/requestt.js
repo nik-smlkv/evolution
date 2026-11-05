@@ -1,7 +1,7 @@
 import { loadHouse } from "./houses.js?v=1.0.10";
 import { tchaikovskyFloorLevels } from "./tchaikovsky-floors.js?v=1.0.2";
 import { openModal } from "../modal.js?v=1.0.2";
-import { initializeTchaikovskyFloorPlan } from "./floor-plan.js?v=1.0.12";
+import { initializeTchaikovskyFloorPlan } from "./floor-plan.js?v=1.0.13";
 import { initializeCatalogFilterControls } from "./catalog-filter-controls.js?v=1.0.2";
 const requestedHouse = new URLSearchParams(window.location.search).get("house");
 const catalog = await loadHouse(requestedHouse);
@@ -347,36 +347,55 @@ const getLamela = () => {
   });
 };
 
-const getApartmentCards = (firstApartment) => {
-  const apartmentCards = document.querySelector(".available-apartments__list");
-  data.map((item) => {
+const apartmentCards = document.querySelector(".available-apartments__list");
+const cardsSentinel = document.createElement("div");
+cardsSentinel.className = "catalog-cards-sentinel";
+cardsSentinel.setAttribute("aria-hidden", "true");
+cardsSentinel.hidden = true;
+apartmentCards.after(cardsSentinel);
+const cardsBatchSize = 12;
+let filteredCardApartments = null;
+let renderedCardCount = 0;
+let activeCardId = house === "tchaikovsky" ? null : String(firstApartment.id);
+const cardsObserver = "IntersectionObserver" in window
+  ? new IntersectionObserver((entries) => {
+    if (document.body.dataset.catalogView === "grid" && entries.some((entry) => entry.isIntersecting)) {
+      renderNextApartmentCards();
+    }
+  }, { rootMargin: "400px 0px" })
+  : null;
+
+const renderNextApartmentCards = () => {
+  cardsObserver?.disconnect();
+  const batch = filteredCardApartments.slice(
+    renderedCardCount,
+    cardsObserver ? renderedCardCount + cardsBatchSize : filteredCardApartments.length,
+  );
+  const markup = batch.map((item) => {
     const img = item.apartmentImg;
     const number = formatCardApartmentNumber(item.apartmentNumber);
-    apartmentCards.insertAdjacentHTML(
-      "beforeend",
-      `
-				<div class="apartment__item apartment-card-item flex-style-column ${house !== "tchaikovsky" && firstApartment.id === item.id ? "active" : ""}" data-key="${item.id}" tabindex="0" role="button" aria-label="Open apartment ${number}">
+    return `
+				<div class="apartment__item apartment-card-item flex-style-column ${activeCardId === String(item.id) ? "active" : ""}" data-key="${item.id}" tabindex="0" role="button" aria-label="Open apartment ${number}">
 				  <div class="apartment-card-item__meta">
 						<span class="apartment-card-item__name">${number}</span>
 						<span class="apartment-card-item__details">${formatApartmentDetails(item)}</span>
 				  </div>
 				  <div class="apartment-card-item__image">
-						<img src="${img}?v=3" alt="Plan of ${number}" loading="lazy" />
+						<img src="${img}?v=3" alt="Plan of ${number}" loading="lazy" decoding="async" />
 				  </div>
 				</div>
-			`,
-    );
-  });
+			`;
+  }).join("");
+  apartmentCards.insertAdjacentHTML("beforeend", markup);
+  renderedCardCount += batch.length;
+  cardsSentinel.hidden = renderedCardCount >= filteredCardApartments.length;
+  if (!cardsSentinel.hidden) cardsObserver?.observe(cardsSentinel);
 };
 
 const handleFilteredCards = (selectedLamela, selectedFloor) => {
-  const apartmentCards = document.querySelectorAll(".apartment__item");
-
-  apartmentCards.forEach((card) => {
-    const cardId = card.getAttribute("data-key");
-    const apartment = data.find((item) => item.id.toString() === cardId);
-    const lamelaIsAll = selectedLamela === "All" || !selectedLamela;
-    const floorIsAll = selectedFloor === "All" || !selectedFloor;
+  const lamelaIsAll = selectedLamela === "All" || !selectedLamela;
+  const floorIsAll = selectedFloor === "All" || !selectedFloor;
+  const filteredApartments = data.filter((apartment) => {
     const lamelaMatch =
       lamelaIsAll ||
       apartment.buldingWing.replace("Lamela", "").trim() === selectedLamela;
@@ -384,12 +403,15 @@ const handleFilteredCards = (selectedLamela, selectedFloor) => {
       floorIsAll || String(apartment.floor ?? "") === String(selectedFloor);
     const areaMatch = !catalog.hasAreaFilter ||
       (apartment.area >= selectedMinArea && apartment.area <= selectedMaxArea);
-    if (lamelaMatch && floorMatch && areaMatch) {
-      card.style.display = "flex";
-    } else {
-      card.style.display = "none";
-    }
+    return lamelaMatch && floorMatch && areaMatch;
   });
+  if (filteredCardApartments?.length === filteredApartments.length &&
+    filteredApartments.every((apartment, index) => apartment === filteredCardApartments[index])) return;
+  cardsObserver?.disconnect();
+  filteredCardApartments = filteredApartments;
+  renderedCardCount = 0;
+  apartmentCards.replaceChildren();
+  renderNextApartmentCards();
 };
 
 const setupLamelaFilter = () => {
@@ -621,7 +643,6 @@ whenDocumentReady(() => {
 whenDocumentReady(() => {
   getFirstApartment();
   getApartmentFloors();
-  getApartmentCards(firstApartment);
   getLamela();
   if (house === "tchaikovsky") initializeCatalogFilterControls();
   setupLamelaFilter();
@@ -636,7 +657,6 @@ whenDocumentReady(() => {
 });
 
 whenDocumentReady(() => {
-  var apartmentCards = document.querySelectorAll(".apartment__item");
   const openApartment = (item) => {
       const apartmentCardsList = document.querySelectorAll(".apartment__item");
       apartmentCardsList.forEach((item) => {
@@ -644,6 +664,7 @@ whenDocumentReady(() => {
       });
       item.classList.add("active");
       const apartmentId = item.getAttribute("data-key");
+      activeCardId = apartmentId;
       let currentItem = data.find((apartment) => apartment.id == apartmentId);
       if (currentItem) {
         // Обновляем данные в секции с информацией
@@ -675,14 +696,16 @@ whenDocumentReady(() => {
         openModal(popupCurrentHouse);
       }
   };
-  apartmentCards.forEach((item) => {
-    item.addEventListener("click", () => openApartment(item));
-    item.addEventListener("keydown", (event) => {
-      if (event.key === "Enter" || event.key === " ") {
-        event.preventDefault();
-        openApartment(item);
-      }
-    });
+  apartmentCards.addEventListener("click", (event) => {
+    const item = event.target.closest(".apartment__item");
+    if (item) openApartment(item);
+  });
+  apartmentCards.addEventListener("keydown", (event) => {
+    const item = event.target.closest(".apartment__item");
+    if (item && (event.key === "Enter" || event.key === " ")) {
+      event.preventDefault();
+      openApartment(item);
+    }
   });
 });
 

@@ -167,6 +167,12 @@ body[data-catalog-house="vivaldi"] .catalog-plan-button {
   overflow: visible;
 }
 
+.catalog-cards-sentinel:not([hidden]) {
+  width: 100%;
+  height: 1px;
+  pointer-events: none;
+}
+
 .apartment-card-item {
   display: flex;
   width: 388px;

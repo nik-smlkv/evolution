@@ -6,7 +6,7 @@ const groundImage = `${planDirectory}2100 Osnova Prizemlja (A,C)_Nisko Prizemlje
 const categories = {
   apartments: {
     label: "Apartments", file: "chaikovsky-life.svg",
-    levels: tchaikovskyFloorLevels.map((level) => ({
+    levels: [...tchaikovskyFloorLevels].reverse().map((level) => ({
       id: level.id, label: level.label,
       image: level.id === "2100" ? groundImage : level.image,
     })),
@@ -319,7 +319,9 @@ export async function initializeTchaikovskyFloorPlan(apartments, onApartment, on
   return {
     selectFloor(floor) {
       if (activeType !== "apartments") return;
-      const level = tchaikovskyFloorLevels.find((level) => level.id === floor || level.label === floor);
+      const useDefault = !floor || floor === "All";
+      const level = useDefault ? categories.apartments.levels[0]
+        : tchaikovskyFloorLevels.find((level) => level.id === floor || level.label === floor);
       if (!level) return;
       activeLevel = level.id;
       renderLevel();
