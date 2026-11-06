@@ -1,6 +1,6 @@
 import { langArr } from "./languages/languages.js?v=1.0.3";
-import { openModal, closeModal, setModalEventListeners } from "./modal.js?v=1.0.3";
-import { openPriceRequest } from "./price-request.js?v=1.0.1";
+import { openModal, closeModal, setModalEventListeners } from "./modal.js?v=1.0.4";
+import { openPriceRequest } from "./price-request.js?v=1.0.2";
 import { initializeHeaderNavigation } from "./header-navigation.js?v=1.0.1";
 const siteRootUrl = new URL("../", import.meta.url);
 const config = {

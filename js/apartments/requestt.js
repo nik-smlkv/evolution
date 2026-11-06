@@ -1,11 +1,12 @@
-import { loadHouse } from "./houses.js?v=1.0.10";
-import { tchaikovskyFloorLevels } from "./tchaikovsky-floors.js?v=1.0.2";
-import { openModal } from "../modal.js?v=1.0.3";
-import { openPropertyDetails } from "./property-dialogs.js?v=1.0.1";
+import { loadHouse } from "./houses.js?v=1.0.13";
+import { tchaikovskyFloorLevels } from "./tchaikovsky-floors.js?v=1.0.3";
+import { openModal } from "../modal.js?v=1.0.4";
+import { openPropertyDetails } from "./property-dialogs.js?v=1.0.5";
 import { tchaikovskyOtherProperties } from "./tchaikovsky-properties.js?v=1.0.1";
-import { initializeTchaikovskyFloorPlan } from "./floor-plan.js?v=1.0.18";
+import { initializeTchaikovskyFloorPlan } from "./floor-plan.js?v=1.0.21";
 import { isTchaikovskyApartmentAvailable } from "./tchaikovsky-availability.js?v=1.0.1";
-import { initializeCatalogFilterControls } from "./catalog-filter-controls.js?v=1.0.3";
+import { initializeCatalogFilterControls } from "./catalog-filter-controls.js?v=1.0.4";
+import { optimizedImageUrl } from "../optimized-images.js?v=1.0.3";
 const requestedHouse = new URLSearchParams(window.location.search).get("house");
 const catalog = await loadHouse(requestedHouse);
 const house = catalog.id;
@@ -35,7 +36,7 @@ document
 const floorPlanButton = document.querySelector(".catalog-plan-button");
 const [firstApartment, ...lastApartment] = apartmentData;
 let apartmentFancyBox = document.querySelector(".apartment__fancybox");
-document.querySelector(".apartment__img").src = firstApartment.planImg;
+// Full apartment sheets are requested only after selecting an object.
 apartmentFancyBox.setAttribute("href", firstApartment.planImg);
 let selectedLamela = null;
 let selectedFloor = null;
@@ -66,7 +67,7 @@ if (house === "tchaikovsky") {
   sectionLabel.textContent = document.querySelector('header [data-lang="srb"].active') ? "Lamela" : "Section";
 }
 const formatArea = (apartment) =>
-  Number.isFinite(apartment.area) ? `${apartment.area}m²` : "—";
+  Number.isFinite(apartment.area) ? `${apartment.area} m²` : "—";
 const formatCardApartmentNumber = (number) => String(number).replace(/^STAN\s*/i, "").trim();
 const formatModalApartmentNumber = (number) => {
   const cleanNumber = String(number).replace(/^STAN\s*/i, "");
@@ -119,8 +120,8 @@ const floorPlanReady = whenDocumentReady(async () => {
     const record = tchaikovskyOtherProperties.find((item) => item.propertyType === property.propertyType && item.unit === property.unit);
     if (record) openPropertyDetails(record, catalog.name);
   }, (type) => setPropertyType(type, false));
-  await tchaikovskyFloorPlan?.selectCategory(selectedPropertyType);
-  if (document.body.dataset.catalogView === "plan") tchaikovskyFloorPlan?.selectFloor(selectedFloor);
+  const categoryCommitted = await tchaikovskyFloorPlan?.selectCategory(selectedPropertyType);
+  if (categoryCommitted && document.body.dataset.catalogView === "plan") await tchaikovskyFloorPlan.selectFloor(selectedFloor);
 });
 floorPlanReady.catch((error) => console.error("Floor plan could not be initialized", error));
 
@@ -439,7 +440,12 @@ const renderNextApartmentCards = () => {
     cardsObserver ? renderedCardCount + cardsBatchSize : filteredCardApartments.length,
   );
   const markup = batch.map((item) => {
-    const img = item.apartmentImg;
+    const placeholder = !item.apartmentImg ? {
+      parking: { image: "./plans/А3/parking-plug.webp", description: "Parking space" },
+      commercial: { image: "./images/comerrical-plug.webp", description: "Commercial space" },
+    }[item.propertyType] : null;
+    const img = optimizedImageUrl(item.apartmentImg || placeholder?.image);
+    const imageDescription = placeholder?.description || `Plan of ${formatCardApartmentNumber(item.apartmentNumber)}`;
     const number = formatCardApartmentNumber(item.apartmentNumber);
     return `
 				<div class="apartment__item apartment-card-item flex-style-column ${activeCardId === String(item.id) ? "active" : ""}" data-key="${item.id}" tabindex="0" role="button" aria-label="Open ${item.propertyType === 'apartments' ? 'apartment' : item.propertyType === 'commercial' ? 'commercial space' : 'parking space'} ${number}">
@@ -448,7 +454,7 @@ const renderNextApartmentCards = () => {
 						<span class="apartment-card-item__details">${formatApartmentDetails(item)}</span>
 				  </div>
 				  <div class="apartment-card-item__image ${img ? 'is-loading' : 'apartment-card-item__image--empty'}" aria-busy="${Boolean(img)}">
-						${img ? `<img src="${img}?v=3" alt="Plan of ${number}" loading="lazy" decoding="async" />` : ''}
+						${img ? `<img src="${img}?v=3" alt="${imageDescription}" loading="lazy" decoding="async" />` : ''}
 				  </div>
 				</div>
 			`;
@@ -691,7 +697,9 @@ const viewControlsReady = whenDocumentReady(() => {
       document.body.classList.toggle("tchaikovsky-grid-view", house === "tchaikovsky" && key !== "2");
       if (key === "1") refreshCatalogLayout();
       if (key === "2" && tchaikovskyFloorPlan) {
-        tchaikovskyFloorPlan.selectCategory(selectedPropertyType).then(() => tchaikovskyFloorPlan.selectFloor(selectedFloor));
+        tchaikovskyFloorPlan.selectCategory(selectedPropertyType).then((committed) => {
+          if (committed) return tchaikovskyFloorPlan.selectFloor(selectedFloor);
+        });
       }
     });
   });

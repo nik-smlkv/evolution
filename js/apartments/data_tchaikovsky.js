@@ -1,4 +1,4 @@
-import { tchaikovskyFloorAssignments } from "./tchaikovsky-floors.js?v=1.0.2";
+import { tchaikovskyFloorAssignments } from "./tchaikovsky-floors.js?v=1.0.3";
 
 const pad = (number) => String(number).padStart(2, "0");
 
@@ -34,8 +34,8 @@ const createCardPlanPaths = (wing, directory, numbers, extension = "png") =>
 
 const tchaikovskyCardPlans = {
   ...createCardPlanPaths("A", "Lamela_A_2D/Level_1", range(1, 14), "jpg"),
-  A22: "./plans/А3/Lamela A/Lamela_A_2D/Level_1/А22_plan.jpg",
-  A23: "./plans/А3/Lamela A/Lamela_A_2D/Level_1/А23_plan.jpg",
+  A22: "./plans/%D0%903/Lamela%20A/Lamela_A_2D/Level_1/%D0%9022_plan.webp",
+  A23: "./plans/%D0%903/Lamela%20A/Lamela_A_2D/Level_1/%D0%9023_plan.webp",
   ...createCardPlanPaths("A", "Lamela_A_2D/Level_2", [
     ...range(15, 21),
     ...range(26, 31),

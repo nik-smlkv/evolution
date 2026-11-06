@@ -1,0 +1,53 @@
+.catalog-filter-accordion { width: 100%; }
+.catalog-filter-accordion__toggle { display: none; }
+
+@media (max-width: 700px) {
+  body.tchaikovsky-grid-view .section__body-title { padding-top: 16px; }
+  body.tchaikovsky-grid-view .catalog-filter-accordion__toggle {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    min-height: 56px;
+    padding: 15px 24px;
+    border: 1px solid #d1d4d8;
+    border-radius: 999px;
+    color: #161d2d;
+    background: transparent;
+    font: inherit;
+    line-height: 24px;
+    text-align: left;
+    text-transform: uppercase;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: border-color 200ms ease, color 200ms ease;
+  }
+  body.tchaikovsky-grid-view .catalog-filter-accordion__toggle:focus-visible { outline: 2px solid #42b0f9; outline-offset: 3px; }
+  body.tchaikovsky-grid-view .catalog-filter-accordion__toggle:active { border-color: #0474dc; color: #0474dc; }
+  .catalog-filter-accordion__icon { flex: none; }
+  .catalog-filter-accordion__chevron { flex: none; margin-left: auto; transition: transform 400ms cubic-bezier(0.22, 1, 0.36, 1); }
+  .catalog-filter-accordion__toggle[aria-expanded="true"] .catalog-filter-accordion__chevron { transform: rotate(-180deg); }
+  body.tchaikovsky-grid-view .catalog-filter-accordion__panel {
+    display: grid;
+    grid-template-rows: 0fr;
+    opacity: 0;
+    transition: grid-template-rows 400ms cubic-bezier(0.22, 1, 0.36, 1), opacity 280ms ease;
+  }
+  body.tchaikovsky-grid-view .catalog-filter-accordion[data-open="true"] .catalog-filter-accordion__panel { grid-template-rows: 1fr; opacity: 1; }
+  body.tchaikovsky-grid-view .catalog-filter-accordion__content {
+    min-height: 0;
+    min-width: 0;
+    overflow: hidden;
+    /* Let the floor list scroll all the way to the viewport edge. */
+    width: calc(100% + 20px);
+    padding-right: 20px;
+  }
+  body.tchaikovsky-grid-view .catalog-filter-accordion .catalog-object-filter { margin-top: 32px; }
+  body.tchaikovsky-grid-view .catalog-filter-accordion :is(.filter__btn, .catalog-reset-button, .filter__floor_list):focus-visible { outline: 2px solid #42b0f9; outline-offset: -3px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .catalog-filter-accordion__toggle,
+  .catalog-filter-accordion__chevron,
+  body.tchaikovsky-grid-view .catalog-filter-accordion__panel { transition: none; }
+}

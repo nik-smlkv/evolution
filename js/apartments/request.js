@@ -1,5 +1,5 @@
 import apartments from "../apartments/data_28_03.js";
-import { openModal } from "../modal.js?v=1.0.3";
+import { openModal } from "../modal.js?v=1.0.4";
 let data = JSON.parse(apartments);
 const [firstApartment, ...lastApartment] = data;
 let apartmentFancyBox = document.querySelector(".apartment__fancybox");

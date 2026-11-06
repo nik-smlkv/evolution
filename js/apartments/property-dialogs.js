@@ -1,5 +1,6 @@
-import { openModal, closeModal, setModalEventListeners } from "../modal.js?v=1.0.3";
-import { openPriceRequest } from "../price-request.js?v=1.0.1";
+import { openModal, closeModal, setModalEventListeners } from "../modal.js?v=1.0.4";
+import { openPriceRequest } from "../price-request.js?v=1.0.2";
+import { optimizedImageUrl } from "../optimized-images.js?v=1.0.3";
 
 const dialogs = new Map();
 const copy = {
@@ -129,7 +130,7 @@ export function openPropertyDetails(property, houseName) {
   state.media.hidden = !hasImage;
   if (hasImage) {
     state.image.alt = `${text[type]} ${unit}`;
-    state.image.src = property.image;
+    state.image.src = optimizedImageUrl(property.image);
   } else {
     state.image.removeAttribute("src");
   }

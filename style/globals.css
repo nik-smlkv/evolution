@@ -282,3 +282,9 @@ h2.title {
 .dark-bg-block {
 	background-color: #161D2D;
 }
+
+html.modal-image-loading,
+html.modal-image-loading [data-modal-image-loading] { cursor: progress; }
+.apartment-card-item[data-modal-image-loading],
+.plan-unit-marker[data-modal-image-loading] { opacity: 0.65; }
+.modal-image-error { position: fixed; z-index: 100; bottom: 24px; left: 50%; transform: translateX(-50%); width: max-content; max-width: calc(100vw - 40px); padding: 14px 20px; border-radius: 12px; color: #fafafa; background: #161d2d; font: 14px/20px var(--ff-main); text-align: center; pointer-events: none; }

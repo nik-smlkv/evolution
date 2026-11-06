@@ -7,8 +7,8 @@
       html.catalog-loading body .section__body-title > .apartments__filter,
       html.catalog-loading body .section__body-title > .houses-plans_container { display: none !important; }
     </style>
-    <link rel="stylesheet" href="./style/catalog-startup.css?v=1.0.2" />
-    <link rel="modulepreload" href="./js/apartments/requestt.js?v=1.0.45" />
+    <link rel="stylesheet" href="./style/catalog-startup.css?v=1.0.5" />
+    <link rel="modulepreload" href="./js/apartments/requestt.js?v=1.0.50" />
     <title>Evolution Residence – Vaš San je Naša Obaveza</title>
     <title>
       Prodaja Stanova u Novogradnji Beograd | Direktno od Investitora |
@@ -62,12 +62,12 @@
     />
     <link rel="icon" type="image/png" href="./images/favicon/favicon.ico" />
     <link rel="manifest" href="./images/favicon/site.webmanifest" />
-    <link rel="stylesheet" href="./style/globals.css?v=1.0.7" />
+    <link rel="stylesheet" href="./style/globals.css?v=1.0.8" />
     <link rel="stylesheet" href="./style/font.css" />
     <link rel="stylesheet" href="./style/variables.css" />
     <link rel="stylesheet" href="./style/style.min.css" />
     <link rel="stylesheet" href="./style/house-switcher.css?v=1.0.6" />
-    <link rel="stylesheet" href="./style/catalog-cards.css?v=1.0.8" />
+    <link rel="stylesheet" href="./style/catalog-cards.css?v=1.0.10" />
     <link rel="stylesheet" href="./style/splitting.css" />
     <link rel="stylesheet" href="./style/swiper-bundle.min.css" />
     <link rel="stylesheet" href="./style/locomotive.css" />
@@ -75,11 +75,12 @@
     <link rel="stylesheet" href="./style/odometer.min.css" />
     <link rel="stylesheet" href="./style/ion.rangeSlider.min.css" />
     <link rel="stylesheet" href="./style/header-responsive.css?v=1.0.3" />
-    <link rel="stylesheet" href="./style/catalog-plan.css?v=1.0.15" />
-    <link rel="stylesheet" href="./style/catalog-responsive.css?v=1.0.6" />
-    <link rel="stylesheet" href="./style/price-request.css?v=1.0.1" />
-    <link rel="stylesheet" href="./style/catalog-properties.css?v=1.0.3" />
-    <link rel="stylesheet" href="./style/property-dialogs.css?v=1.0.1" />
+    <link rel="stylesheet" href="./style/catalog-plan.css?v=1.0.16" />
+    <link rel="stylesheet" href="./style/catalog-responsive.css?v=1.0.10" />
+    <link rel="stylesheet" href="./style/price-request.css?v=1.0.3" />
+    <link rel="stylesheet" href="./style/catalog-properties.css?v=1.0.6" />
+    <link rel="stylesheet" href="./style/catalog-filter-accordion.css?v=1.0.2" />
+    <link rel="stylesheet" href="./style/property-dialogs.css?v=1.0.3" />
     <script src="./js/swiper-bundle.min.js"></script>
     <script src="./js/jquery-3.6.4.min.js"></script>
     <script src="./js/printThis.js"></script>
@@ -376,11 +377,13 @@
                 <div class="catalog-skeleton__grid">
                   <div class="catalog-skeleton__filters">
                     <div class="catalog-skeleton__filter catalog-skeleton__object"><span class="catalog-skeleton__label skeleton-shape"></span><div class="catalog-skeleton__chips"><span class="skeleton-shape"></span><span class="skeleton-shape"></span></div></div>
-                    <div class="catalog-skeleton__filter catalog-skeleton__property"><span class="catalog-skeleton__label skeleton-shape"></span><div class="catalog-skeleton__chips"><span class="skeleton-shape"></span><span class="skeleton-shape"></span><span class="skeleton-shape"></span></div></div>
+                    <div class="catalog-skeleton__filter catalog-skeleton__property"><span class="catalog-skeleton__label skeleton-shape"></span><div class="catalog-skeleton__chips"><span class="skeleton-shape"></span><span class="skeleton-shape" data-key="space_commercial">Commercial</span><span class="skeleton-shape"></span></div></div>
                     <div class="catalog-skeleton__filter catalog-skeleton__lamela"><span class="catalog-skeleton__label skeleton-shape"></span><div class="catalog-skeleton__chips"><span class="skeleton-shape"></span><span class="skeleton-shape"></span><span class="skeleton-shape"></span><span class="skeleton-shape"></span></div></div>
-                    <div class="catalog-skeleton__filter catalog-skeleton__floor"><span class="catalog-skeleton__label skeleton-shape"></span><div class="catalog-skeleton__chips"><span class="skeleton-shape"></span><span class="skeleton-shape"></span><span class="skeleton-shape"></span><span class="skeleton-shape"></span><span class="skeleton-shape"></span></div></div>
                     <div class="catalog-skeleton__filter catalog-skeleton__area"><span class="catalog-skeleton__label skeleton-shape"></span><span class="catalog-skeleton__range skeleton-shape"></span></div>
-                    <span class="catalog-skeleton__reset skeleton-shape"></span>
+                    <div class="catalog-filter-floor-row">
+                      <div class="catalog-skeleton__filter catalog-skeleton__floor"><span class="catalog-skeleton__label skeleton-shape"></span><div class="catalog-skeleton__chips"><span class="skeleton-shape"></span><span class="skeleton-shape"></span><span class="skeleton-shape"></span><span class="skeleton-shape"></span><span class="skeleton-shape"></span></div></div>
+                      <span class="catalog-skeleton__reset skeleton-shape"></span>
+                    </div>
                   </div>
                   <div class="catalog-skeleton__cards">
                   <div class="catalog-skeleton__card">
@@ -458,60 +461,76 @@
                 </button>
               </div>
               <div class="apartments__filter flex-style-column gap">
-                <div class="catalog-object-filter">
-                  <div class="catalog-filter-group catalog-filter-group--object">
-                    <p class="catalog-filter-label">Object</p>
-                    <div class="catalog-object-filter__options" role="group" aria-label="Select object">
-                      <a class="catalog-object-filter__option" data-house-option="tchaikovsky" href="./search-by-parameters/tchaikovsky/">Tchaikovsky</a>
-                      <a class="catalog-object-filter__option" data-house-option="vivaldi" href="./search-by-parameters/vivaldi/">Vivaldi</a>
-                    </div>
-                  </div>
-                  <div class="catalog-filter-group catalog-filter-group--property">
-                    <p class="catalog-filter-label" data-key="catalog_space">Space</p>
-                    <div class="catalog-property-options" role="group" aria-label="Select property type">
-                      <button type="button" class="filter__btn filter__btn_property active" data-property-type="apartments" data-key="space_apartments" aria-pressed="true">Apartments</button>
-                      <button type="button" class="filter__btn filter__btn_property" data-property-type="commercial" data-key="space_commercial" aria-pressed="false">Commercial</button>
-                      <button type="button" class="filter__btn filter__btn_property" data-property-type="parking" data-key="space_parking" aria-pressed="false">Parking</button>
-                    </div>
-                  </div>
-                  <div
-                    class="catalog-filter-group catalog-filter-group--lamela object filter-btn-style flex-style-column gap-title"
-                  >
-                    <p class="fw-medium" data-key="p_section">Section</p>
-                    <div
-                      class="flex-style-row filter-btn-style btns-gap lamela__list"
-                    >
-                      <span
-                        id="all"
-                        class="filter__btn control filter__btn_lamela active"
-                        data-filter="all"
-                        >All</span
-                      >
-                    </div>
-                  </div>
-
-                  <div class="catalog-filter-group catalog-filter-group--floor rooms__number flex-style-column gap-title">
-                    <p class="fw-medium" data-key="p_floor">Floor</p>
-                    <div
-                      class="flex-style-row filter-btn-style btns-gap controls filter__floor_list"
-                    ></div>
-                  </div>
-
-                  <div class="catalog-filter-group catalog-filter-group--area rooms__number flex-style-column gap-title area-filter">
-                    <p class="fw-medium area-after" data-key="p_area">Area</p>
-
-                    <input
-                      type="text"
-                      class="js-range-slider"
-                      name="my_range"
-                      value=""
-                    />
-                  </div>
-                  <button class="catalog-reset-button" type="button" data-reset-filters aria-label="Reset filters" title="Reset filters">
-                    <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                      <path d="M13.6016 7.6001C13.6016 10.6001 11.1016 14.1001 7.10156 14.1001C3.10156 14.1001 0.601562 10.6001 0.601562 7.6001C0.601562 4.6001 3.10156 1.1001 7.10156 1.1001C9.60156 1.1001 11.6016 2.6001 12.6016 4.1001M13.1016 0.600098L12.6016 4.1001L9.10156 4.6001" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" stroke="#161D2D"/>
+                <div class="catalog-filter-accordion">
+                  <button class="catalog-filter-accordion__toggle" type="button" aria-expanded="false" aria-controls="catalog-filter-panel">
+                    <svg class="catalog-filter-accordion__icon" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                      <path d="M2 5h14m4 0h2M2 12h10m4 0h6M2 19h6m4 0h10M18 3v4m-4 3v4m-4 3v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+                    </svg>
+                    <span>Filter</span>
+                    <svg class="catalog-filter-accordion__chevron" width="14" height="8" viewBox="0 0 14 8" fill="none" aria-hidden="true">
+                      <path d="M1 1l6 6 6-6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                   </button>
+                  <div class="catalog-filter-accordion__panel" id="catalog-filter-panel">
+                    <div class="catalog-filter-accordion__content">
+                      <div class="catalog-object-filter">
+                        <div class="catalog-filter-group catalog-filter-group--object">
+                          <p class="catalog-filter-label">Object</p>
+                          <div class="catalog-object-filter__options" role="group" aria-label="Select object">
+                            <a class="catalog-object-filter__option" data-house-option="tchaikovsky" href="./search-by-parameters/tchaikovsky/">Tchaikovsky</a>
+                            <a class="catalog-object-filter__option" data-house-option="vivaldi" href="./search-by-parameters/vivaldi/">Vivaldi</a>
+                          </div>
+                        </div>
+                        <div class="catalog-filter-group catalog-filter-group--property">
+                          <p class="catalog-filter-label" data-key="catalog_space">Space</p>
+                          <div class="catalog-property-options" role="group" aria-label="Select property type">
+                            <button type="button" class="filter__btn filter__btn_property active" data-property-type="apartments" data-key="space_apartments" aria-pressed="true">Apartments</button>
+                            <button type="button" class="filter__btn filter__btn_property" data-property-type="commercial" data-key="space_commercial" aria-pressed="false">Commercial</button>
+                            <button type="button" class="filter__btn filter__btn_property" data-property-type="parking" data-key="space_parking" aria-pressed="false">Parking</button>
+                          </div>
+                        </div>
+                        <div
+                          class="catalog-filter-group catalog-filter-group--lamela object filter-btn-style flex-style-column gap-title"
+                        >
+                          <p class="fw-medium" data-key="p_section">Section</p>
+                          <div
+                            class="flex-style-row filter-btn-style btns-gap lamela__list"
+                          >
+                            <span
+                              id="all"
+                              class="filter__btn control filter__btn_lamela active"
+                              data-filter="all"
+                              >All</span
+                            >
+                          </div>
+                        </div>
+
+                        <div class="catalog-filter-group catalog-filter-group--area rooms__number flex-style-column gap-title area-filter">
+                          <p class="fw-medium area-after" data-key="p_area">Area</p>
+
+                          <input
+                            type="text"
+                            class="js-range-slider"
+                            name="my_range"
+                            value=""
+                          />
+                        </div>
+                        <div class="catalog-filter-floor-row">
+                          <div class="catalog-filter-group catalog-filter-group--floor rooms__number flex-style-column gap-title">
+                            <p class="fw-medium" data-key="p_floor">Floor</p>
+                            <div
+                              class="flex-style-row filter-btn-style btns-gap controls filter__floor_list"
+                            ></div>
+                          </div>
+                          <button class="catalog-reset-button" type="button" data-reset-filters aria-label="Reset filters" title="Reset filters">
+                            <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                              <path d="M13.6016 7.6001C13.6016 10.6001 11.1016 14.1001 7.10156 14.1001C3.10156 14.1001 0.601562 10.6001 0.601562 7.6001C0.601562 4.6001 3.10156 1.1001 7.10156 1.1001C9.60156 1.1001 11.6016 2.6001 12.6016 4.1001M13.1016 0.600098L12.6016 4.1001L9.10156 4.6001" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" stroke="#161D2D"/>
+                            </svg>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <input
                   id="example_2_input_from"
@@ -3593,11 +3612,11 @@
     <script src="./js/lenis.js?v=1.0.6"></script>
     <script src="./js/locomotive-scroll.min.js?v=1.0.6"></script>
     <script src="./js/splitting.min.js?v=1.0.6"></script>
-    <script type="module" src="./js/script.js?v=1.0.15"></script>
+    <script type="module" src="./js/script.js?v=1.0.16"></script>
     <script type="module" src="./js/validation.js?v=1.0.6"></script>
     <script
       type="module"
-      src="./js/apartments/catalog-startup.js?v=1.0.4"
+      src="./js/apartments/catalog-startup.js?v=1.0.9"
       onerror="document.querySelector('.wrapper').setAttribute('aria-busy', 'false'); document.documentElement.classList.add('catalog-load-error')"
     ></script>
     <script src="./js/ion.rangeSlider.min.js?v=1.0.6"></script>

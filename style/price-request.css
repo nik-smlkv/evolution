@@ -1,5 +1,5 @@
 .popup.popup_type_form_quarter {
-  --price-form-duration: 1100ms;
+  --price-form-duration: 560ms;
   align-items: stretch;
   justify-content: flex-end;
   width: 100vw;
@@ -47,10 +47,13 @@ body:has(.popup_type_house.popup_is-opened) .popup.popup_type_form_quarter { bac
   margin: 0;
   gap: 56px;
   overflow-y: auto;
+  scrollbar-width: none;
   overscroll-behavior: contain;
   background: #161d2d;
   text-align: center;
 }
+
+.popup_type_form_quarter .form__block::-webkit-scrollbar { display: none; }
 
 .popup_type_form_quarter .form__block > .title-gap { flex: 0 0 auto; width: 100%; gap: 24px; }
 .popup_type_form_quarter .form__block .title { max-width: 500px; font-size: 80px; line-height: 1; font-weight: 400; font-variation-settings: "wght" 400; letter-spacing: -3px; color: #fafafa; }
@@ -125,8 +128,10 @@ body:has(.popup_type_house.popup_is-opened) .popup.popup_type_form_quarter { bac
   .popup_type_form_quarter .quarter__form > :nth-child(n + 3) { grid-column: 1; }
   .popup_type_form_quarter .form__warn { line-height: 21px; }
   .popup_type_form_quarter .popup__close,
-  .popup_type_form_quarter.popup_is-opened .popup__close { z-index: 2; right: 0; transform: none; transition-delay: 0s; }
+  .popup_type_form_quarter.popup_is-opened .popup__close { z-index: 2; right: 0; transform: none; transition: none; transition-delay: 0s; }
   .popup_type_form_quarter:is(.popup_is-opened, .popup_is-closing) .popup__close { visibility: visible; }
+  .popup_type_form_quarter .popup__close svg,
+  .popup_type_form_quarter .popup__close:hover svg { transform: none; transition: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -42,8 +42,15 @@ body.tchaikovsky-plan-view .houses-plan {
 body.tchaikovsky-plan-view .plan-canvas svg { display: block; width: 100%; height: auto; }
 body.tchaikovsky-plan-view .plan-canvas { width: 100%; aspect-ratio: 4000 / 3160; }
 .plan-surface { position: relative; width: 100%; }
-body.tchaikovsky-plan-view .houses-plan[aria-busy="true"] .plan-surface { opacity: 0; pointer-events: none; }
-body.tchaikovsky-plan-view .houses-plan[aria-busy="true"]::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(100deg, #e8ebef 25%, #f4f5f7 45%, #e8ebef 65%); background-size: 200% 100%; animation: catalog-skeleton-shimmer 1600ms ease-in-out infinite; }
+.plan-viewport,
+.plan-layer { position: relative; width: 100%; }
+.plan-layer--outgoing { position: absolute; inset: 0; pointer-events: none; }
+.plan-viewport.is-plan-transitioning { overflow: hidden; }
+.plan-viewport.is-plan-transitioning .plan-layer { will-change: transform; }
+.plan-viewport.is-plan-transitioning .plan-unit-marker { pointer-events: none; }
+.plan-floor-button[data-plan-pending] { cursor: progress; }
+body.tchaikovsky-plan-view .houses-plan[aria-busy="true"]:not([data-plan-loading="floor"]) .plan-surface { opacity: 0; pointer-events: none; }
+body.tchaikovsky-plan-view .houses-plan[aria-busy="true"]:not([data-plan-loading="floor"])::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(100deg, #e8ebef 25%, #f4f5f7 45%, #e8ebef 65%); background-size: 200% 100%; animation: catalog-skeleton-shimmer 1600ms ease-in-out infinite; }
 body.tchaikovsky-plan-view .houses-plan [data-unit] { opacity: 0; fill: #0474dc; cursor: pointer; transition: opacity 150ms ease; }
 body.tchaikovsky-plan-view .houses-plan [data-unit]:hover,
 body.tchaikovsky-plan-view .houses-plan [data-unit].is-highlighted { opacity: 0.2; }

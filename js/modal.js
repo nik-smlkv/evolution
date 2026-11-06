@@ -2,6 +2,75 @@ let scrollLock = null;
 const closingModals = new Map();
 const returnFocusTargets = new WeakMap();
 const bodyLockProperties = ["overflow", "position", "top", "left", "width"];
+let pendingImageOpen = null;
+let imageErrorTimer;
+
+function clearImageError() {
+	clearTimeout(imageErrorTimer);
+	document.querySelector(".modal-image-error")?.remove();
+}
+
+function cancelImageOpen() {
+	const pending = pendingImageOpen;
+	if (!pending) return;
+	pendingImageOpen = null;
+	pending.controller.abort();
+	document.documentElement.classList.remove("modal-image-loading");
+	document.removeEventListener("keydown", cancelImageOpenEsc);
+	if (pending.trigger) {
+		pending.trigger.removeAttribute("data-modal-image-loading");
+		if (pending.previousBusy === null) pending.trigger.removeAttribute("aria-busy");
+		else pending.trigger.setAttribute("aria-busy", pending.previousBusy);
+	}
+}
+
+function cancelImageOpenEsc(event) {
+	if (event.key === "Escape") cancelImageOpen();
+}
+
+function reportImageError() {
+	clearImageError();
+	const language = document.cookie.match(/(?:^|;\s*)language=([^;]*)/)?.[1];
+	const message = document.createElement("div");
+	message.className = "modal-image-error";
+	message.setAttribute("role", "status");
+	message.textContent = language === "en"
+		? "Unable to load the image. Select the property again to retry."
+		: "Slika nije učitana. Izaberite prostor ponovo da pokušate ponovo.";
+	document.body.append(message);
+	imageErrorTimer = setTimeout(clearImageError, 8000);
+}
+
+function decodeObjectImage(image, signal) {
+	return new Promise((resolve, reject) => {
+		const source = image.src;
+		const finish = (error) => {
+			signal.removeEventListener("abort", abort);
+			image.removeEventListener("load", loaded);
+			image.removeEventListener("error", failed);
+			if (error) reject(error);
+			else resolve();
+		};
+		const abort = () => finish(new DOMException("Image opening cancelled", "AbortError"));
+		const failed = () => finish(new Error("Object image could not be loaded"));
+		const loaded = () => {
+			if (signal.aborted) return abort();
+			if (!image.complete || !image.naturalWidth || image.src !== source) return failed();
+			finish();
+		};
+		if (signal.aborted) return abort();
+		if (!image.getAttribute("src")) return failed();
+		signal.addEventListener("abort", abort, { once: true });
+		image.loading = "eager";
+		image.setAttribute("fetchpriority", "high");
+		if (image.decode) image.decode().then(loaded, failed);
+		else if (image.complete) loaded();
+		else {
+			image.addEventListener("load", loaded, { once: true });
+			image.addEventListener("error", failed, { once: true });
+		}
+	});
+}
 
 function lockScroll(modal) {
 	if (scrollLock) return;
@@ -51,8 +120,34 @@ function unlockScroll() {
 	});
 }
 
-export function openModal(modal) {
+export async function openModal(modal) {
 	if (!modal) return;
+	cancelImageOpen();
+	clearImageError();
+	const image = modal.matches(".popup_type_house")
+		? modal.querySelector(".apartment__img")
+		: modal.matches('.popup_type_property[data-has-image="true"]')
+			? modal.querySelector(".property-dialog__image") : null;
+	if (image) {
+		const trigger = document.activeElement?.closest('button, a, [role="button"], [data-unit]');
+		const pending = { modal, trigger, previousBusy: trigger?.getAttribute("aria-busy"), controller: new AbortController() };
+		pendingImageOpen = pending;
+		document.documentElement.classList.add("modal-image-loading");
+		trigger?.setAttribute("aria-busy", "true");
+		trigger?.setAttribute("data-modal-image-loading", "");
+		document.addEventListener("keydown", cancelImageOpenEsc);
+		try {
+			await decodeObjectImage(image, pending.controller.signal);
+		} catch (error) {
+			if (pendingImageOpen === pending) {
+				cancelImageOpen();
+				if (error.name !== "AbortError") reportImageError();
+			}
+			return false;
+		}
+		if (pendingImageOpen !== pending) return false;
+		cancelImageOpen();
+	}
 	closingModals.get(modal)?.();
 	closingModals.delete(modal);
 	modal.classList.remove("popup_is-closing");
@@ -63,6 +158,7 @@ export function openModal(modal) {
 	modal.classList.add("popup_is-opened");
 	if (modal.matches(".popup_type_form_quarter, .popup_type_property")) modal.focus({ preventScroll: true });
 	document.addEventListener("keydown", closeModalEsc);
+	return true;
 }
 
 function unlockWhenIdle() {
@@ -72,6 +168,7 @@ function unlockWhenIdle() {
 }
 
 export function closeModal(modal) {
+	if (pendingImageOpen?.modal === modal) cancelImageOpen();
 	if (!modal?.classList.contains("popup_is-opened")) return;
 	if (!modal.matches(".popup_type_form_quarter, .popup_type_property")) {
 		modal.classList.remove("popup_is-opened");

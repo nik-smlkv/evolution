@@ -1,5 +1,5 @@
 .popup.popup_type_property {
-  --property-panel-duration: 1100ms;
+  --property-panel-duration: 560ms;
   position: fixed;
   inset: 0;
   z-index: 20;
@@ -42,6 +42,8 @@ body:has(.popup_type_property.popup_is-opened) .popup.popup_type_form_quarter { 
 .property-dialog__layout { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 1fr); height: 100%; background: #f8edd9; }
 .popup_type_property[data-has-image="true"] .property-dialog__layout { grid-template-columns: 302px minmax(0, 1fr); }
 .property-dialog__body { display: flex; flex-direction: column; justify-content: safe center; align-items: center; gap: 56px; width: 100%; min-width: 0; min-height: 0; padding: 80px 48px; overflow-y: auto; overscroll-behavior: contain; }
+.popup_type_property :is(.property-dialog__body, .property-dialog__panel) { scrollbar-width: none; }
+.popup_type_property :is(.property-dialog__body, .property-dialog__panel)::-webkit-scrollbar { display: none; }
 .property-dialog__heading { display: flex; flex-direction: column; align-items: center; gap: 16px; width: 100%; text-align: center; }
 .property-dialog__category { color: #7c7a74; font-size: 16px; line-height: 1.4; text-transform: uppercase; }
 .property-dialog__title { color: #161d2d; font-size: 56px; font-weight: 400; line-height: 1.1; overflow-wrap: anywhere; }
@@ -113,9 +115,10 @@ body:has(.popup_type_property.popup_is-opened) .popup.popup_type_form_quarter { 
   .property-dialog__media { flex: 0 0 auto; width: 100%; height: auto; }
   .property-dialog__image { height: auto; aspect-ratio: 4 / 3; object-fit: cover; }
   .popup_type_property .property-dialog__close,
-  .popup_type_property.popup_is-opened .property-dialog__close { position: absolute; top: 0; right: 0; width: 64px; height: 64px; transform: none; transition-delay: 0s; }
+  .popup_type_property.popup_is-opened .property-dialog__close { position: absolute; top: 0; right: 0; width: 64px; height: 64px; transform: none; transition: none; transition-delay: 0s; }
   .popup_type_property:is(.popup_is-opened, .popup_is-closing) .property-dialog__close { visibility: visible; }
-  .popup_type_property .property-dialog__close svg { width: 32px; height: 32px; }
+  .popup_type_property .property-dialog__close svg,
+  .popup_type_property .property-dialog__close:hover svg { width: 32px; height: 32px; transform: none; transition: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -1,6 +1,8 @@
-import { tchaikovskyFloorLevels } from "./tchaikovsky-floors.js?v=1.0.2";
+import { tchaikovskyFloorLevels } from "./tchaikovsky-floors.js?v=1.0.3";
 import { tchaikovskyUpperFloorMarkers } from "./tchaikovsky-plan-markers.js?v=1.0.1";
 import { commercialPlanUnitAliases } from "./tchaikovsky-properties.js?v=1.0.1";
+import { optimizedImageUrl } from "../optimized-images.js?v=1.0.3";
+import { animatePlanFloorChange, clonePlanLayer } from "./plan-transition.js?v=1.0.1";
 
 const planDirectory = "./plans/А3/";
 const groundImage = `${planDirectory}2100 Osnova Prizemlja (A,C)_Nisko Prizemlje редакт.jpg`;
@@ -10,7 +12,7 @@ const waitForPlanImage = (path) => {
     image.onload = resolve;
     image.onerror = () => reject(new Error(`Unable to load ${path}`));
   });
-  image.src = path.normalize("NFC");
+  image.src = optimizedImageUrl(path.normalize("NFC"));
   return loaded.then(() => image.decode ? image.decode() : undefined);
 };
 const categories = {
@@ -63,8 +65,25 @@ export async function initializeTchaikovskyFloorPlan(apartments, onApartment, on
     ? initialLevel.id : categories[activeType].levels[0].id;
   const selections = new Map();
   const cache = new Map();
+  const readyImages = new Map();
   let requestVersion = 0;
+  let pendingLevel = null;
+  let pendingType = null;
+  let finishTransition = () => {};
+  let transitionSequence = 0;
   let svg;
+  const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
+  reducedMotion.addEventListener("change", () => { if (reducedMotion.matches) finishTransition(); });
+  const prepareLevelImage = (type, id) => {
+    const path = categories[type].levels.find((level) => level.id === id).image;
+    if (!readyImages.has(path)) {
+      readyImages.set(path, waitForPlanImage(path).catch((error) => {
+        readyImages.delete(path);
+        throw error;
+      }));
+    }
+    return readyImages.get(path);
+  };
 
   const floorArrowIcon = `<svg width="14" height="8" viewBox="0 0 14 8" fill="none" aria-hidden="true"><path d="M1 1L7 7L13 1" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
   floorRail.innerHTML = `
@@ -89,7 +108,7 @@ export async function initializeTchaikovskyFloorPlan(apartments, onApartment, on
   container.append(compass);
   const buildingKey = document.createElement("img");
   buildingKey.className = "plan-building-key";
-  buildingKey.src = "./images/plan-building-key.svg";
+  buildingKey.src = "./images/plan-building-key.svg?v=2";
   buildingKey.alt = "Building wings A, B and C";
   const gestureHint = document.createElement("p");
   gestureHint.className = "plan-gesture-hint";
@@ -104,7 +123,13 @@ export async function initializeTchaikovskyFloorPlan(apartments, onApartment, on
   markers.className = "plan-markers";
   const surface = document.createElement("div");
   surface.className = "plan-surface";
-  surface.append(canvas, markers);
+  const viewport = document.createElement("div");
+  viewport.className = "plan-viewport";
+  const layer = document.createElement("div");
+  layer.className = "plan-layer";
+  layer.append(canvas, markers);
+  viewport.append(layer);
+  surface.append(viewport);
   host.append(surface);
   host.setAttribute("data-lenis-prevent", "");
   let planScale = 1;
@@ -115,6 +140,7 @@ export async function initializeTchaikovskyFloorPlan(apartments, onApartment, on
   );
   host.addEventListener("touchstart", (event) => {
     if (event.touches.length !== 2 || !matchMedia("(max-width: 600px)").matches) return;
+    finishTransition();
     const bounds = host.getBoundingClientRect();
     const centerX = (event.touches[0].clientX + event.touches[1].clientX) / 2 - bounds.left;
     const centerY = (event.touches[0].clientY + event.touches[1].clientY) / 2 - bounds.top;
@@ -159,18 +185,21 @@ export async function initializeTchaikovskyFloorPlan(apartments, onApartment, on
   };
   const updateArrows = () => {
     const levels = categories[activeType].levels;
-    const index = levels.findIndex((level) => level.id === activeLevel);
+    const target = pendingType === activeType ? pendingLevel || activeLevel : activeLevel;
+    const index = levels.findIndex((level) => level.id === target);
     previous.disabled = index <= 0;
     next.disabled = index >= levels.length - 1;
+    list.querySelectorAll("[data-plan-level]").forEach((button) => {
+      button.toggleAttribute("data-plan-pending", pendingType === activeType && button.dataset.planLevel === pendingLevel);
+    });
   };
   const moveFloor = (direction) => {
     const levels = categories[activeType].levels;
-    const index = levels.findIndex((level) => level.id === activeLevel);
+    const target = pendingType === activeType ? pendingLevel || activeLevel : activeLevel;
+    const index = levels.findIndex((level) => level.id === target);
     const level = levels[index + direction];
     if (!level) return;
-    activeLevel = level.id;
-    renderLevel();
-    notifyFloorChange();
+    selectLevel(level.id, { notify: true });
   };
   previous.addEventListener("click", () => moveFloor(-1));
   next.addEventListener("click", () => moveFloor(1));
@@ -212,9 +241,10 @@ export async function initializeTchaikovskyFloorPlan(apartments, onApartment, on
           }
           // The repository uses composed filenames; macOS also resolves decomposed
           // spellings locally, but a static Linux host treats them as different URLs.
-          const imagePath = level.image.normalize("NFC");
-          image.setAttribute("href", imagePath);
-          image.setAttributeNS("http://www.w3.org/1999/xlink", "xlink:href", imagePath);
+          const imagePath = optimizedImageUrl(level.image.normalize("NFC"));
+          image.dataset.planImage = imagePath;
+          image.removeAttribute("href");
+          image.removeAttributeNS("http://www.w3.org/1999/xlink", "href");
           if (type === "apartments") {
             (tchaikovskyUpperFloorMarkers[level.id] || []).forEach(({ unit, d, x, y }) => {
               if (group.querySelector(`[data-unit="${unit}"]`)) return;
@@ -246,6 +276,12 @@ export async function initializeTchaikovskyFloorPlan(apartments, onApartment, on
       group.style.display = group.id === `_${activeLevel}` ? "block" : "none";
     });
     const group = svg.querySelector(`[id="_${activeLevel}"]`);
+    const background = group.querySelector("image");
+    // Hidden floors must not compete with the selected plan for bandwidth.
+    if (background?.dataset.planImage) {
+      background.setAttribute("href", background.dataset.planImage);
+      background.setAttributeNS("http://www.w3.org/1999/xlink", "xlink:href", background.dataset.planImage);
+    }
     const [, , width, height] = svg.getAttribute("viewBox").split(/\s+/).map(Number);
     group.querySelectorAll('[data-unit]').forEach((shape) => {
       const unit = shape.dataset.unit;
@@ -307,24 +343,72 @@ export async function initializeTchaikovskyFloorPlan(apartments, onApartment, on
     ).join("");
     list.querySelectorAll("button").forEach((button) => {
       button.addEventListener("click", () => {
-        activeLevel = button.dataset.planLevel;
-        renderLevel();
-        notifyFloorChange();
+        selectLevel(button.dataset.planLevel, { notify: true });
       });
     });
     requestAnimationFrame(updateArrows);
   };
 
+  const finishSelection = (request) => {
+    if (request !== requestVersion) return;
+    pendingType = null;
+    pendingLevel = null;
+    host.setAttribute("aria-busy", "false");
+    delete host.dataset.planLoading;
+    updateArrows();
+  };
+  const selectLevel = async (id, { notify = false, animate = true } = {}) => {
+    const type = activeType;
+    const levels = categories[type].levels;
+    if (!svg || !levels.some((level) => level.id === id)) return false;
+    if (id === activeLevel && pendingLevel === null && pendingType === null) {
+      if (notify) notifyFloorChange();
+      return true;
+    }
+    const request = ++requestVersion;
+    finishTransition();
+    pendingType = type;
+    pendingLevel = id;
+    host.dataset.planLoading = "floor";
+    host.setAttribute("aria-busy", "true");
+    updateArrows();
+    try {
+      await prepareLevelImage(type, id);
+      if (request !== requestVersion || type !== activeType) return false;
+      const direction = levels.findIndex((level) => level.id === id)
+        - levels.findIndex((level) => level.id === activeLevel);
+      const canAnimate = animate && direction && !reducedMotion.matches && host.getClientRects().length;
+      const outgoing = canAnimate ? clonePlanLayer(layer, `plan-outgoing-${++transitionSequence}`) : null;
+      activeLevel = id;
+      selections.set(type, id);
+      renderLevel();
+      finishSelection(request);
+      finishTransition = animatePlanFloorChange({ layer, outgoing, viewport, direction, reducedMotion: reducedMotion.matches });
+      if (notify) notifyFloorChange();
+      return true;
+    } catch (error) {
+      if (request === requestVersion) console.error("Floor image could not be loaded", error);
+      return false;
+    } finally {
+      finishSelection(request);
+    }
+  };
+
   const selectType = async (type, notify = false) => {
     const request = ++requestVersion;
+    finishTransition();
     selections.set(activeType, activeLevel);
+    pendingType = type;
+    pendingLevel = selections.get(type) || categories[type].levels[0].id;
+    host.dataset.planLoading = "category";
     host.setAttribute("aria-busy", "true");
+    updateArrows();
     try {
       const plan = await load(type);
-      if (request !== requestVersion) return;
-      const level = selections.get(type) || categories[type].levels[0].id;
-      await waitForPlanImage(categories[type].levels.find((item) => item.id === level).image);
-      if (request !== requestVersion) return;
+      if (request !== requestVersion) return false;
+      const level = pendingLevel;
+      await prepareLevelImage(type, level);
+      if (request !== requestVersion) return false;
       activeType = type;
       activeLevel = level;
       svg = plan;
@@ -339,35 +423,44 @@ export async function initializeTchaikovskyFloorPlan(apartments, onApartment, on
         notifyFloorChange();
       }
       canvas.classList.remove("plan-load-error");
+      return true;
     } catch (error) {
       console.error("Floor plan could not be loaded", error);
       if (request === requestVersion && !svg) {
         canvas.textContent = "Unable to load the floor plan. Please refresh the page.";
         canvas.classList.add("plan-load-error");
       }
+      return false;
     } finally {
-      if (request === requestVersion) host.setAttribute("aria-busy", "false");
+      finishSelection(request);
     }
   };
   tabs.querySelectorAll("button").forEach((button) => {
     button.addEventListener("click", () => selectType(button.dataset.planType, true));
   });
+  let previousSize;
   new ResizeObserver(() => {
+    const size = `${host.clientWidth}:${host.clientHeight}`;
+    if (size === previousSize) return;
+    previousSize = size;
+    finishTransition();
     if (host.clientWidth && svg) renderLevel();
   }).observe(host);
   await selectType(activeType);
   return {
     selectCategory(type) {
       if (categories[type]) return selectType(type);
-      return Promise.resolve();
+      return Promise.resolve(false);
     },
     selectFloor(floor) {
+      // A superseded selectCategory().then(selectFloor) must not cancel a newer
+      // category request; its controls/floor selection are not committed yet.
+      if (host.dataset.planLoading === "category") return Promise.resolve(false);
       const useDefault = !floor || floor === "All";
       const level = useDefault ? categories[activeType].levels[0]
         : categories[activeType].levels.find((level) => level.id === floor || level.label === floor);
       if (!level) return;
-      activeLevel = level.id;
-      renderLevel();
+      return selectLevel(level.id, { animate: false });
     },
   };
 }

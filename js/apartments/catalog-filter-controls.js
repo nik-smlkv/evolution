@@ -1,6 +1,30 @@
+function initializeFilterAccordion(filter) {
+  const accordion = filter.closest(".catalog-filter-accordion");
+  if (!accordion) return;
+  const toggle = accordion.querySelector(".catalog-filter-accordion__toggle");
+  const panel = accordion.querySelector(".catalog-filter-accordion__panel");
+  const mobile = window.matchMedia("(max-width: 700px)");
+  let isOpen = false;
+  const sync = () => {
+    const expanded = !mobile.matches || isOpen;
+    if (!expanded && panel.contains(document.activeElement)) toggle.focus({ preventScroll: true });
+    accordion.dataset.open = String(expanded);
+    toggle.setAttribute("aria-expanded", String(expanded));
+    panel.inert = !expanded;
+    panel.setAttribute("aria-hidden", String(!expanded));
+  };
+  toggle.addEventListener("click", () => {
+    isOpen = !isOpen;
+    sync();
+  });
+  mobile.addEventListener("change", sync);
+  sync();
+}
+
 export function initializeCatalogFilterControls() {
   const filter = document.querySelector(".catalog-object-filter");
   if (!filter) return;
+  initializeFilterAccordion(filter);
   const floors = filter.querySelector(".filter__floor_list");
   // Preserve the existing filtering handlers while making every pill keyboard accessible.
   const upgradeButtons = () => filter.querySelectorAll("span.filter__btn").forEach((span) => {
