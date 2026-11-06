@@ -22,7 +22,7 @@ body.tchaikovsky-grid-view .catalog-object-filter .catalog-filter-group--area { 
 body.tchaikovsky-grid-view .catalog-object-filter .catalog-filter-group--floor { order: 4; flex: 0 1 var(--catalog-floor-width); width: var(--catalog-floor-width); margin-top: var(--catalog-floor-top-offset); }
 body.tchaikovsky-grid-view .catalog-object-filter .catalog-reset-button { order: 5; flex: 0 0 40px; align-self: flex-start; margin: var(--catalog-reset-top-offset) 0 0; }
 body.tchaikovsky-grid-view .catalog-property-options { display: flex; align-items: center; gap: 8px; min-width: 0; width: 100%; }
-body.tchaikovsky-grid-view .catalog-object-filter .filter__btn_property { flex: 0 0 114px; width: 114px; padding-inline: 12px; cursor: pointer; }
+body.tchaikovsky-grid-view .catalog-object-filter .filter__btn_property { flex: 0 0 114px; width: 114px; padding-inline: 8px; line-height: 18px; white-space: normal; text-align: center; cursor: pointer; }
 body.tchaikovsky-grid-view .catalog-object-filter .filter__btn_property:last-child { flex-basis: 80px; width: 80px; }
 body.tchaikovsky-grid-view .catalog-object-filter .filter__btn_property[aria-pressed="true"] { color: #0474dc; border-color: #0474dc; }
 body.tchaikovsky-grid-view .catalog-object-filter .catalog-filter-group[hidden] { display: none; }
