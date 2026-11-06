@@ -23,7 +23,7 @@ const waitForImage = (image) => image.decode
   });
 
 try {
-  const { catalogReady } = await import("./requestt.js?v=1.0.43");
+  const { catalogReady, refreshCatalogLayout } = await import("./requestt.js?v=1.0.45");
   await catalogReady;
   await document.fonts.ready;
 
@@ -54,6 +54,7 @@ try {
   wrapper.setAttribute("aria-busy", "false");
   document.querySelector(".catalog-plan-button").disabled = false;
   root.classList.remove("catalog-loading");
+  refreshCatalogLayout();
   document.querySelector(".catalog-startup").remove();
   document.querySelector(".catalog-skeleton").remove();
 } catch (error) {

@@ -3,14 +3,16 @@ export function initializeCatalogFilterControls() {
   if (!filter) return;
   const floors = filter.querySelector(".filter__floor_list");
   // Preserve the existing filtering handlers while making every pill keyboard accessible.
-  filter.querySelectorAll("span.filter__btn").forEach((span) => {
+  const upgradeButtons = () => filter.querySelectorAll("span.filter__btn").forEach((span) => {
     const button = document.createElement("button");
     Array.from(span.attributes).forEach(({ name, value }) => button.setAttribute(name, value));
     button.type = "button";
     button.textContent = span.textContent;
     span.replaceWith(button);
   });
+  upgradeButtons();
   const syncSelection = () => {
+    upgradeButtons();
     update();
     filter.querySelectorAll("button.filter__btn").forEach((button) => {
       button.setAttribute("aria-pressed", String(button.classList.contains("active")));
@@ -52,8 +54,8 @@ export function initializeCatalogFilterControls() {
     event.preventDefault();
     floors.scrollTo({ left, behavior: "instant" });
   }, { passive: false });
-  const floorButtons = Array.from(floors.querySelectorAll(".filter__btn_floor"));
   const update = () => {
+    const floorButtons = Array.from(floors.querySelectorAll(".filter__btn_floor"));
     const index = floorButtons.findIndex((button) => button.classList.contains("active"));
     previous.disabled = index <= 0;
     next.disabled = index >= floorButtons.length - 1;
@@ -61,6 +63,7 @@ export function initializeCatalogFilterControls() {
     navigation.dataset.hasFloors = String(floorButtons.length > 1);
   };
   const moveFloor = (direction) => {
+    const floorButtons = Array.from(floors.querySelectorAll(".filter__btn_floor"));
     const index = floorButtons.findIndex((button) => button.classList.contains("active"));
     // Use the same handler as a direct floor choice to retain all other filters and update the URL.
     floorButtons[index + direction]?.click();
@@ -69,7 +72,7 @@ export function initializeCatalogFilterControls() {
   previous.addEventListener("click", () => moveFloor(-1));
   next.addEventListener("click", () => moveFloor(1));
   syncSelection();
-  new MutationObserver(syncSelection).observe(filter, { subtree: true, attributes: true, attributeFilter: ["class"] });
+  new MutationObserver(syncSelection).observe(filter, { subtree: true, childList: true, attributes: true, attributeFilter: ["class"] });
   new ResizeObserver(syncSelection).observe(floors);
 
   const social = document.querySelector(".info_footer_content_block .block-social");

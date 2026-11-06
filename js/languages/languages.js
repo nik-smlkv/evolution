@@ -1,5 +1,9 @@
 export const langArr = {
 	en: {
+		catalog_space: `Space`,
+		space_apartments: `Apartments`,
+		space_commercial: `Commercial`,
+		space_parking: `Parking`,
 		p_price_short: `Fill out the form and we will contact you shortly`,
 		p_price_mail: `Email`,
 		p_section: `Section`,
@@ -144,6 +148,10 @@ export const langArr = {
 		p_belrg: `Belgrade`,
 	},
 	srb: {
+		catalog_space: `Tip prostora`,
+		space_apartments: `Stanovi`,
+		space_commercial: `Poslovni prostor`,
+		space_parking: `Parking`,
 		p_price_short: `Popunite formular i kontaktiraćemo Vas u najkraćem roku`,
 		p_price_mail: `E-mail adresa`,
 		p_section: `Lamela`,

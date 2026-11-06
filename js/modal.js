@@ -7,7 +7,7 @@ function lockScroll(modal) {
 	if (scrollLock) return;
 	const body = document.body;
 	const root = document.documentElement;
-	const fullViewport = modal.matches(".popup_type_house, .popup_type_form_quarter");
+	const fullViewport = modal.matches(".popup_type_house, .popup_type_form_quarter, .popup_type_property");
 	const bodyWidth = body.getBoundingClientRect().width;
 	const header = fullViewport ? document.querySelector("header") : null;
 	const headerWidth = header?.getBoundingClientRect().width;
@@ -56,12 +56,12 @@ export function openModal(modal) {
 	closingModals.get(modal)?.();
 	closingModals.delete(modal);
 	modal.classList.remove("popup_is-closing");
-	if (modal.classList.contains("popup_type_form_quarter") && !modal.contains(document.activeElement)) {
+	if (modal.matches(".popup_type_form_quarter, .popup_type_property") && !modal.contains(document.activeElement)) {
 		returnFocusTargets.set(modal, document.activeElement);
 	}
 	lockScroll(modal);
 	modal.classList.add("popup_is-opened");
-	if (modal.classList.contains("popup_type_form_quarter")) modal.focus({ preventScroll: true });
+	if (modal.matches(".popup_type_form_quarter, .popup_type_property")) modal.focus({ preventScroll: true });
 	document.addEventListener("keydown", closeModalEsc);
 }
 
@@ -73,7 +73,7 @@ function unlockWhenIdle() {
 
 export function closeModal(modal) {
 	if (!modal?.classList.contains("popup_is-opened")) return;
-	if (!modal.classList.contains("popup_type_form_quarter")) {
+	if (!modal.matches(".popup_type_form_quarter, .popup_type_property")) {
 		modal.classList.remove("popup_is-opened");
 		unlockWhenIdle();
 		return;
@@ -111,7 +111,7 @@ export function closeModal(modal) {
 function closeModalEsc(evt) {
 	if (evt.key === "Tab") {
 		if (closingModals.size) { evt.preventDefault(); return; }
-		const form = document.querySelector('.popup_type_form_quarter.popup_is-opened');
+		const form = document.querySelector('.popup_type_form_quarter.popup_is-opened') || document.querySelector('.popup_type_property.popup_is-opened');
 		if (!form) return;
 		const controls = Array.from(form.querySelectorAll('button:not(:disabled), input:not(:disabled), a[href]')).filter((element) => element.getClientRects().length && getComputedStyle(element).visibility !== 'hidden');
 		const first = controls[0];
@@ -127,7 +127,7 @@ function closeModalEsc(evt) {
 	}
 	if (evt.key === "Escape") {
 		if (closingModals.size) return;
-		const openedModal = document.querySelector(".popup_type_form_quarter.popup_is-opened") || document.querySelector(".popup_is-opened");
+		const openedModal = document.querySelector(".popup_type_form_quarter.popup_is-opened") || document.querySelector(".popup_type_property.popup_is-opened") || document.querySelector(".popup_is-opened");
 		closeModal(openedModal);
 	}
 }

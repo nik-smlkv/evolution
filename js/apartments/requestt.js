@@ -1,10 +1,11 @@
 import { loadHouse } from "./houses.js?v=1.0.10";
 import { tchaikovskyFloorLevels } from "./tchaikovsky-floors.js?v=1.0.2";
-import { openModal } from "../modal.js?v=1.0.2";
-import { openPriceRequest } from "../price-request.js?v=1.0.0";
-import { initializeTchaikovskyFloorPlan } from "./floor-plan.js?v=1.0.16";
-import { isTchaikovskyApartmentAvailable } from "./tchaikovsky-availability.js?v=1.0.0";
-import { initializeCatalogFilterControls } from "./catalog-filter-controls.js?v=1.0.2";
+import { openModal } from "../modal.js?v=1.0.3";
+import { openPropertyDetails } from "./property-dialogs.js?v=1.0.1";
+import { tchaikovskyOtherProperties } from "./tchaikovsky-properties.js?v=1.0.1";
+import { initializeTchaikovskyFloorPlan } from "./floor-plan.js?v=1.0.18";
+import { isTchaikovskyApartmentAvailable } from "./tchaikovsky-availability.js?v=1.0.1";
+import { initializeCatalogFilterControls } from "./catalog-filter-controls.js?v=1.0.3";
 const requestedHouse = new URLSearchParams(window.location.search).get("house");
 const catalog = await loadHouse(requestedHouse);
 const house = catalog.id;
@@ -12,8 +13,14 @@ const legacyFloorPlans = document.querySelector("[data-vivaldi-floor-plans]");
 if (house === "vivaldi" && legacyFloorPlans) {
   legacyFloorPlans.parentElement.replaceChildren(legacyFloorPlans.content.cloneNode(true));
 }
-let data = JSON.parse(catalog.apartments);
-if (house === "tchaikovsky") data = data.filter(isTchaikovskyApartmentAvailable);
+const apartmentData = JSON.parse(catalog.apartments)
+  .filter((apartment) => house !== "tchaikovsky" || isTchaikovskyApartmentAvailable(apartment))
+  .map((apartment) => ({ ...apartment, propertyType: "apartments" }));
+const data = house === "tchaikovsky" ? [...apartmentData, ...tchaikovskyOtherProperties] : apartmentData;
+let selectedPropertyType = house === "tchaikovsky" && ["commercial", "parking"].includes(new URLSearchParams(location.search).get("property"))
+  ? new URLSearchParams(location.search).get("property") : "apartments";
+const propertyData = () => data.filter((item) => item.propertyType === selectedPropertyType);
+document.body.dataset.catalogProperty = selectedPropertyType;
 document.body.dataset.catalogHouse = house;
 document.body.dataset.catalogView = "grid";
 document.body.classList.toggle("tchaikovsky-catalog", house === "tchaikovsky");
@@ -26,17 +33,20 @@ document
   .querySelector(`[data-house-option="${house}"]`)
   ?.classList.add("is-active");
 const floorPlanButton = document.querySelector(".catalog-plan-button");
-const [firstApartment, ...lastApartment] = data;
+const [firstApartment, ...lastApartment] = apartmentData;
 let apartmentFancyBox = document.querySelector(".apartment__fancybox");
 document.querySelector(".apartment__img").src = firstApartment.planImg;
 apartmentFancyBox.setAttribute("href", firstApartment.planImg);
 let selectedLamela = null;
 let selectedFloor = null;
 let tchaikovskyFloorPlan;
-const areaValues = data.map((apartment) => apartment.area).filter(Number.isFinite);
-const areaBounds = house === "tchaikovsky"
-  ? { min: Math.floor(Math.min(...areaValues)), max: Math.ceil(Math.max(...areaValues)) }
-  : { min: 30, max: 126 };
+const getAreaBounds = () => {
+  const values = propertyData().map((item) => item.area).filter(Number.isFinite);
+  return house !== "tchaikovsky" ? { min: 30, max: 126 }
+    : values.length ? { min: Math.floor(Math.min(...values)), max: Math.ceil(Math.max(...values)) }
+    : { min: 0, max: 1 };
+};
+let areaBounds = getAreaBounds();
 let selectedMinArea = areaBounds.min;
 let selectedMaxArea = areaBounds.max;
 const readAreaRange = (params) => {
@@ -97,7 +107,7 @@ const setTchaikovskyPlanPopup = (apartment) => {
 
 const floorPlanReady = whenDocumentReady(async () => {
   if (house !== "tchaikovsky") return;
-  tchaikovskyFloorPlan = await initializeTchaikovskyFloorPlan(data, setTchaikovskyPlanPopup, (level) => {
+  tchaikovskyFloorPlan = await initializeTchaikovskyFloorPlan(apartmentData, setTchaikovskyPlanPopup, (level) => {
     if (!level || document.body.dataset.catalogView !== "plan") return;
     selectedFloor = level.label;
     document.querySelectorAll(".apartments__filter .filter__btn_floor").forEach((button) => {
@@ -105,7 +115,11 @@ const floorPlanReady = whenDocumentReady(async () => {
     });
     handleFilteredCards(selectedLamela, selectedFloor);
     updateURL();
-  }, (property) => openPriceRequest({ ...property, house: catalog.name }));
+  }, (property) => {
+    const record = tchaikovskyOtherProperties.find((item) => item.propertyType === property.propertyType && item.unit === property.unit);
+    if (record) openPropertyDetails(record, catalog.name);
+  }, (type) => setPropertyType(type, false));
+  await tchaikovskyFloorPlan?.selectCategory(selectedPropertyType);
   if (document.body.dataset.catalogView === "plan") tchaikovskyFloorPlan?.selectFloor(selectedFloor);
 });
 floorPlanReady.catch((error) => console.error("Floor plan could not be initialized", error));
@@ -199,11 +213,14 @@ const applyURLParams = () => {
   const rawFloor = params.get("floor");
   const floor = house === "tchaikovsky" && rawFloor === "P" ? "2100"
     : rawFloor === "Povᴮ" ? "3800" : rawFloor;
-  const normalizedFloor = house === "tchaikovsky" && floor
+  const propertyFloor = selectedPropertyType !== "apartments" && floor
+    ? propertyData().flatMap((item) => item.planLevels.map((level, index) => ({ level, label: item.floorLabels[index] }))).find((item) => item.level === floor || item.label === floor)?.label
+    : null;
+  const normalizedFloor = propertyFloor || (house === "tchaikovsky" && floor
     ? (tchaikovskyFloorLevels.find((level) => level.label === floor || level.id === floor)
       ?? tchaikovskyFloorLevels.find((level) => level.floors[type?.toUpperCase() || "A"] === floor)
       ?? tchaikovskyFloorLevels.find((level) => floor === "VP" && level.id === "3100"))?.label
-    : floor;
+    : floor);
 
   const { from: minArea, to: maxArea } = readAreaRange(params);
   selectedMinArea = minArea;
@@ -259,6 +276,7 @@ const applyURLParams = () => {
 const updateURL = () => {
   const params = new URLSearchParams();
   params.set("house", house);
+  if (selectedPropertyType !== "apartments") params.set("property", selectedPropertyType);
   if (document.body.dataset.catalogView === "plan") params.set("view", "plan");
 
   if (selectedLamela && selectedLamela !== "All") {
@@ -305,9 +323,11 @@ const getApartmentFloors = () => {
     ".apartments__filter .filter__floor_list",
   );
   const priorityOrder = house === "tchaikovsky"
-    ? tchaikovskyFloorLevels.map((level) => level.label)
+    ? selectedPropertyType === "parking" ? ["-4 Po", "-3 Po", "-2 Po", "-1 Po"]
+      : selectedPropertyType === "commercial" ? ["Sut", "P/NPᴮ"]
+      : tchaikovskyFloorLevels.map((level) => level.label)
     : ["NP", "P", "VP", "1", "2", "3", "4", "5", "6", "PS"];
-  const uniqueFloors = [...new Set(data.map((item) => item.floor))]
+  const uniqueFloors = [...new Set(propertyData().flatMap((item) => item.floorLabels || [item.floor]))]
     .filter((floor) => floor && floor !== "—")
     .sort(
     (a, b) => {
@@ -322,6 +342,7 @@ const getApartmentFloors = () => {
             : String(a).localeCompare(String(b), undefined, { numeric: true });
     },
   );
+  filterApartmentFloorList.replaceChildren();
   filterApartmentFloorList.insertAdjacentHTML(
     "beforeend",
     `
@@ -329,6 +350,7 @@ const getApartmentFloors = () => {
 		`,
   );
   apartmentFloorsLists.forEach((apartmentFloors) => {
+    if (apartmentFloors !== filterApartmentFloorList) apartmentFloors.replaceChildren();
     uniqueFloors.forEach((uniqueFloor) => {
       apartmentFloors.insertAdjacentHTML(
         "beforeend",
@@ -347,9 +369,10 @@ const getApartmentFloors = () => {
 
 const getLamela = () => {
   const apartmentLamelaList = document.querySelector(".lamela__list");
+  apartmentLamelaList.innerHTML = '<button type="button" class="filter__btn control filter__btn_lamela active" aria-pressed="true">All</button>';
   const uniqueLamelas = [
     ...new Set(
-      data.map((item) => item.buldingWing.replace("Lamela", "").trim()),
+      propertyData().map((item) => item.buldingWing.replace("Lamela", "").trim()).filter(Boolean),
     ),
   ];
   uniqueLamelas.map((uniqueLamela) => {
@@ -360,6 +383,35 @@ const getLamela = () => {
 		`,
     );
   });
+  document.querySelector('.catalog-filter-group--lamela').hidden = !uniqueLamelas.length;
+};
+
+const setPropertyType = (type, syncPlan = true) => {
+  if (house !== "tchaikovsky" || !["apartments", "commercial", "parking"].includes(type)) return;
+  selectedPropertyType = type;
+  document.body.dataset.catalogProperty = type;
+  selectedFloor = null;
+  selectedLamela = null;
+  areaBounds = getAreaBounds();
+  selectedMinArea = areaBounds.min;
+  selectedMaxArea = areaBounds.max;
+  getApartmentFloors();
+  getLamela();
+  document.querySelectorAll('[data-property-type]').forEach((button) => {
+    const active = button.dataset.propertyType === type;
+    button.classList.toggle('active', active);
+    button.setAttribute('aria-pressed', String(active));
+  });
+  const range = document.querySelector('.js-range-slider');
+  const slider = range ? $(range).data('ionRangeSlider') : null;
+  const hasArea = propertyData().some((item) => Number.isFinite(item.area));
+  document.querySelector('.catalog-filter-group--area').hidden = !hasArea;
+  if (slider) slider.update({ min: areaBounds.min, max: areaBounds.max, from: areaBounds.min, to: areaBounds.max, disable: !hasArea });
+  document.querySelector('#example_2_input_from').value = areaBounds.min;
+  document.querySelector('#example_2_input_to').value = areaBounds.max;
+  handleFilteredCards();
+  if (syncPlan) tchaikovskyFloorPlan?.selectCategory(type);
+  if (syncPlan || document.body.dataset.catalogView !== "plan") updateURL();
 };
 
 const apartmentCards = document.querySelector(".available-apartments__list");
@@ -390,13 +442,13 @@ const renderNextApartmentCards = () => {
     const img = item.apartmentImg;
     const number = formatCardApartmentNumber(item.apartmentNumber);
     return `
-				<div class="apartment__item apartment-card-item flex-style-column ${activeCardId === String(item.id) ? "active" : ""}" data-key="${item.id}" tabindex="0" role="button" aria-label="Open apartment ${number}">
+				<div class="apartment__item apartment-card-item flex-style-column ${activeCardId === String(item.id) ? "active" : ""}" data-key="${item.id}" tabindex="0" role="button" aria-label="Open ${item.propertyType === 'apartments' ? 'apartment' : item.propertyType === 'commercial' ? 'commercial space' : 'parking space'} ${number}">
 				  <div class="apartment-card-item__meta">
 						<span class="apartment-card-item__name">${number}</span>
 						<span class="apartment-card-item__details">${formatApartmentDetails(item)}</span>
 				  </div>
-				  <div class="apartment-card-item__image is-loading" aria-busy="true">
-						<img src="${img}?v=3" alt="Plan of ${number}" loading="lazy" decoding="async" />
+				  <div class="apartment-card-item__image ${img ? 'is-loading' : 'apartment-card-item__image--empty'}" aria-busy="${Boolean(img)}">
+						${img ? `<img src="${img}?v=3" alt="Plan of ${number}" loading="lazy" decoding="async" />` : ''}
 				  </div>
 				</div>
 			`;
@@ -430,13 +482,16 @@ const handleFilteredCards = (selectedLamela, selectedFloor) => {
   const lamelaIsAll = selectedLamela === "All" || !selectedLamela;
   const floorIsAll = selectedFloor === "All" || !selectedFloor;
   const filteredApartments = data.filter((apartment) => {
+    if (apartment.propertyType !== selectedPropertyType) return false;
     const lamelaMatch =
       lamelaIsAll ||
       apartment.buldingWing.replace("Lamela", "").trim() === selectedLamela;
     const floorMatch =
-      floorIsAll || String(apartment.floor ?? "") === String(selectedFloor);
+      floorIsAll || (apartment.floorLabels || [apartment.floor]).includes(selectedFloor);
     const areaMatch = !catalog.hasAreaFilter ||
-      (apartment.area >= selectedMinArea && apartment.area <= selectedMaxArea);
+      (Number.isFinite(apartment.area)
+        ? apartment.area >= selectedMinArea && apartment.area <= selectedMaxArea
+        : selectedMinArea === areaBounds.min && selectedMaxArea === areaBounds.max);
     return lamelaMatch && floorMatch && areaMatch;
   });
   if (filteredCardApartments?.length === filteredApartments.length &&
@@ -449,25 +504,28 @@ const handleFilteredCards = (selectedLamela, selectedFloor) => {
 };
 
 const setupLamelaFilter = () => {
-  const lamelaButtons = document.querySelectorAll(".filter__btn_lamela");
-  lamelaButtons.forEach((button) => {
-    button.addEventListener("click", () => {
+  const list = document.querySelector('.lamela__list');
+  list.addEventListener('click', (event) => {
+      const button = event.target.closest('.filter__btn_lamela');
+      if (!button) return;
+      const lamelaButtons = list.querySelectorAll('.filter__btn_lamela');
       selectedLamela = button.textContent.trim();
       lamelaButtons.forEach((btn) => btn.classList.remove("active"));
       button.classList.add("active");
       handleFilteredCards(selectedLamela, selectedFloor);
       updateURL();
-    });
   });
 };
 
 const setupFloorFilter = (targetSelector) => {
-  const floorButtons = document.querySelectorAll(
-    `${targetSelector} .filter__btn_floor`,
-  );
-  floorButtons.forEach((button) => {
-    button.addEventListener("click", (evt) => {
-      const isFilterCards = evt.target.parentElement.classList.contains(
+  document.querySelectorAll(`${targetSelector} .filter__floor_list`).forEach((list) => {
+    if (list.dataset.filterBound) return;
+    list.dataset.filterBound = 'true';
+    list.addEventListener("click", (evt) => {
+      const button = evt.target.closest('.filter__btn_floor');
+      if (!button) return;
+      const floorButtons = list.querySelectorAll('.filter__btn_floor');
+      const isFilterCards = list.classList.contains(
         "floor__list_houses_plans",
       );
       selectedFloor = button.textContent.trim();
@@ -631,7 +689,10 @@ const viewControlsReady = whenDocumentReady(() => {
       document.body.dataset.catalogView = key === "2" ? "plan" : "grid";
       document.body.classList.toggle("tchaikovsky-plan-view", house === "tchaikovsky" && key === "2");
       document.body.classList.toggle("tchaikovsky-grid-view", house === "tchaikovsky" && key !== "2");
-      if (key === "2") tchaikovskyFloorPlan?.selectFloor(selectedFloor);
+      if (key === "1") refreshCatalogLayout();
+      if (key === "2" && tchaikovskyFloorPlan) {
+        tchaikovskyFloorPlan.selectCategory(selectedPropertyType).then(() => tchaikovskyFloorPlan.selectFloor(selectedFloor));
+      }
     });
   });
   function redirectBack() {
@@ -678,6 +739,13 @@ const filtersReady = whenDocumentReady(() => {
   getFirstApartment();
   getApartmentFloors();
   getLamela();
+  document.querySelectorAll('[data-property-type]').forEach((button) => {
+    const active = button.dataset.propertyType === selectedPropertyType;
+    button.classList.toggle('active', active);
+    button.setAttribute('aria-pressed', String(active));
+    button.addEventListener('click', () => setPropertyType(button.dataset.propertyType));
+  });
+  document.querySelector('.catalog-filter-group--area').hidden = !propertyData().some((item) => Number.isFinite(item.area));
   if (house === "tchaikovsky") initializeCatalogFilterControls();
   setupLamelaFilter();
   setupFloorFilter(".apartments__filter");
@@ -686,7 +754,6 @@ const filtersReady = whenDocumentReady(() => {
     handleFilteredHousePlans("np");
     getVisiblePolygons(data);
   }
-  initializeRangeSlider();
   applyURLParams();
 });
 
@@ -701,6 +768,10 @@ const cardEventsReady = whenDocumentReady(() => {
       activeCardId = apartmentId;
       let currentItem = data.find((apartment) => apartment.id == apartmentId);
       if (currentItem) {
+        if (currentItem.propertyType !== "apartments") {
+          openPropertyDetails(currentItem, catalog.name);
+          return;
+        }
         // Обновляем данные в секции с информацией
         const imgElement = document.querySelector(
           ".apartment-card__content .apartment__img",
@@ -744,6 +815,7 @@ const cardEventsReady = whenDocumentReady(() => {
 });
 
 document.querySelector("[data-reset-filters]")?.addEventListener("click", () => {
+  if (selectedPropertyType !== "apartments") setPropertyType("apartments");
   selectedLamela = null;
   selectedFloor = null;
   selectedMinArea = areaBounds.min;
@@ -758,6 +830,7 @@ document.querySelector("[data-reset-filters]")?.addEventListener("click", () => 
   document.querySelector("#example_2_input_from").value = areaBounds.min;
   document.querySelector("#example_2_input_to").value = areaBounds.max;
   const params = new URLSearchParams({ house });
+  if (document.body.dataset.catalogView === "plan") params.set("view", "plan");
   window.history.replaceState({}, "", `${window.location.pathname}?${params}`);
   updateSEOTags(params);
 });
@@ -778,3 +851,19 @@ export const catalogReady = Promise.all([viewControlsReady, viewButtonReady, fil
   .then(async () => {
     if (house === "tchaikovsky" && document.body.dataset.catalogView === "plan") await floorPlanReady;
   });
+
+export function refreshCatalogLayout() {
+  const range = document.querySelector('.js-range-slider');
+  if (!range?.getClientRects().length) return;
+  const slider = $(range).data('ionRangeSlider');
+  if (!slider) {
+    const group = range.closest('.catalog-filter-group--area');
+    group.classList.add('catalog-range-pending');
+    initializeRangeSlider();
+    requestAnimationFrame(() => {
+      $(range).data('ionRangeSlider')?.update({ min: areaBounds.min, max: areaBounds.max, from: selectedMinArea, to: selectedMaxArea });
+      group.classList.remove('catalog-range-pending');
+    });
+  }
+  else slider.update({ min: areaBounds.min, max: areaBounds.max, from: selectedMinArea, to: selectedMaxArea });
+}

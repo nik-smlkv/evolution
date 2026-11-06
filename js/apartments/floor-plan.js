@@ -1,5 +1,6 @@
 import { tchaikovskyFloorLevels } from "./tchaikovsky-floors.js?v=1.0.2";
 import { tchaikovskyUpperFloorMarkers } from "./tchaikovsky-plan-markers.js?v=1.0.1";
+import { commercialPlanUnitAliases } from "./tchaikovsky-properties.js?v=1.0.1";
 
 const planDirectory = "./plans/А3/";
 const groundImage = `${planDirectory}2100 Osnova Prizemlja (A,C)_Nisko Prizemlje редакт.jpg`;
@@ -38,7 +39,7 @@ const categories = {
   },
 };
 
-export async function initializeTchaikovskyFloorPlan(apartments, onApartment, onFloorChange, onRequest) {
+export async function initializeTchaikovskyFloorPlan(apartments, onApartment, onFloorChange, onRequest, onPropertyChange) {
   const container = document.querySelector(".houses-plans_container");
   const host = container?.querySelector(".houses-plan");
   const floorRail = container?.querySelector(".floor__filter");
@@ -141,7 +142,7 @@ export async function initializeTchaikovskyFloorPlan(apartments, onApartment, on
   const notifyFloorChange = () => {
     if (activeType === "apartments") {
       onFloorChange?.(tchaikovskyFloorLevels.find((level) => level.id === activeLevel));
-    }
+    } else onFloorChange?.(categories[activeType].levels.find((level) => level.id === activeLevel));
   };
 
   const keepSelectedFloorVisible = () => {
@@ -196,6 +197,11 @@ export async function initializeTchaikovskyFloorPlan(apartments, onApartment, on
             group = documentSvg.createElementNS("http://www.w3.org/2000/svg", "g");
             group.id = `_${level.id}`;
             plan.append(group);
+          }
+          if (type === "commercial") {
+            group.querySelectorAll("[data-unit]").forEach((shape) => {
+              shape.dataset.unit = commercialPlanUnitAliases[level.id]?.[shape.dataset.unit] || shape.dataset.unit;
+            });
           }
           let image = group.querySelector("image");
           if (!image) {
@@ -265,7 +271,7 @@ export async function initializeTchaikovskyFloorPlan(apartments, onApartment, on
       marker.title = `${categories[activeType].label}: ${unit}`;
       if (activate) {
         marker.type = "button";
-        marker.setAttribute("aria-label", apartment ? `Open apartment ${unit}` : `Request price for ${categories[activeType].label} ${unit}`);
+        marker.setAttribute("aria-label", apartment ? `Open apartment ${unit}` : `View ${categories[activeType].label} ${unit} details`);
         marker.addEventListener("click", activate);
         shape.onclick = activate;
       }
@@ -328,7 +334,10 @@ export async function initializeTchaikovskyFloorPlan(apartments, onApartment, on
       });
       renderControls();
       renderLevel();
-      if (notify) notifyFloorChange();
+      if (notify) {
+        onPropertyChange?.(type);
+        notifyFloorChange();
+      }
       canvas.classList.remove("plan-load-error");
     } catch (error) {
       console.error("Floor plan could not be loaded", error);
@@ -348,11 +357,14 @@ export async function initializeTchaikovskyFloorPlan(apartments, onApartment, on
   }).observe(host);
   await selectType(activeType);
   return {
+    selectCategory(type) {
+      if (categories[type]) return selectType(type);
+      return Promise.resolve();
+    },
     selectFloor(floor) {
-      if (activeType !== "apartments") return;
       const useDefault = !floor || floor === "All";
-      const level = useDefault ? categories.apartments.levels[0]
-        : tchaikovskyFloorLevels.find((level) => level.id === floor || level.label === floor);
+      const level = useDefault ? categories[activeType].levels[0]
+        : categories[activeType].levels.find((level) => level.id === floor || level.label === floor);
       if (!level) return;
       activeLevel = level.id;
       renderLevel();
