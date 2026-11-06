@@ -2,8 +2,9 @@
 """Create strictly smaller, pixel-exact WebP alternatives for repository JPEGs.
 
 Original JPEGs are retained. CMYK and unsupported formats are skipped. Run with
-the bundled Python (Pillow), installed cwebp and --apply to write alternatives.
-The JSON URL map uses project-relative NFC paths. Encoding is hash-deduplicated
+the bundled Python (Pillow), installed cwebp and --apply to stage alternatives.
+The local candidate map uses project-relative NFC paths; it is not a production
+URL map. Source/public files stay unchanged. Encoding is hash-deduplicated
 and resumable from a temporary cache; existing differing WebPs are never replaced.
 """
 
@@ -93,7 +94,7 @@ def encode(row, executable):
         if completed.returncode or not output.exists():
             raise ValueError(completed.stderr.decode(errors="replace")[:1000] or "cwebp did not create an output")
         result["fast_candidate_bytes"] = output.stat().st_size
-        large_floor_background = row["path"].parent == ROOT / "plans" / "А3" and row["width"] * row["height"] >= 8_000_000
+        large_floor_background = row["path"].parent.name == "backgrounds" and "tchaikovsky" in row["path"].parts and row["width"] * row["height"] >= 8_000_000
         if output.stat().st_size <= row["bytes"] * 1.05 or large_floor_background:
             refined = CACHE / (key + ".refined.webp")
             completed = subprocess.run([executable, *REFINED_SETTINGS, "-quiet", str(row["path"]), "-o", str(refined)], capture_output=True, timeout=600)
@@ -129,11 +130,10 @@ def encode(row, executable):
 def select_benchmark(rows, count):
     # Distinct photographic, drawing, legacy thumbnail and large-plan surfaces.
     preferred = [
-        "images/1.jpg", "images/gallery3.jpg", "images/main-img.jpg",
-        "images/apartments-plans/Lamela_A/Level_1/A1_1.jpg",
-        "plans/b/img/2.jpg", "plans/b/big/1.jpg", "plans/img/1.jpg",
-        "А3/Lamela A/A01.jpg", "А3/Lamela B/B01.jpg",
-        "plans/А3/3200 Osnova 2- Sprata (A,C)_1-Sprat (B).jpg",
+        "assets/sources/originals/site/materials/material-01.jpg",
+        "assets/sources/originals/site/gallery/gallery-03.jpg", "assets/sources/originals/site/hero/main.jpg",
+        "assets/sources/originals/projects/vivaldi/apartments/plans/a/level-1/a1-1.jpg",
+        "assets/sources/originals/projects/tchaikovsky/floors/backgrounds/level-3200.jpg",
     ]
     lookup = {row["relative"]: row for row in rows}
     selected = []
@@ -148,8 +148,9 @@ def select_benchmark(rows, count):
     return selected
 
 
-def destination_for(row, encoded):
-    desired = ROOT / unicodedata.normalize("NFC", str(row["path"].relative_to(ROOT).with_suffix(".webp")))
+def destination_for(row, encoded, output_dir):
+    desired = staged_path(output_dir, row["path"], ROOT).with_suffix(".webp")
+    desired = Path(unicodedata.normalize("NFC", str(desired)))
     choices = [desired, desired.with_name(desired.stem + ".optimized.webp")]
     number = 2
     while True:
@@ -162,27 +163,74 @@ def destination_for(row, encoded):
         number += 1
 
 
+def processing_paths(parser, args, root):
+    """Read local originals and stage candidates; never overwrite public assets."""
+    local = root / "assets/sources"
+    requested = args.source_dir or [local / name for name in
+                                    ("originals", "unavailable-apartments", "project-exports")]
+    sources = [Path(path).resolve() for path in requested if Path(path).is_dir()]
+    if not sources:
+        parser.error("No local image sources; provide --source-dir under assets/sources")
+    for source in sources:
+        if (not source.is_relative_to(local) or source.is_relative_to(local / "generated")
+                or (local / "generated").is_relative_to(source)):
+            parser.error("Inputs must be local assets/sources originals, not generated/public assets")
+    output = (args.output_dir or local / "generated/images").resolve()
+    if output.is_relative_to(root) and not output.is_relative_to(local / "generated"):
+        parser.error("Output inside the repository must be under ignored assets/sources/generated")
+    if any(output.is_relative_to(source) or source.is_relative_to(output) for source in sources):
+        parser.error("Input and staging output directories must be separate")
+    for name in ("map", "report"):
+        value = getattr(args, name, None)
+        if value:
+            target = Path(value).resolve()
+            if target.is_relative_to(root) and not target.is_relative_to(local / "generated"):
+                parser.error("Reports/maps inside the repository must stay in assets/sources/generated")
+    return sorted(set(sources)), output
+
+
+def staged_path(output, source, root):
+    return output / source.relative_to(root / "assets/sources")
+
+
+def display_path(path, root):
+    try:
+        return path.relative_to(root).as_posix()
+    except ValueError:
+        return path.as_posix()
+
+
 def main():
+    global ROOT
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--apply", action="store_true")
+    parser.add_argument("--root", type=Path, default=ROOT, help="Repository root containing ignored assets/sources")
+    parser.add_argument("--source-dir", type=Path, action="append", help="Local source directory; repeat to select several")
+    parser.add_argument("--output-dir", type=Path, help="Separate staging directory; defaults to assets/sources/generated/images")
+    parser.add_argument("--apply", action="store_true", help="Write verified alternatives only to staging")
     parser.add_argument("--benchmark", type=int, help="Encode a diverse sample without changing repository files")
     parser.add_argument("--workers", type=int, default=4)
     parser.add_argument("--report", type=Path, default=Path("/private/tmp/evolution-jpeg-webp-report.json"))
     parser.add_argument("--map", type=Path, default=Path("/private/tmp/evolution-jpeg-webp-map.json"))
     args = parser.parse_args()
+    ROOT = args.root.resolve()
     if args.benchmark and args.apply:
         parser.error("Benchmark is read-only; omit --apply")
     executable = shutil.which("cwebp")
     if not executable:
         parser.error("Install cwebp before running this script")
+    source_dirs, output_dir = processing_paths(parser, args, ROOT)
     started = time.monotonic()
-    paths = sorted(path for path in ROOT.rglob("*") if path.suffix.lower() in {".jpg", ".jpeg"} and ".git" not in path.parts and "node_modules" not in path.parts)
+    paths = sorted({path for directory in source_dirs for path in directory.rglob("*")
+                    if path.suffix.lower() in {".jpg", ".jpeg"} and path.is_file() and not path.is_symlink()})
     rows = [inspect(path) for path in paths]
     eligible = [row for row in rows if row.get("status") != "unsupported"]
     unique = {row["source_sha256"]: row for row in eligible}
     work = select_benchmark(list(unique.values()), args.benchmark) if args.benchmark else list(unique.values())
     results = {}
     report = {"applied": args.apply, "benchmark": args.benchmark,
+              "source_directories": [display_path(path, ROOT) for path in source_dirs],
+              "output_directory": display_path(output_dir, ROOT),
+              "sources_unchanged": True, "production_modified": False,
               "settings": SETTINGS, "refined_settings": REFINED_SETTINGS,
               "refine_when": "Fast candidate <= 105% of JPEG bytes, or large floor-plan background",
               "workers": args.workers, "inventory": {
@@ -191,6 +239,8 @@ def main():
                   "eligible_bytes": sum(row["bytes"] for row in eligible),
                   "modes": dict(Counter(row.get("mode", "unknown") for row in rows))},
               "encoding_results": [], "files": []}
+    args.report.parent.mkdir(parents=True, exist_ok=True)
+    args.map.parent.mkdir(parents=True, exist_ok=True)
     with concurrent.futures.ThreadPoolExecutor(max_workers=max(1, args.workers)) as pool:
         pending = {pool.submit(encode, row, executable): row for row in work}
         for future in concurrent.futures.as_completed(pending):
@@ -211,10 +261,11 @@ def main():
             entry.update(status=encoded["status"], candidate_bytes=encoded.get("candidate_bytes"),
                          proof=encoded.get("proof"), warning=encoded.get("warning"))
             if encoded["status"] == "smaller":
-                destination, reused = destination_for(row, encoded)
+                destination, reused = destination_for(row, encoded, output_dir)
                 if args.apply and not reused:
+                    destination.parent.mkdir(parents=True, exist_ok=True)
                     shutil.copyfile(CACHE / (row["source_sha256"] + ".webp"), destination)
-                entry.update(webp=nfc(destination.relative_to(ROOT)), webp_sha256=encoded["webp_sha256"],
+                entry.update(webp=display_path(destination, ROOT), webp_sha256=encoded["webp_sha256"],
                              reused_existing=reused, saved=row["bytes"] - encoded["candidate_bytes"])
                 mapping[row["relative"]] = entry["webp"]
         report["files"].append(entry)

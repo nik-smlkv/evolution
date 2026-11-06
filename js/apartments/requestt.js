@@ -1,12 +1,12 @@
-import { loadHouse } from "./houses.js?v=1.0.14";
-import { tchaikovskyFloorLevels } from "./tchaikovsky-floors.js?v=1.0.3";
+import { loadHouse } from "./houses.js?v=1.0.16";
+import { tchaikovskyFloorLevels } from "./tchaikovsky-floors.js?v=1.0.5";
 import { openModal } from "../modal.js?v=1.0.4";
-import { openPropertyDetails } from "./property-dialogs.js?v=1.0.6";
+import { openPropertyDetails } from "./property-dialogs.js?v=1.0.8";
 import { tchaikovskyOtherProperties } from "./tchaikovsky-properties.js?v=1.0.1";
-import { initializeTchaikovskyFloorPlan } from "./floor-plan.js?v=1.0.25";
+import { initializeTchaikovskyFloorPlan } from "./floor-plan.js?v=1.0.27";
 import { isTchaikovskyApartmentAvailable } from "./tchaikovsky-availability.js?v=1.0.2";
 import { initializeCatalogFilterControls } from "./catalog-filter-controls.js?v=1.0.4";
-import { optimizedImageUrl } from "../optimized-images.js?v=1.0.4";
+import { optimizedImageUrl } from "../optimized-images.js?v=1.0.6";
 import { langArr } from "../languages/languages.js?v=1.0.5";
 const requestedHouse = new URLSearchParams(window.location.search).get("house");
 const catalog = await loadHouse(requestedHouse);
@@ -442,8 +442,8 @@ const renderNextApartmentCards = () => {
   );
   const markup = batch.map((item) => {
     const placeholder = !item.apartmentImg ? {
-      parking: { image: "./plans/%D0%903/parking-plug.webp", description: "Parking space" },
-      commercial: { image: "./images/comerrical-plug.webp", description: "Commercial space" },
+      parking: { image: "./assets/images/shared/placeholders/parking.webp", description: "Parking space" },
+      commercial: { image: "./assets/images/shared/placeholders/commercial.webp", description: "Commercial space" },
     }[item.propertyType] : null;
     const img = optimizedImageUrl(item.apartmentImg || placeholder?.image);
     const imageDescription = placeholder?.description || `Plan of ${formatCardApartmentNumber(item.apartmentNumber)}`;

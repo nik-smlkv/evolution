@@ -1,15 +1,16 @@
-import { tchaikovskyFloorLevels, tchaikovskyFloorAssignments } from "./tchaikovsky-floors.js?v=1.0.3";
+import { tchaikovskyFloorLevels, tchaikovskyFloorAssignments } from "./tchaikovsky-floors.js?v=1.0.5";
 import { tchaikovskyUpperFloorMarkers } from "./tchaikovsky-plan-markers.js?v=1.0.1";
 import { commercialPlanUnitAliases } from "./tchaikovsky-properties.js?v=1.0.1";
 import { isTchaikovskyApartmentAvailable } from "./tchaikovsky-availability.js?v=1.0.2";
-import { optimizedImageUrl } from "../optimized-images.js?v=1.0.4";
+import { optimizedImageUrl } from "../optimized-images.js?v=1.0.6";
 import { animatePlanFloorChange, clonePlanLayer } from "./plan-transition.js?v=1.0.1";
 import { langArr } from "../languages/languages.js?v=1.0.5";
 import { canHover, hoverMedia } from "../input-capabilities.js?v=1.0.0";
 import { getPlanZoomScales } from "./plan-zoom.js?v=1.0.1";
 
-const planDirectory = "./plans/А3/";
-const groundImage = `${planDirectory}2100 Osnova Prizemlja (A,C)_Nisko Prizemlje редакт.jpg`;
+const floorBackgroundDirectory = "./assets/images/projects/tchaikovsky/floors/backgrounds";
+const floorOverlayDirectory = "./assets/images/projects/tchaikovsky/floors/overlays";
+const groundImage = `${floorBackgroundDirectory}/level-2100-edited.jpg`;
 const waitForPlanImage = (path) => {
   const image = new Image();
   const loaded = new Promise((resolve, reject) => {
@@ -21,26 +22,26 @@ const waitForPlanImage = (path) => {
 };
 const categories = {
   apartments: {
-    label: "Apartments", file: "chaikovsky-life.svg",
+    label: "Apartments", file: "apartments.svg",
     levels: [...tchaikovskyFloorLevels].reverse().map((level) => ({
       id: level.id, label: level.label,
       image: level.id === "2100" ? groundImage : level.image,
     })),
   },
   commercial: {
-    label: "Commercial", file: "chaikovsky-commercial.svg",
+    label: "Commercial", file: "commercial.svg",
     levels: [
-      { id: "2000", label: "Sut", image: `${planDirectory}2000 Osnova Suterena (A,B,C) редакт.jpg` },
+      { id: "2000", label: "Sut", image: `${floorBackgroundDirectory}/level-2000-edited.jpg` },
       { id: "2100", label: tchaikovskyFloorLevels.find((level) => level.id === "2100").label, image: groundImage },
     ],
   },
   parking: {
-    label: "Parking", file: "chaikovsky-parking.svg",
+    label: "Parking", file: "parking.svg",
     levels: [
-      { id: "1100", label: "-4 Po", image: `${planDirectory}1100 Osnova Podruma -4 - Garaža.jpg` },
-      { id: "1200", label: "-3 Po", image: `${planDirectory}1200 Osnova Podruma -3 - Garaža.jpg` },
-      { id: "1300", label: "-2 Po", image: `${planDirectory}1300 Osnova Podruma -2 - Garaža.jpg` },
-      { id: "1400", label: "-1 Po", image: `${planDirectory}1400 Osnova Podruma -1 - Garaža.jpg` },
+      { id: "1100", label: "-4 Po", image: `${floorBackgroundDirectory}/level-1100.webp` },
+      { id: "1200", label: "-3 Po", image: `${floorBackgroundDirectory}/level-1200.webp` },
+      { id: "1300", label: "-2 Po", image: `${floorBackgroundDirectory}/level-1300.webp` },
+      { id: "1400", label: "-1 Po", image: `${floorBackgroundDirectory}/level-1400.jpg` },
     ],
   },
 };
@@ -113,12 +114,12 @@ export async function initializeTchaikovskyFloorPlan(apartments, onApartment, on
   container.append(tabs);
   const compass = document.createElement("img");
   compass.className = "plan-compass";
-  compass.src = "./images/plan-compass.svg";
+  compass.src = "./assets/images/projects/tchaikovsky/ui/compass.svg";
   compass.alt = "North orientation";
   container.append(compass);
   const buildingKey = document.createElement("img");
   buildingKey.className = "plan-building-key";
-  buildingKey.src = "./images/plan-building-key.svg?v=2";
+  buildingKey.src = "./assets/images/projects/tchaikovsky/ui/section-key.svg?v=2";
   buildingKey.alt = "Building wings A, B and C";
   const gestureHint = document.createElement("p");
   gestureHint.className = "plan-gesture-hint";
@@ -232,7 +233,7 @@ export async function initializeTchaikovskyFloorPlan(apartments, onApartment, on
     if (!cache.has(type)) {
       cache.set(type, (async () => {
         const category = categories[type];
-        const response = await fetch(`${planDirectory}${category.file}?v=3`);
+        const response = await fetch(`${floorOverlayDirectory}/${category.file}?v=4`);
         if (!response.ok) throw new Error(`Unable to load ${category.file}`);
         const documentSvg = new DOMParser().parseFromString(await response.text(), "image/svg+xml");
         const plan = documentSvg.documentElement;
@@ -259,8 +260,7 @@ export async function initializeTchaikovskyFloorPlan(apartments, onApartment, on
             image.setAttribute("height", height);
             group.prepend(image);
           }
-          // The repository uses composed filenames; macOS also resolves decomposed
-          // spellings locally, but a static Linux host treats them as different URLs.
+          // Resolve the smaller verified variant of each canonical background.
           const imagePath = optimizedImageUrl(level.image.normalize("NFC"));
           image.dataset.planImage = imagePath;
           image.removeAttribute("href");

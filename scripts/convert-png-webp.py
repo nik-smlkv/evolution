@@ -5,7 +5,8 @@ Requires Pillow and cwebp. ICC, EXIF, XMP and orientation are verified after
 encoding. Standard PNG sRGB/gamma/chromaticity semantics are safe for WebP's
 default sRGB space; unfamiliar color metadata and animated PNGs are retained.
 Non-rendering PNG text/resolution metadata remains in each original PNG.
-Dry-run is the default; --apply writes only verified smaller alternatives.
+Dry-run is the default; --apply writes verified smaller alternatives only to
+isolated local staging. Candidate maps never modify production URL mappings.
 """
 
 import argparse
@@ -197,10 +198,11 @@ def encode(row, executable, mux_executable):
 
 def select_benchmark(rows, count):
     # Include photography, transparent art, palette transparency, XMP and plans.
-    names = ["images/parking.png", "images/moving-img.png", "videos/preview-video.png",
-             "images/comerrical-plug.png", "images/apartments-plans/apartment/4.png",
-             "plans/А3/parking-plug.png", "plans/А3/Lamela A/Lamela_A_2D/Level_3/A34.png",
-             "А3/Lamela A/Lamela_A_2D/Level_1/A3.png"]
+    names = ["assets/sources/originals/site/amenities/parking.png", "assets/sources/originals/site/hero/detail.png",
+             "assets/sources/originals/shared/placeholders/commercial.png",
+             "assets/sources/originals/projects/vivaldi/source-exports/catalog-extras/apartment/4.png",
+             "assets/sources/originals/shared/placeholders/parking.png",
+             "assets/sources/originals/projects/tchaikovsky/apartments/previews/supplied/a/level-3/a34.png"]
     lookup = {row["relative"]: row for row in rows}
     ordered = [lookup[name] for name in names if name in lookup] + sorted(rows, key=lambda row: row["bytes"], reverse=True)
     selected = []
@@ -214,8 +216,9 @@ def select_benchmark(rows, count):
     return selected
 
 
-def destination_for(row, encoded):
-    desired = ROOT / unicodedata.normalize("NFC", str(row["path"].relative_to(ROOT).with_suffix(".webp")))
+def destination_for(row, encoded, output_dir):
+    desired = staged_path(output_dir, row["path"], ROOT).with_suffix(".webp")
+    desired = Path(unicodedata.normalize("NFC", str(desired)))
     candidates = [desired, desired.with_name(desired.stem + ".png.webp")]
     number = 2
     while True:
@@ -234,22 +237,65 @@ def destination_for(row, encoded):
         number += 1
 
 
+def processing_paths(parser, args, root):
+    """Read local originals and stage candidates; never overwrite public assets."""
+    local = root / "assets/sources"
+    requested = args.source_dir or [local / name for name in
+                                    ("originals", "unavailable-apartments", "project-exports")]
+    sources = [Path(path).resolve() for path in requested if Path(path).is_dir()]
+    if not sources:
+        parser.error("No local image sources; provide --source-dir under assets/sources")
+    for source in sources:
+        if (not source.is_relative_to(local) or source.is_relative_to(local / "generated")
+                or (local / "generated").is_relative_to(source)):
+            parser.error("Inputs must be local assets/sources originals, not generated/public assets")
+    output = (args.output_dir or local / "generated/images").resolve()
+    if output.is_relative_to(root) and not output.is_relative_to(local / "generated"):
+        parser.error("Output inside the repository must be under ignored assets/sources/generated")
+    if any(output.is_relative_to(source) or source.is_relative_to(output) for source in sources):
+        parser.error("Input and staging output directories must be separate")
+    for name in ("map", "report"):
+        value = getattr(args, name, None)
+        if value:
+            target = Path(value).resolve()
+            if target.is_relative_to(root) and not target.is_relative_to(local / "generated"):
+                parser.error("Reports/maps inside the repository must stay in assets/sources/generated")
+    return sorted(set(sources)), output
+
+
+def staged_path(output, source, root):
+    return output / source.relative_to(root / "assets/sources")
+
+
+def display_path(path, root):
+    try:
+        return path.relative_to(root).as_posix()
+    except ValueError:
+        return path.as_posix()
+
+
 def main():
+    global ROOT
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--apply", action="store_true")
+    parser.add_argument("--root", type=Path, default=ROOT, help="Repository root containing ignored assets/sources")
+    parser.add_argument("--source-dir", type=Path, action="append", help="Local source directory; repeat to select several")
+    parser.add_argument("--output-dir", type=Path, help="Separate staging directory; defaults to assets/sources/generated/images")
+    parser.add_argument("--apply", action="store_true", help="Write verified alternatives only to staging")
     parser.add_argument("--benchmark", type=int, help="Encode a diverse sample without changing repository files")
     parser.add_argument("--workers", type=int, default=4)
     parser.add_argument("--report", type=Path, default=Path("/private/tmp/evolution-png-webp-report.json"))
     parser.add_argument("--map", type=Path, default=Path("/private/tmp/evolution-png-webp-map.json"))
     args = parser.parse_args()
+    ROOT = args.root.resolve()
     if args.benchmark is not None and (args.benchmark <= 0 or args.apply):
         parser.error("Benchmark needs a positive count and cannot be combined with --apply")
     executable = shutil.which("cwebp")
     if not executable:
         parser.error("Install cwebp before running this script")
+    source_dirs, output_dir = processing_paths(parser, args, ROOT)
     started = time.monotonic()
-    paths = sorted(path for path in ROOT.rglob("*") if path.suffix.lower() == ".png"
-                   and ".git" not in path.parts and "node_modules" not in path.parts)
+    paths = sorted({path for directory in source_dirs for path in directory.rglob("*") if path.suffix.lower() == ".png"
+                    and path.is_file() and not path.is_symlink()})
     rows = [inspect(path) for path in paths]
     eligible = [row for row in rows if row.get("status") != "unsupported"]
     unique = {row["source_sha256"]: row for row in eligible}
@@ -264,6 +310,9 @@ def main():
     work = select_benchmark(list(unique.values()), args.benchmark) if args.benchmark else list(unique.values())
     results = {}
     report = {"applied": args.apply, "benchmark": args.benchmark, "settings": SETTINGS,
+              "source_directories": [display_path(path, ROOT) for path in source_dirs],
+              "output_directory": display_path(output_dir, ROOT),
+              "sources_unchanged": True, "production_modified": False,
               "refined_settings": REFINED_SETTINGS,
               "refine_when": "Candidate >= 95% of PNG bytes, plus the 24 largest not already encoded with strongest settings",
               "workers": max(1, args.workers), "inventory": {
@@ -295,11 +344,12 @@ def main():
             entry.update(status=encoded["status"], candidate_bytes=encoded.get("candidate_bytes"),
                          proof=encoded.get("proof"), warning=encoded.get("warning"))
             if encoded["status"] == "smaller":
-                destination, reused = destination_for(row, encoded)
+                destination, reused = destination_for(row, encoded, output_dir)
                 if args.apply and not reused:
+                    destination.parent.mkdir(parents=True, exist_ok=True)
                     shutil.copyfile(CACHE / (row["source_sha256"] + ".webp"), destination)
                 actual_bytes = destination.stat().st_size if reused else encoded["candidate_bytes"]
-                entry.update(webp=nfc(destination.relative_to(ROOT)),
+                entry.update(webp=display_path(destination, ROOT),
                              webp_sha256=sha256(destination.read_bytes()) if reused else encoded["webp_sha256"],
                              webp_bytes=actual_bytes, reused_existing=reused, saved=row["bytes"] - actual_bytes)
                 mapping[row["relative"]] = entry["webp"]

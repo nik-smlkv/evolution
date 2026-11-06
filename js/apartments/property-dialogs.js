@@ -1,6 +1,6 @@
 import { openModal, closeModal, setModalEventListeners } from "../modal.js?v=1.0.4";
 import { openPriceRequest } from "../price-request.js?v=1.0.2";
-import { optimizedImageUrl } from "../optimized-images.js?v=1.0.4";
+import { optimizedImageUrl } from "../optimized-images.js?v=1.0.6";
 
 const dialogs = new Map();
 const copy = {

@@ -6,8 +6,8 @@ the smallest candidate is eligible for replacement, and only after dimensions,
 all APP/COM metadata, and the complete djpeg-decoded RGB stream match the source.
 CMYK sources use matching deterministic baseline coefficient serialization,
 since djpeg cannot convert CMYK JPEGs to RGB.
-Byte-identical sources share optimization and verification work. Changed files
-are backed up outside the repository before atomic replacement.
+Byte-identical sources share optimization and verification work. Local original
+files stay unchanged; --apply writes candidates only to isolated local staging.
 
 Dry run by default. Requires libjpeg-turbo's jpegtran and djpeg on PATH (or the
 usual Homebrew paths), for example:
@@ -217,10 +217,50 @@ def executable(name: str) -> str:
     raise SystemExit(f"Required executable not found: {name}")
 
 
+def processing_paths(parser, args, root):
+    """Read local originals and stage candidates; never overwrite public assets."""
+    local = root / "assets/sources"
+    requested = args.source_dir or [local / name for name in
+                                    ("originals", "unavailable-apartments", "project-exports")]
+    sources = [Path(path).resolve() for path in requested if Path(path).is_dir()]
+    if not sources:
+        parser.error("No local image sources; provide --source-dir under assets/sources")
+    for source in sources:
+        if (not source.is_relative_to(local) or source.is_relative_to(local / "generated")
+                or (local / "generated").is_relative_to(source)):
+            parser.error("Inputs must be local assets/sources originals, not generated/public assets")
+    output = (args.output_dir or local / "generated/images").resolve()
+    if output.is_relative_to(root) and not output.is_relative_to(local / "generated"):
+        parser.error("Output inside the repository must be under ignored assets/sources/generated")
+    if any(output.is_relative_to(source) or source.is_relative_to(output) for source in sources):
+        parser.error("Input and staging output directories must be separate")
+    for name in ("map", "report"):
+        value = getattr(args, name, None)
+        if value:
+            target = Path(value).resolve()
+            if target.is_relative_to(root) and not target.is_relative_to(local / "generated"):
+                parser.error("Reports/maps inside the repository must stay in assets/sources/generated")
+    return sorted(set(sources)), output
+
+
+def staged_path(output, source, root):
+    return output / source.relative_to(root / "assets/sources")
+
+
+def display_path(path, root):
+    try:
+        return path.relative_to(root).as_posix()
+    except ValueError:
+        return path.as_posix()
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--root", type=Path, default=Path(__file__).resolve().parents[1])
-    parser.add_argument("--apply", action="store_true")
+    parser.add_argument("--root", type=Path, default=Path(__file__).resolve().parents[1],
+                        help="Repository root containing ignored assets/sources")
+    parser.add_argument("--source-dir", type=Path, action="append", help="Local source directory; repeat to select several")
+    parser.add_argument("--output-dir", type=Path, help="Separate staging directory; defaults to assets/sources/generated/images")
+    parser.add_argument("--apply", action="store_true", help="Write verified candidates to staging; never replace source/public files")
     parser.add_argument("--workers", type=int, default=4)
     parser.add_argument("--report", type=Path)
     parser.add_argument("--backup-dir", type=Path)
@@ -228,6 +268,7 @@ def main() -> int:
                         help="Only retry error paths from an earlier JSON report")
     args = parser.parse_args()
     root = args.root.resolve()
+    source_dirs, output_dir = processing_paths(parser, args, root)
     timestamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     report_path = args.report or Path(f"/private/tmp/evolution-jpeg-report-{timestamp}.json")
     backup = args.backup_dir or Path(f"/private/tmp/evolution-jpeg-backup-{timestamp}")
@@ -235,12 +276,12 @@ def main() -> int:
         raise SystemExit("Backup directory must be outside the repository")
     jpegtran = executable("jpegtran")
     djpeg = executable("djpeg")
-    paths = sorted(
-        path for path in root.rglob("*")
+    paths = sorted({
+        path for directory in source_dirs for path in directory.rglob("*")
         if ".git" not in path.relative_to(root).parts
         and path.is_file() and not path.is_symlink()
         and path.suffix.lower() in (".jpg", ".jpeg")
-    )
+    })
     if args.retry_errors_from:
         earlier = json.loads(args.retry_errors_from.read_text())
         if Path(earlier["root"]).resolve() != root:
@@ -293,6 +334,8 @@ def main() -> int:
                         "metadata_preserved", "dimensions_preserved", "frame"
                     ) if key in result})
                     if args.apply:
+                        destination = staged_path(output_dir, path, root)
+                        destination.parent.mkdir(parents=True, exist_ok=True)
                         backup_path = backup / path.relative_to(root)
                         backup_path.parent.mkdir(parents=True, exist_ok=True)
                         if backup_path.exists():
@@ -304,7 +347,7 @@ def main() -> int:
                         if sha256(backup_path.read_bytes()) != source_hash:
                             raise RuntimeError("Backup does not match source; left untouched")
                         descriptor, temporary = tempfile.mkstemp(
-                            prefix=f".{path.stem}-jpeg-", suffix=path.suffix, dir=path.parent
+                            prefix=f".{path.stem}-jpeg-", suffix=path.suffix, dir=destination.parent
                         )
                         os.close(descriptor)
                         temporary_path = Path(temporary)
@@ -315,10 +358,11 @@ def main() -> int:
                                 raise RuntimeError("Replacement copy hash mismatch")
                             if sha256(path.read_bytes()) != source_hash:
                                 raise RuntimeError("Source changed before replacement; left untouched")
-                            os.replace(temporary_path, path)
+                            os.replace(temporary_path, destination)
                         finally:
                             temporary_path.unlink(missing_ok=True)
                         row["backup"] = str(backup_path)
+                        row["staged_output"] = display_path(destination, root)
                     else:
                         row["status"] = "would_optimize"
                 except Exception as error:
@@ -339,6 +383,9 @@ def main() -> int:
         "seconds": round(time.monotonic() - started, 3),
     }
     report = {"root": str(root), "timestamp_utc": timestamp, "apply": args.apply,
+              "source_directories": [display_path(path, root) for path in source_dirs],
+              "output_directory": display_path(output_dir, root),
+              "sources_unchanged": True, "production_modified": False,
               "tools": {"jpegtran": jpegtran, "djpeg": djpeg},
               "backup_directory": str(backup) if args.apply else None,
               "validation": "jpegtran coefficient-preserving entropy optimization; "

@@ -1,17 +1,17 @@
-import { optimizedImageUrl } from "../optimized-images.js?v=1.0.4";
+import { optimizedImageUrl } from "../optimized-images.js?v=1.0.6";
 
 export const houses = {
   vivaldi: {
     id: "vivaldi",
     name: "Vivaldi",
-    dataModule: "./data_vivaldi.js?v=1.0.0",
+    dataModule: "./data_vivaldi.js?v=1.0.1",
     hasAreaFilter: true,
     hasFloorPlans: true,
   },
   tchaikovsky: {
     id: "tchaikovsky",
     name: "Tchaikovsky",
-    dataModule: "./data_tchaikovsky.js?v=1.0.14",
+    dataModule: "./data_tchaikovsky.js?v=1.0.16",
     hasAreaFilter: true,
     hasFloorPlans: true,
   },

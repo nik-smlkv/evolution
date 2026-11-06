@@ -8,8 +8,8 @@ const apartments =
 			"buldingWing": "Lamela A",
 			"area": 50.66,
 			"status": "Slobodan",
-			"planImg": "./images/apartments-plans/Lamela_A/Level_2/A1_9.jpg",
-			"apartmentImg": "./images/apartments-plans/plans-for-card/Lamela_A/Level_2/A1_9-0.jpg",
+			"planImg": "./assets/images/projects/vivaldi/apartments/plans/a/level-2/a1-9.jpg",
+			"apartmentImg": "./assets/images/projects/vivaldi/apartments/previews/a/level-2/a1-9-0.jpg",
 			"object": "FF"
 		},
 		{
@@ -19,8 +19,8 @@ const apartments =
 			"buldingWing": "Lamela A",
 			"area": 52.6,
 			"status": "Slobodan",
-			"planImg": "./images/apartments-plans/Lamela_A/Level_3/A3_16.jpg",
-			"apartmentImg": "./images/apartments-plans/plans-for-card/Lamela_A/Level_3/A3_16-2.jpg",
+			"planImg": "./assets/images/projects/vivaldi/apartments/plans/a/level-3/a3-16.jpg",
+			"apartmentImg": "./assets/images/projects/vivaldi/apartments/previews/a/level-3/a3-16-2.jpg",
 			"object": "FF"
 		},
 		{
@@ -30,8 +30,8 @@ const apartments =
 			"buldingWing": "Lamela A",
 			"area": 51.59,
 			"status": "Slobodan",
-			"planImg": "./images/apartments-plans/Lamela_A/Level_3/A3_18.jpg",
-			"apartmentImg": "./images/apartments-plans/plans-for-card/Lamela_A/Level_3/A3_18-2.jpg",
+			"planImg": "./assets/images/projects/vivaldi/apartments/plans/a/level-3/a3-18.jpg",
+			"apartmentImg": "./assets/images/projects/vivaldi/apartments/previews/a/level-3/a3-18-2.jpg",
 			"object": "FF"
 		},
 		{
@@ -41,8 +41,8 @@ const apartments =
 			"buldingWing": "Lamela A",
 			"area": 52.6,
 			"status": "Slobodan",
-			"planImg": "./images/apartments-plans/Lamela_A/Level_4/A4_25.jpg",
-			"apartmentImg": "./images/apartments-plans/plans-for-card/Lamela_A/Level_4/A4_25-0.jpg",
+			"planImg": "./assets/images/projects/vivaldi/apartments/plans/a/level-4/a4-25.jpg",
+			"apartmentImg": "./assets/images/projects/vivaldi/apartments/previews/a/level-4/a4-25-0.jpg",
 			"object": "FF"
 		},
 		{
@@ -52,8 +52,8 @@ const apartments =
 			"buldingWing": "Lamela A",
 			"area": 52.6,
 			"status": "Slobodan",
-			"planImg": "./images/apartments-plans/Lamela_A/Level_4/A4_26.jpg",
-			"apartmentImg": "./images/apartments-plans/plans-for-card/Lamela_A/Level_4/A4_26-0.jpg",
+			"planImg": "./assets/images/projects/vivaldi/apartments/plans/a/level-4/a4-26.jpg",
+			"apartmentImg": "./assets/images/projects/vivaldi/apartments/previews/a/level-4/a4-26-0.jpg",
 			"object": "FF"
 		},
 		{
@@ -63,8 +63,8 @@ const apartments =
 			"buldingWing": "Lamela A",
 			"area": 51.59,
 			"status": "Slobodan",
-			"planImg": "./images/apartments-plans/Lamela_A/Level_4/A4_27.jpg",
-			"apartmentImg": "./images/apartments-plans/plans-for-card/Lamela_A/Level_4/A4_27-2.jpg",
+			"planImg": "./assets/images/projects/vivaldi/apartments/plans/a/level-4/a4-27.jpg",
+			"apartmentImg": "./assets/images/projects/vivaldi/apartments/previews/a/level-4/a4-27-2.jpg",
 			"object": "FF"
 		},
 		{
@@ -74,8 +74,8 @@ const apartments =
 			"buldingWing": "Lamela A",
 			"area": 51.59,
 			"status": "Slobodan",
-			"planImg": "./images/apartments-plans/Lamela_A/Level_5/A5_36.jpg",
-			"apartmentImg": "./images/apartments-plans/plans-for-card/Lamela_A/Level_5/A5_36-2.jpg",
+			"planImg": "./assets/images/projects/vivaldi/apartments/plans/a/level-5/a5-36.jpg",
+			"apartmentImg": "./assets/images/projects/vivaldi/apartments/previews/a/level-5/a5-36-2.jpg",
 			"object": "FF"
 		},
 		{
@@ -85,8 +85,8 @@ const apartments =
 			"buldingWing": "Lamela A",
 			"area": 52.6,
 			"status": "Slobodan",
-			"planImg": "./images/apartments-plans/Lamela_A/Level_6/A5_44.jpg",
-			"apartmentImg": "./images/apartments-plans/plans-for-card/Lamela_A/Level_6/A5_44.jpg",
+			"planImg": "./assets/images/projects/vivaldi/apartments/plans/a/level-6/a5-44.jpg",
+			"apartmentImg": "./assets/images/projects/vivaldi/apartments/previews/a/level-6/a5-44.jpg",
 			"object": "FF"
 		},
 		{
@@ -96,8 +96,8 @@ const apartments =
 			"buldingWing": "Lamela B",
 			"area": 57.07,
 			"status": "Slobodan",
-			"planImg": "./images/apartments-plans/Lamela_B/Level_3/B3_24.jpg",
-			"apartmentImg": "./images/apartments-plans/plans-for-card/Lamela_B/Level_3/B3_24-2.jpg",
+			"planImg": "./assets/images/projects/vivaldi/apartments/plans/b/level-3/b3-24.jpg",
+			"apartmentImg": "./assets/images/projects/vivaldi/apartments/previews/b/level-3/b3-24-2.jpg",
 			"object": "FF"
 		},
 		{
@@ -107,8 +107,8 @@ const apartments =
 			"buldingWing": "Lamela B",
 			"area": 53.24,
 			"status": "Slobodan",
-			"planImg": "./images/apartments-plans/Lamela_B/Level_3/B3_30.jpg",
-			"apartmentImg": "./images/apartments-plans/plans-for-card/Lamela_B/Level_3/B3_30-2.jpg",
+			"planImg": "./assets/images/projects/vivaldi/apartments/plans/b/level-3/b3-30.jpg",
+			"apartmentImg": "./assets/images/projects/vivaldi/apartments/previews/b/level-3/b3-30-2.jpg",
 			"object": "FF"
 		},
 		{
@@ -118,8 +118,8 @@ const apartments =
 			"buldingWing": "Lamela B",
 			"area": 56.78,
 			"status": "Slobodan",
-			"planImg": "./images/apartments-plans/Lamela_B/Level_4/B4_37.jpg",
-			"apartmentImg": "./images/apartments-plans/plans-for-card/Lamela_B/Level_4/B4_37-0.jpg",
+			"planImg": "./assets/images/projects/vivaldi/apartments/plans/b/level-4/b4-37.jpg",
+			"apartmentImg": "./assets/images/projects/vivaldi/apartments/previews/b/level-4/b4-37-0.jpg",
 
 			"object": "FF"
 		},
@@ -130,8 +130,8 @@ const apartments =
 			"buldingWing": "Lamela B",
 			"area": 53.26,
 			"status": "Slobodan",
-			"planImg": "./images/apartments-plans/Lamela_B/Level_4/B4_41.jpg",
-			"apartmentImg": "./images/apartments-plans/plans-for-card/Lamela_B/Level_4/B4_41-2.jpg",
+			"planImg": "./assets/images/projects/vivaldi/apartments/plans/b/level-4/b4-41.jpg",
+			"apartmentImg": "./assets/images/projects/vivaldi/apartments/previews/b/level-4/b4-41-2.jpg",
 
 			"object": "FF"
 		},
@@ -142,8 +142,8 @@ const apartments =
 			"buldingWing": "Lamela B",
 			"area": 57.07,
 			"status": "Slobodan",
-			"planImg": "./images/apartments-plans/Lamela_B/Level_5/B5_52.jpg",
-			"apartmentImg": "./images/apartments-plans/plans-for-card/Lamela_B/Level_5/B5_52-0.jpg",
+			"planImg": "./assets/images/projects/vivaldi/apartments/plans/b/level-5/b5-52.jpg",
+			"apartmentImg": "./assets/images/projects/vivaldi/apartments/previews/b/level-5/b5-52-0.jpg",
 
 			"object": "FF"
 		},
@@ -154,8 +154,8 @@ const apartments =
 			"buldingWing": "Lamela B",
 			"area": 53.26,
 			"status": "Slobodan",
-			"planImg": "./images/apartments-plans/Lamela_B/Level_5/B5_55.jpg",
-			"apartmentImg": "./images/apartments-plans/plans-for-card/Lamela_B/Level_5/B5_55-2.jpg",
+			"planImg": "./assets/images/projects/vivaldi/apartments/plans/b/level-5/b5-55.jpg",
+			"apartmentImg": "./assets/images/projects/vivaldi/apartments/previews/b/level-5/b5-55-2.jpg",
 
 			"object": "FF"
 		},
@@ -166,8 +166,8 @@ const apartments =
 			"buldingWing": "Lamela B",
 			"area": 56.78,
 			"status": "Slobodan",
-			"planImg": "./images/apartments-plans/Lamela_B/Level_6/B6_65.jpg",
-			"apartmentImg": "./images/apartments-plans/plans-for-card/Lamela_B/Level_6/B6_65-0.jpg",
+			"planImg": "./assets/images/projects/vivaldi/apartments/plans/b/level-6/b6-65.jpg",
+			"apartmentImg": "./assets/images/projects/vivaldi/apartments/previews/b/level-6/b6-65-0.jpg",
 
 			"object": "FF"
 		},
@@ -178,8 +178,8 @@ const apartments =
 			"buldingWing": "Lamela B",
 			"area": 53.26,
 			"status": "Slobodan",
-			"planImg": "./images/apartments-plans/Lamela_B/Level_6/B6_69.jpg",
-			"apartmentImg": "./images/apartments-plans/plans-for-card/Lamela_B/Level_6/B6_69-2.jpg",
+			"planImg": "./assets/images/projects/vivaldi/apartments/plans/b/level-6/b6-69.jpg",
+			"apartmentImg": "./assets/images/projects/vivaldi/apartments/previews/b/level-6/b6-69-2.jpg",
 
 			"object": "FF"
 		},
@@ -190,8 +190,8 @@ const apartments =
 			"buldingWing": "Lamela B",
 			"area": 53.26,
 			"status": "Slobodan",
-			"planImg": "./images/apartments-plans/Lamela_B/Level_7/B7_83.jpg",
-			"apartmentImg": "./images/apartments-plans/plans-for-card/Lamela_B/Level_7/B7_83-2.jpg",
+			"planImg": "./assets/images/projects/vivaldi/apartments/plans/b/level-7/b7-83.jpg",
+			"apartmentImg": "./assets/images/projects/vivaldi/apartments/previews/b/level-7/b7-83-2.jpg",
 
 			"object": "FF"
 		},
@@ -202,8 +202,8 @@ const apartments =
 			"buldingWing": "Lamela C",
 			"area": 49.64,
 			"status": "Slobodan",
-			"planImg": "./images/apartments-plans/Lamela_C/Level_1/C1_2.jpg",
-			"apartmentImg": "./images/apartments-plans/plans-for-card/Lamela_C/Level_1/C1_2-1.jpg",
+			"planImg": "./assets/images/projects/vivaldi/apartments/plans/c/level-1/c1-2.jpg",
+			"apartmentImg": "./assets/images/projects/vivaldi/apartments/previews/c/level-1/c1-2-1.jpg",
 
 			"object": "FF"
 		},
@@ -214,8 +214,8 @@ const apartments =
 			"buldingWing": "Lamela C",
 			"area": 45.73,
 			"status": "Slobodan",
-			"planImg": "./images/apartments-plans/Lamela_C/Level_1/C1_4.jpg",
-			"apartmentImg": "./images/apartments-plans/plans-for-card/Lamela_C/Level_1/C1_4-0.jpg",
+			"planImg": "./assets/images/projects/vivaldi/apartments/plans/c/level-1/c1-4.jpg",
+			"apartmentImg": "./assets/images/projects/vivaldi/apartments/previews/c/level-1/c1-4-0.jpg",
 
 			"object": "FF"
 		},
@@ -226,8 +226,8 @@ const apartments =
 			"buldingWing": "Lamela C",
 			"area": 57.32,
 			"status": "Slobodan",
-			"planImg": "./images/apartments-plans/Lamela_C/Level_6/C6_106.jpg",
-			"apartmentImg": "./images/apartments-plans/plans-for-card/Lamela_C/Level_6/C6_106-0.jpg",
+			"planImg": "./assets/images/projects/vivaldi/apartments/plans/c/level-6/c6-106.jpg",
+			"apartmentImg": "./assets/images/projects/vivaldi/apartments/previews/c/level-6/c6-106-0.jpg",
 
 			"object": "FF"
 		},
@@ -238,8 +238,8 @@ const apartments =
 			"buldingWing": "Lamela C",
 			"area": 54.82,
 			"status": "Slobodan",
-			"planImg": "./images/apartments-plans/Lamela_C/Level_7/C7_120.jpg",
-			"apartmentImg": "./images/apartments-plans/plans-for-card/Lamela_C/Level_7/C7_120-0.jpg",
+			"planImg": "./assets/images/projects/vivaldi/apartments/plans/c/level-7/c7-120.jpg",
+			"apartmentImg": "./assets/images/projects/vivaldi/apartments/previews/c/level-7/c7-120-0.jpg",
 
 			"object": "FF"
 		},
@@ -250,8 +250,8 @@ const apartments =
 			"buldingWing": "Lamela C",
 			"area": 54.79,
 			"status": "Slobodan",
-			"planImg": "./images/apartments-plans/Lamela_C/Level_7/C7_121.jpg",
-			"apartmentImg": "./images/apartments-plans/plans-for-card/Lamela_C/Level_7/C7_121-0.jpg",
+			"planImg": "./assets/images/projects/vivaldi/apartments/plans/c/level-7/c7-121.jpg",
+			"apartmentImg": "./assets/images/projects/vivaldi/apartments/previews/c/level-7/c7-121-0.jpg",
 
 			"object": "FF"
 		},
@@ -262,8 +262,8 @@ const apartments =
 			"buldingWing": "Lamela C",
 			"area": 53.47,
 			"status": "Slobodan",
-			"planImg": "./images/apartments-plans/Lamela_C/Level_7/C7_123.jpg",
-			"apartmentImg": "./images/apartments-plans/plans-for-card/Lamela_C/Level_7/C7_123-0.jpg",
+			"planImg": "./assets/images/projects/vivaldi/apartments/plans/c/level-7/c7-123.jpg",
+			"apartmentImg": "./assets/images/projects/vivaldi/apartments/previews/c/level-7/c7-123-0.jpg",
 
 			"object": "FF"
 		},
@@ -274,8 +274,8 @@ const apartments =
 			"buldingWing": "Lamela C",
 			"area": 57.32,
 			"status": "Slobodan",
-			"planImg": "./images/apartments-plans/Lamela_C/Level_7/C7_125.jpg",
-			"apartmentImg": "./images/apartments-plans/plans-for-card/Lamela_C/Level_7/C7_125-0.jpg",
+			"planImg": "./assets/images/projects/vivaldi/apartments/plans/c/level-7/c7-125.jpg",
+			"apartmentImg": "./assets/images/projects/vivaldi/apartments/previews/c/level-7/c7-125-0.jpg",
 
 			"object": "FF"
 		},
@@ -286,8 +286,8 @@ const apartments =
 			"buldingWing": "Lamela C",
 			"area": 54.82,
 			"status": "Slobodan",
-			"planImg": "./images/apartments-plans/Lamela_C/Level_1/C1_13.jpg",
-			"apartmentImg": "./images/apartments-plans/plans-for-card/Lamela_C/Level_1/C1_13-0.jpg",
+			"planImg": "./assets/images/projects/vivaldi/apartments/plans/c/level-1/c1-13.jpg",
+			"apartmentImg": "./assets/images/projects/vivaldi/apartments/previews/c/level-1/c1-13-0.jpg",
 
 			"object": "FF"
 		},
@@ -298,8 +298,8 @@ const apartments =
 			"buldingWing": "Lamela C",
 			"area": 49.64,
 			"status": "Slobodan",
-			"planImg": "./images/apartments-plans/Lamela_C/Level_2/C2_15.jpg",
-			"apartmentImg": "./images/apartments-plans/plans-for-card/Lamela_C/Level_2/C2_15-0.jpg",
+			"planImg": "./assets/images/projects/vivaldi/apartments/plans/c/level-2/c2-15.jpg",
+			"apartmentImg": "./assets/images/projects/vivaldi/apartments/previews/c/level-2/c2-15-0.jpg",
 
 			"object": "FF"
 		},
@@ -310,8 +310,8 @@ const apartments =
 			"buldingWing": "Lamela C",
 			"area": 54.82,
 			"status": "Slobodan",
-			"planImg": "./images/apartments-plans/Lamela_C/Level_2/C2_26.jpg",
-			"apartmentImg": "./images/apartments-plans/plans-for-card/Lamela_C/Level_2/C2_26-0.jpg",
+			"planImg": "./assets/images/projects/vivaldi/apartments/plans/c/level-2/c2-26.jpg",
+			"apartmentImg": "./assets/images/projects/vivaldi/apartments/previews/c/level-2/c2-26-0.jpg",
 
 			"object": "FF"
 		},
@@ -322,8 +322,8 @@ const apartments =
 			"buldingWing": "Lamela C",
 			"area": 46.45,
 			"status": "Slobodan",
-			"planImg": "./images/apartments-plans/Lamela_C/Level_2/C2_27.jpg",
-			"apartmentImg": "./images/apartments-plans/plans-for-card/Lamela_C/Level_2/C2_27-1.jpg",
+			"planImg": "./assets/images/projects/vivaldi/apartments/plans/c/level-2/c2-27.jpg",
+			"apartmentImg": "./assets/images/projects/vivaldi/apartments/previews/c/level-2/c2-27-1.jpg",
 
 			"object": "FF"
 		},
@@ -334,8 +334,8 @@ const apartments =
 			"buldingWing": "Lamela C",
 			"area": 49.37,
 			"status": "Slobodan",
-			"planImg": "./images/apartments-plans/Lamela_C/Level_2/C2_30.jpg",
-			"apartmentImg": "./images/apartments-plans/plans-for-card/Lamela_C/Level_2/C2_30-0.jpg",
+			"planImg": "./assets/images/projects/vivaldi/apartments/plans/c/level-2/c2-30.jpg",
+			"apartmentImg": "./assets/images/projects/vivaldi/apartments/previews/c/level-2/c2-30-0.jpg",
 
 			"object": "FF"
 		},
@@ -346,8 +346,8 @@ const apartments =
 			"buldingWing": "Lamela C",
 			"area": 54.82,
 			"status": "Slobodan",
-			"planImg": "./images/apartments-plans/Lamela_C/Level_3/C3_44.jpg",
-			"apartmentImg": "./images/apartments-plans/plans-for-card/Lamela_C/Level_3/C3_44-0.jpg",
+			"planImg": "./assets/images/projects/vivaldi/apartments/plans/c/level-3/c3-44.jpg",
+			"apartmentImg": "./assets/images/projects/vivaldi/apartments/previews/c/level-3/c3-44-0.jpg",
 
 			"object": "FF"
 		},
@@ -358,8 +358,8 @@ const apartments =
 			"buldingWing": "Lamela C",
 			"area": 54.79,
 			"status": "Slobodan",
-			"planImg": "./images/apartments-plans/Lamela_C/Level_3/C3_45.jpg",
-			"apartmentImg": "./images/apartments-plans/plans-for-card/Lamela_C/Level_3/C3_45-0.jpg",
+			"planImg": "./assets/images/projects/vivaldi/apartments/plans/c/level-3/c3-45.jpg",
+			"apartmentImg": "./assets/images/projects/vivaldi/apartments/previews/c/level-3/c3-45-0.jpg",
 
 			"object": "FF"
 		},
@@ -370,8 +370,8 @@ const apartments =
 			"buldingWing": "Lamela C",
 			"area": 57.32,
 			"status": "Slobodan",
-			"planImg": "./images/apartments-plans/Lamela_C/Level_3/C3_49.jpg",
-			"apartmentImg": "./images/apartments-plans/plans-for-card/Lamela_C/Level_3/C3_49-0.jpg",
+			"planImg": "./assets/images/projects/vivaldi/apartments/plans/c/level-3/c3-49.jpg",
+			"apartmentImg": "./assets/images/projects/vivaldi/apartments/previews/c/level-3/c3-49-0.jpg",
 
 			"object": "FF"
 		},
@@ -382,8 +382,8 @@ const apartments =
 			"buldingWing": "Lamela C",
 			"area": 54.82,
 			"status": "Slobodan",
-			"planImg": "./images/apartments-plans/Lamela_C/Level_4/C4_64.jpg",
-			"apartmentImg": "./images/apartments-plans/plans-for-card/Lamela_C/Level_4/C4_64-1.jpg",
+			"planImg": "./assets/images/projects/vivaldi/apartments/plans/c/level-4/c4-64.jpg",
+			"apartmentImg": "./assets/images/projects/vivaldi/apartments/previews/c/level-4/c4-64-1.jpg",
 
 			"object": "FF"
 		},
@@ -394,8 +394,8 @@ const apartments =
 			"buldingWing": "Lamela C",
 			"area": 57.32,
 			"status": "Slobodan",
-			"planImg": "./images/apartments-plans/Lamela_C/Level_4/C4_68.jpg",
-			"apartmentImg": "./images/apartments-plans/plans-for-card/Lamela_C/Level_4/C4_68-0.jpg",
+			"planImg": "./assets/images/projects/vivaldi/apartments/plans/c/level-4/c4-68.jpg",
+			"apartmentImg": "./assets/images/projects/vivaldi/apartments/previews/c/level-4/c4-68-0.jpg",
 
 			"object": "FF"
 		},
@@ -406,8 +406,8 @@ const apartments =
 			"buldingWing": "Lamela C",
 			"area": 54.82,
 			"status": "Slobodan",
-			"planImg": "./images/apartments-plans/Lamela_C/Level_5/C5_82.jpg",
-			"apartmentImg": "./images/apartments-plans/plans-for-card/Lamela_C/Level_5/C5_82-0.jpg",
+			"planImg": "./assets/images/projects/vivaldi/apartments/plans/c/level-5/c5-82.jpg",
+			"apartmentImg": "./assets/images/projects/vivaldi/apartments/previews/c/level-5/c5-82-0.jpg",
 
 			"object": "FF"
 		},
@@ -418,8 +418,8 @@ const apartments =
 			"buldingWing": "Lamela C",
 			"area": 57.32,
 			"status": "Slobodan",
-			"planImg": "./images/apartments-plans/Lamela_C/Level_5/C5_87.jpg",
-			"apartmentImg": "./images/apartments-plans/plans-for-card/Lamela_C/Level_5/C5_87-0.jpg",
+			"planImg": "./assets/images/projects/vivaldi/apartments/plans/c/level-5/c5-87.jpg",
+			"apartmentImg": "./assets/images/projects/vivaldi/apartments/previews/c/level-5/c5-87-0.jpg",
 
 			"object": "FF"
 		},
@@ -430,8 +430,8 @@ const apartments =
 			"buldingWing": "Lamela C",
 			"area": 49.64,
 			"status": "Slobodan",
-			"planImg": "./images/apartments-plans/Lamela_C/Level_1/C1_9.jpg",
-			"apartmentImg": "./images/apartments-plans/plans-for-card/Lamela_C/Level_1/C1_9-0.jpg",
+			"planImg": "./assets/images/projects/vivaldi/apartments/plans/c/level-1/c1-9.jpg",
+			"apartmentImg": "./assets/images/projects/vivaldi/apartments/previews/c/level-1/c1-9-0.jpg",
 
 			"object": "FF"
 		},
@@ -442,8 +442,8 @@ const apartments =
 			"buldingWing": "Lamela D",
 			"area": 47.48,
 			"status": "Slobodan",
-			"planImg": "./images/apartments-plans/Lamela_D/Level_2/D2_11.jpg",
-			"apartmentImg": "./images/apartments-plans/plans-for-card/Lamela_D/Level_2/D2_11-0.jpg",
+			"planImg": "./assets/images/projects/vivaldi/apartments/plans/d/level-2/d2-11.jpg",
+			"apartmentImg": "./assets/images/projects/vivaldi/apartments/previews/d/level-2/d2-11-0.jpg",
 
 			"object": "FF"
 		},
@@ -454,8 +454,8 @@ const apartments =
 			"buldingWing": "Lamela D",
 			"area": 49.64,
 			"status": "Slobodan",
-			"planImg": "./images/apartments-plans/Lamela_D/Level_2/D2_13.jpg",
-			"apartmentImg": "./images/apartments-plans/plans-for-card/Lamela_D/Level_2/D2_13-0.jpg",
+			"planImg": "./assets/images/projects/vivaldi/apartments/plans/d/level-2/d2-13.jpg",
+			"apartmentImg": "./assets/images/projects/vivaldi/apartments/previews/d/level-2/d2-13-0.jpg",
 
 			"object": "FF"
 		},
@@ -466,8 +466,8 @@ const apartments =
 			"buldingWing": "Lamela D",
 			"area": 52.02,
 			"status": "Slobodan",
-			"planImg": "./images/apartments-plans/Lamela_D/Level_3/D3_26.jpg",
-			"apartmentImg": "./images/apartments-plans/plans-for-card/Lamela_D/Level_3/D3_26-0.jpg",
+			"planImg": "./assets/images/projects/vivaldi/apartments/plans/d/level-3/d3-26.jpg",
+			"apartmentImg": "./assets/images/projects/vivaldi/apartments/previews/d/level-3/d3-26-0.jpg",
 
 			"object": "FF"
 		},
@@ -478,8 +478,8 @@ const apartments =
 			"buldingWing": "Lamela D",
 			"area": 55.91,
 			"status": "Slobodan",
-			"planImg": "./images/apartments-plans/Lamela_D/Level_4/D4_37.jpg",
-			"apartmentImg": "./images/apartments-plans/plans-for-card/Lamela_D/Level_4/D4_37-1.jpg",
+			"planImg": "./assets/images/projects/vivaldi/apartments/plans/d/level-4/d4-37.jpg",
+			"apartmentImg": "./assets/images/projects/vivaldi/apartments/previews/d/level-4/d4-37-1.jpg",
 
 			"object": "FF"
 		},
@@ -490,8 +490,8 @@ const apartments =
 			"buldingWing": "Lamela D",
 			"area": 52.02,
 			"status": "Slobodan",
-			"planImg": "./images/apartments-plans/Lamela_D/Level_5/D5_50.jpg",
-			"apartmentImg": "./images/apartments-plans/plans-for-card/Lamela_D/Level_5/D5_50-0.jpg",
+			"planImg": "./assets/images/projects/vivaldi/apartments/plans/d/level-5/d5-50.jpg",
+			"apartmentImg": "./assets/images/projects/vivaldi/apartments/previews/d/level-5/d5-50-0.jpg",
 
 			"object": "FF"
 		},
@@ -502,8 +502,8 @@ const apartments =
 			"buldingWing": "Lamela D",
 			"area": 57.46,
 			"status": "Slobodan",
-			"planImg": "./images/apartments-plans/Lamela_D/Level_5/D5_52.jpg",
-			"apartmentImg": "./images/apartments-plans/plans-for-card/Lamela_D/Level_5/D5_52-0.jpg",
+			"planImg": "./assets/images/projects/vivaldi/apartments/plans/d/level-5/d5-52.jpg",
+			"apartmentImg": "./assets/images/projects/vivaldi/apartments/previews/d/level-5/d5-52-0.jpg",
 
 			"object": "FF"
 		},
@@ -514,8 +514,8 @@ const apartments =
 			"buldingWing": "Lamela D",
 			"area": 57.46,
 			"status": "Slobodan",
-			"planImg": "./images/apartments-plans/Lamela_D/Level_6/D6_63.jpg",
-			"apartmentImg": "./images/apartments-plans/plans-for-card/Lamela_D/Level_6/D6_63-0.jpg",
+			"planImg": "./assets/images/projects/vivaldi/apartments/plans/d/level-6/d6-63.jpg",
+			"apartmentImg": "./assets/images/projects/vivaldi/apartments/previews/d/level-6/d6-63-0.jpg",
 			"object": "FF"
 		},
 		{
@@ -525,8 +525,8 @@ const apartments =
 			"buldingWing": "Lamela D",
 			"area": 83.2,
 			"status": "Slobodan",
-			"planImg": "./images/apartments-plans/Lamela_D/Level_7/D7_67.jpg",
-			"apartmentImg": "./images/apartments-plans/plans-for-card/Lamela_D/Level_7/D7_67-1.jpg",
+			"planImg": "./assets/images/projects/vivaldi/apartments/plans/d/level-7/d7-67.jpg",
+			"apartmentImg": "./assets/images/projects/vivaldi/apartments/previews/d/level-7/d7-67-1.jpg",
 			"object": "FF"
 		},
 		{
@@ -536,8 +536,8 @@ const apartments =
 			"buldingWing": "Lamela D",
 			"area": 52.02,
 			"status": "Slobodan",
-			"planImg": "./images/apartments-plans/Lamela_D/Level_7/D7_72.jpg",
-			"apartmentImg": "./images/apartments-plans/plans-for-card/Lamela_D/Level_7/D7_72-0.jpg",
+			"planImg": "./assets/images/projects/vivaldi/apartments/plans/d/level-7/d7-72.jpg",
+			"apartmentImg": "./assets/images/projects/vivaldi/apartments/previews/d/level-7/d7-72-0.jpg",
 			"object": "FF"
 		},
 		{
@@ -547,8 +547,8 @@ const apartments =
 			"buldingWing": "Lamela D",
 			"area": 57.46,
 			"status": "Slobodan",
-			"planImg": "./images/apartments-plans/Lamela_D/Level_7/D7_74.jpg",
-			"apartmentImg": "./images/apartments-plans/plans-for-card/Lamela_D/Level_7/D7_74-1.jpg",
+			"planImg": "./assets/images/projects/vivaldi/apartments/plans/d/level-7/d7-74.jpg",
+			"apartmentImg": "./assets/images/projects/vivaldi/apartments/previews/d/level-7/d7-74-1.jpg",
 			"object": "FF"
 		},
 		{
@@ -558,8 +558,8 @@ const apartments =
 			"buldingWing": "Lamela D",
 			"area": 47.78,
 			"status": "Slobodan",
-			"planImg": "./images/apartments-plans/Lamela_D/Level_2/D2_8.jpg",
-			"apartmentImg": "./images/apartments-plans/plans-for-card/Lamela_D/Level_2/D2_8-1.jpg",
+			"planImg": "./assets/images/projects/vivaldi/apartments/plans/d/level-2/d2-8.jpg",
+			"apartmentImg": "./assets/images/projects/vivaldi/apartments/previews/d/level-2/d2-8-1.jpg",
 			"object": "FF"
 		},
 		{
@@ -569,8 +569,8 @@ const apartments =
 			"buldingWing": "Lamela C",
 			"area": 45.42,
 			"status": "Slobodan",
-			"planImg": "./images/apartments-plans/Lamela_C/Level_2/C2_29.jpg",
-			"apartmentImg": "./images/apartments-plans/plans-for-card/Lamela_C/Level_2/C2_29-1.jpg",
+			"planImg": "./assets/images/projects/vivaldi/apartments/plans/c/level-2/c2-29.jpg",
+			"apartmentImg": "./assets/images/projects/vivaldi/apartments/previews/c/level-2/c2-29-1.jpg",
 			"object": "FF"
 		},
 		{
@@ -580,8 +580,8 @@ const apartments =
 			"buldingWing": "Lamela C",
 			"area": 82.41,
 			"status": "Slobodan",
-			"planImg": "./images/apartments-plans/Lamela_C/Level_4/C4_56.jpg",
-			"apartmentImg": "./images/apartments-plans/plans-for-card/Lamela_C/Level_4/C4_56-0.jpg",
+			"planImg": "./assets/images/projects/vivaldi/apartments/plans/c/level-4/c4-56.jpg",
+			"apartmentImg": "./assets/images/projects/vivaldi/apartments/previews/c/level-4/c4-56-0.jpg",
 			"object": "FF"
 		},
 		{
@@ -591,8 +591,8 @@ const apartments =
 			"buldingWing": "Lamela C",
 			"area": 53.47,
 			"status": "Slobodan",
-			"planImg": "./images/apartments-plans/Lamela_C/Level_3/C3_47.jpg",
-			"apartmentImg": "./images/apartments-plans/plans-for-card/Lamela_C/Level_3/C3_47-0.jpg",
+			"planImg": "./assets/images/projects/vivaldi/apartments/plans/c/level-3/c3-47.jpg",
+			"apartmentImg": "./assets/images/projects/vivaldi/apartments/previews/c/level-3/c3-47-0.jpg",
 			"object": "FF"
 		},
 		{
@@ -602,8 +602,8 @@ const apartments =
 			"buldingWing": "Lamela C",
 			"area": 54.79,
 			"status": "Slobodan",
-			"planImg": "./images/apartments-plans/Lamela_C/Level_6/C6_102.jpg",
-			"apartmentImg": "./images/apartments-plans/plans-for-card/Lamela_C/Level_6/C6_102-0.jpg",
+			"planImg": "./assets/images/projects/vivaldi/apartments/plans/c/level-6/c6-102.jpg",
+			"apartmentImg": "./assets/images/projects/vivaldi/apartments/previews/c/level-6/c6-102-0.jpg",
 			"object": "FF"
 		},
 		{
@@ -613,8 +613,8 @@ const apartments =
 			"buldingWing": "Lamela A",
 			"area": 82.12,
 			"status": "Slobodan",
-			"planImg": "./images/apartments-plans/Lamela_A/Level_5/A5_32.jpg",
-			"apartmentImg": "./images/apartments-plans/plans-for-card/Lamela_A/Level_5/A5_32-2.jpg",
+			"planImg": "./assets/images/projects/vivaldi/apartments/plans/a/level-5/a5-32.jpg",
+			"apartmentImg": "./assets/images/projects/vivaldi/apartments/previews/a/level-5/a5-32-2.jpg",
 			"object": "FF"
 		},
 		{
@@ -624,8 +624,8 @@ const apartments =
 			"buldingWing": "Lamela B",
 			"area": 82.48,
 			"status": "Slobodan",
-			"planImg": "./images/apartments-plans/Lamela_B/Level_4/B4_42.jpg",
-			"apartmentImg": "./images/apartments-plans/plans-for-card/Lamela_B/Level_4/B4_42-2.jpg",
+			"planImg": "./assets/images/projects/vivaldi/apartments/plans/b/level-4/b4-42.jpg",
+			"apartmentImg": "./assets/images/projects/vivaldi/apartments/previews/b/level-4/b4-42-2.jpg",
 			"object": "FF"
 		},
 		{
@@ -635,8 +635,8 @@ const apartments =
 			"buldingWing": "Lamela B",
 			"area": 82.48,
 			"status": "Slobodan",
-			"planImg": "./images/apartments-plans/Lamela_B/Level_5/B5_56.jpg",
-			"apartmentImg": "./images/apartments-plans/plans-for-card/Lamela_B/Level_5/B5_56-2.jpg",
+			"planImg": "./assets/images/projects/vivaldi/apartments/plans/b/level-5/b5-56.jpg",
+			"apartmentImg": "./assets/images/projects/vivaldi/apartments/previews/b/level-5/b5-56-2.jpg",
 			"object": "FF"
 		},
 		{
@@ -646,8 +646,8 @@ const apartments =
 			"buldingWing": "Lamela D",
 			"area": 82.23,
 			"status": "Slobodan",
-			"planImg": "./images/apartments-plans/Lamela_D/Level_2/D2_3.jpg",
-			"apartmentImg": "./images/apartments-plans/plans-for-card/Lamela_D/Level_2/D2_3-0.jpg",
+			"planImg": "./assets/images/projects/vivaldi/apartments/plans/d/level-2/d2-3.jpg",
+			"apartmentImg": "./assets/images/projects/vivaldi/apartments/previews/d/level-2/d2-3-0.jpg",
 			"object": "FF"
 		},
 		{
@@ -657,8 +657,8 @@ const apartments =
 			"buldingWing": "Lamela C",
 			"area": 53.47,
 			"status": "Slobodan",
-			"planImg": "./images/apartments-plans/Lamela_C/Level_3/C3_47.jpg",
-			"apartmentImg": "./images/apartments-plans/plans-for-card/Lamela_C/Level_3/C3_47-0.jpg",
+			"planImg": "./assets/images/projects/vivaldi/apartments/plans/c/level-3/c3-47.jpg",
+			"apartmentImg": "./assets/images/projects/vivaldi/apartments/previews/c/level-3/c3-47-0.jpg",
 			"object": "FF"
 		},
 		{
@@ -668,8 +668,8 @@ const apartments =
 			"buldingWing": "Lamela C",
 			"area": 82.41,
 			"status": "Slobodan",
-			"planImg": "./images/apartments-plans/Lamela_C/Level_4/C4_56.jpg",
-			"apartmentImg": "./images/apartments-plans/plans-for-card/Lamela_C/Level_4/C4_56-0.jpg",
+			"planImg": "./assets/images/projects/vivaldi/apartments/plans/c/level-4/c4-56.jpg",
+			"apartmentImg": "./assets/images/projects/vivaldi/apartments/previews/c/level-4/c4-56-0.jpg",
 			"object": "FF"
 		},
 
@@ -680,8 +680,8 @@ const apartments =
 			"buldingWing": "Lamela D",
 			"area": 82.57,
 			"status": "Slobodan",
-			"planImg": "./images/apartments-plans/Lamela_D/Level_3/D3_17.jpg",
-			"apartmentImg": "./images/apartments-plans/plans-for-card/Lamela_D/Level_3/D3_17-0.jpg",
+			"planImg": "./assets/images/projects/vivaldi/apartments/plans/d/level-3/d3-17.jpg",
+			"apartmentImg": "./assets/images/projects/vivaldi/apartments/previews/d/level-3/d3-17-0.jpg",
 			"object": "FF"
 		},
 		{
@@ -691,8 +691,8 @@ const apartments =
 			"buldingWing": "Lamela C",
 			"area": 50.1,
 			"status": "Slobodan",
-			"planImg": "./images/apartments-plans/Lamela_C/Level_5/C5_86.jpg",
-			"apartmentImg": "./images/apartments-plans/plans-for-card/Lamela_C/Level_5/C5_86-1.jpg",
+			"planImg": "./assets/images/projects/vivaldi/apartments/plans/c/level-5/c5-86.jpg",
+			"apartmentImg": "./assets/images/projects/vivaldi/apartments/previews/c/level-5/c5-86-1.jpg",
 			"object": "FF"
 		},
 

@@ -4,8 +4,9 @@
 Requires Pillow. Only the IDAT chunks are replaced; IHDR, palettes, transparency,
 ICC/gamma, EXIF, resolution and other chunks remain byte-for-byte unchanged.
 Every candidate is decoded again and checked against the original pixel bytes.
-Files are replaced only when the verified result is smaller. Originals and a
-per-file audit report are kept outside the repository by default.
+Local originals are read only. --apply writes smaller verified candidates into
+ignored assets/sources/generated; public assets are never replaced. Reports and
+temporary encoding work stay outside the published website.
 """
 
 from __future__ import annotations
@@ -142,23 +143,64 @@ def optimize_unique(path_text: str, source_hash: str, cache_directory: str):
         return {**result, "status": "error", "error": str(error)}
 
 
+def processing_paths(parser, args, root):
+    """Read local originals and stage candidates; never overwrite public assets."""
+    local = root / "assets/sources"
+    requested = args.source_dir or [local / name for name in
+                                    ("originals", "unavailable-apartments", "project-exports")]
+    sources = [Path(path).resolve() for path in requested if Path(path).is_dir()]
+    if not sources:
+        parser.error("No local image sources; provide --source-dir under assets/sources")
+    for source in sources:
+        if (not source.is_relative_to(local) or source.is_relative_to(local / "generated")
+                or (local / "generated").is_relative_to(source)):
+            parser.error("Inputs must be local assets/sources originals, not generated/public assets")
+    output = (args.output_dir or local / "generated/images").resolve()
+    if output.is_relative_to(root) and not output.is_relative_to(local / "generated"):
+        parser.error("Output inside the repository must be under ignored assets/sources/generated")
+    if any(output.is_relative_to(source) or source.is_relative_to(output) for source in sources):
+        parser.error("Input and staging output directories must be separate")
+    for name in ("map", "report"):
+        value = getattr(args, name, None)
+        if value:
+            target = Path(value).resolve()
+            if target.is_relative_to(root) and not target.is_relative_to(local / "generated"):
+                parser.error("Reports/maps inside the repository must stay in assets/sources/generated")
+    return sorted(set(sources)), output
+
+
+def staged_path(output, source, root):
+    return output / source.relative_to(root / "assets/sources")
+
+
+def display_path(path, root):
+    try:
+        return path.relative_to(root).as_posix()
+    except ValueError:
+        return path.as_posix()
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--root", type=Path, default=Path.cwd())
+    parser.add_argument("--root", type=Path, default=Path(__file__).resolve().parents[1],
+                        help="Repository root containing ignored assets/sources")
+    parser.add_argument("--source-dir", type=Path, action="append", help="Local source directory; repeat to select several")
+    parser.add_argument("--output-dir", type=Path, help="Separate staging directory; defaults to assets/sources/generated/images")
     parser.add_argument("--work-dir", type=Path, default=Path("/private/tmp/evolution-png-optimization"))
     parser.add_argument("--report", type=Path, default=Path("/private/tmp/evolution-png-report.json"))
     parser.add_argument("--jobs", type=int, default=4)
-    parser.add_argument("--apply", action="store_true", help="Replace smaller verified files; otherwise audit only")
+    parser.add_argument("--apply", action="store_true", help="Write smaller verified candidates to staging; source/public files stay unchanged")
     args = parser.parse_args()
     started = time.monotonic()
     root = args.root.resolve()
+    source_dirs, output_dir = processing_paths(parser, args, root)
     cache = args.work_dir / "optimized"
     backup = args.work_dir / "originals"
     cache.mkdir(parents=True, exist_ok=True)
     backup.mkdir(parents=True, exist_ok=True)
 
     groups: dict[str, list[Path]] = {}
-    for path in sorted(root.rglob("*")):
+    for path in sorted({path for directory in source_dirs for path in directory.rglob("*")}):
         if path.is_file() and path.suffix.lower() == ".png" and ".git" not in path.relative_to(root).parts:
             digest = hashlib.sha256(path.read_bytes()).hexdigest()
             groups.setdefault(digest, []).append(path)
@@ -184,12 +226,16 @@ def main():
                 for path in paths:
                     if hashlib.sha256(path.read_bytes()).hexdigest() != digest:
                         raise RuntimeError(f"Source changed while optimizing: {path}")
-                    temporary = path.with_name(path.name + ".lossless-tmp")
+                    destination = staged_path(output_dir, path, root)
+                    destination.parent.mkdir(parents=True, exist_ok=True)
+                    temporary = destination.with_name(destination.name + ".lossless-tmp")
                     temporary.write_bytes(optimized_data)
                     temporary.chmod(stat.S_IMODE(path.stat().st_mode))
-                    os.replace(temporary, path)
+                    os.replace(temporary, destination)
             for path in paths:
-                records.append({"path": str(path.relative_to(root)), **{key: value for key, value in result.items() if key != "cache_path"}})
+                records.append({"path": str(path.relative_to(root)),
+                                "staged_output": display_path(staged_path(output_dir, path, root), root) if result["status"] == "optimized" else None,
+                                **{key: value for key, value in result.items() if key != "cache_path"}})
             if index % 20 == 0 or index == len(futures):
                 savings = sum(record["before"] - record.get("after", record["before"]) for record in records)
                 print(f"Processed {index}/{len(futures)} unique PNGs; saved {savings / 1_000_000:.2f} MB", flush=True)
@@ -197,6 +243,10 @@ def main():
     summary = {
         "root": str(root),
         "applied": args.apply,
+        "source_directories": [display_path(path, root) for path in source_dirs],
+        "output_directory": display_path(output_dir, root),
+        "sources_unchanged": True,
+        "production_modified": False,
         "files": count,
         "unique_sources": len(groups),
         "optimized": sum(record["status"] == "optimized" for record in records),

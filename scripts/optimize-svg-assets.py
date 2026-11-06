@@ -2,8 +2,9 @@
 """Losslessly compact SVGs and their embedded rasters without changing SVG IDs.
 
 Run with the bundled Python environment (Pillow and lxml are required). A dry run
-is the default; --apply writes only smaller, verified results and backs up every
-changed SVG outside the repository. No path precision or render nodes change.
+is the default; --apply writes smaller verified results only to isolated local
+staging. Sources and public assets stay unchanged. No path precision or render
+nodes change.
 """
 
 import argparse
@@ -196,18 +197,64 @@ def optimize_svg(data):
     return output, rasters
 
 
+def processing_paths(parser, args, root):
+    """Read local originals and stage candidates; never overwrite public assets."""
+    local = root / "assets/sources"
+    requested = args.source_dir or [local / name for name in
+                                    ("originals", "unavailable-apartments", "project-exports")]
+    sources = [Path(path).resolve() for path in requested if Path(path).is_dir()]
+    if not sources:
+        parser.error("No local image sources; provide --source-dir under assets/sources")
+    for source in sources:
+        if (not source.is_relative_to(local) or source.is_relative_to(local / "generated")
+                or (local / "generated").is_relative_to(source)):
+            parser.error("Inputs must be local assets/sources originals, not generated/public assets")
+    output = (args.output_dir or local / "generated/images").resolve()
+    if output.is_relative_to(root) and not output.is_relative_to(local / "generated"):
+        parser.error("Output inside the repository must be under ignored assets/sources/generated")
+    if any(output.is_relative_to(source) or source.is_relative_to(output) for source in sources):
+        parser.error("Input and staging output directories must be separate")
+    for name in ("map", "report"):
+        value = getattr(args, name, None)
+        if value:
+            target = Path(value).resolve()
+            if target.is_relative_to(root) and not target.is_relative_to(local / "generated"):
+                parser.error("Reports/maps inside the repository must stay in assets/sources/generated")
+    return sorted(set(sources)), output
+
+
+def staged_path(output, source, root):
+    return output / source.relative_to(root / "assets/sources")
+
+
+def display_path(path, root):
+    try:
+        return path.relative_to(root).as_posix()
+    except ValueError:
+        return path.as_posix()
+
+
 def main():
+    global ROOT
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--apply", action="store_true")
+    parser.add_argument("--root", type=Path, default=ROOT, help="Repository root containing ignored assets/sources")
+    parser.add_argument("--source-dir", type=Path, action="append", help="Local source directory; repeat to select several")
+    parser.add_argument("--output-dir", type=Path, help="Separate staging directory; defaults to assets/sources/generated/images")
+    parser.add_argument("--apply", action="store_true", help="Write verified candidates to staging; never replace source/public files")
     parser.add_argument("--sample-count", type=int, help="Benchmark only the largest N SVGs")
     parser.add_argument("--report", type=Path, default=Path("/private/tmp/evolution-svg-report.json"))
     args = parser.parse_args()
-    files = sorted(ROOT.rglob("*.svg"))
+    ROOT = args.root.resolve()
+    source_dirs, output_dir = processing_paths(parser, args, ROOT)
+    files = sorted({path for directory in source_dirs for path in directory.rglob("*.svg")})
     files = [path for path in files if ".git" not in path.parts and "node_modules" not in path.parts]
     if args.sample_count:
         files = sorted(files, key=lambda path: path.stat().st_size, reverse=True)[:args.sample_count]
     backup = Path(tempfile.mkdtemp(prefix="evolution-svg-backup-", dir="/private/tmp")) if args.apply else None
-    report = {"applied": args.apply, "backup_directory": str(backup) if backup else None, "files": []}
+    report = {"applied": args.apply, "backup_directory": str(backup) if backup else None,
+              "source_directories": [display_path(path, ROOT) for path in source_dirs],
+              "output_directory": display_path(output_dir, ROOT),
+              "sources_unchanged": True, "production_modified": False, "files": []}
     for path in files:
         original = path.read_bytes()
         optimized, rasters = optimize_svg(original)
@@ -216,7 +263,10 @@ def main():
             backup_path = backup / path.relative_to(ROOT)
             backup_path.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(path, backup_path)
-            path.write_bytes(optimized)
+            destination = staged_path(output_dir, path, ROOT)
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            destination.write_bytes(optimized)
+            entry["staged_output"] = display_path(destination, ROOT)
         report["files"].append(entry)
         args.report.write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n")
         print(json.dumps(entry, ensure_ascii=False), flush=True)

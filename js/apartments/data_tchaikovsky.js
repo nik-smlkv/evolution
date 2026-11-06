@@ -1,16 +1,10 @@
-import { tchaikovskyFloorAssignments } from "./tchaikovsky-floors.js?v=1.0.3";
+import { tchaikovskyFloorAssignments } from "./tchaikovsky-floors.js?v=1.0.5";
+import tchaikovskyImagePaths from "./tchaikovsky-image-paths.js?v=1.0.1";
 
 const pad = (number) => String(number).padStart(2, "0");
 
 const range = (from, to) =>
   Array.from({ length: to - from + 1 }, (_, index) => from + index);
-
-/* Full JPG plans are available for every apartment except C08 and C34. */
-const tchaikovskyRenderedUnits = {
-  A: range(1, 132),
-  B: range(1, 147),
-  C: [...range(1, 7), ...range(9, 33), ...range(35, 124)],
-};
 
 /* Every apartment from the new official A, B and C tables. */
 const tchaikovskyUnits = {
@@ -19,42 +13,9 @@ const tchaikovskyUnits = {
   C: range(1, 124),
 };
 
-/*
- * Card plans are stored separately from full apartment sheets. Keep supplied
- * standalone 2D plans; additional clean plans extracted from PDF image layers
- * live in card-previews and exclude room-number overlays and sheet labels.
- */
-const createCardPlanPaths = (wing, directory, numbers, extension = "png") =>
-  Object.fromEntries(
-    numbers.map((number) => [
-      `${wing}${pad(number)}`,
-      `./plans/А3/Lamela ${wing}/${directory}/${wing}${number}.${extension}`,
-    ]),
-  );
-
-const tchaikovskyCardPlans = {
-  ...createCardPlanPaths("A", "Lamela_A_2D/Level_1", range(1, 14), "jpg"),
-  A22: "./plans/%D0%903/Lamela%20A/Lamela_A_2D/Level_1/%D0%9022_plan.webp",
-  A23: "./plans/%D0%903/Lamela%20A/Lamela_A_2D/Level_1/%D0%9023_plan.webp",
-  ...createCardPlanPaths("A", "Lamela_A_2D/Level_2", [
-    ...range(15, 21),
-    ...range(26, 31),
-  ]),
-  ...createCardPlanPaths("A", "Lamela_A_2D/Level_3", [
-    ...range(32, 38),
-    ...range(44, 48),
-  ]),
-  ...createCardPlanPaths("B", "Lamela_B 2D", [
-    ...range(1, 11),
-    ...range(14, 21),
-  ]),
-  ...createCardPlanPaths("C", "Lamela_C 2D", [
-    1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 14, 22, 23, 24, 25, 26, 27, 28, 29,
-    31, 34, 41, 51, 52, 67, 68,
-  ]),
-};
-
-const noImagePath = "./images/no-image.svg";
+// Unavailable apartments keep their metadata and contours, but their artwork
+// stays in the local source archive instead of the production image directory.
+const noImagePath = "./assets/images/shared/placeholders/no-image.svg";
 
 /* Fallback areas were read from the apartment badges in the supplied renders. */
 const tchaikovskyAreas = {
@@ -438,12 +399,7 @@ const tchaikovskyOfficialData = {
 const apartments = Object.entries(tchaikovskyUnits).flatMap(([wing, numbers]) =>
   numbers.map((number) => {
     const unit = `${wing}${pad(number)}`;
-    const hasRender = tchaikovskyRenderedUnits[wing].includes(number);
-    const renderPath = hasRender
-      ? `./plans/А3/Lamela ${wing}/${unit}.jpg`
-      : noImagePath;
-    const cardPlanPath = tchaikovskyCardPlans[unit] ??
-      (hasRender ? `./plans/А3/card-previews/${unit}.png` : noImagePath);
+    const imagePaths = tchaikovskyImagePaths[unit];
     const officialData = tchaikovskyOfficialData[unit];
     const floorAssignment = tchaikovskyFloorAssignments[unit];
 
@@ -456,8 +412,8 @@ const apartments = Object.entries(tchaikovskyUnits).flatMap(([wing, numbers]) =>
       floorInWing: floorAssignment.floor,
       area: officialData?.area ?? tchaikovskyAreas[unit],
       status: "Slobodan",
-      planImg: renderPath,
-      apartmentImg: cardPlanPath,
+      planImg: imagePaths?.planImg ?? noImagePath,
+      apartmentImg: imagePaths?.apartmentImg ?? noImagePath,
       object: "Tchaikovsky",
     };
   }),

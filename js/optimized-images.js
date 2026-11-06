@@ -1,4 +1,4 @@
-import imageMap from "./optimized-image-map.js?v=1.0.4";
+import imageMap from "./optimized-image-map.js?v=1.0.6";
 
 export function createOptimizedImageResolver(map, root = new URL("../", import.meta.url)) {
   return (path) => {

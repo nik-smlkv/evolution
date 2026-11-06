@@ -8,7 +8,7 @@ export const tchaikovskyFloorLevels = [
       "A": "P",
       "C": "P"
     },
-    "image": "./plans/А3/2100 Osnova Prizemlja (A,C)_Nisko Prizemlje.jpg",
+    "image": "./assets/images/projects/tchaikovsky/floors/backgrounds/level-2100-edited.jpg",
     "hasContours": true,
     "units": {
       "A": [
@@ -53,7 +53,7 @@ export const tchaikovskyFloorLevels = [
       "B": "VP",
       "C": "1"
     },
-    "image": "./plans/%D0%903/3100%20Osnova%201-%20Sprata%20%28A%2CC%29%20Visoko%20prizemlje%20%28B%29.webp",
+    "image": "./assets/images/projects/tchaikovsky/floors/backgrounds/level-3100.webp",
     "hasContours": true,
     "units": {
       "A": [
@@ -116,7 +116,7 @@ export const tchaikovskyFloorLevels = [
       "B": "1",
       "C": "2"
     },
-    "image": "./plans/%D0%903/3200%20Osnova%202-%20Sprata%20%28A%2CC%29_1-Sprat%20%28B%29.webp",
+    "image": "./assets/images/projects/tchaikovsky/floors/backgrounds/level-3200.webp",
     "hasContours": true,
     "units": {
       "A": [
@@ -189,7 +189,7 @@ export const tchaikovskyFloorLevels = [
       "B": "2",
       "C": "3"
     },
-    "image": "./plans/%D0%903/3300%20Osnova%203-%20Sprata%20%28A%2CC%29_2-Sprat%20%28B%29.webp",
+    "image": "./assets/images/projects/tchaikovsky/floors/backgrounds/level-3300.webp",
     "hasContours": true,
     "units": {
       "A": [
@@ -262,7 +262,7 @@ export const tchaikovskyFloorLevels = [
       "B": "3",
       "C": "4"
     },
-    "image": "./plans/%D0%903/3400%20Osnova%204-%20Sprata%20%28A%2CC%29_3-Sprat%20%28B%29.webp",
+    "image": "./assets/images/projects/tchaikovsky/floors/backgrounds/level-3400.webp",
     "hasContours": true,
     "units": {
       "A": [
@@ -333,7 +333,7 @@ export const tchaikovskyFloorLevels = [
       "B": "4",
       "C": "5"
     },
-    "image": "./plans/%D0%903/3500%20Osnova%205-%20Sprata%20%28A%2CC%29_4-Sprat%20%28B%29.webp",
+    "image": "./assets/images/projects/tchaikovsky/floors/backgrounds/level-3500.webp",
     "hasContours": true,
     "units": {
       "A": [
@@ -404,7 +404,7 @@ export const tchaikovskyFloorLevels = [
       "B": "5",
       "C": "6"
     },
-    "image": "./plans/%D0%903/3600%20Osnova%206-Sprat%20%28A%26C%29_5-Sprat%20%28B%29.webp",
+    "image": "./assets/images/projects/tchaikovsky/floors/backgrounds/level-3600.webp",
     "hasContours": false,
     "units": {
       "A": [
@@ -475,7 +475,7 @@ export const tchaikovskyFloorLevels = [
       "B": "6",
       "C": "PS"
     },
-    "image": "./plans/%D0%903/3700%20Osnova%20Povu%C4%8Deni%20Sprat%20%20%28A%26C%29_6-Sprat%20%28B%29.webp",
+    "image": "./assets/images/projects/tchaikovsky/floors/backgrounds/level-3700.webp",
     "hasContours": false,
     "units": {
       "A": [
@@ -542,7 +542,7 @@ export const tchaikovskyFloorLevels = [
     "floors": {
       "B": "PS"
     },
-    "image": "./plans/%D0%903/3800%20Osnova%20Krova%20%28A%26C%29_Povu%C4%8Deni%20sprat%20%28B%29.webp",
+    "image": "./assets/images/projects/tchaikovsky/floors/backgrounds/level-3800.webp",
     "hasContours": false,
     "units": {
       "B": [

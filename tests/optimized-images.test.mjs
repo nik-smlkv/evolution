@@ -4,13 +4,13 @@ import { createOptimizedImageResolver } from "../js/optimized-images.js";
 
 const root = new URL("https://example.test/evolution/");
 const resolve = createOptimizedImageResolver({
-  "plans/А3/Lamela A/A45.jpg": "plans/А3/Lamela A/A45.webp",
+  "assets/images/projects/tchaikovsky/apartments/plans/a/a45.jpg": "assets/images/projects/tchaikovsky/apartments/plans/a/a45.webp",
   "images/é.jpg": "images/é.webp",
 }, root);
 
 test("converted assets use the correct site root and preserve query/hash", () => {
-  assert.equal(resolve("./plans/А3/Lamela A/A45.jpg?v=3#preview"),
-    new URL("plans/А3/Lamela A/A45.webp?v=3#preview", root).href);
+  assert.equal(resolve("./assets/images/projects/tchaikovsky/apartments/plans/a/a45.jpg?v=3#preview"),
+    new URL("assets/images/projects/tchaikovsky/apartments/plans/a/a45.webp?v=3#preview", root).href);
 });
 
 test("encoded and decomposed Unicode names resolve to the same variant", () => {
