@@ -1,4 +1,4 @@
-// Temporarily unavailable for sale. Keep these units out of the catalog and plan.
+// Temporarily unavailable for sale. Keep them out of the catalog and disabled on the plan.
 const unavailableApartments = new Set([
   ...Array.from({ length: 29 }, (_, index) => `A${String(index + 1).padStart(2, "0")}`),
   "A03", "A04", "A17", "A18", "A22", "A23", "A34", "A35", "A39", "A40",

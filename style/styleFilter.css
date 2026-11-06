@@ -31,7 +31,7 @@ body {
     transition: background 150ms;
 }
 
-.control:hover {
+.control:hover:where(html[data-hover-enabled="true"] *) {
     background: #3f3f3f;
 }
 

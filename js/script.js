@@ -1,7 +1,8 @@
-import { langArr } from "./languages/languages.js?v=1.0.3";
+import { langArr } from "./languages/languages.js?v=1.0.5";
 import { openModal, closeModal, setModalEventListeners } from "./modal.js?v=1.0.4";
 import { openPriceRequest } from "./price-request.js?v=1.0.2";
 import { initializeHeaderNavigation } from "./header-navigation.js?v=1.0.1";
+import "./input-capabilities.js?v=1.0.0";
 const siteRootUrl = new URL("../", import.meta.url);
 const config = {
   baseUrl: "https://pb17539.profitbase.ru/api/v4/json",
@@ -471,6 +472,7 @@ function setLanguage(lang) {
 }
 
 function updateLanguage(lang) {
+  document.documentElement.lang = lang === "srb" ? "sr" : "en";
   const switcher = document.querySelector("#language-switcher");
   if (switcher) switcher.dataset.active = lang;
   document.querySelectorAll(".lang__item").forEach((item) => {
@@ -482,7 +484,20 @@ function updateLanguage(lang) {
     const elements = document.querySelectorAll(`[data-key="${key}"]`);
     elements.forEach((element) => {
       if (element) {
-        element.textContent = langArr[lang][key];
+        if (key === "p_callback") {
+          const [firstLine, ...lastLine] = langArr[lang][key].trim().split(/\s+/);
+          const lines = [firstLine, lastLine.join(" ")].map((text) => {
+            const line = document.createElement("span");
+            line.className = "callback-title__line";
+            line.textContent = text;
+            return line;
+          });
+          // Keep the requested phrase groups intact when text animations run.
+          element.classList.remove("split-text");
+          element.replaceChildren(lines[0], document.createTextNode(" "), lines[1]);
+        } else {
+          element.textContent = langArr[lang][key];
+        }
       }
     });
   }

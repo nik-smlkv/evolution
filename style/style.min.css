@@ -126,7 +126,7 @@
 	pointer-events: none;
 }
 
-.enabled:hover {
+.enabled:hover:where(html[data-hover-enabled="true"] *) {
 	opacity: 0.8;
 }
 
@@ -253,7 +253,7 @@
 
 @media(hover:hover) {
 
-	.menu__item:hover .header__submenu {
+	.menu__item:hover:where(html[data-hover-enabled="true"] *) .header__submenu {
 		display: flex;
 		color: white;
 	}
@@ -317,17 +317,17 @@ header {
 	transition: color .3s
 }
 
-.link-inst:hover .heart-inst,
-.link-tg:hover .heart-tg {
+.link-inst:hover:where(html[data-hover-enabled="true"] *) .heart-inst,
+.link-tg:hover:where(html[data-hover-enabled="true"] *) .heart-tg {
 	fill: var(--blue-light-color)
 }
 
-.link-inst:hover .circle-inst,
-.link-tg:hover .circle-tg {
+.link-inst:hover:where(html[data-hover-enabled="true"] *) .circle-inst,
+.link-tg:hover:where(html[data-hover-enabled="true"] *) .circle-tg {
 	stroke: var(--blue-light-color)
 }
 
-.phone-link:hover {
+.phone-link:hover:where(html[data-hover-enabled="true"] *) {
 	color: var(--blue-light-color)
 }
 
@@ -1733,23 +1733,23 @@ input.input-event[value=""]+.input-placeholder {
 
 
 @media(hover:hover) {
-	.previous-link:hover {
+	.previous-link:hover:where(html[data-hover-enabled="true"] *) {
 		text-decoration: underline;
 	}
 
-	.card-cash .card-text-content:hover,
-	.card-credit .card-text-content:hover {
+	.card-cash .card-text-content:hover:where(html[data-hover-enabled="true"] *),
+	.card-credit .card-text-content:hover:where(html[data-hover-enabled="true"] *) {
 		transform: translate(0, 0);
 		right: 0;
 		top: 0;
 	}
 
-	.slide__arrow-hover:hover {
+	.slide__arrow-hover:hover:where(html[data-hover-enabled="true"] *) {
 		--hover-arrow-color: #0474DC;
 		border-color: var(--blue-color)
 	}
 
-	.apartment__item:hover {
+	.apartment__item:hover:where(html[data-hover-enabled="true"] *) {
 		border-color: #0474dc
 	}
 }
@@ -2945,7 +2945,7 @@ section {
 	cursor: pointer;
 }
 
-.popup__close:hover {
+.popup__close:hover:where(html[data-hover-enabled="true"] *) {
 	opacity: 0.6;
 }
 

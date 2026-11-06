@@ -7,7 +7,7 @@ html.catalog-loading .catalog-plan-button:disabled { opacity: 0.4; cursor: defau
 .catalog-startup__message { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 .catalog-startup__error { display: none; min-height: 320px; flex-direction: column; align-items: center; justify-content: center; gap: 24px; color: #161d2d; text-align: center; }
 .catalog-startup__retry { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 10px 24px; border: 1px solid #d1d4d8; border-radius: 999px; }
-.catalog-startup__retry:is(:hover, :focus-visible) { color: #fff; background: #0474dc; border-color: #0474dc; }
+.catalog-startup__retry:is(:hover:where(html[data-hover-enabled="true"] *), :focus-visible) { color: #fff; background: #0474dc; border-color: #0474dc; }
 .catalog-startup__retry:focus-visible { outline: 2px solid #42b0f9; outline-offset: 3px; }
 html.catalog-load-error .catalog-startup__message,
 html.catalog-load-error .catalog-skeleton { display: none; }

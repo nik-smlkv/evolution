@@ -3,10 +3,11 @@ import { tchaikovskyFloorLevels } from "./tchaikovsky-floors.js?v=1.0.3";
 import { openModal } from "../modal.js?v=1.0.4";
 import { openPropertyDetails } from "./property-dialogs.js?v=1.0.6";
 import { tchaikovskyOtherProperties } from "./tchaikovsky-properties.js?v=1.0.1";
-import { initializeTchaikovskyFloorPlan } from "./floor-plan.js?v=1.0.22";
-import { isTchaikovskyApartmentAvailable } from "./tchaikovsky-availability.js?v=1.0.1";
+import { initializeTchaikovskyFloorPlan } from "./floor-plan.js?v=1.0.25";
+import { isTchaikovskyApartmentAvailable } from "./tchaikovsky-availability.js?v=1.0.2";
 import { initializeCatalogFilterControls } from "./catalog-filter-controls.js?v=1.0.4";
 import { optimizedImageUrl } from "../optimized-images.js?v=1.0.4";
+import { langArr } from "../languages/languages.js?v=1.0.5";
 const requestedHouse = new URLSearchParams(window.location.search).get("house");
 const catalog = await loadHouse(requestedHouse);
 const house = catalog.id;
@@ -721,11 +722,15 @@ const viewButtonReady = whenDocumentReady(() => {
   const floorPlanView = document.querySelector(".houses-plans_container");
   const updateViewButton = () => {
     const isPlan = document.body.dataset.catalogView === "plan";
-    floorPlanButton.textContent = isPlan
-      ? (house === "tchaikovsky" ? "SELECT BY PARAMETERS" : "BACK TO THE GRID")
-      : "SELECT ON THE FLOOR PLAN";
+    const language = document.cookie.match(/(?:^|;\s*)language=([^;]*)/)?.[1] === "en" ? "en" : "srb";
+    floorPlanButton.dataset.key = isPlan
+      ? (house === "tchaikovsky" ? "catalog_select_parameters" : "catalog_back_grid")
+      : "catalog_select_plan";
+    floorPlanButton.textContent = langArr[language][floorPlanButton.dataset.key];
     floorPlanButton.setAttribute("aria-pressed", String(isPlan));
   };
+  gridButton?.addEventListener("click", updateViewButton);
+  planButton?.addEventListener("click", updateViewButton);
 
   floorPlanButton.addEventListener("click", () => {
     if (document.body.dataset.catalogView === "plan") {

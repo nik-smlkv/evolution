@@ -59,6 +59,12 @@ input {
 	font-size: inherit;
 }
 
+.catalog-plan-button,
+.tchaikovsky-plan-types__button {
+	-webkit-user-select: none;
+	user-select: none;
+}
+
 section {
 	min-height: 100%;
 }
@@ -176,38 +182,38 @@ img {
 }
 
 @media (hover:hover) {
-	.blue-btn-hover:hover {
+	.blue-btn-hover:hover:where(html[data-hover-enabled="true"] *) {
 		background-color: var(--blue-color);
 		border-color: var(--blue-color);
 		color: var(--wh-color);
 	}
 
-	.link-hover:hover {
+	.link-hover:hover:where(html[data-hover-enabled="true"] *) {
 		color: var(--blue-light-color);
 	}
 
-	.light-btn-hover:hover {
+	.light-btn-hover:hover:where(html[data-hover-enabled="true"] *) {
 		--btn-border: 1px solid var(--wh-color);
 		border: var(--btn-border);
 		color: var(--primary-main-color);
 		background-color: var(--wh-color);
 	}
 
-	.blue-light-btn-hover:hover {
+	.blue-light-btn-hover:hover:where(html[data-hover-enabled="true"] *) {
 		background-color: var(--blue-light-color);
 		color: var(--wh-color);
 	}
 
-	.header__nav ul li:hover {
+	.header__nav ul li:hover:where(html[data-hover-enabled="true"] *) {
 		color: var(--blue-light-color);
 	}
 
-	.filter-btn-style span:hover {
+	.filter-btn-style span:hover:where(html[data-hover-enabled="true"] *) {
 		border: 1px solid var(--blue-color);
 		color: var(--blue-color);
 	}
 
-	.dark-btn-hover:hover {
+	.dark-btn-hover:hover:where(html[data-hover-enabled="true"] *) {
 		--btn-border: 1px solid var(--primary-main-color);
 		border: var(--btn-border);
 		color: var(--wh-color);
@@ -273,6 +279,41 @@ h2.title {
 .subtitle {
 	font-size: var(--fz-subtitle);
 	line-height: var(--lh-text);
+}
+
+html body #form .title[data-key="p_callback"],
+html body .popup_type_form_quarter .title[data-key="p_callback"] {
+	width: 100%;
+	max-width: 610px;
+	font-size: clamp(40px, 6vw, 60px);
+	line-height: 1;
+	letter-spacing: -0.05em;
+	text-align: center;
+}
+
+html body #form .subtitle[data-key="p_short"],
+html body .popup_type_form_quarter .subtitle[data-key="p_price_short"] {
+	font-size: clamp(16px, 2vw, 20px);
+	line-height: 1.4;
+}
+
+.callback-title__line {
+	white-space: nowrap;
+}
+
+html[lang="sr"] .callback-title__line {
+	display: block;
+}
+
+@media (max-width: 700px) {
+	html body #form .title[data-key="p_callback"],
+	html body .popup_type_form_quarter .title[data-key="p_callback"] {
+		font-size: clamp(32px, 10vw, 40px);
+	}
+
+	.callback-title__line {
+		display: block;
+	}
 }
 
 .block-height {

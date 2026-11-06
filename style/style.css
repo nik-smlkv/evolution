@@ -177,19 +177,19 @@ header {
 	transition: color 0.3s ease;
 }
 
-.link-tg:hover .heart-tg {
+.link-tg:hover:where(html[data-hover-enabled="true"] *) .heart-tg {
 	fill: var(--blue-light-color);
 }
 
-.link-tg:hover .circle-tg {
+.link-tg:hover:where(html[data-hover-enabled="true"] *) .circle-tg {
 	stroke: var(--blue-light-color);
 }
 
-.link-inst:hover .heart-inst {
+.link-inst:hover:where(html[data-hover-enabled="true"] *) .heart-inst {
 	fill: var(--blue-light-color);
 }
 
-.link-inst:hover .circle-inst {
+.link-inst:hover:where(html[data-hover-enabled="true"] *) .circle-inst {
 	stroke: var(--blue-light-color);
 }
 
@@ -197,7 +197,7 @@ header {
 
 
 
-.phone-link:hover {
+.phone-link:hover:where(html[data-hover-enabled="true"] *) {
 	color: var(--blue-light-color);
 }
 
@@ -851,8 +851,8 @@ h2.title {
 
 @media(hover:hover) {
 
-	.card-cash .card-text-content:hover,
-	.card-credit .card-text-content:hover {
+	.card-cash .card-text-content:hover:where(html[data-hover-enabled="true"] *),
+	.card-credit .card-text-content:hover:where(html[data-hover-enabled="true"] *) {
 		transform: translate(0%, 0%);
 	}
 
@@ -1011,7 +1011,7 @@ input.input-event[value=""]+.input-placeholder {
 }
 
 @media(hover:hover) {
-	.slide__arrow-hover:hover {
+	.slide__arrow-hover:hover:where(html[data-hover-enabled="true"] *) {
 		--hover-arrow-color: #0474DC;
 		border-color: var(--blue-color);
 	}
@@ -1238,7 +1238,7 @@ input.input-event[value=""]+.input-placeholder {
 }
 
 @media(hover:hover) {
-	.apartment__item:hover {
+	.apartment__item:hover:where(html[data-hover-enabled="true"] *) {
 		border-color: #0474DC;
 	}
 

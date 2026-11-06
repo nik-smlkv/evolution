@@ -1,8 +1,14 @@
+import { langArr } from "../languages/languages.js?v=1.0.5";
+
 const root = document.documentElement;
 const wrapper = document.querySelector(".wrapper");
 document.querySelector("[data-house-title]").textContent = document.body.dataset.catalogHouse === "tchaikovsky" ? "Tchaikovsky" : "Vivaldi";
-if (document.body.dataset.catalogView === "plan") document.querySelector(".catalog-plan-button").textContent = document.body.dataset.catalogHouse === "tchaikovsky" ? "SELECT BY PARAMETERS" : "BACK TO THE GRID";
 const savedLanguage = document.cookie.match(/(?:^|;\s*)language=([^;]*)/)?.[1];
+const viewButton = document.querySelector(".catalog-plan-button");
+viewButton.dataset.key = document.body.dataset.catalogView === "plan"
+  ? (document.body.dataset.catalogHouse === "tchaikovsky" ? "catalog_select_parameters" : "catalog_back_grid")
+  : "catalog_select_plan";
+viewButton.textContent = langArr[savedLanguage === "en" ? "en" : "srb"][viewButton.dataset.key];
 const messages = savedLanguage === "en"
   ? { loading: "Loading apartments…", error: "Unable to load apartments. Please try again.", retry: "Reload page" }
   : { loading: "Učitavanje apartmana…", error: "Nije moguće učitati apartmane. Pokušajte ponovo.", retry: "Učitaj ponovo" };
@@ -23,7 +29,7 @@ const waitForImage = (image) => image.decode
   });
 
 try {
-  const { catalogReady, refreshCatalogLayout } = await import("./requestt.js?v=1.0.51");
+  const { catalogReady, refreshCatalogLayout } = await import("./requestt.js?v=1.0.54");
   await catalogReady;
   await document.fonts.ready;
 

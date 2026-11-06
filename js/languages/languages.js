@@ -1,5 +1,11 @@
 export const langArr = {
 	en: {
+		plan_category_apartments: `APARTMENTS`,
+		plan_category_commercial: `COMMERCIAL`,
+		plan_category_parking: `PARKING`,
+		catalog_select_parameters: `SELECT BY PARAMETERS`,
+		catalog_select_plan: `SELECT ON THE FLOOR PLAN`,
+		catalog_back_grid: `BACK TO THE GRID`,
 		catalog_space: `Space`,
 		space_apartments: `Apartments`,
 		space_commercial: `Commercial`,
@@ -148,6 +154,12 @@ export const langArr = {
 		p_belrg: `Belgrade`,
 	},
 	srb: {
+		plan_category_apartments: `STANOVI`,
+		plan_category_commercial: `POSLOVNI PROSTOR`,
+		plan_category_parking: `PARKING`,
+		catalog_select_parameters: `IZABERITE PO PARAMETRIMA`,
+		catalog_select_plan: `IZABERITE NA PLANU`,
+		catalog_back_grid: `NAZAD NA TABELU`,
 		catalog_space: `Tip prostora`,
 		space_apartments: `Stanovi`,
 		space_commercial: `Poslovni prostor`,

@@ -35,9 +35,10 @@ body[data-catalog-house="vivaldi"] .catalog-filter-group--area { order: 3; }
 body[data-catalog-house="vivaldi"] .catalog-reset-button { order: 4; }
 
 @media (min-width: 1001px) {
-  body.tchaikovsky-grid-view .catalog-filter-floor-row { display: flex; order: 4; flex: 0 0 100%; min-width: 0; align-items: flex-end; gap: 24px; }
+  body.tchaikovsky-grid-view { --catalog-area-offset: 0px; }
+  body.tchaikovsky-grid-view .catalog-filter-floor-row { display: flex; order: 4; flex: 0 0 100%; min-width: 0; align-items: flex-end; gap: var(--catalog-filter-column-gap); }
   body.tchaikovsky-grid-view .catalog-object-filter .catalog-filter-group--floor,
-  body.tchaikovsky-grid-view .catalog-filter-floor-row .catalog-skeleton__floor { flex: 0 1 auto; width: max-content; min-width: 0; max-width: calc(100% - 64px); }
+  body.tchaikovsky-grid-view .catalog-filter-floor-row .catalog-skeleton__floor { flex: 0 1 auto; width: max-content; min-width: 0; max-width: calc(100% - 40px - var(--catalog-filter-column-gap)); }
   body.tchaikovsky-grid-view .catalog-filter-floor-row .catalog-reset-button,
   body.tchaikovsky-grid-view .catalog-filter-floor-row .catalog-skeleton__reset { align-self: flex-end; margin: 0; }
 }
@@ -72,7 +73,7 @@ body[data-catalog-house="vivaldi"] .catalog-reset-button { order: 4; }
   body.tchaikovsky-grid-view .catalog-object-filter .irs-single { position: absolute; left: 50% !important; transform: translateX(-50%); }
   body.tchaikovsky-grid-view .catalog-object-filter .irs-bar { background: #0474dc; }
   body.tchaikovsky-grid-view .catalog-object-filter__option { color: #161d2d; border-color: #d1d4d8; }
-  body.tchaikovsky-grid-view .catalog-object-filter__option:is(.is-active, :hover, :focus-visible) { color: #0474dc; border-color: #0474dc; }
+  body.tchaikovsky-grid-view .catalog-object-filter__option:is(.is-active, :hover:where(html[data-hover-enabled="true"] *), :focus-visible) { color: #0474dc; border-color: #0474dc; }
   body.tchaikovsky-grid-view .catalog-object-filter .catalog-filter-group--floor { width: calc(100% + 20px); max-width: none; }
   body.tchaikovsky-grid-view .catalog-object-filter .catalog-reset-button { align-self: flex-end; }
 }

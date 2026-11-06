@@ -7,7 +7,7 @@ document.querySelectorAll('[data-house-menu]').forEach((menu) => {
   };
 
   const isInBurger = () => Boolean(menu.closest('.header__overflow_list'));
-  const canHover = () => window.matchMedia('(hover: hover)').matches;
+  const canHover = () => document.documentElement.dataset.hoverEnabled === 'true';
 
   toggle.addEventListener('click', (event) => {
     if (isInBurger() || !canHover() || event.detail === 0) {

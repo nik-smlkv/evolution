@@ -329,7 +329,7 @@ body.compensate-for-scrollbar {
 	color: #ccc;
 }
 
-.fancybox-button:hover {
+.fancybox-button:hover:where(html[data-hover-enabled="true"] *) {
 	color: #fff;
 }
 
@@ -342,7 +342,7 @@ body.compensate-for-scrollbar {
 }
 
 .fancybox-button[disabled],
-.fancybox-button[disabled]:hover {
+.fancybox-button[disabled]:hover:where(html[data-hover-enabled="true"] *) {
 	color: #888;
 	cursor: default;
 	outline: none;
@@ -408,7 +408,7 @@ body.compensate-for-scrollbar {
 	z-index: 401;
 }
 
-.fancybox-close-small:hover {
+.fancybox-close-small:hover:where(html[data-hover-enabled="true"] *) {
 	color: #fff;
 	opacity: 1;
 }
@@ -503,7 +503,7 @@ body.compensate-for-scrollbar {
 	text-decoration: none;
 }
 
-.fancybox-caption a:hover {
+.fancybox-caption a:hover:where(html[data-hover-enabled="true"] *) {
 	color: #fff;
 	text-decoration: underline;
 }
@@ -720,7 +720,7 @@ body.compensate-for-scrollbar {
 	color: #fff;
 }
 
-.fancybox-share__button:hover {
+.fancybox-share__button:hover:where(html[data-hover-enabled="true"] *) {
 	text-decoration: none;
 }
 
@@ -728,7 +728,7 @@ body.compensate-for-scrollbar {
 	background: #3b5998;
 }
 
-.fancybox-share__button--fb:hover {
+.fancybox-share__button--fb:hover:where(html[data-hover-enabled="true"] *) {
 	background: #344e86;
 }
 
@@ -736,7 +736,7 @@ body.compensate-for-scrollbar {
 	background: #bd081d;
 }
 
-.fancybox-share__button--pt:hover {
+.fancybox-share__button--pt:hover:where(html[data-hover-enabled="true"] *) {
 	background: #aa0719;
 }
 
@@ -744,7 +744,7 @@ body.compensate-for-scrollbar {
 	background: #1da1f2;
 }
 
-.fancybox-share__button--tw:hover {
+.fancybox-share__button--tw:hover:where(html[data-hover-enabled="true"] *) {
 	background: #0d95e8;
 }
 

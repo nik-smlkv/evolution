@@ -28,7 +28,7 @@
   transition: transform 180ms ease, filter 180ms ease;
 }
 
-.house-menu:hover .house-menu__toggle,
+.house-menu:hover:where(html[data-hover-enabled="true"] *) .house-menu__toggle,
 .house-menu[data-open="true"] .house-menu__toggle,
 .house-menu__toggle:focus-visible {
   color: #42b0f9;
@@ -36,7 +36,7 @@
   outline: none;
 }
 
-.house-menu:hover .house-menu__toggle img,
+.house-menu:hover:where(html[data-hover-enabled="true"] *) .house-menu__toggle img,
 .house-menu[data-open="true"] .house-menu__toggle img,
 .house-menu__toggle:focus-visible img {
   filter: brightness(0) saturate(100%) invert(63%) sepia(65%) saturate(623%) hue-rotate(166deg) brightness(100%) contrast(96%);
@@ -83,7 +83,7 @@
   transition: color 180ms ease;
 }
 
-.house-menu__list a:hover,
+.house-menu__list a:hover:where(html[data-hover-enabled="true"] *),
 .house-menu__list a:focus-visible {
   color: #42b0f9 !important;
   outline: none;
@@ -126,7 +126,7 @@ body[data-catalog-house="tchaikovsky"] .houses-plan {
   transition: color 180ms ease, background-color 180ms ease, border-color 180ms ease;
 }
 
-.tchaikovsky-plan-types__button:hover,
+.tchaikovsky-plan-types__button:hover:where(html[data-hover-enabled="true"] *),
 .tchaikovsky-plan-types__button:focus-visible {
   color: #0474dc;
   border-color: #0474dc;
@@ -177,7 +177,7 @@ body[data-catalog-house="tchaikovsky"] .tchaikovsky-life-plan [data-plan-unit].e
   cursor: pointer;
 }
 
-body[data-catalog-house="tchaikovsky"] .tchaikovsky-life-plan [data-plan-unit].enabled:hover,
+body[data-catalog-house="tchaikovsky"] .tchaikovsky-life-plan [data-plan-unit].enabled:hover:where(html[data-hover-enabled="true"] *),
 body[data-catalog-house="tchaikovsky"] .tchaikovsky-life-plan [data-plan-unit].enabled:focus-visible {
   opacity: 0.82;
 }

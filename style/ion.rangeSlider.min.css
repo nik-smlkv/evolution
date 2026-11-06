@@ -210,7 +210,7 @@
 }
 
 .irs--flat .irs-handle.state_hover>i:first-child,
-.irs--flat .irs-handle:hover>i:first-child {
+.irs--flat .irs-handle:hover:where(html[data-hover-enabled="true"] *)>i:first-child {
 	background-color: #a43540
 }
 
@@ -310,7 +310,7 @@
 }
 
 .irs--big .irs-handle.state_hover,
-.irs--big .irs-handle:hover {
+.irs--big .irs-handle:hover:where(html[data-hover-enabled="true"] *) {
 	border-color: rgba(0, 0, 0, 0.45);
 	background-color: #939ba7;
 	background: linear-gradient(to bottom, white 0%, #919BA5 30%, white 100%)
@@ -428,19 +428,19 @@
 }
 
 .irs--modern .irs-handle.state_hover,
-.irs--modern .irs-handle:hover {
+.irs--modern .irs-handle:hover:where(html[data-hover-enabled="true"] *) {
 	border-color: #7685a2;
 	background: #c3c7cd;
 	background: linear-gradient(to bottom, #ffffff 0%, #919ba5 30%, #ffffff 100%)
 }
 
 .irs--modern .irs-handle.state_hover>i:nth-child(1),
-.irs--modern .irs-handle:hover>i:nth-child(1) {
+.irs--modern .irs-handle:hover:where(html[data-hover-enabled="true"] *)>i:nth-child(1) {
 	border-color: #7685a2
 }
 
 .irs--modern .irs-handle.state_hover>i:nth-child(3),
-.irs--modern .irs-handle:hover>i:nth-child(3) {
+.irs--modern .irs-handle:hover:where(html[data-hover-enabled="true"] *)>i:nth-child(3) {
 	border-color: #48536a
 }
 
@@ -549,12 +549,12 @@
 }
 
 .irs--sharp .irs-handle.state_hover,
-.irs--sharp .irs-handle:hover {
+.irs--sharp .irs-handle:hover:where(html[data-hover-enabled="true"] *) {
 	background-color: black
 }
 
 .irs--sharp .irs-handle.state_hover>i:first-child,
-.irs--sharp .irs-handle:hover>i:first-child {
+.irs--sharp .irs-handle:hover:where(html[data-hover-enabled="true"] *)>i:first-child {
 	border-top-color: black
 }
 
@@ -667,7 +667,7 @@
 }
 
 .irs--round .irs-handle.state_hover,
-.irs--round .irs-handle:hover {
+.irs--round .irs-handle:hover:where(html[data-hover-enabled="true"] *) {
 	background-color: #f0f6ff
 }
 
@@ -776,7 +776,7 @@
 }
 
 .irs--square .irs-handle.state_hover,
-.irs--square .irs-handle:hover {
+.irs--square .irs-handle:hover:where(html[data-hover-enabled="true"] *) {
 	background-color: #f0f6ff
 }
 

@@ -1,8 +1,12 @@
-import { tchaikovskyFloorLevels } from "./tchaikovsky-floors.js?v=1.0.3";
+import { tchaikovskyFloorLevels, tchaikovskyFloorAssignments } from "./tchaikovsky-floors.js?v=1.0.3";
 import { tchaikovskyUpperFloorMarkers } from "./tchaikovsky-plan-markers.js?v=1.0.1";
 import { commercialPlanUnitAliases } from "./tchaikovsky-properties.js?v=1.0.1";
+import { isTchaikovskyApartmentAvailable } from "./tchaikovsky-availability.js?v=1.0.2";
 import { optimizedImageUrl } from "../optimized-images.js?v=1.0.4";
 import { animatePlanFloorChange, clonePlanLayer } from "./plan-transition.js?v=1.0.1";
+import { langArr } from "../languages/languages.js?v=1.0.5";
+import { canHover, hoverMedia } from "../input-capabilities.js?v=1.0.0";
+import { getPlanZoomScales } from "./plan-zoom.js?v=1.0.1";
 
 const planDirectory = "./plans/А3/";
 const groundImage = `${planDirectory}2100 Osnova Prizemlja (A,C)_Nisko Prizemlje редакт.jpg`;
@@ -66,6 +70,10 @@ export async function initializeTchaikovskyFloorPlan(apartments, onApartment, on
   const selections = new Map();
   const cache = new Map();
   const readyImages = new Map();
+  const resetHoverStates = new Set();
+  hoverMedia.addEventListener("change", () => {
+    if (!canHover()) resetHoverStates.forEach((reset) => reset());
+  });
   let requestVersion = 0;
   let pendingLevel = null;
   let pendingType = null;
@@ -97,9 +105,11 @@ export async function initializeTchaikovskyFloorPlan(apartments, onApartment, on
   tabs.className = "tchaikovsky-plan-types";
   tabs.setAttribute("role", "group");
   tabs.setAttribute("aria-label", "Property type");
-  tabs.innerHTML = Object.entries(categories).map(([type, category]) =>
-    `<button class="tchaikovsky-plan-types__button" type="button" data-plan-type="${type}" aria-pressed="${type === activeType}">${category.label}</button>`,
-  ).join("");
+  const language = document.cookie.match(/(?:^|;\s*)language=([^;]*)/)?.[1] === "en" ? "en" : "srb";
+  tabs.innerHTML = Object.entries(categories).map(([type, category]) => {
+    const key = `plan_category_${type}`;
+    return `<button class="tchaikovsky-plan-types__button" type="button" data-key="${key}" data-plan-type="${type}" aria-pressed="${type === activeType}">${langArr[language][key] || category.label}</button>`;
+  }).join("");
   container.append(tabs);
   const compass = document.createElement("img");
   compass.className = "plan-compass";
@@ -134,12 +144,20 @@ export async function initializeTchaikovskyFloorPlan(apartments, onApartment, on
   host.setAttribute("data-lenis-prevent", "");
   let planScale = 1;
   let pinch;
+  const mobileZoom = matchMedia("(max-width: 600px)");
+  mobileZoom.addEventListener("change", () => {
+    if (mobileZoom.matches) return;
+    planScale = 1;
+    pinch = null;
+    surface.style.removeProperty("transform");
+    surface.style.removeProperty("--plan-marker-compensation");
+  });
   const touchDistance = (touches) => Math.hypot(
     touches[0].clientX - touches[1].clientX,
     touches[0].clientY - touches[1].clientY,
   );
   host.addEventListener("touchstart", (event) => {
-    if (event.touches.length !== 2 || !matchMedia("(max-width: 600px)").matches) return;
+    if (event.touches.length !== 2 || !mobileZoom.matches) return;
     finishTransition();
     const bounds = host.getBoundingClientRect();
     const centerX = (event.touches[0].clientX + event.touches[1].clientX) / 2 - bounds.left;
@@ -156,8 +174,10 @@ export async function initializeTchaikovskyFloorPlan(apartments, onApartment, on
     const bounds = host.getBoundingClientRect();
     const centerX = (event.touches[0].clientX + event.touches[1].clientX) / 2 - bounds.left;
     const centerY = (event.touches[0].clientY + event.touches[1].clientY) / 2 - bounds.top;
-    planScale = Math.min(3, Math.max(1, pinch.scale * touchDistance(event.touches) / pinch.distance));
+    const zoom = getPlanZoomScales(pinch.scale * touchDistance(event.touches) / pinch.distance);
+    planScale = zoom.planScale;
     surface.style.transform = `scale(${planScale})`;
+    surface.style.setProperty("--plan-marker-compensation", zoom.markerCompensation);
     host.scrollLeft = pinch.anchorX * planScale - centerX;
     host.scrollTop = pinch.anchorY * planScale - centerY;
   }, { passive: false });
@@ -260,7 +280,9 @@ export async function initializeTchaikovskyFloorPlan(apartments, onApartment, on
         });
         if (type === "apartments") {
           plan.querySelectorAll("[data-unit]").forEach((shape) => {
-            if (!apartmentsByUnit.has(shape.dataset.unit)) shape.remove();
+            // Keep the full inventory visible, including temporarily unavailable
+            // apartments omitted from the clickable catalog records.
+            if (!Object.hasOwn(tchaikovskyFloorAssignments, shape.dataset.unit)) shape.remove();
           });
         }
         return plan;
@@ -271,6 +293,7 @@ export async function initializeTchaikovskyFloorPlan(apartments, onApartment, on
 
   const renderLevel = () => {
     if (!svg) return;
+    resetHoverStates.clear();
     markers.replaceChildren();
     Array.from(svg.children).filter((element) => /^_\d+$/.test(element.id)).forEach((group) => {
       group.style.display = group.id === `_${activeLevel}` ? "block" : "none";
@@ -287,17 +310,30 @@ export async function initializeTchaikovskyFloorPlan(apartments, onApartment, on
       const unit = shape.dataset.unit;
       const apartment = activeType === "apartments"
         ? apartmentsByUnit.get(unit) : null;
+      const unavailable = activeType === "apartments"
+        && !isTchaikovskyApartmentAvailable({ apartmentNumber: unit });
       const request = activeType !== "apartments" && onRequest ? {
         propertyType: activeType,
         unit,
         buildingWing: unit.match(/^[A-Z]+/)?.[0] || "",
         floor: categories[activeType].levels.find((level) => level.id === activeLevel).label,
       } : null;
-      const activate = apartment ? () => onApartment(apartment)
+      const activate = unavailable ? null : apartment ? () => onApartment(apartment)
         : request ? () => onRequest(request) : null;
-      const bounds = shape.getBBox();
       shape.dataset.planUnit = unit;
       shape.classList.remove("is-highlighted");
+      shape.classList.toggle("is-unavailable", unavailable);
+      shape.onclick = null;
+      shape.onmouseenter = null;
+      shape.onmouseleave = null;
+      if (unavailable) {
+        shape.setAttribute("aria-disabled", "true");
+        shape.setAttribute("aria-label", `Apartment ${unit} is currently unavailable`);
+        return;
+      }
+      shape.removeAttribute("aria-disabled");
+      shape.removeAttribute("aria-label");
+      const bounds = shape.getBBox();
       const marker = document.createElement(activate ? "button" : "span");
       marker.className = "plan-unit-marker";
       marker.dataset.planUnit = unit;
@@ -315,14 +351,20 @@ export async function initializeTchaikovskyFloorPlan(apartments, onApartment, on
       let markerHovered = false;
       let markerFocused = false;
       const highlight = () => {
-        const enabled = shapeHovered || markerHovered || markerFocused;
+        const hovered = canHover() && (shapeHovered || markerHovered);
+        const enabled = hovered || (markerFocused && marker.matches(":focus-visible"));
         shape.classList.toggle("is-highlighted", enabled);
         marker.classList.toggle("is-highlighted", enabled);
-        marker.classList.toggle("is-pointer-hovered", shapeHovered || markerHovered);
+        marker.classList.toggle("is-pointer-hovered", hovered);
       };
-      shape.onmouseenter = () => { shapeHovered = true; highlight(); };
+      resetHoverStates.add(() => {
+        shapeHovered = false;
+        markerHovered = false;
+        highlight();
+      });
+      shape.onmouseenter = () => { if (canHover()) { shapeHovered = true; highlight(); } };
       shape.onmouseleave = () => { shapeHovered = false; highlight(); };
-      marker.addEventListener("mouseenter", () => { markerHovered = true; highlight(); });
+      marker.addEventListener("mouseenter", () => { if (canHover()) { markerHovered = true; highlight(); } });
       marker.addEventListener("mouseleave", () => { markerHovered = false; highlight(); });
       marker.addEventListener("focus", () => { markerFocused = true; highlight(); });
       marker.addEventListener("blur", () => { markerFocused = false; highlight(); });

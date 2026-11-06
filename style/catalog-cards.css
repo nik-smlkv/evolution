@@ -87,10 +87,10 @@ body[data-catalog-house="vivaldi"] .catalog-plan-button {
   transition: border-color 160ms ease, color 160ms ease, background-color 160ms ease;
 }
 
-.catalog-object-filter__option:hover,
+.catalog-object-filter__option:hover:where(html[data-hover-enabled="true"] *),
 .catalog-object-filter__option:focus-visible,
 .catalog-object-filter__option.is-active,
-.catalog-reset-button:hover,
+.catalog-reset-button:hover:where(html[data-hover-enabled="true"] *),
 .catalog-reset-button:focus-visible {
   color: #087bf0;
   border-color: #087bf0;
@@ -134,7 +134,7 @@ body[data-catalog-house="vivaldi"] .catalog-plan-button {
   line-height: 20px;
 }
 
-.catalog-reset-button:hover svg path,
+.catalog-reset-button:hover:where(html[data-hover-enabled="true"] *) svg path,
 .catalog-reset-button:focus-visible svg path {
   stroke: #087bf0;
 }
@@ -186,7 +186,7 @@ body[data-catalog-house="vivaldi"] .catalog-plan-button {
   transition: border-color 160ms ease, outline-color 160ms ease, transform 160ms ease;
 }
 
-.apartment-card-item:hover,
+.apartment-card-item:hover:where(html[data-hover-enabled="true"] *),
 .apartment-card-item:focus-visible,
 .apartment-card-item.active {
   border-color: #087bf0;
@@ -303,7 +303,7 @@ body[data-catalog-house="tchaikovsky"] .popup_type_house.popup_is-opened {
   transition-delay: calc(var(--apartment-panel-duration) + 80ms), calc(var(--apartment-panel-duration) + 80ms);
 }
 
-.popup_type_house.popup_is-opened .popup__close:hover {
+.popup_type_house.popup_is-opened .popup__close:hover:where(html[data-hover-enabled="true"] *) {
   opacity: 1;
 }
 
@@ -319,7 +319,7 @@ body[data-catalog-house="tchaikovsky"] .popup_type_house.popup_is-opened {
   transition: transform 280ms cubic-bezier(0.22, 0.78, 0.24, 1);
 }
 
-.popup_type_house .popup__close:hover svg {
+.popup_type_house .popup__close:hover:where(html[data-hover-enabled="true"] *) svg {
   transform: rotate(90deg);
 }
 
@@ -490,7 +490,7 @@ body[data-catalog-house="tchaikovsky"] .popup_type_house .button__price-request 
   border-color: rgba(22, 29, 45, 0.3);
 }
 
-body[data-catalog-house="tchaikovsky"] .popup_type_house .button__price-request:is(:hover, :focus-visible) {
+body[data-catalog-house="tchaikovsky"] .popup_type_house .button__price-request:is(:hover:where(html[data-hover-enabled="true"] *), :focus-visible) {
   color: #fff;
   border-color: #0474dc;
   background: #0474dc;
@@ -662,7 +662,7 @@ body[data-catalog-house="tchaikovsky"] .popup_type_house .popup__close svg { wid
   .popup_type_house .popup__close,
   .popup_type_house.popup_is-opened .popup__close { transform: none; transition: none; transition-delay: 0s; }
   .popup_type_house .popup__close svg,
-  .popup_type_house.popup_is-opened .popup__close:hover svg { transform: none; transition: none; }
+  .popup_type_house.popup_is-opened .popup__close:hover:where(html[data-hover-enabled="true"] *) svg { transform: none; transition: none; }
   body[data-catalog-house="tchaikovsky"] .popup_type_house .popup__content { width: 100%; }
   body[data-catalog-house="tchaikovsky"] .popup_type_house .apartment-card { overflow-y: auto; overscroll-behavior: contain; }
   body[data-catalog-house="tchaikovsky"] .popup_type_house .apartment-card__content { display: flex !important; flex-direction: column; height: auto; min-height: 100%; }

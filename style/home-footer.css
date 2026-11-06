@@ -1,0 +1,58 @@
+/* Reuse the catalog contact layout without applying catalog styles to the home page. */
+.home-footer { padding: 0; color: #fafafa; background: #161d2d; }
+.home-footer .footer__body { position: relative; min-height: 746px; padding: 0 121px 56px; gap: 0; }
+.home-footer .block-info { width: 100%; }
+.home-footer .footer-address__block { width: 100%; min-height: 690px; flex-wrap: nowrap; gap: 0; }
+.home-footer .footer-address__block > img { position: absolute; top: 0; right: 121px; width: 1100px; max-width: calc(100% - 500px); height: auto; }
+.home-footer .footer-address__content { position: relative; z-index: 1; align-self: stretch; flex: 0 0 560px; width: 560px; padding-top: 120px; gap: 80px; }
+.home-footer .footer-address { gap: 16px; }
+.home-footer .footer-address .title { color: #fafafa; font-size: 80px; line-height: 1; letter-spacing: -0.05em; }
+.home-footer .footer-address .street { color: #fafafa; font-size: 24px; line-height: 1.4; }
+.home-footer .footer-address__content > a { min-height: 56px; margin-top: auto; }
+.home-footer .info > img,
+.home-footer .info_footer_content_block > a { display: none; }
+.home-footer .info__footer__content { position: absolute; right: 121px; bottom: 56px; left: 418px; align-items: end; }
+.home-footer .info_footer_content_block { flex: 0 0 auto; width: auto; }
+.home-footer .block-social { gap: 24px; }
+.home-footer .catalog-grid-social { display: none; }
+.home-footer .info__footer__content > span { flex: 0 0 260px; max-width: 260px; margin-left: auto; color: #d1d4d8; font-size: 16px; line-height: 24px; text-align: right; }
+
+@media (max-width: 1500px) {
+  .home-footer .footer__body { min-height: 640px; padding-inline: 60px; }
+  .home-footer .footer-address__block { min-height: 584px; }
+  .home-footer .footer-address__block > img { right: 60px; width: 850px; max-width: 65%; }
+  .home-footer .footer-address__content { flex-basis: 420px; width: 420px; padding-top: 80px; gap: 64px; }
+  .home-footer .footer-address .title { font-size: 60px; }
+  .home-footer .info__footer__content { left: 300px; right: 60px; }
+}
+
+@media (max-width: 1000px) {
+  .home-footer .footer__body { min-height: 0; padding: 0 32px 16px; }
+  .home-footer .footer-address__block { flex-direction: column; min-height: 0; gap: 0; }
+  .home-footer .footer-address__content { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: auto 53px; flex: none; width: 100%; padding: 0; gap: 24px; }
+  .home-footer .footer-address { align-self: start; }
+  .home-footer .footer-address .title { font-size: 40px; }
+  .home-footer .footer-address > span { font-size: 14px; line-height: 20px; }
+  .home-footer .footer-address .street { font-size: 16px; line-height: 20px; }
+  .home-footer .footer-address__content > a { justify-self: start; min-height: 53px; height: 53px; margin: 0; }
+  .home-footer .catalog-grid-social { display: flex; align-self: center; gap: 12px; }
+  .home-footer .footer-address__block > img { position: static; width: calc(100% + 64px); max-width: none; margin-inline: -32px; opacity: 1; }
+  .home-footer .info_footer_content_block { display: none; }
+  .home-footer .info__footer__content { position: static; display: block; padding-top: 12px; }
+  .home-footer .info__footer__content > span { display: block; width: 100%; max-width: none; margin: 0; text-align: center; font-size: 12px; line-height: 18px; }
+}
+
+@media (max-width: 600px) {
+  .home-footer .footer__body { padding-inline: 20px; }
+  .home-footer .footer-address__content { grid-template-columns: minmax(0, 1fr) auto; grid-template-rows: auto auto 53px; gap: 32px 16px; }
+  .home-footer .footer-address__content > .footer-address { grid-column: 1 / -1; }
+  .home-footer .footer-address__block { gap: 0; }
+  .home-footer .footer-address > span { line-height: 1.2; }
+  .home-footer .footer-address .title { line-height: 1.2; letter-spacing: -1px; }
+  .home-footer .footer-address .street { margin-top: -4px; font-size: 16px; line-height: 20px; }
+  .home-footer .footer-address .catalog-plan-address.title { font-size: 40px; line-height: 1; letter-spacing: -2px; }
+  .home-footer .footer-address__block > img { width: calc(100% + 40px); margin-inline: -20px; }
+  .home-footer .footer-address__content > .catalog-grid-social { gap: 12px; }
+  .home-footer .info__footer__content { padding-top: 0; }
+  .home-footer .info__footer__content > span { line-height: 1.2; }
+}
