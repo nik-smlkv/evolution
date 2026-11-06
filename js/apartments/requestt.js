@@ -25,6 +25,8 @@ const propertyData = () => data.filter((item) => item.propertyType === selectedP
 document.body.dataset.catalogProperty = selectedPropertyType;
 document.body.dataset.catalogHouse = house;
 document.body.dataset.catalogView = "grid";
+document.body.classList.add("catalog-grid-view");
+document.documentElement.classList.add("catalog-grid-view");
 document.body.classList.toggle("tchaikovsky-catalog", house === "tchaikovsky");
 document.body.classList.toggle("tchaikovsky-grid-view", house === "tchaikovsky");
 document.documentElement.classList.toggle("tchaikovsky-catalog", house === "tchaikovsky");
@@ -694,6 +696,8 @@ const viewControlsReady = whenDocumentReady(() => {
       setupFloorFilter(targetSelector);
       if (targetElement) targetElement.style.display = "flex";
       document.body.dataset.catalogView = key === "2" ? "plan" : "grid";
+      document.body.classList.toggle("catalog-grid-view", key !== "2");
+      document.documentElement.classList.toggle("catalog-grid-view", key !== "2");
       document.body.classList.toggle("tchaikovsky-plan-view", house === "tchaikovsky" && key === "2");
       document.body.classList.toggle("tchaikovsky-grid-view", house === "tchaikovsky" && key !== "2");
       if (key === "1") refreshCatalogLayout();
@@ -759,7 +763,8 @@ const filtersReady = whenDocumentReady(() => {
     button.addEventListener('click', () => setPropertyType(button.dataset.propertyType));
   });
   document.querySelector('.catalog-filter-group--area').hidden = !propertyData().some((item) => Number.isFinite(item.area));
-  if (house === "tchaikovsky") initializeCatalogFilterControls();
+  document.querySelector('.catalog-filter-group--property').hidden = house !== "tchaikovsky";
+  initializeCatalogFilterControls();
   setupLamelaFilter();
   setupFloorFilter(".apartments__filter");
   handleFilteredCards();

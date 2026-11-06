@@ -1,0 +1,263 @@
+/* Shared bottom callback form. The request dialog keeps its own layout. */
+html body .wrapper:has(#form.contact-form) {
+  row-gap: 0;
+}
+
+html body #form.contact-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  min-height: 545px;
+  margin: 0;
+  padding: 180px 121px 80px;
+  gap: 56px;
+  color: #fafafa;
+  background: #161d2d;
+  font-family: "Manrope-Variable", var(--ff-main);
+  text-align: center;
+}
+
+/* The home page has an extra section/body wrapper around the same form. */
+html body #form.contact-form > .section__body,
+html body #form.contact-form .form__block {
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  overflow: visible;
+  background: transparent;
+}
+
+html body #form.contact-form .form__block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 56px;
+}
+
+html body #form.contact-form .title-gap:not(.block-form) {
+  width: 100%;
+  min-width: 0;
+  gap: 24px;
+}
+
+html body #form.contact-form .title[data-key="p_callback"] {
+  width: 100%;
+  max-width: 610px;
+  margin: 0;
+  color: #fafafa;
+  font-size: clamp(40px, 6vw, 60px);
+  font-weight: 400;
+  font-variation-settings: "wght" 400;
+  line-height: 1;
+  letter-spacing: -0.05em;
+  text-align: center;
+}
+
+html body #form.contact-form .subtitle[data-key="p_short"] {
+  max-width: 100%;
+  margin: 0;
+  color: #d1d4d8;
+  font-size: clamp(16px, 2vw, 20px);
+  font-weight: 400;
+  line-height: 1.4;
+  text-align: center;
+}
+
+html body #form.contact-form .block-form {
+  width: 100%;
+  max-width: 1100px;
+  min-width: 0;
+  gap: 16px;
+}
+
+html body #form.contact-form .form-flex {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-items: start;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  gap: 24px;
+}
+
+html body #form.contact-form .form-flex > * {
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+}
+
+html body #form.contact-form .input-style {
+  flex: 0 0 56px;
+  height: 56px;
+  min-height: 56px;
+  padding: 16px 24px;
+  color: #fafafa;
+  border: 1px solid #fafafa;
+  border-radius: 999px;
+  background: transparent;
+  font: inherit;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+html body #form.contact-form .input-placeholder {
+  top: 16px;
+  left: 24px;
+  color: #fafafa;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+html body #form.contact-form .input-placeholder .text-dark,
+html body #form.contact-form .important-span {
+  color: inherit;
+}
+
+html body #form.contact-form .input-style:focus {
+  border-color: #42b0f9;
+}
+
+html body #form.contact-form .input-style:focus-visible {
+  outline: 2px solid #42b0f9;
+  outline-offset: 3px;
+}
+
+html body #form.contact-form .input-style.popup__input_type_error {
+  border-color: #ff6b6b;
+}
+
+html body #form.contact-form .quarter__form > label > span:not(.input-placeholder):empty {
+  display: none;
+}
+
+html body #form.contact-form .quarter__form > label > span:not(.input-placeholder):not(:empty) {
+  position: static;
+  margin-top: 4px;
+  color: #ff6b6b;
+  font-size: 12px;
+  line-height: 16px;
+  text-align: left;
+}
+
+html body #form.contact-form .form__button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 56px;
+  min-height: 56px;
+  padding: 0 24px;
+  color: #42b0f9;
+  border: 1px solid #42b0f9;
+  border-radius: 999px;
+  background: transparent;
+  font: inherit;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0;
+}
+
+html body #form.contact-form .form__button:not(:disabled):is(:hover:where(html[data-hover-enabled="true"] *), :focus-visible) {
+  color: #fff;
+  border-color: #0474dc;
+  background: #0474dc;
+}
+
+html body #form.contact-form :is(.form_description, .form__warn) {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 0 4px;
+  color: #d1d4d8;
+  font-size: 16px;
+  line-height: 24px;
+  text-align: center;
+}
+
+html body #form.contact-form :is(.form_description, .form__warn) a {
+  margin: 0;
+  color: inherit;
+}
+
+@media (max-width: 1500px) {
+  html body #form.contact-form {
+    min-height: 0;
+    padding: 120px 60px 80px;
+  }
+}
+
+@media (max-width: 1000px) {
+  html body #form.contact-form {
+    padding: 80px 32px 56px;
+    gap: 40px;
+  }
+
+  html body #form.contact-form .form__block {
+    gap: 40px;
+  }
+
+  html body #form.contact-form .block-form {
+    max-width: 448px;
+  }
+
+  html body #form.contact-form .form-flex {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  html body #form.contact-form .form-flex > :nth-child(n + 3) {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 700px) {
+  html body #form.contact-form {
+    padding: 80px 20px 56px;
+    gap: 32px;
+  }
+
+  html body #form.contact-form .form__block {
+    gap: 32px;
+  }
+
+  html body #form.contact-form .title-gap:not(.block-form) {
+    gap: 20px;
+  }
+
+  html body #form.contact-form .title[data-key="p_callback"] {
+    display: block;
+    max-width: 100%;
+    font-size: clamp(32px, 10vw, 40px);
+  }
+
+  html body #form.contact-form .callback-title__line {
+    display: block;
+  }
+
+  html body #form.contact-form .subtitle[data-key="p_short"] {
+    font-size: 16px;
+  }
+
+  html body #form.contact-form .block-form {
+    max-width: none;
+  }
+
+  html body #form.contact-form .form-flex {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  html body #form.contact-form .form-flex > :nth-child(n + 3) {
+    grid-column: 1;
+  }
+
+  html body #form.contact-form :is(.form_description, .form__warn) {
+    font-size: 14px;
+    line-height: 21px;
+  }
+}

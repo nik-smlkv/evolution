@@ -7,8 +7,8 @@
       html.catalog-loading body .section__body-title > .apartments__filter,
       html.catalog-loading body .section__body-title > .houses-plans_container { display: none !important; }
     </style>
-    <link rel="stylesheet" href="./style/catalog-startup.css?v=1.0.6" />
-    <link rel="modulepreload" href="./js/apartments/requestt.js?v=1.0.56" />
+    <link rel="stylesheet" href="./style/catalog-startup.css?v=1.0.7" />
+    <link rel="modulepreload" href="./js/apartments/requestt.js?v=1.0.57" />
     <title>Evolution Residence – Vaš San je Naša Obaveza</title>
     <title>
       Prodaja Stanova u Novogradnji Beograd | Direktno od Investitora |
@@ -76,11 +76,12 @@
     <link rel="stylesheet" href="./style/ion.rangeSlider.min.css?v=1.0.6" />
     <link rel="stylesheet" href="./style/header-responsive.css?v=1.0.3" />
     <link rel="stylesheet" href="./style/catalog-plan.css?v=1.0.19" />
-    <link rel="stylesheet" href="./style/catalog-responsive.css?v=1.0.11" />
+    <link rel="stylesheet" href="./style/catalog-responsive.css?v=1.0.12" />
     <link rel="stylesheet" href="./style/price-request.css?v=1.0.4" />
-    <link rel="stylesheet" href="./style/catalog-properties.css?v=1.0.8" />
-    <link rel="stylesheet" href="./style/catalog-filter-accordion.css?v=1.0.2" />
+    <link rel="stylesheet" href="./style/catalog-properties.css?v=1.0.9" />
+    <link rel="stylesheet" href="./style/catalog-filter-accordion.css?v=1.0.3" />
     <link rel="stylesheet" href="./style/property-dialogs.css?v=1.0.4" />
+    <link rel="stylesheet" href="./style/contact-form.css?v=1.0.3" />
     <script src="./js/swiper-bundle.min.js"></script>
     <script src="./js/jquery-3.6.4.min.js"></script>
     <script src="./js/printThis.js"></script>
@@ -121,6 +122,8 @@
         const view = params.get("view") === "plan" ? "plan" : "grid";
         document.body.dataset.catalogHouse = house;
         document.body.dataset.catalogView = view;
+        document.body.classList.toggle("catalog-grid-view", view === "grid");
+        document.documentElement.classList.toggle("catalog-grid-view", view === "grid");
         if (house === "tchaikovsky") {
           document.body.classList.add("tchaikovsky-catalog", `tchaikovsky-${view}-view`);
           document.documentElement.classList.add("tchaikovsky-catalog");
@@ -265,15 +268,7 @@
                     >Infrastructure</a
                   >
                 </li>
-                <li class="menu__item">
-                  <a
-                    href="./"
-                    class="menu__item_link"
-                    data-key="link_gallery"
-                    data-target="gallery"
-                    >Gallery</a
-                  >
-                </li>
+
                 <li class="menu__item">
                   <a
                     href="./"
@@ -3192,7 +3187,7 @@
               </div>
             </div>
           </section>
-          <div id="form" class="form__block block-center flex-style-column gap">
+          <div id="form" class="form__block block-center flex-style-column gap contact-form">
             <div class="block-center flex-style-column title-gap">
               <p
                 class="title title-dark tt-up split-text ezd-animtext"
@@ -3594,7 +3589,7 @@
     <script type="module" src="./js/validation.js?v=1.0.6"></script>
     <script
       type="module"
-      src="./js/apartments/catalog-startup.js?v=1.0.15"
+      src="./js/apartments/catalog-startup.js?v=1.0.16"
       onerror="document.querySelector('.wrapper').setAttribute('aria-busy', 'false'); document.documentElement.classList.add('catalog-load-error')"
     ></script>
     <script src="./js/ion.rangeSlider.min.js?v=1.0.6"></script>

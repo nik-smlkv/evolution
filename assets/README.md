@@ -10,7 +10,7 @@
 assets/
   images/                          # Только файлы для сайта
     shared/                        # Логотип, иконки, карта, заглушки
-    site/                          # Фотографии и галерея сайта
+    site/                          # Фотографии сайта
     projects/
       tchaikovsky/
         apartments/{plans,previews}/

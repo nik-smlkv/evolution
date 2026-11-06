@@ -4,8 +4,8 @@
   "summary": {
     "before_files": 3852,
     "before_bytes": 1527010844,
-    "production_files": 792,
-    "production_bytes": 197622240,
+    "production_files": 787,
+    "production_bytes": 192953070,
     "available_tchaikovsky": 308,
     "unavailable_tchaikovsky": 95,
     "available_vivaldi_records": 60,
@@ -18292,106 +18292,6 @@
           "source_sha256": "780980880f1b760ab17f5f70f5df8b1fd5ae8f7f35be6c1119e2b5a2068319b3",
           "selected_sha256": "780980880f1b760ab17f5f70f5df8b1fd5ae8f7f35be6c1119e2b5a2068319b3",
           "lossless_webp_candidate_bytes": 378290
-        }
-      ]
-    },
-    {
-      "path": "assets/images/site/gallery/gallery-01.jpg",
-      "bytes": 934815,
-      "sha256": "5f10db52e9fe09a7596706fac0d6bf361a165280261487aaa1e7fc9fb370b59c",
-      "roles": [
-        "index.html/a.href",
-        "index.html/img.src"
-      ],
-      "selections": [
-        {
-          "requested": "assets/images/site/gallery/gallery-01.jpg",
-          "chosen": "assets/images/site/gallery/gallery-01.jpg",
-          "source_bytes": 934815,
-          "selected_bytes": 934815,
-          "source_sha256": "5f10db52e9fe09a7596706fac0d6bf361a165280261487aaa1e7fc9fb370b59c",
-          "selected_sha256": "5f10db52e9fe09a7596706fac0d6bf361a165280261487aaa1e7fc9fb370b59c",
-          "lossless_webp_candidate_bytes": 5426772
-        }
-      ]
-    },
-    {
-      "path": "assets/images/site/gallery/gallery-02.jpg",
-      "bytes": 953011,
-      "sha256": "f22ae048c2088267c8fcf8320513b558f7a5d52663c0286929f8df2cdc0a98e5",
-      "roles": [
-        "index.html/a.href",
-        "index.html/img.src"
-      ],
-      "selections": [
-        {
-          "requested": "assets/images/site/gallery/gallery-02.jpg",
-          "chosen": "assets/images/site/gallery/gallery-02.jpg",
-          "source_bytes": 953011,
-          "selected_bytes": 953011,
-          "source_sha256": "f22ae048c2088267c8fcf8320513b558f7a5d52663c0286929f8df2cdc0a98e5",
-          "selected_sha256": "f22ae048c2088267c8fcf8320513b558f7a5d52663c0286929f8df2cdc0a98e5",
-          "lossless_webp_candidate_bytes": 5685142
-        }
-      ]
-    },
-    {
-      "path": "assets/images/site/gallery/gallery-03.jpg",
-      "bytes": 972923,
-      "sha256": "26fd04c2b6c932578960f0b65b8ed1c8a6853d03463d8bb7bfa6198a37f3704e",
-      "roles": [
-        "index.html/a.href",
-        "index.html/img.src"
-      ],
-      "selections": [
-        {
-          "requested": "assets/images/site/gallery/gallery-03.jpg",
-          "chosen": "assets/images/site/gallery/gallery-03.jpg",
-          "source_bytes": 972923,
-          "selected_bytes": 972923,
-          "source_sha256": "26fd04c2b6c932578960f0b65b8ed1c8a6853d03463d8bb7bfa6198a37f3704e",
-          "selected_sha256": "26fd04c2b6c932578960f0b65b8ed1c8a6853d03463d8bb7bfa6198a37f3704e",
-          "lossless_webp_candidate_bytes": 5674390
-        }
-      ]
-    },
-    {
-      "path": "assets/images/site/gallery/gallery-04.jpg",
-      "bytes": 808361,
-      "sha256": "f860254a3e9fb57ef8a7e5a371231b02b3e37fa995f9c08c36f7ddce2d1d705b",
-      "roles": [
-        "index.html/a.href",
-        "index.html/img.src"
-      ],
-      "selections": [
-        {
-          "requested": "assets/images/site/gallery/gallery-04.jpg",
-          "chosen": "assets/images/site/gallery/gallery-04.jpg",
-          "source_bytes": 808361,
-          "selected_bytes": 808361,
-          "source_sha256": "f860254a3e9fb57ef8a7e5a371231b02b3e37fa995f9c08c36f7ddce2d1d705b",
-          "selected_sha256": "f860254a3e9fb57ef8a7e5a371231b02b3e37fa995f9c08c36f7ddce2d1d705b",
-          "lossless_webp_candidate_bytes": 4740578
-        }
-      ]
-    },
-    {
-      "path": "assets/images/site/gallery/gallery-05.jpg",
-      "bytes": 1000060,
-      "sha256": "62d45f59d81e0ec897eb4e5d55076429cba425c2c15b5176d66211f043f5b414",
-      "roles": [
-        "index.html/a.href",
-        "index.html/img.src"
-      ],
-      "selections": [
-        {
-          "requested": "assets/images/site/gallery/gallery-05.jpg",
-          "chosen": "assets/images/site/gallery/gallery-05.jpg",
-          "source_bytes": 1000060,
-          "selected_bytes": 1000060,
-          "source_sha256": "62d45f59d81e0ec897eb4e5d55076429cba425c2c15b5176d66211f043f5b414",
-          "selected_sha256": "62d45f59d81e0ec897eb4e5d55076429cba425c2c15b5176d66211f043f5b414",
-          "lossless_webp_candidate_bytes": 5996628
         }
       ]
     },
