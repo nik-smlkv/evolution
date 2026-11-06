@@ -1,7 +1,7 @@
 import { tchaikovskyFloorLevels } from "./tchaikovsky-floors.js?v=1.0.3";
 import { tchaikovskyUpperFloorMarkers } from "./tchaikovsky-plan-markers.js?v=1.0.1";
 import { commercialPlanUnitAliases } from "./tchaikovsky-properties.js?v=1.0.1";
-import { optimizedImageUrl } from "../optimized-images.js?v=1.0.3";
+import { optimizedImageUrl } from "../optimized-images.js?v=1.0.4";
 import { animatePlanFloorChange, clonePlanLayer } from "./plan-transition.js?v=1.0.1";
 
 const planDirectory = "./plans/А3/";

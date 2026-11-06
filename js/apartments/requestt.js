@@ -1,12 +1,12 @@
-import { loadHouse } from "./houses.js?v=1.0.13";
+import { loadHouse } from "./houses.js?v=1.0.14";
 import { tchaikovskyFloorLevels } from "./tchaikovsky-floors.js?v=1.0.3";
 import { openModal } from "../modal.js?v=1.0.4";
-import { openPropertyDetails } from "./property-dialogs.js?v=1.0.5";
+import { openPropertyDetails } from "./property-dialogs.js?v=1.0.6";
 import { tchaikovskyOtherProperties } from "./tchaikovsky-properties.js?v=1.0.1";
-import { initializeTchaikovskyFloorPlan } from "./floor-plan.js?v=1.0.21";
+import { initializeTchaikovskyFloorPlan } from "./floor-plan.js?v=1.0.22";
 import { isTchaikovskyApartmentAvailable } from "./tchaikovsky-availability.js?v=1.0.1";
 import { initializeCatalogFilterControls } from "./catalog-filter-controls.js?v=1.0.4";
-import { optimizedImageUrl } from "../optimized-images.js?v=1.0.3";
+import { optimizedImageUrl } from "../optimized-images.js?v=1.0.4";
 const requestedHouse = new URLSearchParams(window.location.search).get("house");
 const catalog = await loadHouse(requestedHouse);
 const house = catalog.id;
@@ -441,7 +441,7 @@ const renderNextApartmentCards = () => {
   );
   const markup = batch.map((item) => {
     const placeholder = !item.apartmentImg ? {
-      parking: { image: "./plans/А3/parking-plug.webp", description: "Parking space" },
+      parking: { image: "./plans/%D0%903/parking-plug.webp", description: "Parking space" },
       commercial: { image: "./images/comerrical-plug.webp", description: "Commercial space" },
     }[item.propertyType] : null;
     const img = optimizedImageUrl(item.apartmentImg || placeholder?.image);

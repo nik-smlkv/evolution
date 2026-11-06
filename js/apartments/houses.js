@@ -1,4 +1,4 @@
-import { optimizedImageUrl } from "../optimized-images.js?v=1.0.3";
+import { optimizedImageUrl } from "../optimized-images.js?v=1.0.4";
 
 export const houses = {
   vivaldi: {

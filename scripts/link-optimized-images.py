@@ -41,13 +41,27 @@ def link_url(value, source, mapping):
 
 
 def rewrite(text, source, mapping):
-    # Social-image metadata retains the source JPEG for crawler compatibility.
-    metadata = [match.span() for match in re.finditer(r"<meta\b[^>]*>", text, re.I | re.S)] if source.suffix == ".html" else []
-    pattern = re.compile(r"(?P<quote>[\"'])(?P<url>[^\"'<>\r\n]+?\.jpe?g(?:[?#][^\"'<>\r\n]*)?)(?P=quote)", re.I)
+    # Social images and platform icons keep their declared source format.
+    def preserved_tags(content):
+        spans = []
+        if source.suffix.lower() != ".html":
+            return spans
+        for tag in re.finditer(r"<(?P<name>meta|link)\b[^>]*>", content, re.I | re.S):
+            if tag.group("name").lower() == "meta":
+                spans.append(tag.span())
+                continue
+            relation = re.search(r"\brel\s*=\s*(?:\"([^\"]*)\"|'([^']*)'|([^\s>]+))", tag.group(0), re.I)
+            tokens = next((value for value in relation.groups() if value is not None), "").lower().split() if relation else []
+            if "manifest" in tokens or any(token.endswith("icon") or token == "apple-touch-icon-precomposed" for token in tokens):
+                spans.append(tag.span())
+        return spans
+
+    preserved = preserved_tags(text)
+    pattern = re.compile(r"(?P<quote>[\"'])(?P<url>[^\"'<>\r\n]+?\.(?:jpe?g|png)(?:[?#][^\"'<>\r\n]*)?)(?P=quote)", re.I)
     changes = []
 
     def replace(match):
-        if any(start <= match.start() < end for start, end in metadata):
+        if any(start <= match.start() < end for start, end in preserved):
             return match.group(0)
         before = match.group("url")
         after = link_url(before, source, mapping)
@@ -56,9 +70,12 @@ def rewrite(text, source, mapping):
         return match.group("quote") + after + match.group("quote")
 
     result = pattern.sub(replace, text)
-    css_url = re.compile(r"url\(\s*(?P<url>[^)'\"\s]+\.jpe?g(?:[?#][^)'\"\s]*)?)\s*\)", re.I)
+    preserved = preserved_tags(result)
+    css_url = re.compile(r"url\(\s*(?P<url>[^)'\"\s]+\.(?:jpe?g|png)(?:[?#][^)'\"\s]*)?)\s*\)", re.I)
 
     def replace_css(match):
+        if any(start <= match.start() < end for start, end in preserved):
+            return match.group(0)
         before = match.group("url")
         after = link_url(before, source, mapping)
         if before != after:
