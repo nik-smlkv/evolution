@@ -2,8 +2,20 @@ import { langArr } from "./languages/languages.js?v=1.0.5";
 import { openModal, closeModal, setModalEventListeners } from "./modal.js?v=1.0.4";
 import { openPriceRequest } from "./price-request.js?v=1.0.2";
 import { initializeHeaderNavigation } from "./header-navigation.js?v=1.0.1";
+import { initializeHomeNavigation, normalizeHomeUrl } from "./home-navigation.js?v=1.0.1";
+import { getSelectedHouse } from "./house-context.js?v=1.0.1";
 import "./input-capabilities.js?v=1.0.0";
 const siteRootUrl = new URL("../", import.meta.url);
+// Keep relative assets and catalog links rooted here after history changes the path.
+const documentBase = document.querySelector("base") || document.createElement("base");
+documentBase.href = siteRootUrl.href;
+document.head.prepend(documentBase);
+// Remember the selected house before home navigation removes catalog parameters.
+getSelectedHouse();
+const homeAddress = normalizeHomeUrl(window.location.href, siteRootUrl);
+if (homeAddress.href !== window.location.href) {
+  history.replaceState(history.state, "", homeAddress.href);
+}
 const config = {
   baseUrl: "https://pb17539.profitbase.ru/api/v4/json",
   headers: {
@@ -157,7 +169,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
-        const link = document.querySelector(`a[href="#${entry.target.id}"]`);
+        const link = document.querySelector(`.menu__item_link[data-target="${entry.target.id}"]`);
 
         if (link) {
           if (entry.isIntersecting) {
@@ -175,77 +187,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
   sections.forEach((section) => observer.observe(section));
 
-  document.querySelectorAll(".menu__item_link").forEach((link) => {
-    link.addEventListener("click", function (event) {
-      event.preventDefault();
-
-      const targetId = this.dataset.target;
-      if (!targetId) return;
-
-      const currentPath = window.location.pathname;
-
-      if (currentPath === siteRootUrl.pathname || currentPath === `${siteRootUrl.pathname}index.html`) {
-        const targetElement = document.getElementById(targetId);
-
-        if (targetElement) {
-          lenis.scrollTo(targetElement, {
-            offset: -100,
-            immediate: false,
-          });
-        }
+  initializeHomeNavigation({
+    root: siteRootUrl,
+    closeMenu: closeHeaderMenu,
+    scrollTo: (target, immediate) => {
+      const offset = target === 0 ? 0 : -100;
+      if (typeof lenis !== "undefined") {
+        if (immediate) lenis.resize();
+        lenis.scrollTo(target, { offset, immediate });
       } else {
-        const existingParams = new URLSearchParams(window.location.search);
-        existingParams.set("section", targetId);
-        window.location.href = `${siteRootUrl.href}?${existingParams.toString()}`;
+        const top = target === 0 ? 0 : target.getBoundingClientRect().top + window.scrollY + offset;
+        window.scrollTo({ top, behavior: immediate ? "instant" : "smooth" });
       }
-    });
+    },
   });
-
-  const logo = document.querySelector(".header__logo");
-  if (logo) {
-    logo.addEventListener("click", function (event) {
-      if (window.location.pathname.includes("search-by-parameters")) {
-        // Со страницы фильтров — сохраняем параметры при переходе на главную
-        event.preventDefault();
-        const existingParams = new URLSearchParams(window.location.search);
-        window.location.href = existingParams.toString()
-          ? `${siteRootUrl.href}?${existingParams.toString()}`
-          : siteRootUrl.href;
-      } else {
-        event.preventDefault();
-        window.scrollTo({ top: 0, behavior: "smooth" });
-        document
-          .querySelectorAll(".menu__item_link")
-          .forEach((link) => link.classList.remove("active-link"));
-      }
-    });
-  }
-
-  handleButtonScroll();
 });
-function handleButtonScroll() {
-  const buttonScrollForm = document.querySelector(".js-scroll-form");
-  if (buttonScrollForm) {
-    buttonScrollForm.addEventListener("click", function (e) {
-      e.preventDefault();
-      const targetId = this.getAttribute("href").substring(1); // Получаем ID цели
-      const targetElement = document.getElementById(targetId);
-      if (targetElement) {
-        const offset = -100; // Сдвиг на -100px
-        const targetPosition =
-          targetElement.getBoundingClientRect().top + window.scrollY + offset;
-        closeHeaderMenu();
-        window.scrollTo({
-          top: targetPosition,
-          behavior: "smooth",
-        });
-        document
-          .querySelectorAll(".menu__item_link")
-          .forEach((link) => link.classList.remove("active-link"));
-      }
-    });
-  }
-}
 let startX;
 let isScrolling = false;
 
@@ -559,28 +515,6 @@ document
 document.addEventListener("DOMContentLoaded", () => {
   const savedLang = getCookie("language") || "srb";
   updateLanguage(savedLang);
-});
-
-document.addEventListener("DOMContentLoaded", () => {
-  const params = new URLSearchParams(window.location.search);
-  const scrollTo = params.get("section");
-
-  if (scrollTo) {
-    setTimeout(() => {
-      const targetElement = document.getElementById(scrollTo);
-      if (targetElement) {
-        lenis.scrollTo(targetElement, {
-          offset: -100,
-          immediate: false,
-        });
-      }
-    }, 500);
-
-    window.history.replaceState({}, "", `/?section=${scrollTo}`);
-    const url = new URL(window.location);
-    url.searchParams.delete("section");
-    history.replaceState(null, "", url);
-  }
 });
 
 function setDynamicHeight() {

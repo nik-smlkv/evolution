@@ -3,7 +3,7 @@ import { tchaikovskyFloorLevels } from "./tchaikovsky-floors.js?v=1.0.5";
 import { openModal } from "../modal.js?v=1.0.4";
 import { openPropertyDetails } from "./property-dialogs.js?v=1.0.8";
 import { tchaikovskyOtherProperties } from "./tchaikovsky-properties.js?v=1.0.1";
-import { initializeTchaikovskyFloorPlan } from "./floor-plan.js?v=1.0.27";
+import { createDeferredPlan, deferPlanImages, activatePlanImages, createPlanImageLoader } from "./deferred-plan.js?v=1.0.2";
 import { isTchaikovskyApartmentAvailable } from "./tchaikovsky-availability.js?v=1.0.2";
 import { initializeCatalogFilterControls } from "./catalog-filter-controls.js?v=1.0.4";
 import { optimizedImageUrl } from "../optimized-images.js?v=1.0.6";
@@ -12,9 +12,9 @@ const requestedHouse = new URLSearchParams(window.location.search).get("house");
 const catalog = await loadHouse(requestedHouse);
 const house = catalog.id;
 const legacyFloorPlans = document.querySelector("[data-vivaldi-floor-plans]");
-if (house === "vivaldi" && legacyFloorPlans) {
-  legacyFloorPlans.parentElement.replaceChildren(legacyFloorPlans.content.cloneNode(true));
-}
+let vivaldiFloorPlansInitialized = false;
+let vivaldiFloorVersion = 0;
+const waitForVivaldiImage = createPlanImageLoader();
 const apartmentData = JSON.parse(catalog.apartments)
   .filter((apartment) => house !== "tchaikovsky" || isTchaikovskyApartmentAvailable(apartment))
   .map((apartment) => ({ ...apartment, propertyType: "apartments" }));
@@ -109,8 +109,19 @@ const setTchaikovskyPlanPopup = (apartment) => {
   openModal(popup);
 };
 
-const floorPlanReady = whenDocumentReady(async () => {
-  if (house !== "tchaikovsky") return;
+const ensureFloorPlan = createDeferredPlan(() => whenDocumentReady(async () => {
+  if (house === "vivaldi") {
+    if (!legacyFloorPlans) throw new Error("Floor plan template is missing");
+    const plans = legacyFloorPlans.content.cloneNode(true);
+    // Keep unvisited floor backgrounds inert even after their SVGs enter the DOM.
+    deferPlanImages(plans, optimizedImageUrl);
+    plans.querySelectorAll(".floors-res").forEach((plan) => { plan.style.display = "none"; });
+    legacyFloorPlans.parentElement.replaceChildren(plans);
+    vivaldiFloorPlansInitialized = true;
+    getVisiblePolygons(data);
+    return;
+  }
+  const { initializeTchaikovskyFloorPlan } = await import("./floor-plan.js?v=1.0.27");
   tchaikovskyFloorPlan = await initializeTchaikovskyFloorPlan(apartmentData, setTchaikovskyPlanPopup, (level) => {
     if (!level || document.body.dataset.catalogView !== "plan") return;
     selectedFloor = level.label;
@@ -123,10 +134,53 @@ const floorPlanReady = whenDocumentReady(async () => {
     const record = tchaikovskyOtherProperties.find((item) => item.propertyType === property.propertyType && item.unit === property.unit);
     if (record) openPropertyDetails(record, catalog.name);
   }, (type) => setPropertyType(type, false));
-  const categoryCommitted = await tchaikovskyFloorPlan?.selectCategory(selectedPropertyType);
-  if (categoryCommitted && document.body.dataset.catalogView === "plan") await tchaikovskyFloorPlan.selectFloor(selectedFloor);
-});
-floorPlanReady.catch((error) => console.error("Floor plan could not be initialized", error));
+  return tchaikovskyFloorPlan;
+}));
+
+let planActivationVersion = 0;
+let activeFloorPlan = Promise.resolve();
+const activateFloorPlan = async () => {
+  const version = ++planActivationVersion;
+  const container = document.querySelector(".houses-plans_container");
+  // The header remains available for switching views while the first plan loads.
+  // Its own category/floor controls become interactive once that selection commits.
+  container.inert = true;
+  container.setAttribute("aria-busy", "true");
+  try {
+    await ensureFloorPlan();
+    if (version !== planActivationVersion || document.body.dataset.catalogView !== "plan") return;
+    if (house === "vivaldi") {
+      await handleFilteredHousePlans(selectedFloor && selectedFloor !== "All" ? selectedFloor : "NP");
+      return;
+    }
+    const committed = await tchaikovskyFloorPlan?.selectCategory(selectedPropertyType);
+    if (committed && version === planActivationVersion && document.body.dataset.catalogView === "plan") {
+      await tchaikovskyFloorPlan.selectFloor(selectedFloor);
+    }
+  } finally {
+    if (version === planActivationVersion) {
+      container.inert = false;
+      container.setAttribute("aria-busy", "false");
+    }
+  }
+};
+const requestFloorPlan = () => {
+  document.querySelector("[data-deferred-plan-error]")?.remove();
+  const pending = activateFloorPlan();
+  activeFloorPlan = pending;
+  pending.catch((error) => {
+    console.error("Floor plan could not be initialized", error);
+    if (activeFloorPlan !== pending || document.body.dataset.catalogView !== "plan") return;
+    const message = document.createElement("p");
+    message.className = "plan-load-error";
+    message.dataset.deferredPlanError = "";
+    message.textContent = document.cookie.match(/(?:^|;\s*)language=([^;]*)/)?.[1] === "en"
+      ? "Unable to load the floor plan. Please try opening it again."
+      : "Nije moguće učitati plan. Pokušajte ponovo da ga otvorite.";
+    document.querySelector(".houses-plan").append(message);
+  });
+  return activeFloorPlan;
+};
 
 const updateSEOTags = (params) => {
   const stanoviDo = params.get("stanovi-do");
@@ -414,7 +468,7 @@ const setPropertyType = (type, syncPlan = true) => {
   document.querySelector('#example_2_input_from').value = areaBounds.min;
   document.querySelector('#example_2_input_to').value = areaBounds.max;
   handleFilteredCards();
-  if (syncPlan) tchaikovskyFloorPlan?.selectCategory(type);
+  if (syncPlan && document.body.dataset.catalogView === "plan") requestFloorPlan();
   if (syncPlan || document.body.dataset.catalogView !== "plan") updateURL();
 };
 
@@ -436,13 +490,27 @@ const cardsObserver = "IntersectionObserver" in window
   }, { rootMargin: "400px 0px" })
   : null;
 
+const getCardColumnCount = () => {
+  const grid = document.querySelector(".catalog-skeleton__cards") || apartmentCards;
+  const columns = getComputedStyle(grid).gridTemplateColumns;
+  const repeated = columns.match(/^repeat\((\d+),/);
+  return repeated ? Number(repeated[1]) : Math.max(1, columns.split(/\s+/).filter(Boolean).length);
+};
+const prioritizeFirstCardRow = () => {
+  Array.from(apartmentCards.querySelectorAll("img")).slice(0, getCardColumnCount()).forEach((image) => {
+    image.fetchPriority = "high";
+    image.loading = "eager";
+  });
+};
+
 const renderNextApartmentCards = () => {
   cardsObserver?.disconnect();
   const batch = filteredCardApartments.slice(
     renderedCardCount,
     cardsObserver ? renderedCardCount + cardsBatchSize : filteredCardApartments.length,
   );
-  const markup = batch.map((item) => {
+  const columns = getCardColumnCount();
+  const markup = batch.map((item, index) => {
     const placeholder = !item.apartmentImg ? {
       parking: { image: "./assets/images/shared/placeholders/parking.webp", description: "Parking space" },
       commercial: { image: "./assets/images/shared/placeholders/commercial.webp", description: "Commercial space" },
@@ -450,6 +518,7 @@ const renderNextApartmentCards = () => {
     const img = optimizedImageUrl(item.apartmentImg || placeholder?.image);
     const imageDescription = placeholder?.description || `Plan of ${formatCardApartmentNumber(item.apartmentNumber)}`;
     const number = formatCardApartmentNumber(item.apartmentNumber);
+    const firstRow = document.body.dataset.catalogView === "grid" && renderedCardCount + index < columns;
     return `
 				<div class="apartment__item apartment-card-item flex-style-column ${activeCardId === String(item.id) ? "active" : ""}" data-key="${item.id}" tabindex="0" role="button" aria-label="Open ${item.propertyType === 'apartments' ? 'apartment' : item.propertyType === 'commercial' ? 'commercial space' : 'parking space'} ${number}">
 				  <div class="apartment-card-item__meta">
@@ -457,7 +526,7 @@ const renderNextApartmentCards = () => {
 						<span class="apartment-card-item__details">${formatApartmentDetails(item)}</span>
 				  </div>
 				  <div class="apartment-card-item__image ${img ? 'is-loading' : 'apartment-card-item__image--empty'}" aria-busy="${Boolean(img)}">
-						${img ? `<img src="${img}?v=3" alt="${imageDescription}" loading="lazy" decoding="async" />` : ''}
+						${img ? `<img src="${img}?v=3" alt="${imageDescription}" loading="${firstRow ? "eager" : "lazy"}" fetchpriority="${firstRow ? "high" : "auto"}" decoding="async" />` : ''}
 				  </div>
 				</div>
 			`;
@@ -614,13 +683,44 @@ function setEventCurrentPolygon(combined, data) {
   });
 }
 
-function handleFilteredHousePlans(selectedFloor) {
-  const housesPlans = document.querySelectorAll(".floors-res");
-  housesPlans.forEach((card) => {
-    card.classList.contains(`plans-${selectedFloor.toLowerCase()}`)
-      ? (card.style.display = "flex")
-      : (card.style.display = "none");
-  });
+async function handleFilteredHousePlans(selectedFloor) {
+  if (house === "vivaldi" && !vivaldiFloorPlansInitialized) return;
+  const housesPlans = Array.from(document.querySelectorAll(".floors-res"));
+  const target = housesPlans.find((plan) => plan.classList.contains(`plans-${selectedFloor.toLowerCase()}`));
+  if (!target) return false;
+  const version = ++vivaldiFloorVersion;
+  const host = document.querySelector(".houses-plan");
+  host.querySelector("[data-plan-image-error]")?.remove();
+  host.inert = true;
+  host.setAttribute("aria-busy", "true");
+  try {
+    const paths = Array.from(target.querySelectorAll("image"), (image) => image.dataset.planImage).filter(Boolean);
+    await Promise.all(paths.map(waitForVivaldiImage));
+    if (version !== vivaldiFloorVersion || document.body.dataset.catalogView !== "plan") return false;
+    activatePlanImages(target);
+    housesPlans.forEach((plan) => { plan.style.display = plan === target ? "flex" : "none"; });
+    document.querySelectorAll(".floor__list_houses_plans .filter__btn_floor").forEach((button) => {
+      button.classList.toggle("active", button.textContent.trim().toLowerCase() === selectedFloor.toLowerCase());
+    });
+    return true;
+  } catch (error) {
+    console.error("Floor image could not be loaded", error);
+    if (version === vivaldiFloorVersion && document.body.dataset.catalogView === "plan") {
+      const message = document.createElement("p");
+      message.className = "plan-load-error";
+      message.dataset.planImageError = "";
+      message.textContent = document.cookie.match(/(?:^|;\s*)language=([^;]*)/)?.[1] === "en"
+        ? "Unable to load the floor plan. Please select the floor again."
+        : "Nije moguće učitati plan. Izaberite sprat ponovo.";
+      host.append(message);
+    }
+    return false;
+  } finally {
+    if (version === vivaldiFloorVersion) {
+      host.inert = false;
+      host.setAttribute("aria-busy", "false");
+    }
+  }
 }
 
 function filterAndRenderApartments(minValue, maxValue) {
@@ -700,12 +800,15 @@ const viewControlsReady = whenDocumentReady(() => {
       document.documentElement.classList.toggle("catalog-grid-view", key !== "2");
       document.body.classList.toggle("tchaikovsky-plan-view", house === "tchaikovsky" && key === "2");
       document.body.classList.toggle("tchaikovsky-grid-view", house === "tchaikovsky" && key !== "2");
-      if (key === "1") refreshCatalogLayout();
-      if (key === "2" && tchaikovskyFloorPlan) {
-        tchaikovskyFloorPlan.selectCategory(selectedPropertyType).then((committed) => {
-          if (committed) return tchaikovskyFloorPlan.selectFloor(selectedFloor);
-        });
+      if (key === "1") {
+        ++vivaldiFloorVersion;
+        const host = document.querySelector(".houses-plan");
+        host.inert = false;
+        host.setAttribute("aria-busy", "false");
+        prioritizeFirstCardRow();
+        refreshCatalogLayout();
       }
+      if (key === "2") requestFloorPlan();
     });
   });
   function redirectBack() {
@@ -768,10 +871,6 @@ const filtersReady = whenDocumentReady(() => {
   setupLamelaFilter();
   setupFloorFilter(".apartments__filter");
   handleFilteredCards();
-  if (catalog.hasFloorPlans && house !== "tchaikovsky") {
-    handleFilteredHousePlans("np");
-    getVisiblePolygons(data);
-  }
   applyURLParams();
 });
 
@@ -867,7 +966,7 @@ if (window.innerWidth <= 767) {
 
 export const catalogReady = Promise.all([viewControlsReady, viewButtonReady, filtersReady, cardEventsReady])
   .then(async () => {
-    if (house === "tchaikovsky" && document.body.dataset.catalogView === "plan") await floorPlanReady;
+    if (document.body.dataset.catalogView === "plan") await activeFloorPlan;
   });
 
 export function refreshCatalogLayout() {

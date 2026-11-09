@@ -1,0 +1,10 @@
+{
+  "homeRoutes": {
+    "about-project": "about-project",
+    "features": "features",
+    "infrastructure": "infrastructure",
+    "financing": "financing",
+    "contact": "contact",
+    "request-callback": "form"
+  }
+}

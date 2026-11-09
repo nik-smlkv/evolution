@@ -8,7 +8,7 @@
       html.catalog-loading body .section__body-title > .houses-plans_container { display: none !important; }
     </style>
     <link rel="stylesheet" href="./style/catalog-startup.css?v=1.0.7" />
-    <link rel="modulepreload" href="./js/apartments/requestt.js?v=1.0.57" />
+    <link rel="modulepreload" href="./js/apartments/requestt.js?v=1.0.59" />
     <title>Evolution Residence – Vaš San je Naša Obaveza</title>
     <title>
       Prodaja Stanova u Novogradnji Beograd | Direktno od Investitora |
@@ -227,13 +227,12 @@
         <div class="header__body flex-style-row">
           <div class="header__menu flex-style-row">
             <a href="./" class="header__logo flex-style-row"
-              ><img src="./assets/images/shared/brand/logo.webp" alt="Logo"
-            /></a>
+              ><img src="./assets/images/shared/brand/logo.webp" alt="Logo" width="240" height="58" decoding="async" loading="eager" /></a>
             <nav class="header__nav" id="site-navigation" aria-label="Main navigation">
               <ul class="flex-style-row header__nav_list">
                 <li class="menu__item">
                   <a
-                    href="./"
+                    href="./about-project/"
                     class="menu__item_link"
                     data-key="link_about"
                     data-target="about-project"
@@ -243,7 +242,7 @@
                 <li class="menu__item house-menu" data-house-menu>
                   <button class="house-menu__toggle" type="button" aria-expanded="false" aria-controls="house-menu-list">
                     <span>APARTMENTS</span>
-                    <img src="./assets/images/shared/icons/chevron.svg" alt="" aria-hidden="true" />
+                    <img src="./assets/images/shared/icons/chevron.svg" alt="" aria-hidden="true" width="11" height="6" decoding="async" loading="eager" />
                   </button>
                   <ul class="house-menu__list" id="house-menu-list">
                     <li><a href="./search-by-parameters/tchaikovsky/">Tchaikovsky</a></li>
@@ -252,7 +251,7 @@
                 </li>
                 <li class="menu__item">
                   <a
-                    href="./"
+                    href="./features/"
                     class="menu__item_link"
                     data-key="link_features"
                     data-target="features"
@@ -261,7 +260,7 @@
                 </li>
                 <li class="menu__item">
                   <a
-                    href="./"
+                    href="./infrastructure/"
                     class="menu__item_link"
                     data-key="link_infrastructure"
                     data-target="infrastructure"
@@ -271,7 +270,7 @@
 
                 <li class="menu__item">
                   <a
-                    href="./"
+                    href="./financing/"
                     class="menu__item_link"
                     data-key="link_financing"
                     data-target="financing"
@@ -280,7 +279,7 @@
                 </li>
                 <li class="menu__item">
                   <a
-                    href="./"
+                    href="./contact/"
                     class="menu__item_link"
                     data-key="link_contact"
                     data-target="contact"
@@ -295,7 +294,7 @@
             <div class="flex-style-row content-header">
               <a href="tel:0800012026" class="phone-link">0800 012 026</a>
               <a
-                href="#form"
+                href="./request-callback/"
                 class="btn-style header-btn-color blue-btn-hover js-scroll-form"
                 data-key="btn_zayav"
                 >leave a request</a
@@ -3299,16 +3298,15 @@
                   >get direction</a
                 >
               </div>
-              <img src="./assets/images/shared/maps/location.webp" alt="" />
+              <img src="./assets/images/shared/maps/location.webp" alt="" width="2000" height="1351" decoding="async" loading="lazy" fetchpriority="low" />
             </div>
           </div>
           <div class="info flex-style-column">
-            <img src="./assets/images/site/contact/interior.jpg" alt="Footer image interier" />
+            <img src="./assets/images/site/contact/interior.jpg" alt="Footer image interier" width="3356" height="1286" decoding="async" loading="lazy" fetchpriority="low" />
             <div class="flex-style-row info__footer__content">
               <div class="flex-style-row info_footer_content_block">
                 <a href="./"
-                  ><img src="./assets/images/shared/brand/logo.webp" alt="" class="footer__logo"
-                /></a>
+                  ><img src="./assets/images/shared/brand/logo.webp" alt="" class="footer__logo" width="240" height="58" decoding="async" loading="lazy" fetchpriority="low" /></a>
                 <div class="block-social flex-style-row">
                   <a class="social-link link-tg" href=""
                     ><svg
@@ -3585,15 +3583,15 @@
     <script src="./js/lenis.js?v=1.0.6"></script>
     <script src="./js/locomotive-scroll.min.js?v=1.0.6"></script>
     <script src="./js/splitting.min.js?v=1.0.6"></script>
-    <script type="module" src="./js/script.js?v=1.0.18"></script>
+    <script type="module" src="./js/script.js?v=1.0.21"></script>
     <script type="module" src="./js/validation.js?v=1.0.6"></script>
     <script
       type="module"
-      src="./js/apartments/catalog-startup.js?v=1.0.16"
+      src="./js/apartments/catalog-startup.js?v=1.0.18"
       onerror="document.querySelector('.wrapper').setAttribute('aria-busy', 'false'); document.documentElement.classList.add('catalog-load-error')"
     ></script>
     <script src="./js/ion.rangeSlider.min.js?v=1.0.6"></script>
-    <script type="module" src="./js/form.js?v=1.0.7"></script>
+    <script type="module" src="./js/form.js?v=1.0.8"></script>
     <script src="./js/house-menu.js?v=1.0.3"></script>
   </body>
 </html>

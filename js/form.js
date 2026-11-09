@@ -1,3 +1,5 @@
+import { getSelectedHouse } from "./house-context.js?v=1.0.1";
+
 const formFeedback = document.forms["form-feedback"];
 const formFlatFeedback = document.forms["form-feedback-flat"];
 
@@ -5,6 +7,7 @@ formFeedback.addEventListener("submit", (evt) => {
 	const inputPlaceholders = formFeedback.querySelectorAll('.input-placeholder');
 	evt.preventDefault();
 	const submitButton = evt.submitter;
+	const selectedHouse = getSelectedHouse();
 	console.log(formFeedback.elements["phone"].value.trim());
 	const formData = {
 		fields: {
@@ -16,6 +19,7 @@ formFeedback.addEventListener("submit", (evt) => {
 			EMAIL: [
 				{ VALUE: formFeedback.elements["mail"].value.trim(), VALUE_TYPE: "WORK" }
 			],
+			COMMENTS: selectedHouse ? `Objekat: ${selectedHouse.name}` : "Objekat: Nije izabran",
 		},
 		params: { REGISTER_SONET_EVENT: "Y" }
 	};
@@ -45,9 +49,10 @@ formFlatFeedback.addEventListener("submit", (evt) => {
 	let requestComment;
 	if (selectedProperty) {
 		const { propertyType, unit, buildingWing, floor, house } = JSON.parse(selectedProperty);
+		const selectedHouse = getSelectedHouse(house);
 		const propertyLabel = propertyType === "parking" ? "parking mesta" : "poslovnog prostora";
 		const details = [
-			house && `Objekat: ${house}`,
+			selectedHouse && `Objekat: ${selectedHouse.name}`,
 			buildingWing && `Krilo zgrade: ${buildingWing}`,
 			floor && `Sprat: ${floor}`,
 			unit && `Broj: ${unit}`,
@@ -60,7 +65,9 @@ formFlatFeedback.addEventListener("submit", (evt) => {
 		const apartmentFloor = houseInformation.querySelector('.js-apartment-floor').textContent;
 		const apartmentNumber = houseInformation.querySelector('.js-apartment-number').textContent;
 		const apartmentImg = houseInformation.querySelector('.apartment__img').src;
-		requestComment = `Saznati cenu stana 'Površina:${apartmentArea}, Krilo zgrade:${apartmentWing}, Sprat: ${apartmentFloor}, Broj stana: ${apartmentNumber}. Tlocrt stana na sajtu ${apartmentImg}`;
+		const selectedHouse = getSelectedHouse();
+		const houseDetail = selectedHouse ? `Objekat: ${selectedHouse.name}, ` : "";
+		requestComment = `Saznati cenu stana '${houseDetail}Površina:${apartmentArea}, Krilo zgrade:${apartmentWing}, Sprat: ${apartmentFloor}, Broj stana: ${apartmentNumber}. Tlocrt stana na sajtu ${apartmentImg}`;
 	}
 	const submitButton = evt.submitter;
 	console.log(formFeedback.elements["phone"].value.trim());

@@ -18,8 +18,10 @@ import zipfile
 from collections import Counter
 from html.parser import HTMLParser
 from pathlib import Path
-from urllib.parse import unquote, urlsplit
+from urllib.parse import quote, unquote, urljoin, urlsplit
 import xml.etree.ElementTree as ET
+
+from home_routes import HomeRouteError, validate_home_routes
 
 
 DEFAULT_ROOT = Path(__file__).resolve().parents[1]
@@ -89,18 +91,24 @@ class RuntimeGraph:
             self.files.add(relative)
             self.queue.append(path)
 
-    def reference(self, value, parent, document_root=False):
+    def reference(self, value, parent, document_root=False, base=None):
         value = value.strip()
         if not value or value.startswith("#"):
             return
         parsed = urlsplit(value)
         if parsed.scheme or parsed.netloc or not parsed.path:
             return
-        decoded = unquote(parsed.path)
-        if decoded.startswith("/") or document_root:
-            path = self.root / decoded.removeprefix("./").lstrip("/")
+        if base is not None and not document_root:
+            parsed = urlsplit(urljoin(base, value))
+            if parsed.scheme or parsed.netloc:
+                return
+            path = self.root / unquote(parsed.path).lstrip("/")
         else:
-            path = parent.parent / decoded
+            decoded = unquote(parsed.path)
+            if decoded.startswith("/") or document_root:
+                path = self.root / decoded.removeprefix("./").lstrip("/")
+            else:
+                path = parent.parent / decoded
         # Normalize dot segments without following a symlink outside the tree.
         path = Path(os.path.normpath(path))
         if not path.is_relative_to(self.root):
@@ -111,18 +119,27 @@ class RuntimeGraph:
         self.edges.append({"from": parent.relative_to(self.root).as_posix(), "to": relative})
         self.include(relative)
 
-    def css(self, text, parent):
+    def css(self, text, parent, base=None):
         for value in CSS_URL.findall(text) + CSS_IMPORT.findall(text):
-            self.reference(value, parent)
+            self.reference(value, parent, base=base)
 
-    def javascript(self, text, parent):
+    def javascript(self, text, parent, base=None):
         for value in MODULE_IMPORT.findall(text) + DYNAMIC_DATASET.findall(text):
-            self.reference(value, parent)
+            self.reference(value, parent, base=base)
         for value in DOCUMENT_IMAGE.findall(text):
             if "${" in value:
                 continue  # Generated image paths are covered by the allowlist.
             if Path(urlsplit(value).path).suffix.lower() in IMAGE_EXTENSIONS:
-                self.reference(value, parent, document_root=True)
+                self.reference(value, parent, document_root=base is None, base=base)
+
+    def entry_points(self):
+        entries = list(ENTRY_POINTS)
+        try:
+            routes = validate_home_routes(self.root)
+        except HomeRouteError as error:
+            raise BuildError(str(error)) from error
+        entries.extend(slug + "/index.html" for slug in routes)
+        return entries
 
     def load_image_manifest(self):
         manifest = self.root / IMAGE_MANIFEST
@@ -148,14 +165,15 @@ class RuntimeGraph:
 
     def collect(self):
         self.load_image_manifest()
-        for entry in ENTRY_POINTS:
+        for entry in self.entry_points():
             self.include(entry)
         while self.queue:
             path = self.queue.pop(0)
             extension = path.suffix.lower()
             if extension == ".html":
-                parser = RuntimeHTML(self, path)
-                parser.feed(path.read_text())
+                document = path.read_text()
+                parser = RuntimeHTML(self, path, document)
+                parser.feed(document)
             elif extension == ".css":
                 self.css(path.read_text(), path)
             elif extension == ".js":
@@ -176,28 +194,51 @@ class RuntimeGraph:
         return self
 
 
-class RuntimeHTML(HTMLParser):
-    def __init__(self, graph, path):
+class HTMLBase(HTMLParser):
+    def __init__(self):
         super().__init__()
-        self.graph, self.path = graph, path
-        self.script = self.style = False
+        self.href = None
 
     def handle_starttag(self, tag, attrs):
         attrs = dict(attrs)
+        if tag == "base" and "href" in attrs and self.href is None:
+            self.href = attrs["href"] or ""
+
+
+class RuntimeHTML(HTMLParser):
+    def __init__(self, graph, path, document):
+        super().__init__()
+        self.graph, self.path = graph, path
+        self.script = self.style = False
+        # A base URL governs every document reference, even references preceding
+        # the base tag. It is URL context, not another runtime dependency.
+        document_base = HTMLBase()
+        document_base.feed(document)
+        self.base = urljoin("/" + quote(path.relative_to(graph.root).as_posix()), document_base.href or "")
+
+    def handle_starttag(self, tag, attrs):
+        attrs = dict(attrs)
+        if tag == "base":
+            return
         for key in ("src", "href", "xlink:href", "poster"):
             if attrs.get(key):
-                self.graph.reference(attrs[key], self.path)
+                self.graph.reference(attrs[key], self.path, base=self.base)
+        # Deferred video sources become live src URLs only near the viewport.
+        # Keep them in the runtime graph without treating arbitrary data-src
+        # metadata on unrelated elements as a dependency.
+        if tag in {"video", "source"} and attrs.get("data-src"):
+            self.graph.reference(attrs["data-src"], self.path, base=self.base)
         if attrs.get("style"):
-            self.graph.css(attrs["style"], self.path)
+            self.graph.css(attrs["style"], self.path, base=self.base)
         if attrs.get("srcset"):
             for candidate in attrs["srcset"].split(","):
-                self.graph.reference(candidate.strip().split()[0], self.path)
+                self.graph.reference(candidate.strip().split()[0], self.path, base=self.base)
         if tag == "meta" and attrs.get("http-equiv", "").lower() == "refresh":
             redirect = re.search(r"url\s*=\s*(.*)", attrs.get("content", ""), re.IGNORECASE)
             if redirect:
-                self.graph.reference(redirect[1].strip("'\" "), self.path)
+                self.graph.reference(redirect[1].strip("'\" "), self.path, base=self.base)
         if tag == "meta" and (attrs.get("property") in {"og:image", "og:image:url"} or attrs.get("name") == "twitter:image"):
-            self.graph.reference(attrs.get("content", ""), self.path)
+            self.graph.reference(attrs.get("content", ""), self.path, base=self.base)
         if tag == "script":
             self.script = True
         if tag == "style":
@@ -211,9 +252,9 @@ class RuntimeHTML(HTMLParser):
 
     def handle_data(self, text):
         if self.script:
-            self.graph.javascript(text, self.path)
+            self.graph.javascript(text, self.path, base=self.base)
         if self.style:
-            self.graph.css(text, self.path)
+            self.graph.css(text, self.path, base=self.base)
 
 
 def build_report(graph):

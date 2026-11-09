@@ -201,14 +201,13 @@
       <header>
         <div class="header__body flex-style-row">
           <div class="header__menu flex-style-row">
-            <a href="#main" class="header__logo flex-style-row"
-              ><img src="./assets/images/shared/brand/logo.webp" alt="Logo"
-            /></a>
+            <a href="./" class="header__logo flex-style-row"
+              ><img src="./assets/images/shared/brand/logo.webp" alt="Logo" width="240" height="58" decoding="async" loading="eager" /></a>
             <nav class="header__nav" id="site-navigation" aria-label="Main navigation">
               <ul class="flex-style-row header__nav_list">
                 <li class="menu__item">
                   <a
-                    href="./"
+                    href="./about-project/"
                     class="menu__item_link"
                     data-key="link_about"
                     data-target="about-project"
@@ -218,7 +217,7 @@
                 <li class="menu__item house-menu" data-house-menu>
                   <button class="house-menu__toggle" type="button" aria-expanded="false" aria-controls="house-menu-list">
                     <span>APARTMENTS</span>
-                    <img src="./assets/images/shared/icons/chevron.svg" alt="" aria-hidden="true" />
+                    <img src="./assets/images/shared/icons/chevron.svg" alt="" aria-hidden="true" width="11" height="6" decoding="async" loading="eager" />
                   </button>
                   <ul class="house-menu__list" id="house-menu-list">
                     <li><a href="./search-by-parameters/tchaikovsky/">Tchaikovsky</a></li>
@@ -227,7 +226,7 @@
                 </li>
                 <li class="menu__item">
                   <a
-                    href="./"
+                    href="./features/"
                     class="menu__item_link"
                     data-key="link_features"
                     data-target="features"
@@ -236,7 +235,7 @@
                 </li>
                 <li class="menu__item">
                   <a
-                    href="./"
+                    href="./infrastructure/"
                     class="menu__item_link"
                     data-key="link_infrastructure"
                     data-target="infrastructure"
@@ -246,7 +245,7 @@
 
                 <li class="menu__item">
                   <a
-                    href="./"
+                    href="./financing/"
                     class="menu__item_link"
                     data-key="link_financing"
                     data-target="financing"
@@ -255,7 +254,7 @@
                 </li>
                 <li class="menu__item">
                   <a
-                    href="./"
+                    href="./contact/"
                     class="menu__item_link"
                     data-key="link_contact"
                     data-target="contact"
@@ -270,7 +269,7 @@
             <div class="flex-style-row content-header">
               <a href="tel:0800012026" class="phone-link">0800 012 026</a>
               <a
-                href="#form"
+                href="./request-callback/"
                 class="btn-style header-btn-color blue-btn-hover js-scroll-form"
                 data-key="btn_zayav"
                 >leave a request</a
@@ -338,13 +337,11 @@
                   <img
                     class="main-img"
                     src="./assets/images/site/hero/main.jpg"
-                    alt="Main Image"
-                  />
+                    alt="Main Image" width="3600" height="2564" decoding="async" loading="eager" fetchpriority="high" />
                   <img
                     class="moving-img"
                     src="./assets/images/site/hero/detail.webp"
-                    alt=""
-                  />
+                    alt="" width="3600" height="2564" decoding="async" loading="eager" />
                 </div>
               </div>
             </div>
@@ -354,14 +351,14 @@
             >
               <div class="video__wrapper">
                 <video
-                  autoplay=""
                   muted=""
                   playsinline=""
                   loop=""
-                  poster=""
+                  preload="none"
+                  data-deferred-video
                   class="video flex-style-row"
                 >
-                  <source src="./videos/evolution-video.mp4" type="video/mp4" />
+                  <source data-src="./videos/evolution-video.mp4" type="video/mp4" />
                 </video>
               </div>
             </div>
@@ -440,8 +437,7 @@
               <img
                 src="./assets/images/site/content/dream.jpg"
                 data-parallax-layer="1"
-                class="parallax__layers"
-              />
+                class="parallax__layers" width="2600" height="1438" decoding="async" loading="lazy" fetchpriority="low" />
             </div>
             <div class="block-name flex-style-row gap">
               <h2
@@ -482,7 +478,7 @@
                   </div>
                   <div class="scroll-card-container flex-style-row">
                     <div class="scroll-card flex-style-column panel">
-                      <img src="./assets/images/site/amenities/swimming.jpg" alt="swimming" />
+                      <img src="./assets/images/site/amenities/swimming.jpg" alt="swimming" width="1920" height="1081" decoding="async" loading="lazy" fetchpriority="low" />
                       <p
                         class="btn-style btn-color-gray tt-up"
                         data-key="p_swim"
@@ -491,7 +487,7 @@
                       </p>
                     </div>
                     <div class="scroll-card flex-style-column panel">
-                      <img src="./assets/images/site/amenities/fitness.jpg" alt="fitness" />
+                      <img src="./assets/images/site/amenities/fitness.jpg" alt="fitness" width="720" height="480" decoding="async" loading="lazy" fetchpriority="low" />
                       <p
                         class="btn-style btn-color-gray tt-up"
                         data-key="p_fit"
@@ -500,7 +496,7 @@
                       </p>
                     </div>
                     <div class="scroll-card flex-style-column panel">
-                      <img src="./assets/images/site/amenities/spa.jpg" alt="spa" />
+                      <img src="./assets/images/site/amenities/spa.jpg" alt="spa" width="1621" height="1080" decoding="async" loading="lazy" fetchpriority="low" />
                       <p
                         class="btn-style btn-color-gray tt-up"
                         data-key="p_spa"
@@ -509,7 +505,7 @@
                       </p>
                     </div>
                     <div class="scroll-card flex-style-column panel">
-                      <img src="./assets/images/site/amenities/lobby.jpg" alt="lobby" />
+                      <img src="./assets/images/site/amenities/lobby.jpg" alt="lobby" width="1621" height="1080" decoding="async" loading="lazy" fetchpriority="low" />
                       <p
                         class="btn-style btn-color-gray tt-up"
                         data-key="p_lob"
@@ -518,7 +514,7 @@
                       </p>
                     </div>
                     <div class="scroll-card flex-style-column panel">
-                      <img src="./assets/images/site/amenities/commercial.jpg" alt="commercial" />
+                      <img src="./assets/images/site/amenities/commercial.jpg" alt="commercial" width="1621" height="1080" decoding="async" loading="lazy" fetchpriority="low" />
                       <p
                         class="btn-style btn-color-gray tt-up"
                         data-key="p_prem"
@@ -527,7 +523,7 @@
                       </p>
                     </div>
                     <div class="scroll-card flex-style-column panel">
-                      <img src="./assets/images/site/amenities/parking.webp" alt="fitness" />
+                      <img src="./assets/images/site/amenities/parking.webp" alt="fitness" width="1621" height="1080" decoding="async" loading="lazy" fetchpriority="low" />
                       <p
                         class="btn-style btn-color-gray tt-up"
                         data-key="p_park"
@@ -723,8 +719,7 @@
                   <img
                     class="svg-width"
                     src="./assets/images/shared/icons/location.svg"
-                    alt="location"
-                  />
+                    alt="location" width="100" height="125" decoding="async" loading="lazy" fetchpriority="low" />
                   <div class="flex-style-column gap-text">
                     <p class="font-about-block" data-key="p_located">
                       Evolution Residence is located in Voždovac,
@@ -741,7 +736,7 @@
                 </div>
                 <div class="block-map">
                   <div class="pointer flex-style-row"></div>
-                  <img src="./assets/images/site/location/neighborhood.jpg" alt="map" />
+                  <img src="./assets/images/site/location/neighborhood.jpg" alt="map" width="2000" height="1048" decoding="async" loading="lazy" fetchpriority="low" />
                 </div>
               </div>
             </div>
@@ -751,8 +746,7 @@
               <img
                 src="./assets/images/site/content/comfort.jpg"
                 data-parallax-layer="2"
-                class="parallax__layers"
-              />
+                class="parallax__layers" width="2490" height="1375" decoding="async" loading="lazy" fetchpriority="low" />
             </div>
             <div class="block-name flex-style-row gap areas-block-name">
               <h2
@@ -853,15 +847,13 @@
                       <img
                         class="slider-card-img"
                         src="./assets/images/site/materials/material-01.jpg"
-                        alt="Slide image one"
-                      />
+                        alt="Slide image one" width="960" height="650" decoding="async" loading="lazy" fetchpriority="low" />
                     </div>
                     <div class="slider-card-body flex-style-row swiper-slide">
                       <img
                         class="slider-card-img"
                         src="./assets/images/site/materials/material-02.jpg"
-                        alt="Slide image one"
-                      />
+                        alt="Slide image one" width="1800" height="1219" decoding="async" loading="lazy" fetchpriority="low" />
                     </div>
                   </div>
                   <div
@@ -986,7 +978,7 @@
               </div>
               <div class="cards flex-style-row">
                 <div class="card-credit card">
-                  <img src="./assets/images/site/financing/credit.jpg" alt="Credit image" />
+                  <img src="./assets/images/site/financing/credit.jpg" alt="Credit image" width="811" height="679" decoding="async" loading="lazy" fetchpriority="low" />
                   <div class="card-text-content flex-style-column">
                     <div class="text-card__block flex-style-row">
                       <p
@@ -1032,7 +1024,7 @@
                   </div>
                 </div>
                 <div class="card-cash card">
-                  <img src="./assets/images/site/financing/cash.jpg" alt="Cash image" />
+                  <img src="./assets/images/site/financing/cash.jpg" alt="Cash image" width="811" height="679" decoding="async" loading="lazy" fetchpriority="low" />
                   <div class="card-text-content flex-style-column">
                     <div class="text-card__block flex-style-row">
                       <p
@@ -1249,16 +1241,15 @@
                   </a>
                 </div>
               </div>
-              <img src="./assets/images/shared/maps/location.webp" alt="" />
+              <img src="./assets/images/shared/maps/location.webp" alt="" width="2000" height="1351" decoding="async" loading="lazy" fetchpriority="low" />
             </div>
           </div>
           <div class="info flex-style-column">
-            <img src="./assets/images/site/contact/interior.jpg" alt="Footer image interier" />
+            <img src="./assets/images/site/contact/interior.jpg" alt="Footer image interier" width="3356" height="1286" decoding="async" loading="lazy" fetchpriority="low" />
             <div class="flex-style-row info__footer__content">
               <div class="flex-style-row info_footer_content_block">
                 <a href="./"
-                  ><img src="./assets/images/shared/brand/logo.webp" alt="" class="footer__logo"
-                /></a>
+                  ><img src="./assets/images/shared/brand/logo.webp" alt="" class="footer__logo" width="240" height="58" decoding="async" loading="lazy" fetchpriority="low" /></a>
                 <div class="block-social flex-style-row">
                   <a
                     style="display: none"
@@ -1455,11 +1446,12 @@
     <script src="./js/lenis.js?v=1.0.5"></script>
     <script src="./js/locomotive-scroll.min.js?v=1.0.5"></script>
     <script src="./js/splitting.min.js?v=1.0.5"></script>
-    <script src="./js/animation.min.js?v=1.0.5"></script>
+    <script src="./js/animation.min.js?v=1.0.6"></script>
     <script type="module" src="./js/validation.js?v=1.0.5"></script>
     <script src="./js/ion.rangeSlider.min.js?v=1.0.5"></script>
-    <script src="./js/form.js?v=1.0.7"></script>
+    <script type="module" src="./js/form.js?v=1.0.8"></script>
+    <script type="module" src="./js/deferred-media.js?v=1.0.1"></script>
     <script src="./js/house-menu.js?v=1.0.3"></script>
-    <script type="module" src="./js/script.js?v=1.0.18" defer></script>
+    <script type="module" src="./js/script.js?v=1.0.21" defer></script>
   </body>
 </html>

@@ -29,7 +29,7 @@ const waitForImage = (image) => image.decode
   });
 
 try {
-  const { catalogReady, refreshCatalogLayout } = await import("./requestt.js?v=1.0.57");
+  const { catalogReady, refreshCatalogLayout } = await import("./requestt.js?v=1.0.59");
   await catalogReady;
   await document.fonts.ready;
 
@@ -52,6 +52,7 @@ try {
     const columns = getComputedStyle(document.querySelector(".catalog-skeleton__cards")).gridTemplateColumns.split(/\s+/).length;
     const images = Array.from(list.querySelectorAll("img")).slice(0, columns);
     await Promise.allSettled(images.map((image) => {
+      image.fetchPriority = "high";
       image.loading = "eager";
       return waitForImage(image);
     }));

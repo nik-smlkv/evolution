@@ -48,6 +48,11 @@ function run(root, args = []) {
   return spawnSync("python3", ["-B", script, "--root", root, ...args], { encoding: "utf8" });
 }
 
+function generateHomeRoutes(root) {
+  const result = spawnSync("python3", ["-B", "-c", "import sys; from pathlib import Path; sys.path.insert(0,sys.argv[1]); from home_routes import generate_home_routes; generate_home_routes(Path(sys.argv[2]))", dirname(script), root], { encoding: "utf8" });
+  assert.equal(result.status, 0, result.stderr);
+}
+
 function files(directory, base = directory) {
   return readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
     const path = join(directory, entry.name);
@@ -63,6 +68,75 @@ test("production build follows imports, fonts, video, SVG and manifest icons whi
   assert.deepEqual(files(output), Object.keys(sources).sort());
   for (const [path, bytes] of Object.entries(sources)) assert.equal(hash(readFileSync(join(output, path))), hash(bytes), path);
   assert.equal(JSON.parse(result.stdout).files, Object.keys(sources).length);
+});
+
+test("configured home routes deploy with document-base dependencies and without development route config", (t) => {
+  const { root, base, write, sources } = fixture(t);
+  const additions = {
+    "preview/index.html": `<link rel="stylesheet" href="./style/route.css">
+      <base href="../"><base href="./ignored/">
+      <a href="./contact/?utm_source=menu">Contact</a>
+      <img src="./assets/images/tile.webp" srcset="./assets/images/tile.webp 1x, ./assets/images/tile.webp 2x">
+      <video poster="./assets/images/tile.webp" src="./videos/route.mp4"></video>
+      <video data-deferred-video preload="none"><source data-src="./videos/deferred.mp4?v=2"><source data-src="https://external.test/video.mp4"></video>
+      <video data-src="./videos/deferred-direct.mp4" preload="none"></video>
+      <div data-src="./assets/sources/original.png"></div>
+      <meta property="og:image" content="./assets/images/tile.webp">
+      <div style="background:url('./assets/images/tile.webp')"></div>
+      <style>@import './style/inline.css'; @font-face{src:url('./fonts/inline.woff2')}</style>
+      <script type="module" src="./js/route.js"></script>
+      <script type="module">import './js/inline.js'; import('./js/dynamic.js');</script>`,
+    "style/route.css": '@import "./nested/route.css";',
+    "style/nested/route.css": '@font-face{src:url("../../fonts/route.woff2")}',
+    "style/inline.css": "body{color:navy}",
+    "fonts/route.woff2": "route font",
+    "fonts/inline.woff2": "inline font",
+    "videos/route.mp4": "route video",
+    "videos/deferred.mp4": "deferred route video",
+    "videos/deferred-direct.mp4": "direct deferred route video",
+    "js/route.js": 'import "./nested/route.js";',
+    "js/nested/route.js": 'export {default} from "../leaf.js";',
+    "js/leaf.js": "export default 1;",
+    "js/inline.js": "export default 2;",
+    "js/dynamic.js": "export default 3;",
+  };
+  for (const [path, bytes] of Object.entries(additions)) write(path, bytes);
+  sources["index.html"] = `<!doctype html><html><head><script type="module" src="./js/home-routes.js"></script></head><body>${sources["index.html"]}
+    <main id="about-project">About project</main><section id="contact">Contact</section><section id="form">Callback</section>
+    <a href="./about-project/">About project</a><a href="./preview/">Preview</a></body></html>`;
+  write("index.html", sources["index.html"]);
+  write("config/site-routes.json", JSON.stringify({ homeRoutes: {
+    "about-project": "about-project", contact: "contact", "request-callback": "form",
+  } }));
+  generateHomeRoutes(root);
+  for (const path of ["about-project/index.html", "contact/index.html", "request-callback/index.html", "js/home-routes.js"]) {
+    additions[path] = readFileSync(join(root, path), "utf8");
+  }
+  const output = join(base, "deploy");
+  const result = run(root, ["--output", output]);
+  assert.equal(result.status, 0, result.stderr);
+  const expected = { ...sources, ...additions };
+  assert.deepEqual(files(output), Object.keys(expected).sort());
+  for (const [path, bytes] of Object.entries(expected)) assert.equal(hash(readFileSync(join(output, path))), hash(bytes), path);
+  assert.equal(existsSync(join(output, "config/site-routes.json")), false);
+});
+
+test("production builds reject missing or stale generated home routes", (t) => {
+  const { root, write } = fixture(t);
+  write("index.html", '<!doctype html><html><head></head><body><main id="contact">Contact</main></body></html>');
+  write("config/site-routes.json", JSON.stringify({ homeRoutes: { contact: "contact" } }));
+  generateHomeRoutes(root);
+  rmSync(join(root, "contact/index.html"));
+  const missing = run(root, ["--check"]);
+  assert.notEqual(missing.status, 0);
+  assert.match(missing.stderr, /contact\/index\.html/);
+  assert.match(missing.stderr, /generate-home-routes\.py/);
+  generateHomeRoutes(root);
+  write("index.html", '<!doctype html><html><head></head><body><main id="contact">Updated contact</main></body></html>');
+  const stale = run(root, ["--check"]);
+  assert.notEqual(stale.status, 0);
+  assert.match(stale.stderr, /stale/i);
+  assert.match(stale.stderr, /generate-home-routes\.py/);
 });
 
 test("production check is read-only and rejects missing or changed approved images", (t) => {
@@ -99,6 +173,12 @@ test("runtime images outside the allowlist and dependencies on archived sources 
   const archived = run(root, ["--check"]);
   assert.notEqual(archived.status, 0);
   assert.match(archived.stderr, /Non-production dependency/);
+  write("js/details.js", "export default 1;");
+  write("assets/sources/private.mp4", "source video");
+  write("search-by-parameters.html", '<video data-deferred-video><source data-src="./assets/sources/private.mp4"></video>');
+  const deferredArchived = run(root, ["--check"]);
+  assert.notEqual(deferredArchived.status, 0);
+  assert.match(deferredArchived.stderr, /Non-production dependency/);
 });
 
 test("production build never overwrites an existing nonempty output", (t) => {
