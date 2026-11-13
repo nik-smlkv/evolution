@@ -4,6 +4,7 @@ export default {
   "features": "features",
   "infrastructure": "infrastructure",
   "financing": "financing",
+  "gallery": "render-gallery",
   "contact": "contact",
   "request-callback": "form"
 };

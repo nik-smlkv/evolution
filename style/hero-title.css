@@ -1,0 +1,97 @@
+.main-block .section__body-main {
+  isolation: isolate;
+}
+
+.main-block .main-block-relative {
+  min-width: 0;
+}
+
+.main-block .main-title {
+  --fz-title: min(11.6667vw, 224px);
+  max-width: 100%;
+  letter-spacing: -0.0045em;
+  white-space: nowrap;
+}
+
+.main-block .main-title > :first-child {
+  align-self: flex-start;
+  width: max-content;
+}
+
+.hero-wordmark {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .main-block .section__body-main {
+    --hero-gutter: min(6.25vw, 120px);
+    --hero-photo-top: max(-7px, -0.3646vw);
+    align-items: flex-start;
+    flex-direction: row;
+    justify-content: flex-start;
+    /* Leave one pixel below the fold so the video's observer stays inactive at the boundary. */
+    min-height: max(min(40.78125vw, 783px), calc(100vh - 89px));
+    height: auto;
+    margin-top: 0;
+    padding-inline: var(--hero-gutter);
+  }
+
+  .main-block .section__body-main > .block-image {
+    top: var(--hero-photo-top);
+    right: var(--hero-gutter);
+    width: 57.2917%;
+    max-width: 1100px;
+    max-height: none;
+  }
+
+  .main-block .main-block-relative {
+    top: min(9.47917vw, 23.25vh, 182px);
+    bottom: auto;
+  }
+
+  .main-block .main-title {
+    --fz-title: min(11.6667vw, 35vh, 224px);
+    display: block;
+    height: 0;
+  }
+
+  .main-block .main-title > span {
+    position: absolute;
+    opacity: 0;
+  }
+
+  .main-block .hero-wordmark {
+    display: block;
+    position: absolute;
+    left: min(0.83333vw, 16px);
+    top: 0;
+    width: min(58.69792vw, 148vh, 1127px);
+    height: auto;
+  }
+
+  .main-block .about-button {
+    top: 52.4%;
+    left: calc(-1 * min(3.90625vw, 75px));
+    width: min(7.8125vw, 150px);
+    height: min(7.8125vw, 150px);
+    padding: 0;
+    gap: min(0.68vw, 13px);
+  }
+}
+
+@media (max-width: 767.99px) {
+  .main-block .main-block-relative {
+    z-index: 4;
+  }
+
+  .main-block .main-title {
+    --fz-title: min(12vw, 90px);
+    /* Include the side gutters and a possible reserved scrollbar in the fit. */
+    font-size: min(var(--fz-title), calc((100vw - 56px) / 6));
+  }
+
+  .main-block .main-title .title-span {
+    --fz-title: min(10vw, 76px);
+    margin-left: 0;
+  }
+}

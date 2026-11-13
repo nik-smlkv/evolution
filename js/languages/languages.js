@@ -1,5 +1,12 @@
 export const langArr = {
 	en: {
+		home_house_offer: `Explore the apartments in`,
+		home_house_and: `and`,
+		catalog_noscript: `Enable JavaScript to view the apartment catalog.`,
+		catalog_heading: `Evolution Residence apartments`,
+		catalog_loading: `Loading apartments…`,
+		catalog_load_error: `Unable to load apartments. Please try again.`,
+		catalog_retry: `Reload page`,
 		plan_category_apartments: `APARTMENTS`,
 		plan_category_commercial: `COMMERCIAL`,
 		plan_category_parking: `PARKING`,
@@ -59,7 +66,7 @@ export const langArr = {
 		p_kom: `Autokomanda`,
 		p_partstad: `Partizan Stadium`,
 		p_rajk: `Stadium «Rajko Mitić»`,
-		p_located: `Evolution Residence is located in Voždovac, at Tolminska St. № 5-11.`,
+		p_located: `Evolution Residence is located in Voždovac, at Tolminska St. № 5–11.`,
 		p_build: `The Evolution Residence complex is located in a carefully selected area, offering easy access to the city 
 		center while being situated in a peaceful green oasis. With a total area of 57,302 m², 
 		the complex will consist of four residential-commercial buildings.`,
@@ -68,14 +75,14 @@ export const langArr = {
 		ENVIRONMENT FOR RELAXATION, SOCIALIZING, AND CREATING UNFORGETTABLE MOMENTS.`,
 		p_mater: `MATERIALS`,
 		p_quality_comf: `Top quality for complete enjoyment`,
-		h2_aesth2: `Aesthetics and reliability in every detail`,
+		h2_aesth2: `Aesthetics and Reliability in Every Detail`,
 		p_porcelain: `The porcelain tiles in the hallways and stairwells will be selected to provide a modern and elegant appearance, 
 		in line with the overall style of the building. The doors to be installed will be of domestic production, equipped with a 
 		Grade III anti-burglary system, ensuring a high level of security for the residents. The interior doors will be MDF, finished with 
 		melamine treatment, combining durability and aesthetic appeal. The three-layer oak parquet, combined with white MDF baseboards of 6/8 cm height, 
 		will create a harmonious and contemporary interior. 
 		The spaces will feature first-class ceramic tiles from renowned European manufacturers, adding sophistication and comfort to every room.`,
-		p_comf: `High quality and exceptional comfort`,
+		p_comf: `High Quality and Exceptional Comfort`,
 		p_facade: `The building’s facade will be cladded with high-quality materials that will provide a long-lasting visual effect and an aesthetically 
 		pleasing appearance. Modern terraces with geometric shapes will contribute to the dynamism of the facade, while aluminum railings will add 
 		elegance and sophistication. Mosquito nets installed on the openings will be designed to allow for unobstructed ventilation, thus contributing
@@ -122,7 +129,9 @@ export const langArr = {
 		link_features: `Features`,
 		link_infrastructure: `Infrastructure`,
 		link_apartments: `Apartments`,
-		link_gallery: `Gallery`,
+		gallery_skip: `Skip`,
+		materials_previous: `Previous slide`,
+		materials_next: `Next slide`,
 		link_financing: `Financing`,
 		link_contact: `Contact`,
 		h2_search_parameter: `Select by parameters`,
@@ -132,28 +141,20 @@ export const langArr = {
 		p_previous: `Previous`,
 		p_floor_plan: `Floor plan`,
 		p_grid_view: `Grid View`,
-		p_street: `Tolminska street, no. 5-11`,
+		p_street: `Tolminska street, no. 5–11`,
 		p_affordable: `Affordable apartments`,
-		p_text_slide_0: `The porcelain tiles in the hallways and stairwells will
-                        be selected to provide a modern and elegant appearance,
-                        in line with the overall style of the building. The
-                        doors to be installed will be of domestic production,
-                        equipped with a Grade III anti-burglary system, ensuring
-                        a high level of security for the residents. The interior
-                        doors will be MDF, finished with melamine treatment,
-                        combining durability and aesthetic appeal.Quality parquet, combined with white MDF
-                        baseboards of 6/8 cm height, will create a harmonious
-                        and contemporary interior. The spaces will feature
-                        first-class ceramic tiles from renowned European
-                        manufacturers, adding sophistication and comfort to
-                        every room.`,
-		p_text_slide_1: `The building’s facade will be cladded with high-quality materials that will provide a long-lasting visual effect and an aesthetically pleasing appearance. 
-		Modern terraces with geometric shapes will contribute to the dynamism of the facade, while aluminum railings will add elegance and sophistication. 
-		The central heating system with remote control and a calorimeter to monitor energy consumption, 
-		along with aluminum radiators and climate control systems, will ensure an optimal indoor climate, creating a comfortable atmosphere in all weather conditions.`,
+		p_text_slide_0: `The corridors and stairwells of the building are clad in elegant porcelain tiles, giving them a refined and modern appearance. Doors of domestic production are equipped with a Grade III anti-burglary system, ensuring a high level of security. The interior doors are faced with MDF and finished with melamine film, combining durability and aesthetic appeal. The flooring is made of three-layer oak parquet, complemented by white MDF baseboards with a height of 6/8 cm, creating a harmonious and stylish interior. Additionally, first-class ceramic tiles from a renowned European manufacturer are used, adding a touch of sophistication and comfort to the overall atmosphere.`,
+		p_text_slide_1: `The facade of the building is clad with high-quality facing materials that boast excellent aesthetic characteristics. Modern terraces with geometric shapes add dynamism to the facade, while high-quality aluminum railings provide elegance. Aluminum blinds and mosquito nets enhance comfort. The building is equipped with a centralized heating system with remote control and energy consumption measurement through a calorimeter, as well as aluminum radiators and air conditioning to ensure an optimal indoor climate.`,
 		p_belrg: `Belgrade`,
 	},
 	srb: {
+		home_house_offer: `Pogledajte ponudu stanova u zgradama`,
+		home_house_and: `i`,
+		catalog_noscript: `Omogućite JavaScript za prikaz kataloga stanova.`,
+		catalog_heading: `Stanovi u kompleksu Evolution Residence`,
+		catalog_loading: `Učitavanje apartmana…`,
+		catalog_load_error: `Nije moguće učitati apartmane. Pokušajte ponovo.`,
+		catalog_retry: `Učitaj ponovo`,
 		plan_category_apartments: `STANOVI`,
 		plan_category_commercial: `POSLOVNI PROSTOR`,
 		plan_category_parking: `PARKING`,
@@ -173,15 +174,8 @@ export const langArr = {
 		p_belrg: `Beograd`,
 		p_locat: `Lokacija`,
 		p_quality_comf: `Vrhunski kvalitet za potpuno uživanje`,
-		p_text_slide_1: `Fasada zgrade biće obložena visokokvalitetnim materijalima koji će obezbediti dugotrajan vizuelni efekat i estetski privlačan izgled. 
-		Moderne terase sa geometrijskim oblicima doprinosiće dinamici fasade, dok će aluminijumske ograde uneti eleganciju i sofisticiranost. 
-		 Centralni sistem grejanja sa daljinskim upravljačem i kalorimetrom za praćenje potrošnje energije, uz aluminijumske radijatore i klimatske sisteme, 
-		 omogućiće optimalnu unutrašnju klimu, stvarajući prijatnu atmosferu u svim vremenskim uslovima.`,
-		p_text_slide_0: `Porcelanske pločice u hodnicima i stepeništima biće odabrane da pruže moderan i elegantan izgled, 
-		u skladu sa celokupnim stilom zgrade. Vrata koja će biti postavljena, biće domaće proizvodnje, sa protivprovalnim sistemom III stepena, 
-		čime će stanarima biti obezbeđeno visoko bezbednosno okruženje. Unutrašnja vrata biće MDF, završena melaminskom obradom, spajajući dugovečnost i lep izgled. 
-		Kvalitetan parket, u kombinaciji sa belim MDF baseboardima visine 6/8 cm, stvoriće harmoničan i savremen enterijer. 
-		U prostorima će se koristiti prvoklasne keramičke pločice od renomiranih evropskih proizvođača, što će dodati sofisticiranost i udobnost svakom prostoru.`,
+		p_text_slide_1: `Fasada zgrade obložena je visokokvalitetnim materijalima odličnih estetskih karakteristika. Moderne terase geometrijskih oblika daju fasadi dinamiku, dok joj kvalitetne aluminijumske ograde daju eleganciju. Aluminijumske roletne i komarnici povećavaju udobnost. Zgrada je opremljena centralnim grejanjem s daljinskim upravljanjem i merenjem potrošnje energije kalorimetrom, kao i aluminijumskim radijatorima i klima-uređajima koji obezbeđuju optimalnu temperaturu u prostorijama.`,
+		p_text_slide_0: `Hodnici i stepeništa zgrade obloženi su elegantnim porcelanskim pločicama koje im daju prefinjen i moderan izgled. Vrata domaće proizvodnje opremljena su protivprovalnim sistemom III stepena, koji obezbeđuje visok nivo sigurnosti. Unutrašnja vrata obložena su MDF-om i završno obrađena melaminskom folijom, što spaja dugotrajnost i lep izgled. Podovi su od troslojnog hrastovog parketa, uz bele MDF lajsne visine 6/8 cm, koje stvaraju skladan i moderan enterijer. Prvoklasne keramičke pločice renomiranog evropskog proizvođača doprinose prefinjenosti i udobnosti prostora.`,
 		p_grid_view: `Tabela stanova`,
 		p_floor_plan: `Planovi etaža`,
 		p_affordable: `Tabela stanova`,
@@ -227,12 +221,13 @@ export const langArr = {
 		p_univ: `Univerzitet “Singidunum”`,
 		p_engin: `Saobraćajni fakultet`,
 		p_fon: `Fakultet Organizacionih Nauka "FON"`,
+		p_stad: `TC «Stadion»`,
 		p_rajk: `Stadion "Rajko Mitić"`,
 		p_partstad: `Stadion FK "Partizan`,
 		p_kom: `Autokomanda`,
 		p_max: `Supermarket «Maxi»`,
 		p_lidl: `Supermarket «Lidl» Trošarina`,
-		p_located: `Evolution Residence se nalazi na Voždovcu, u Tolminskoj ulici br. 5-11.`,
+		p_located: `Evolution Residence se nalazi na Voždovcu, u Tolminskoj ulici br. 5–11.`,
 		p_build: `Kompleks Evolution Residence se nalazi na pažljivo odabranoj lokaciji, koja pruža lak pristup centru grada, dok 
 		je istovremeno smešten u mirnoj zelenoj oazi. 
 		Sa ukupnom površinom od 57.302 m², kompleks će sadržati četiri stambeno-poslovne zgrade.`,
@@ -246,7 +241,7 @@ export const langArr = {
 		 Unutrašnja vrata biće MDF, završena melaminskom obradom, spajajući dugovečnost i lep izgled. Troslojni hrastov parket, u kombinaciji sa belim 
 		 MDF baseboardima visine 6/8 cm, stvoriće harmoničan i savremen enterijer. 
 		U prostorima će se koristiti prvoklasne keramičke pločice od renomiranih evropskih proizvođača, što će dodati sofisticiranost i udobnost svakom prostoru.`,
-		p_comf: `Vrhunski kvalitet i izuzetna`,
+		p_comf: `Vrhunski kvalitet i izuzetna udobnost`,
 		p_facade: `Fasada zgrade biće obložena visokokvalitetnim materijalima koji će obezbediti dugotrajan vizuelni efekat
 		 i estetski privlačan izgled. Moderne terase sa geometrijskim oblicima doprinosiće dinamici fasade, dok će aluminijumske ograde 
 		 uneti eleganciju i sofisticiranost. Komarnici postavljeni na otvorima biće dizajnirani da omoguće nesmetano provetravanje prostora,
@@ -294,10 +289,12 @@ export const langArr = {
 		link_features: `O nama`,
 		link_infrastructure: `Infrastruktura`,
 		link_apartments: `Stanovi`,
-		link_gallery: `Galerija`,
+		gallery_skip: `Preskoči`,
+		materials_previous: `Prethodni slajd`,
+		materials_next: `Sledeći slajd`,
 		link_financing: `Finansiranje`,
 		link_contact: `Kontakt`,
-		p_street: `Tolminska ulica, br. 5-11`,
+		p_street: `Tolminska ulica, br. 5–11`,
 	},
 };
 

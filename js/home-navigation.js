@@ -1,4 +1,4 @@
-import homeRoutes from "./home-routes.js?v=1.0.1";
+import homeRoutes from "./home-routes.js?v=1.0.2";
 
 const catalogParameters = ["house", "type", "floor", "property", "view", "kvadrati-od", "stanovi-do"];
 const sectionRoutes = new Map(Object.entries(homeRoutes).map(([route, section]) => [section, route]));
@@ -109,6 +109,35 @@ export function initializeHomeNavigation({ root, closeMenu, scrollTo }) {
   const initialSection = getHomeSection(location.href, root);
   if (initialSection && initialSection !== "main") {
     showSection(initialSection, true);
+    if (initialSection === "render-gallery") {
+      const initialUrl = location.href;
+      const interactionEvents = ["wheel", "touchstart", "pointerdown", "keydown"];
+      let frame;
+      let settled;
+      const align = () => {
+        if (settled || frame !== undefined) return;
+        frame = requestAnimationFrame(() => {
+          frame = undefined;
+          if (location.href === initialUrl) showSection(initialSection, true);
+        });
+      };
+      const observer = new ResizeObserver(align);
+      observer.observe(document.querySelector("#main"));
+      const stop = () => {
+        settled = true;
+        observer.disconnect();
+        if (frame !== undefined) cancelAnimationFrame(frame);
+        for (const event of interactionEvents) window.removeEventListener(event, stop);
+      };
+      for (const event of interactionEvents) window.addEventListener(event, stop, { passive: true });
+      const finish = () => {
+        Promise.resolve(document.fonts?.ready).then(align);
+        setTimeout(stop, 1000);
+      };
+      if (document.readyState === "complete") finish();
+      else window.addEventListener("load", finish, { once: true });
+      return;
+    }
     const finish = () => {
       const section = getHomeSection(location.href, root);
       if (section && section !== "main") showSection(section, true);

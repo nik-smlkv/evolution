@@ -1072,6 +1072,7 @@ h2.title {
 }
 
 .slider-block-title {
+	position: relative;
 	gap: 24px;
 	padding-top: 0px;
 	padding-bottom: 56px;
@@ -1291,53 +1292,32 @@ input.input-event[value=""]+.input-placeholder {
 	display: flex
 }
 
-.change-title {
-	overflow: hidden;
-	height: 90px;
-	position: relative
-}
-
+.change-title,
 .change-text {
-	position: relative;
-	width: 522px;
-	height: 240px
+	display: grid;
 }
 
 .title-slide {
-	position: absolute;
 	text-transform: none;
-	width: 100%;
-	transition: transform .5s ease-in-out
 }
 
-.title-slide.hide {
-	transform: translateY(200%)
+.title-slide,
+.text-slide {
+	grid-area: 1 / 1;
 }
 
-.title-slide.show {
-	transform: translateY(0)
-}
-
-.text-slide.hide {
-	opacity: 0;
-	height: 0;
+.title-slide[aria-hidden="true"],
+.text-slide[aria-hidden="true"] {
 	visibility: hidden;
 }
 
-.text-slide.show {
-	opacity: 1;
+.swiper-quality {
+	min-width: 0;
 }
 
-.text-slide {
-	position: absolute;
-	top: 0;
-	left: 0;
+.swiper-quality .swiper {
 	width: 100%;
-	transition: opacity .5s ease-in-out
-}
-
-.swiper-quality .swiper-wrapper {
-	max-width: 960px
+	max-width: 960px;
 }
 
 .text-visible {
@@ -1904,9 +1884,6 @@ span.irs.irs--round.js-irs-0 {
 		height: 444px;
 	}
 
-	.change-title {
-		height: 70px;
-	}
 
 	.materials-title {
 		max-width: 768px;
@@ -2098,14 +2075,7 @@ span.irs.irs--round.js-irs-0 {
 		flex-direction: row;
 	}
 
-	.change-text {
-		height: 300px;
-		width: 100%
-	}
 
-	.title-slide.hide {
-		transform: translateY(200%)
-	}
 
 	.slider-block-title {
 		padding-top: 0px;
@@ -2113,9 +2083,6 @@ span.irs.irs--round.js-irs-0 {
 		padding-right: 20px
 	}
 
-	.change-text p {
-		position: static
-	}
 
 	.card-text-content svg {
 		width: 27px
@@ -2405,9 +2372,6 @@ span.irs.irs--round.js-irs-0 {
 		visibility: visible
 	}
 
-	.change-title {
-		height: 40px
-	}
 
 	.slider-navigation__block {
 		left: unset;
@@ -2717,9 +2681,12 @@ section {
 	justify-content: end;
 }
 
+.swiper-statistic .swiper {
+	width: 100%;
+}
+
 .swiper-statistic .swiper-wrapper {
 	align-items: center;
-	gap: 16px;
 }
 
 .header__nav ul li {
@@ -3198,17 +3165,11 @@ section {
 		background-color: transparent;
 	}
 
-	.change-text {
-		height: 410px;
-	}
 
 	.card-name {
 		max-width: 169px;
 	}
 
-	.change-title {
-		height: 70px;
-	}
 }
 
 

@@ -28,9 +28,9 @@ function setup() {
   trigger.focus = () => { document.activeElement = trigger; };
   const body = element();
   body.append = (message) => messages.push(message);
-  const root = element();
+  const root = { ...element(), lang: "en" };
   const document = {
-    body, documentElement: root, activeElement: trigger, cookie: "language=en",
+    body, documentElement: root, activeElement: trigger, cookie: "language=srb",
     addEventListener(type, listener) { if (!listeners.has(type)) listeners.set(type, new Set()); listeners.get(type).add(listener); },
     removeEventListener(type, listener) { listeners.get(type)?.delete(listener); },
     querySelector(selector) {

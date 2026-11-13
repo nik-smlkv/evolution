@@ -1,13 +1,13 @@
 import { loadHouse } from "./houses.js?v=1.0.16";
 import { tchaikovskyFloorLevels } from "./tchaikovsky-floors.js?v=1.0.5";
-import { openModal } from "../modal.js?v=1.0.4";
-import { openPropertyDetails } from "./property-dialogs.js?v=1.0.8";
+import { openModal } from "../modal.js?v=1.0.5";
+import { openPropertyDetails } from "./property-dialogs.js?v=1.0.9";
 import { tchaikovskyOtherProperties } from "./tchaikovsky-properties.js?v=1.0.1";
 import { createDeferredPlan, deferPlanImages, activatePlanImages, createPlanImageLoader } from "./deferred-plan.js?v=1.0.2";
 import { isTchaikovskyApartmentAvailable } from "./tchaikovsky-availability.js?v=1.0.2";
 import { initializeCatalogFilterControls } from "./catalog-filter-controls.js?v=1.0.4";
 import { optimizedImageUrl } from "../optimized-images.js?v=1.0.6";
-import { langArr } from "../languages/languages.js?v=1.0.5";
+import { langArr } from "../languages/languages.js?v=1.0.6";
 const requestedHouse = new URLSearchParams(window.location.search).get("house");
 const catalog = await loadHouse(requestedHouse);
 const house = catalog.id;
@@ -30,7 +30,6 @@ document.documentElement.classList.add("catalog-grid-view");
 document.body.classList.toggle("tchaikovsky-catalog", house === "tchaikovsky");
 document.body.classList.toggle("tchaikovsky-grid-view", house === "tchaikovsky");
 document.documentElement.classList.toggle("tchaikovsky-catalog", house === "tchaikovsky");
-document.title = `${catalog.name} — Apartments`;
 const catalogTitle = document.querySelector("[data-house-title]");
 if (catalogTitle) catalogTitle.textContent = catalog.name;
 document
@@ -121,7 +120,7 @@ const ensureFloorPlan = createDeferredPlan(() => whenDocumentReady(async () => {
     getVisiblePolygons(data);
     return;
   }
-  const { initializeTchaikovskyFloorPlan } = await import("./floor-plan.js?v=1.0.27");
+  const { initializeTchaikovskyFloorPlan } = await import("./floor-plan.js?v=1.0.28");
   tchaikovskyFloorPlan = await initializeTchaikovskyFloorPlan(apartmentData, setTchaikovskyPlanPopup, (level) => {
     if (!level || document.body.dataset.catalogView !== "plan") return;
     selectedFloor = level.label;
@@ -174,7 +173,7 @@ const requestFloorPlan = () => {
     const message = document.createElement("p");
     message.className = "plan-load-error";
     message.dataset.deferredPlanError = "";
-    message.textContent = document.cookie.match(/(?:^|;\s*)language=([^;]*)/)?.[1] === "en"
+    message.textContent = document.documentElement.lang === "en"
       ? "Unable to load the floor plan. Please try opening it again."
       : "Nije moguće učitati plan. Pokušajte ponovo da ga otvorite.";
     document.querySelector(".houses-plan").append(message);
@@ -182,92 +181,9 @@ const requestFloorPlan = () => {
   return activeFloorPlan;
 };
 
-const updateSEOTags = (params) => {
-  const stanoviDo = params.get("stanovi-do");
-  const type = params.get("type");
-  const kvadratiOd = params.get("kvadrati-od");
-
-  const seoMap = {
-    // Фильтры по типу квартиры
-    garsonjere: {
-      title:
-        "Garsonjere Beograd | Prodaja Garsonjera u Novogradnji | Evolution Residence",
-      desc: "Garsonjere u Beogradu na prodaju – novogradnja u centru, jeftine garsonjere za studente. Direktno od investitora.",
-    },
-    jednosoban: {
-      title: "Jednosoban Stan Beograd | Cene i Prodaja | Evolution Residence",
-      desc: "Jednosoban stan u Beogradu – prodaja jednosobnih stanova u centru i novogradnji direktno od investitora.",
-    },
-    dvosoban: {
-      title:
-        "Dvosoban Stan Beograd | Prodaja Dvosobnih Stanova | Evolution Residence",
-      desc: "Dvosoban stan u Beogradu – prodaja dvosobnih stanova u novogradnji i centru direktno od investitora.",
-    },
-    trosoban: {
-      title:
-        "Trosoban Stan Beograd | Prodaja Trosobnih Stanova | Evolution Residence",
-      desc: "Trosoban stan u Beogradu – prodaja trosobnih stanova u novogradnji direktno od investitora.",
-    },
-    // Фильтры по метражу
-    30: {
-      title: "Stanovi do 30 Kvadrata Beograd | Prodaja | Evolution Residence",
-      desc: "Prodaja stanova do 30 kvadrata u Beogradu – novogradnja direktno od investitora. Pogledajte aktuelnu ponudu malih stanova.",
-    },
-    35: {
-      title: "Prodaja Stanova do 35 Kvadrata Beograd | Evolution Residence",
-      desc: "Prodaja stanova do 35 kvadrata u Beogradu – mali stanovi u novogradnji direktno od investitora.",
-    },
-    40: {
-      title: "Prodaja Stanova do 40 Kvadrata Beograd | Evolution Residence",
-      desc: "Prodaja stanova do 40 kvadrata u Beogradu – novogradnja, povoljne cene, direktno od investitora.",
-    },
-    50: {
-      title: "Stanovi do 50 Kvadrata Beograd | Prodaja | Evolution Residence",
-      desc: "Stanovi do 50 kvadrata u Beogradu na prodaju – novogradnja direktno od investitora.",
-    },
-  };
-
-  // Определяем какой ключ использовать
-  let seo = null;
-
-  if (type && seoMap[type]) {
-    seo = seoMap[type]; // ?type=garsonjere → ключ "garsonjere"
-  } else if (stanoviDo && seoMap[stanoviDo]) {
-    seo = seoMap[stanoviDo]; // ?stanovi-do=35 → ключ "35"
-  }
-
-  // Дефолтные значения если нет параметров
-  const title = seo?.title ?? `${catalog.name} — Apartments`;
-  const description =
-    seo?.desc ?? `Available apartments in ${catalog.name}.`;
-
-  // Применяем title
-  document.title = title;
-
-  // Применяем meta description
-  let metaDesc = document.querySelector('meta[name="description"]');
-  if (!metaDesc) {
-    metaDesc = document.createElement("meta");
-    metaDesc.name = "description";
-    document.head.appendChild(metaDesc);
-  }
-  metaDesc.setAttribute("content", description);
-
-  // Применяем canonical
-  let canonicalTag = document.querySelector('link[rel="canonical"]');
-  if (!canonicalTag) {
-    canonicalTag = document.createElement("link");
-    canonicalTag.rel = "canonical";
-    document.head.appendChild(canonicalTag);
-  }
-  canonicalTag.href = window.location.href;
-};
-
 const applyURLParams = () => {
   const params = new URLSearchParams(window.location.search);
-  const stanoviDo = params.get("stanovi-do");
   const type = params.get("type");
-  const kvadratiOd = params.get("kvadrati-od");
   const rawFloor = params.get("floor");
   const floor = house === "tchaikovsky" && rawFloor === "P" ? "2100"
     : rawFloor === "Povᴮ" ? "3800" : rawFloor;
@@ -327,8 +243,6 @@ const applyURLParams = () => {
 
   // Применяем фильтрацию по метражу поверх карточек
   filterAndRenderApartments(minArea, maxArea);
-
-  updateSEOTags(params);
 };
 
 const updateURL = () => {
@@ -360,9 +274,6 @@ const updateURL = () => {
     : window.location.pathname;
 
   window.history.pushState({}, "", newURL);
-
-  // Обновляем SEO теги
-  updateSEOTags(params);
 };
 
 const getFirstApartment = () => {
@@ -709,7 +620,7 @@ async function handleFilteredHousePlans(selectedFloor) {
       const message = document.createElement("p");
       message.className = "plan-load-error";
       message.dataset.planImageError = "";
-      message.textContent = document.cookie.match(/(?:^|;\s*)language=([^;]*)/)?.[1] === "en"
+      message.textContent = document.documentElement.lang === "en"
         ? "Unable to load the floor plan. Please select the floor again."
         : "Nije moguće učitati plan. Izaberite sprat ponovo.";
       host.append(message);
@@ -829,7 +740,7 @@ const viewButtonReady = whenDocumentReady(() => {
   const floorPlanView = document.querySelector(".houses-plans_container");
   const updateViewButton = () => {
     const isPlan = document.body.dataset.catalogView === "plan";
-    const language = document.cookie.match(/(?:^|;\s*)language=([^;]*)/)?.[1] === "en" ? "en" : "srb";
+    const language = document.documentElement.lang === "en" ? "en" : "srb";
     floorPlanButton.dataset.key = isPlan
       ? (house === "tchaikovsky" ? "catalog_select_parameters" : "catalog_back_grid")
       : "catalog_select_plan";
@@ -949,7 +860,6 @@ document.querySelector("[data-reset-filters]")?.addEventListener("click", () => 
   const params = new URLSearchParams({ house });
   if (document.body.dataset.catalogView === "plan") params.set("view", "plan");
   window.history.replaceState({}, "", `${window.location.pathname}?${params}`);
-  updateSEOTags(params);
 });
 
 if (window.innerWidth <= 767) {

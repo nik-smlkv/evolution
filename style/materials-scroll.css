@@ -1,0 +1,165 @@
+.materials-stage {
+  --materials-viewport-height: 100vh;
+  position: relative;
+}
+
+@supports (height: 100svh) {
+  .materials-stage {
+    --materials-viewport-height: 100svh;
+  }
+}
+
+.materials-stage[data-materials-pinned] {
+  z-index: 1;
+}
+
+.materials-deck {
+  display: grid;
+  overflow: hidden;
+}
+
+.materials-slide {
+  grid-area: 1 / 1;
+  position: relative;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  min-width: 0;
+  background: #fff;
+}
+
+.materials-slide--next {
+  z-index: 1;
+  transform: translateY(calc((1 - var(--materials-progress, 0)) * 100%));
+  transition: transform 780ms cubic-bezier(0.45, 0, 0.55, 1);
+}
+
+.materials-stage[data-materials-pinned] .materials-slide--next {
+  transition: none;
+}
+
+.materials-slide__image {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1920 / 1086;
+  object-fit: cover;
+}
+
+.materials-slide__caption {
+  display: grid;
+  align-content: start;
+  gap: clamp(16px, 2.083vw, 40px);
+  padding: clamp(20px, 6.25vw, 120px);
+  background: #fff;
+  font-family: "Manrope-Buttons", var(--ff-main);
+}
+
+.materials-slide__caption h3,
+.materials-slide__caption p {
+  margin: 0;
+  font-weight: 400;
+  font-variation-settings: "wght" 400;
+}
+
+.materials-slide__caption h3 {
+  color: #161d2d;
+  font-size: clamp(24px, 2.083vw, 40px);
+  line-height: 1.2;
+  letter-spacing: -0.04em;
+}
+
+.materials-slide__caption p {
+  color: #303439;
+  font-size: clamp(14px, 0.833vw, 16px);
+  line-height: 1.5;
+  letter-spacing: -0.015em;
+}
+
+@media (min-width: 768px) {
+  .materials-deck {
+    min-height: min(56.5625vw, calc(var(--materials-viewport-height) - var(--materials-header-height, 90px)));
+  }
+
+  .materials-slide {
+    grid-template-rows: 1fr;
+  }
+
+  .materials-slide__image {
+    position: absolute;
+    inset: 0;
+    height: 100%;
+  }
+
+  .materials-slide__caption {
+    position: relative;
+    width: 50%;
+    justify-self: start;
+    align-self: start;
+  }
+
+  .materials-slide--next .materials-slide__caption {
+    justify-self: end;
+    align-self: end;
+  }
+}
+
+.materials-controls {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 16px max(20px, 6.25vw);
+  color: #161d2d;
+  background: #fff;
+}
+
+.materials-stage:not([data-materials-ready]) .materials-controls,
+.materials-stage[data-materials-pinned] .materials-controls {
+  display: none;
+}
+
+.materials-controls__button {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: 1px solid #d1d4d8;
+  border-radius: 50%;
+  color: inherit;
+}
+
+.materials-controls__button:focus-visible {
+  outline: 2px solid #0474dc;
+  outline-offset: 3px;
+}
+
+.materials-controls__label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .materials-slide--next {
+    transition: none;
+  }
+}
+
+#financing[data-materials-reveal] {
+  position: relative;
+  z-index: 2;
+  margin-top: var(--materials-financing-margin);
+  margin-bottom: calc(-1 * var(--materials-financing-gap));
+  padding-block: var(--materials-financing-gap);
+  background: var(--bg-main);
+}
+
+/* Keep the foreground continuous while the last slide is still pinned. */
+#financing[data-materials-reveal] + div > .render-gallery {
+  position: relative;
+  z-index: 2;
+}

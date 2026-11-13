@@ -30,7 +30,7 @@ function cancelImageOpenEsc(event) {
 
 function reportImageError() {
 	clearImageError();
-	const language = document.cookie.match(/(?:^|;\s*)language=([^;]*)/)?.[1];
+	const language = document.documentElement.lang;
 	const message = document.createElement("div");
 	message.className = "modal-image-error";
 	message.setAttribute("role", "status");

@@ -1,4 +1,4 @@
-import { openModal } from "./modal.js?v=1.0.4";
+import { openModal } from "./modal.js?v=1.0.5";
 
 export function openPriceRequest(context = null) {
   const popup = document.querySelector(".popup_type_form_quarter");

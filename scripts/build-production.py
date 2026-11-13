@@ -3,6 +3,7 @@
 
 The reviewed image manifest is the image allowlist. HTML entry points and their
 local CSS/JavaScript/font/video dependencies form the remaining dependency graph.
+An explicit list of optional root files covers crawler and hosting configuration.
 Source artwork, archives, developer tools and reports never enter the output.
 Existing nonempty output folders are refused; this command deletes no files.
 """
@@ -22,6 +23,7 @@ from urllib.parse import quote, unquote, urljoin, urlsplit
 import xml.etree.ElementTree as ET
 
 from home_routes import HomeRouteError, validate_home_routes
+from localized_pages import LOCALE_CONFIG
 
 
 DEFAULT_ROOT = Path(__file__).resolve().parents[1]
@@ -31,6 +33,7 @@ ENTRY_POINTS = (
     "search-by-parameters/tchaikovsky/index.html",
     "search-by-parameters/vivaldi/index.html",
 )
+OPTIONAL_ROOT_FILES = ("robots.txt", "sitemap.xml", ".htaccess", "lead.php")
 IMAGE_MANIFEST = "assets/manifests/production-images.json"
 IMAGE_PREFIX = "assets/images/"
 FORBIDDEN_PREFIXES = (
@@ -72,7 +75,9 @@ class RuntimeGraph:
         if not resolved.is_relative_to(self.root):
             raise BuildError("Dependency escapes the project: " + str(value))
         relative = candidate.relative_to(self.root).as_posix()
-        if relative.startswith(FORBIDDEN_PREFIXES) or candidate.name.startswith("."):
+        if relative.startswith(FORBIDDEN_PREFIXES) or (
+            candidate.name.startswith(".") and relative not in OPTIONAL_ROOT_FILES
+        ):
             raise BuildError("Non-production dependency: " + relative)
         if candidate.is_symlink():
             raise BuildError("Symlink dependencies are not copied: " + relative)
@@ -82,7 +87,7 @@ class RuntimeGraph:
         path = self.project_path(relative)
         if not path.is_file():
             raise BuildError("Missing runtime dependency: " + relative)
-        if path.suffix.lower() not in RUNTIME_EXTENSIONS:
+        if path.suffix.lower() not in RUNTIME_EXTENSIONS and relative not in OPTIONAL_ROOT_FILES:
             raise BuildError("Unsupported runtime dependency: " + relative)
         if path.suffix.lower() in IMAGE_EXTENSIONS:
             if relative not in self.images:
@@ -139,6 +144,12 @@ class RuntimeGraph:
         except HomeRouteError as error:
             raise BuildError(str(error)) from error
         entries.extend(slug + "/index.html" for slug in routes)
+        if (self.root / LOCALE_CONFIG).is_file():
+            entries.extend(f"en/{slug}/index.html" for slug in routes)
+        for name in OPTIONAL_ROOT_FILES:
+            path = self.root / name
+            if path.exists() or path.is_symlink():
+                entries.append(name)
         return entries
 
     def load_image_manifest(self):
@@ -270,7 +281,7 @@ def build_archive(graph, report, destination):
     if destination.exists():
         raise BuildError("Archive already exists; existing files are never replaced: " + str(destination))
     destination.parent.mkdir(parents=True, exist_ok=True)
-    compressed_text = {".html", ".css", ".js", ".svg", ".webmanifest"}
+    compressed_text = {".html", ".css", ".js", ".php", ".svg", ".webmanifest"}
     try:
         with zipfile.ZipFile(destination, mode="x") as archive:
             for entry in report["files"]:

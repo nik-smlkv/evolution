@@ -1,0 +1,15 @@
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Match explicit index URLs to avoid redirecting a directory's internal index lookup.
+  RewriteCond %{HTTP_HOST} ^(?:www\.)?evolutionresidence\.rs(?::80|:443)?$ [NC]
+  RewriteCond %{THE_REQUEST} "^(?:GET|HEAD)[[:space:]]+(/(?:en/)?)index\.html[?[:space:]]"
+  RewriteRule ^ https://evolutionresidence.rs%1 [R=301,L,NE]
+
+  # Capture the original encoded path. The query string carries over automatically.
+  RewriteCond %{HTTP_HOST} ^(?:www\.)?evolutionresidence\.rs(?::80|:443)?$ [NC]
+  RewriteCond %{HTTPS} !=on [OR]
+  RewriteCond %{HTTP_HOST} ^www\. [NC]
+  RewriteCond %{THE_REQUEST} "^(?:GET|HEAD)[[:space:]]+(/[^?#[:space:]]*)[?[:space:]]"
+  RewriteRule ^ https://evolutionresidence.rs%1 [R=301,L,NE]
+</IfModule>

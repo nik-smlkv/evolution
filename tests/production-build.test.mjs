@@ -23,6 +23,7 @@ function fixture(t) {
     "search-by-parameters.html": '<img src="./assets/images/plan.svg"><link rel="manifest" href="./assets/images/site.webmanifest"><a href="https://other.test/">External</a>',
     "search-by-parameters/tchaikovsky/index.html": '<meta http-equiv="refresh" content="0; url=../../search-by-parameters.html?house=tchaikovsky">',
     "search-by-parameters/vivaldi/index.html": '<meta http-equiv="refresh" content="0; url=../../search-by-parameters.html?house=vivaldi">',
+    "lead.php": '<?php echo json_encode(["ok" => true]);',
     "style/site.css": '@font-face{src:url("../fonts/site.woff2")}body{background:url("data:image/svg+xml;base64,PHN2Zz4=")}',
     "fonts/site.woff2": "font bytes",
     "videos/site.mp4": "video bytes",
@@ -40,7 +41,7 @@ function fixture(t) {
     .filter(([path]) => path.startsWith("assets/images/"))
     .map(([path, bytes]) => ({ path, bytes: Buffer.byteLength(bytes), sha256: hash(bytes) }));
   write("assets/manifests/production-images.json", JSON.stringify({ files: images }));
-  for (const path of ["assets/sources/original.png", "archive/unavailable.png", "tests/dev.test.mjs", "scripts/tool.py", "design-qa.md", "js/unused.js", "style/unused.css", ".git/config"]) write(path, "local only");
+  for (const path of ["assets/sources/original.png", "archive/unavailable.png", "tests/dev.test.mjs", "scripts/tool.py", "design-qa.md", "js/unused.js", "style/unused.css", ".git/config", ".env", "local-config.php"]) write(path, "local only");
   return { root, base, write, images, sources };
 }
 

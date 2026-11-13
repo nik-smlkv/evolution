@@ -1,14 +1,16 @@
-import { langArr } from "./languages/languages.js?v=1.0.5";
-import { openModal, closeModal, setModalEventListeners } from "./modal.js?v=1.0.4";
-import { openPriceRequest } from "./price-request.js?v=1.0.2";
+import { langArr } from "./languages/languages.js?v=1.0.8";
+import { openModal, closeModal, setModalEventListeners } from "./modal.js?v=1.0.5";
+import { openPriceRequest } from "./price-request.js?v=1.0.3";
 import { initializeHeaderNavigation } from "./header-navigation.js?v=1.0.1";
-import { initializeHomeNavigation, normalizeHomeUrl } from "./home-navigation.js?v=1.0.1";
+import { initializeHomeNavigation, isPlainNavigation, normalizeHomeUrl } from "./home-navigation.js?v=1.0.3";
 import { getSelectedHouse } from "./house-context.js?v=1.0.1";
 import "./input-capabilities.js?v=1.0.0";
-const siteRootUrl = new URL("../", import.meta.url);
+const assetsRootUrl = new URL("../", import.meta.url);
+const language = document.documentElement.lang === "en" ? "en" : "srb";
+const siteRootUrl = new URL(language === "en" ? "en/" : "./", assetsRootUrl);
 // Keep relative assets and catalog links rooted here after history changes the path.
 const documentBase = document.querySelector("base") || document.createElement("base");
-documentBase.href = siteRootUrl.href;
+documentBase.href = assetsRootUrl.href;
 document.head.prepend(documentBase);
 // Remember the selected house before home navigation removes catalog parameters.
 getSelectedHouse();
@@ -169,7 +171,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
-        const link = document.querySelector(`.menu__item_link[data-target="${entry.target.id}"]`);
+        const section = entry.target.closest("section");
+        const link = document.querySelector(`.menu__item_link[data-target="${section.id}"]`);
 
         if (link) {
           if (entry.isIntersecting) {
@@ -185,19 +188,23 @@ document.addEventListener("DOMContentLoaded", () => {
     },
   );
 
-  sections.forEach((section) => observer.observe(section));
+  sections.forEach((section) => {
+    const observed = section.querySelector(".render-gallery__stage") ?? section;
+    observer.observe(observed);
+  });
 
   initializeHomeNavigation({
     root: siteRootUrl,
     closeMenu: closeHeaderMenu,
     scrollTo: (target, immediate) => {
       const offset = target === 0 ? 0 : -100;
+      const jump = immediate || target.id === "render-gallery";
       if (typeof lenis !== "undefined") {
-        if (immediate) lenis.resize();
-        lenis.scrollTo(target, { offset, immediate });
+        if (jump) lenis.resize();
+        lenis.scrollTo(target, { offset, immediate: jump });
       } else {
         const top = target === 0 ? 0 : target.getBoundingClientRect().top + window.scrollY + offset;
-        window.scrollTo({ top, behavior: immediate ? "instant" : "smooth" });
+        window.scrollTo({ top, behavior: jump ? "instant" : "smooth" });
       }
     },
   });
@@ -401,41 +408,7 @@ $("input").change(function () {
   }
 });
 
-function setCookie(name, value, days) {
-  let expires = "";
-  if (days) {
-    const date = new Date();
-    date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
-    expires = "; expires=" + date.toUTCString();
-  }
-  document.cookie = name + "=" + value + expires + "; path=/";
-}
-
-function getCookie(name) {
-  const matches = document.cookie.match(
-    new RegExp(
-      "(?:^|; )" +
-        name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, "\\$1") +
-        "=([^;]*)",
-    ),
-  );
-  return matches ? decodeURIComponent(matches[1]) : undefined;
-}
-
-function setLanguage(lang) {
-  setCookie("language", lang, 7);
-  updateLanguage(lang);
-}
-
 function updateLanguage(lang) {
-  document.documentElement.lang = lang === "srb" ? "sr" : "en";
-  const switcher = document.querySelector("#language-switcher");
-  if (switcher) switcher.dataset.active = lang;
-  document.querySelectorAll(".lang__item").forEach((item) => {
-    const isActive = item.dataset.lang === lang;
-    item.classList.toggle("active", isActive);
-    item.setAttribute("aria-pressed", String(isActive));
-  });
   for (let key in langArr[lang]) {
     const elements = document.querySelectorAll(`[data-key="${key}"]`);
     elements.forEach((element) => {
@@ -503,19 +476,27 @@ export function splitText() {
   });
 }
 
-document
-  .querySelector("#language-switcher")
-  .addEventListener("click", (event) => {
-    const lang = event.target.dataset.lang;
-    if (lang) {
-      setLanguage(lang);
-    }
+document.querySelectorAll("#language-switcher a[data-lang]").forEach((link) => {
+  const localeRoot = new URL(link.dataset.lang === "en" ? "en/" : "./", assetsRootUrl);
+  const refreshLink = () => {
+    const current = new URL(window.location.href);
+    const page = current.pathname.slice(siteRootUrl.pathname.length);
+    const localized = new URL(localeRoot);
+    localized.pathname += page;
+    localized.search = current.search;
+    localized.hash = current.hash;
+    link.href = localized.href;
+  };
+  refreshLink();
+  link.addEventListener("pointerdown", refreshLink);
+  link.addEventListener("focus", refreshLink);
+  link.addEventListener("click", (event) => {
+    refreshLink();
+    if (isPlainNavigation(event, link) && link.dataset.lang === language) event.preventDefault();
   });
-
-document.addEventListener("DOMContentLoaded", () => {
-  const savedLang = getCookie("language") || "srb";
-  updateLanguage(savedLang);
 });
+
+document.addEventListener("DOMContentLoaded", () => updateLanguage(language));
 
 function setDynamicHeight() {
   const vh = window.innerHeight * 0.01;

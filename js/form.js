@@ -1,126 +1,150 @@
 import { getSelectedHouse } from "./house-context.js?v=1.0.1";
+import { initializeLeadValidation } from "./validation.js?v=1.0.7";
 
-const formFeedback = document.forms["form-feedback"];
-const formFlatFeedback = document.forms["form-feedback-flat"];
+const siteRoot = new URL("../", import.meta.url);
+const endpoint = new URL("../lead.php", import.meta.url);
+const language = document.documentElement.lang === "en" ? "en" : "sr";
+const serverErrors = new Set(["invalid", "rate_limited", "upstream", "unavailable"]);
+const copy = {
+  en: {
+    sending: "Sending your request…",
+    success: "Your request has been sent.",
+    invalid: "Check the form fields and try again.",
+    rate_limited: "Too many requests. Please try again later.",
+    upstream: "Your request could not be sent. Please try again.",
+    unavailable: "The form service is unavailable. Please try again.",
+  },
+  sr: {
+    sending: "Slanje upita je u toku…",
+    success: "Vaš upit je uspešno poslat.",
+    invalid: "Proverite podatke u formularu i pokušajte ponovo.",
+    rate_limited: "Previše upita. Pokušajte ponovo kasnije.",
+    upstream: "Upit nije poslat. Pokušajte ponovo.",
+    unavailable: "Slanje upita trenutno nije dostupno. Pokušajte ponovo.",
+  },
+}[language];
 
-formFeedback.addEventListener("submit", (evt) => {
-	const inputPlaceholders = formFeedback.querySelectorAll('.input-placeholder');
-	evt.preventDefault();
-	const submitButton = evt.submitter;
-	const selectedHouse = getSelectedHouse();
-	console.log(formFeedback.elements["phone"].value.trim());
-	const formData = {
-		fields: {
-			TITLE: "Complete CRM form 'Prijava za konsultacije sa sajta (evolutionresidence.rs)'",
-			NAME: formFeedback.elements["name"].value.trim(),
-			PHONE: [
-				{ VALUE: formFeedback.elements["phone"].value.trim(), VALUE_TYPE: "WORK" }
-			],
-			EMAIL: [
-				{ VALUE: formFeedback.elements["mail"].value.trim(), VALUE_TYPE: "WORK" }
-			],
-			COMMENTS: selectedHouse ? `Objekat: ${selectedHouse.name}` : "Objekat: Nije izabran",
-		},
-		params: { REGISTER_SONET_EVENT: "Y" }
-	};
-
-	submitButton.disabled = true;
-	const originalText = submitButton.textContent;
-	submitButton.textContent = "Send...";
-
-	sendDataToBitrix("https://crm.bktesla.rs/rest/1/gt107jhf1wp8901m/crm.lead.add.json", formData)
-		.then(() => {
-			submitButton.textContent = "Successfully!";
-			setTimeout(() => submitButton.textContent = originalText, 3000);
-			inputPlaceholders.forEach((inputPlaceholder) => {
-				inputPlaceholder.removeAttribute("style");
-			})
-			formFeedback.reset();
-		})
-		.catch(() => {
-			submitButton.textContent = "Ошибка!";
-			submitButton.disabled = false;
-		});
-});
-formFlatFeedback.addEventListener("submit", (evt) => {
-	evt.preventDefault();
-	const inputPlaceholders = formFeedback.querySelectorAll('.input-placeholder');
-	const selectedProperty = formFlatFeedback.dataset.priceRequestContext;
-	let requestComment;
-	if (selectedProperty) {
-		const { propertyType, unit, buildingWing, floor, house } = JSON.parse(selectedProperty);
-		const selectedHouse = getSelectedHouse(house);
-		const propertyLabel = propertyType === "parking" ? "parking mesta" : "poslovnog prostora";
-		const details = [
-			selectedHouse && `Objekat: ${selectedHouse.name}`,
-			buildingWing && `Krilo zgrade: ${buildingWing}`,
-			floor && `Sprat: ${floor}`,
-			unit && `Broj: ${unit}`,
-		].filter(Boolean).join(", ");
-		requestComment = `Saznati cenu ${propertyLabel} '${details}'`;
-	} else {
-		const houseInformation = document.querySelector('.popup_type_house.popup_is-opened') || document.querySelector('.apartments__info-block');
-		const apartmentArea = houseInformation.querySelector('.js-apartment-area').textContent;
-		const apartmentWing = houseInformation.querySelector('.js-apartment-wing').textContent;
-		const apartmentFloor = houseInformation.querySelector('.js-apartment-floor').textContent;
-		const apartmentNumber = houseInformation.querySelector('.js-apartment-number').textContent;
-		const apartmentImg = houseInformation.querySelector('.apartment__img').src;
-		const selectedHouse = getSelectedHouse();
-		const houseDetail = selectedHouse ? `Objekat: ${selectedHouse.name}, ` : "";
-		requestComment = `Saznati cenu stana '${houseDetail}Površina:${apartmentArea}, Krilo zgrade:${apartmentWing}, Sprat: ${apartmentFloor}, Broj stana: ${apartmentNumber}. Tlocrt stana na sajtu ${apartmentImg}`;
-	}
-	const submitButton = evt.submitter;
-	console.log(formFeedback.elements["phone"].value.trim());
-	const formData = {
-		fields: {
-			TITLE: "Complete CRM form 'Prijava za konsultacije sa sajta (evolutionresidence.rs)'",
-			NAME: formFlatFeedback.elements["name"].value.trim(),
-			PHONE: [
-				{ VALUE: formFlatFeedback.elements["phone"].value.trim(), VALUE_TYPE: "WORK" }
-			],
-			EMAIL: [
-				{ VALUE: formFlatFeedback.elements["mail"].value.trim(), VALUE_TYPE: "WORK" }
-			],
-			COMMENTS: requestComment
-		},
-		params: { REGISTER_SONET_EVENT: "Y" }
-	};
-
-	submitButton.disabled = true;
-	const originalText = submitButton.textContent;
-	submitButton.textContent = "Send...";
-
-	sendDataToBitrix("https://crm.bktesla.rs/rest/1/gt107jhf1wp8901m/crm.lead.add.json", formData)
-		.then(() => {
-			submitButton.textContent = "Successfully!";
-			setTimeout(() => submitButton.textContent = originalText, 3000);
-			inputPlaceholders.forEach((inputPlaceholder) => {
-				inputPlaceholder.removeAttribute("style");
-			})
-			formFeedback.reset();
-		})
-		.catch(() => {
-			submitButton.textContent = "Ошибка!";
-			submitButton.disabled = false;
-		});
-});
-
-
-
-function sendDataToBitrix(webhookUrl, formData) {
-	return fetch(webhookUrl, {
-		method: "POST",
-		headers: {
-			'Accept': 'application/json',
-			'Content-Type': 'application/json',
-		},
-		body: JSON.stringify(formData)
-	})
-		.then(response => {
-			if (!response.ok) throw new Error(`Ошибка HTTP: ${response.status}`);
-			return response.json();
-		})
-		.catch(error => {
-			console.error("Ошибка при отправке:", error);
-		});
+function planPath(source, house) {
+  if (!source || !house) return "";
+  const url = new URL(source, siteRoot);
+  if (url.origin !== siteRoot.origin || !url.pathname.startsWith(siteRoot.pathname)) return "";
+  const path = "/" + url.pathname.slice(siteRoot.pathname.length);
+  return path.startsWith("/assets/images/projects/" + house + "/apartments/plans/") ? path : "";
 }
+
+function propertyDetails(form) {
+  const raw = form.dataset.priceRequestContext;
+  if (raw) {
+    let context;
+    try {
+      context = JSON.parse(raw);
+    } catch {
+      throw new Error("invalid");
+    }
+    if (!context || !["apartments", "commercial", "parking"].includes(context.propertyType)) {
+      throw new Error("invalid");
+    }
+    const house = getSelectedHouse(context.house)?.id ?? null;
+    return {
+      house,
+      property: {
+        type: context.propertyType,
+        unit: String(context.unit ?? "").trim(),
+        wing: String(context.buildingWing ?? "").trim(),
+        floor: String(context.floor ?? "").trim(),
+        area: String(context.area ?? "").trim(),
+        planUrl: planPath(context.planUrl, house),
+      },
+    };
+  }
+
+  const details = document.querySelector(".popup_type_house.popup_is-opened")
+    || document.querySelector(".apartments__info-block");
+  const house = getSelectedHouse()?.id ?? null;
+  const value = (selector) => details?.querySelector(selector)?.textContent.trim() ?? "";
+  return {
+    house,
+    property: {
+      type: "apartments",
+      unit: value(".js-apartment-number"),
+      wing: value(".js-apartment-wing"),
+      floor: value(".js-apartment-floor"),
+      area: value(".js-apartment-area"),
+      planUrl: planPath(details?.querySelector(".apartment__img")?.src, house),
+    },
+  };
+}
+
+async function sendLead(payload) {
+  const response = await fetch(endpoint, {
+    method: "POST",
+    headers: { Accept: "application/json", "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+    redirect: "error",
+    signal: AbortSignal.timeout(25_000),
+  });
+  const result = await response.json().catch(() => null);
+  if (response.status === 200 && result?.ok === true) return;
+  if (serverErrors.has(result?.error)) throw new Error(result.error);
+  throw new Error(response.status === 429 ? "rate_limited" : "upstream");
+}
+
+function initializeLeadForm(form, kind) {
+  if (!form) return;
+  const validation = initializeLeadValidation(form);
+  const feedback = document.createElement("div");
+  feedback.className = "lead-form-feedback";
+  const status = document.createElement("p");
+  status.className = "lead-form-status";
+  status.setAttribute("role", "status");
+  status.setAttribute("aria-atomic", "true");
+  feedback.append(status);
+  form.append(feedback);
+
+  function setFeedback(state, message = state) {
+    feedback.dataset.state = state;
+    status.textContent = copy[message];
+  }
+
+  let busy = false;
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    if (busy) return;
+    if (!validation.check()) {
+      setFeedback("error", "invalid");
+      return;
+    }
+    busy = true;
+    validation.setBusy(true);
+
+    try {
+      const details = kind === "price" ? propertyDetails(form) : {
+        house: getSelectedHouse()?.id ?? null,
+        property: null,
+      };
+      if (kind === "price" && (!details.house || !details.property.unit)) throw new Error("invalid");
+      const payload = {
+        kind,
+        name: form.elements.namedItem("name").value.trim(),
+        phone: form.elements.namedItem("phone").value.trim(),
+        email: form.elements.namedItem("mail").value.trim(),
+        ...details,
+      };
+      setFeedback("sending");
+      await sendLead(payload);
+      form.reset();
+      form.querySelectorAll(".input-placeholder").forEach((element) => element.removeAttribute("style"));
+      validation.clear();
+      setFeedback("success");
+    } catch (error) {
+      const code = serverErrors.has(error?.message) ? error.message : "unavailable";
+      setFeedback("error", code);
+    } finally {
+      busy = false;
+      validation.setBusy(false);
+    }
+  });
+}
+
+initializeLeadForm(document.forms.namedItem("form-feedback"), "callback");
+initializeLeadForm(document.forms.namedItem("form-feedback-flat"), "price");

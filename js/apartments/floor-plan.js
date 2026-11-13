@@ -4,7 +4,7 @@ import { commercialPlanUnitAliases } from "./tchaikovsky-properties.js?v=1.0.1";
 import { isTchaikovskyApartmentAvailable } from "./tchaikovsky-availability.js?v=1.0.2";
 import { optimizedImageUrl } from "../optimized-images.js?v=1.0.6";
 import { animatePlanFloorChange, clonePlanLayer } from "./plan-transition.js?v=1.0.1";
-import { langArr } from "../languages/languages.js?v=1.0.5";
+import { langArr } from "../languages/languages.js?v=1.0.6";
 import { canHover, hoverMedia } from "../input-capabilities.js?v=1.0.0";
 import { getPlanZoomScales } from "./plan-zoom.js?v=1.0.1";
 
@@ -106,7 +106,7 @@ export async function initializeTchaikovskyFloorPlan(apartments, onApartment, on
   tabs.className = "tchaikovsky-plan-types";
   tabs.setAttribute("role", "group");
   tabs.setAttribute("aria-label", "Property type");
-  const language = document.cookie.match(/(?:^|;\s*)language=([^;]*)/)?.[1] === "en" ? "en" : "srb";
+  const language = document.documentElement.lang === "en" ? "en" : "srb";
   tabs.innerHTML = Object.entries(categories).map(([type, category]) => {
     const key = `plan_category_${type}`;
     return `<button class="tchaikovsky-plan-types__button" type="button" data-key="${key}" data-plan-type="${type}" aria-pressed="${type === activeType}">${langArr[language][key] || category.label}</button>`;

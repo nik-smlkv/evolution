@@ -1,0 +1,121 @@
+.render-gallery {
+  --render-stage-height: 100vh;
+  --render-step: clamp(19rem, 58vh, 43rem);
+  --render-control-inset: max(16px, 6.3%);
+  min-height: 0;
+  width: 100%;
+}
+
+@supports (height: 100dvh) {
+  .render-gallery {
+    --render-stage-height: 100dvh;
+  }
+}
+
+.wrapper:has(.render-gallery.is-enhanced) {
+  overflow: visible;
+  overflow: clip;
+}
+
+.render-gallery.is-enhanced {
+  height: calc(var(--render-stage-height) + var(--render-steps) * var(--render-step));
+}
+
+.render-gallery__stage {
+  position: relative;
+  isolation: isolate;
+  height: var(--render-stage-height);
+  overflow: hidden;
+  background: #161d2d;
+}
+
+.render-gallery.is-enhanced .render-gallery__stage {
+  position: sticky;
+  top: 0;
+}
+
+.render-gallery__image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+}
+
+.render-gallery__image.is-active {
+  z-index: 2;
+  opacity: 1;
+}
+
+.render-gallery__image.is-outgoing {
+  z-index: 1;
+  opacity: 1;
+}
+
+.render-gallery__controls {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: none;
+  pointer-events: none;
+}
+
+.render-gallery.is-enhanced .render-gallery__controls {
+  display: block;
+}
+
+.render-gallery__track {
+  --render-thumb-size: 16.055%;
+  position: absolute;
+  top: max(6.095%, var(--render-header-height, 0px));
+  right: calc(var(--render-control-inset) + 1px);
+  bottom: 17.715%;
+  width: 6px;
+  border-radius: 3px;
+  background: rgb(255 255 255 / 20%);
+}
+
+.render-gallery__thumb {
+  position: absolute;
+  top: calc(var(--render-progress, 0) * (100% - var(--render-thumb-size)));
+  left: -1px;
+  width: 8px;
+  height: var(--render-thumb-size);
+  border-radius: 4px;
+  background: rgb(255 255 255 / 60%);
+}
+
+.render-gallery__skip {
+  position: absolute;
+  right: var(--render-control-inset);
+  bottom: 8.75%;
+  min-height: 44px;
+  padding: 0;
+  color: #fafafa;
+  font-size: clamp(0.875rem, 1.25vw, 1.5rem);
+  font-weight: 400;
+  line-height: 1;
+  text-transform: uppercase;
+  text-shadow: 0 1px 4px rgb(0 0 0 / 70%);
+  pointer-events: auto;
+}
+
+.render-gallery__skip:focus-visible {
+  outline: 2px solid #fafafa;
+  outline-offset: 4px;
+}
+
+@media (max-width: 767px) {
+  .render-gallery {
+    --render-step: clamp(12.5rem, 42vh, 26.25rem);
+  }
+
+  .render-gallery__track {
+    width: 4px;
+  }
+
+  .render-gallery__thumb {
+    width: 6px;
+  }
+}

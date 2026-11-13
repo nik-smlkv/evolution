@@ -1,95 +1,88 @@
-const validationConfig = {
-	formSelector: ".quarter__form",
-	inputSelector: ".input-event",
-	submitButtonSelector: ".form__button",
-	inactiveButtonClass: "popup__button_disabled",
-	inputErrorClass: "popup__input_type_error",
-	errorClass: "popup__error_visible",
+const messages = {
+  en: {
+    name: "Enter a valid name.",
+    phone: "Enter a valid phone number.",
+    mail: "Enter a valid email address.",
+  },
+  sr: {
+    name: "Unesite ispravno ime.",
+    phone: "Unesite ispravan broj telefona.",
+    mail: "Unesite ispravnu e-mail adresu.",
+  },
 };
 
-const configPattern = {
-	name: /^[a-zA-Z\s]+$/,
-	mail: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-	tel: /[0-9]{3}[0-9]{2}[0-9]{3}[0-9]{2}/,
+const fields = {
+  name: {
+    error: ".place-name-error",
+    valid: (value) => value.length <= 80 && /^[\p{L}\p{M}][\p{L}\p{M} .’'-]*$/u.test(value),
+  },
+  phone: {
+    error: ".place-phone-error",
+    valid: (value) => {
+      const digits = value.replace(/\D/g, "").length;
+      return value.length <= 32 && /^\+?[\d ().-]+$/.test(value) && digits >= 8 && digits <= 15;
+    },
+  },
+  mail: {
+    error: ".place-email-error",
+    valid: (value) => value.length <= 254 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value),
+  },
+};
+
+export function initializeLeadValidation(form) {
+  const language = document.documentElement.lang === "en" ? "en" : "sr";
+  const controls = Object.entries(fields).map(([name, config]) => ({
+    name,
+    input: form.elements.namedItem(name),
+    error: form.querySelector(config.error),
+    valid: config.valid,
+  }));
+  const button = form.querySelector('button[type="submit"]');
+  let busy = false;
+
+  function isValid(control) {
+    return control.input.validity.valid && control.valid(control.input.value.trim());
+  }
+
+  function showError(control, invalid) {
+    control.input.setAttribute("aria-invalid", String(invalid));
+    control.input.classList.toggle("popup__input_type_error", invalid);
+    control.error.classList.toggle("popup__error_visible", invalid);
+    control.error.textContent = invalid ? messages[language][control.name] : "";
+  }
+
+  function syncButton() {
+    const valid = controls.every(isValid);
+    button.disabled = busy || !valid;
+    button.classList.toggle("popup__button_disabled", !valid);
+    return valid;
+  }
+
+  for (const control of controls) {
+    const update = () => {
+      showError(control, !isValid(control));
+      syncButton();
+    };
+    control.input.addEventListener("input", update);
+    control.input.addEventListener("change", update);
+    control.input.addEventListener("blur", update);
+  }
+  syncButton();
+
+  return {
+    check() {
+      for (const control of controls) showError(control, !isValid(control));
+      return syncButton();
+    },
+    setBusy(value) {
+      busy = value;
+      form.setAttribute("aria-busy", String(value));
+      for (const control of controls) control.input.readOnly = value;
+      syncButton();
+    },
+    clear() {
+      for (const control of controls) showError(control, false);
+      syncButton();
+    },
+  };
 }
-
-
-enableValidation(validationConfig);
-
-function showInputError(formElement, inputElement, errorMessage, settings) {
-	const errorElement = formElement.querySelector(`.place-${inputElement.name}-error`);
-	if (errorElement) {
-		inputElement.classList.add(settings.inputErrorClass);
-		errorElement.classList.add(settings.errorClass);
-		errorElement.textContent = errorMessage;
-	}
-}
-
-function hideInputError(formElement, inputElement, settings) {
-	const errorElement = formElement.querySelector(`.place-${inputElement.name}-error`);
-	if (errorElement) {
-		inputElement.classList.remove(settings.inputErrorClass);
-		errorElement.classList.remove(settings.errorClass);
-		errorElement.textContent = '';
-	}
-}
-
-function checkInputValidity(formElement, inputElement, settings) {
-	const inputType = inputElement.getAttribute('type');
-	const inputValue = inputElement.value;
-	const pattern = configPattern[inputType];
-	if (!inputElement.validity.valid || pattern && !pattern.test(inputValue)) {
-		const errorMessage = inputElement.dataset.errorMessage || inputElement.validationMessage;
-		showInputError(formElement, inputElement, errorMessage, settings);
-	} else {
-		hideInputError(formElement, inputElement, settings);
-	}
-}
-
-function toggleButtonState(inputList, buttonElement, settings) {
-	const isValid = inputList.every(inputElement => {
-		const inputType = inputElement.getAttribute('type');
-		const inputValue = inputElement.value;
-		const pattern = configPattern[inputType];
-		return inputElement.validity.valid && pattern && pattern.test(inputValue)
-	});
-	buttonElement.disabled = !isValid;
-	buttonElement.classList.toggle(settings.inactiveButtonClass, !isValid);
-}
-
-function setEventListeners(formElement, settings) {
-	const inputList = Array.from(formElement.querySelectorAll(settings.inputSelector));
-	const buttonElement = formElement.querySelector(settings.submitButtonSelector);
-
-	toggleButtonState(inputList, buttonElement, settings);
-
-	inputList.forEach(inputElement => {
-		inputElement.addEventListener('input', () => {
-			checkInputValidity(formElement, inputElement, settings);
-			toggleButtonState(inputList, buttonElement, settings);
-		});
-	});
-}
-
-function enableValidation(settings) {
-	const formList = Array.from(document.querySelectorAll(settings.formSelector));
-	formList.forEach(formElement => {
-		formElement.addEventListener('submit', (evt) => {
-			evt.preventDefault();
-		});
-		setEventListeners(formElement, settings);
-	});
-}
-
-function clearValidation(formElement, settings) {
-	const inputList = Array.from(formElement.querySelectorAll(settings.inputSelector));
-	const buttonElement = formElement.querySelector(settings.submitButtonSelector);
-
-	inputList.forEach(inputElement => {
-		hideInputError(formElement, inputElement, settings);
-	});
-
-	toggleButtonState(inputList, buttonElement, settings);
-}
-
-export { enableValidation, clearValidation };

@@ -1,5 +1,5 @@
-import { openModal, closeModal, setModalEventListeners } from "../modal.js?v=1.0.4";
-import { openPriceRequest } from "../price-request.js?v=1.0.2";
+import { openModal, closeModal, setModalEventListeners } from "../modal.js?v=1.0.5";
+import { openPriceRequest } from "../price-request.js?v=1.0.3";
 import { optimizedImageUrl } from "../optimized-images.js?v=1.0.6";
 
 const dialogs = new Map();
@@ -21,8 +21,8 @@ const copy = {
 };
 
 const getCopy = () => {
-  const language = document.cookie.match(/(?:^|;\s*)language=([^;]*)/)?.[1];
-  return copy[language === "en" || (!language && document.querySelector('header [data-lang="en"].active')) ? "en" : "srb"];
+  const language = document.documentElement.lang;
+  return copy[language === "en" ? "en" : "srb"];
 };
 
 const makeElement = (tag, className, text) => {

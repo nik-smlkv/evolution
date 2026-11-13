@@ -1,0 +1,29 @@
+.quarter__form > .lead-form-feedback {
+  grid-column: 1 / -1;
+  flex: 0 0 100%;
+  min-width: 0;
+  color: #d1d4d8;
+  text-align: center;
+}
+
+.lead-form-feedback:not([data-state]) {
+  position: absolute;
+  width: 1px !important;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+
+.lead-form-status {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.lead-form-feedback[data-state="error"] .lead-form-status {
+  color: #ffabab;
+}
+
+.quarter__form[aria-busy="true"] .form__button {
+  cursor: progress;
+}
