@@ -13,6 +13,74 @@ function initializeSlider(container, options) {
   });
 }
 
+function initializeFeatures(section) {
+  const viewport = section.querySelector(".features-viewport");
+  const track = section.querySelector(".scroll-card-container");
+  const stage = section.querySelector(".section-complex");
+  const header = document.querySelector("header");
+  const desktop = window.matchMedia("(min-width: 768px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)");
+  const distance = () => Math.max(0, track.offsetWidth - viewport.clientWidth);
+  const headerBottom = () => Math.ceil(header.getBoundingClientRect().bottom);
+  let animation;
+
+  function updateLayout() {
+    const shouldPin = desktop.matches && distance() > 0 &&
+      stage.offsetHeight <= window.innerHeight - headerBottom();
+    if (shouldPin === Boolean(animation)) return;
+
+    stage.toggleAttribute("data-features-pinned", shouldPin);
+    if (shouldPin) {
+      viewport.scrollLeft = 0;
+      animation = window.gsap.to(track, {
+        x: () => -distance(),
+        ease: "none",
+        scrollTrigger: {
+          id: "features-scroll",
+          trigger: section,
+          pin: stage,
+          pinSpacing: true,
+          start: () => `top ${headerBottom()}px`,
+          end: () => `+=${distance()}`,
+          scrub: true,
+          invalidateOnRefresh: true,
+        },
+      });
+    } else {
+      animation.scrollTrigger.kill();
+      animation.kill();
+      window.gsap.set(track, { clearProps: "transform" });
+      animation = undefined;
+    }
+    window.ScrollTrigger.sort();
+    window.ScrollTrigger.refresh();
+  }
+
+  viewport.addEventListener("keydown", (event) => {
+    const trigger = animation?.scrollTrigger;
+    if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+    event.preventDefault();
+    const first = track.firstElementChild;
+    const pitch = first.nextElementSibling.offsetLeft - first.offsetLeft;
+    const direction = event.key === "ArrowRight" ? 1 : -1;
+    if (!trigger) {
+      viewport.scrollBy({ left: direction * pitch, behavior: "instant" });
+      return;
+    }
+    const position = Math.min(trigger.end, Math.max(trigger.start, trigger.scroll()));
+    trigger.scroll(Math.min(trigger.end, Math.max(trigger.start, position + direction * pitch)));
+  });
+
+  desktop.addEventListener("change", updateLayout);
+  window.addEventListener("resize", updateLayout);
+  const observer = new ResizeObserver(updateLayout);
+  observer.observe(stage);
+  observer.observe(header);
+  updateLayout();
+}
+
+const features = document.querySelector("#features");
+if (features && window.gsap && window.ScrollTrigger) initializeFeatures(features);
+
 const infrastructure = document.querySelector("#infrastructure .swiper-statistic");
 if (infrastructure) {
   initializeSlider(infrastructure, {
@@ -29,10 +97,17 @@ function initializeMaterials(stage) {
   const deck = stage.querySelector(".materials-deck");
   const slides = stage.querySelectorAll(".materials-slide");
   const count = stage.querySelector(".materials-controls__count");
+  const controls = [...stage.querySelectorAll("[data-materials-step]")];
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const directControls = window.matchMedia("(max-width: 767.99px), (pointer: coarse)");
   const wheelDuration = 0.78;
   const wheelDurationMs = wheelDuration * 1000;
   let activeIndex = 0;
+
+  function updateControls() {
+    controls[0].setAttribute("aria-disabled", String(activeIndex === 0));
+    controls[1].setAttribute("aria-disabled", String(activeIndex === slides.length - 1));
+  }
 
   function showProgress(progress) {
     stage.style.setProperty("--materials-progress", progress);
@@ -42,12 +117,28 @@ function initializeMaterials(stage) {
     slides[0].setAttribute("aria-hidden", String(index !== 0));
     slides[1].setAttribute("aria-hidden", String(index !== 1));
     count.textContent = `${index + 1} / ${slides.length}`;
+    updateControls();
   }
 
-  for (const button of stage.querySelectorAll("[data-materials-step]")) {
-    button.addEventListener("click", () => showProgress(1 - activeIndex));
-  }
+  controls.forEach((button, index) => button.addEventListener("click", () => showProgress(index)));
+  updateControls();
   stage.setAttribute("data-materials-ready", "");
+
+  let touchStart;
+  deck.addEventListener("touchstart", (event) => {
+    const touch = event.touches[0];
+    touchStart = directControls.matches && event.touches.length === 1
+      ? { x: touch.clientX, y: touch.clientY } : undefined;
+  }, { passive: true });
+  deck.addEventListener("touchcancel", () => { touchStart = undefined; }, { passive: true });
+  deck.addEventListener("touchend", (event) => {
+    if (!touchStart) return;
+    const touch = event.changedTouches[0];
+    const x = touch.clientX - touchStart.x;
+    const y = touch.clientY - touchStart.y;
+    touchStart = undefined;
+    if (Math.abs(x) > 36 && Math.abs(x) > Math.abs(y) * 1.4) showProgress(x < 0 ? 1 : 0);
+  }, { passive: true });
 
   if (!window.ScrollTrigger) return;
 
@@ -122,7 +213,7 @@ function initializeMaterials(stage) {
     const viewport = window.innerHeight;
     slideDistance = Math.round(Math.min(560, Math.max(300, viewport * 0.7)));
     const gap = Number.parseFloat(getComputedStyle(section.parentElement).rowGap) || 0;
-    const shouldPin = !reducedMotion.matches && height > 0 && height <= viewport - pinTop + 1;
+    const shouldPin = !directControls.matches && !reducedMotion.matches && height > 0 && height <= viewport - pinTop + 1;
     const nextLayout = `${pinTop}/${height}/${deck.offsetWidth}/${viewport}/${gap}/${shouldPin}`;
     if (nextLayout === layout) return;
     layout = nextLayout;
@@ -184,6 +275,7 @@ function initializeMaterials(stage) {
     });
   };
   reducedMotion.addEventListener("change", scheduleLayout);
+  directControls.addEventListener("change", scheduleLayout);
   window.addEventListener("resize", scheduleLayout);
   window.addEventListener("load", refreshScrollPosition, { once: true });
   document.fonts?.ready.then(refreshScrollPosition);
@@ -201,7 +293,6 @@ function initializeMaterials(stage) {
 
 const materials = document.querySelector("[data-materials]");
 if (materials) {
-  // The features pin adds its scroll distance above Materials on DOMContentLoaded.
   if (document.readyState === "complete") initializeMaterials(materials);
   else document.addEventListener("DOMContentLoaded", () => initializeMaterials(materials), { once: true });
 }

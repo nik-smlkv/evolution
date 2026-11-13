@@ -93,9 +93,6 @@ async function getHouses() {
 
 const closeHeaderMenu = initializeHeaderNavigation();
 const popups = document.querySelectorAll(".popup");
-const updateCheckWidth = () => {
-  return window.innerWidth <= 1500 && window.innerWidth >= 768;
-};
 
 const getHeaderSubMenu = () => {
   if (window.innerWidth <= 1000) {
@@ -197,7 +194,10 @@ document.addEventListener("DOMContentLoaded", () => {
     root: siteRootUrl,
     closeMenu: closeHeaderMenu,
     scrollTo: (target, immediate) => {
-      const offset = target === 0 ? 0 : -100;
+      if (target.id === "features") {
+        target.querySelector(".features-viewport")?.scrollTo({ left: 0, behavior: "instant" });
+      }
+      const offset = target === 0 || target.id === "render-gallery" ? 0 : -100;
       const jump = immediate || target.id === "render-gallery";
       if (typeof lenis !== "undefined") {
         if (jump) lenis.resize();
@@ -209,44 +209,6 @@ document.addEventListener("DOMContentLoaded", () => {
     },
   });
 });
-let startX;
-let isScrolling = false;
-
-const getScrollablePanels = () => {
-  const checkWidth = updateCheckWidth();
-  if (checkWidth) {
-    const scrollable = document.querySelector("#panels-container");
-    if (!scrollable) {
-      return;
-    }
-    scrollable.addEventListener("touchstart", (event) => {
-      startX = event.touches[0].clientX;
-    });
-
-    scrollable.addEventListener(
-      "touchmove",
-      (event) => {
-        event.preventDefault();
-        const touchX = event.touches[0].clientX;
-        const deltaX = startX - touchX;
-
-        if (!isScrolling) {
-          isScrolling = true;
-          requestAnimationFrame(() => {
-            scrollable.scrollBy({
-              left: deltaX,
-              behavior: "smooth",
-            });
-            isScrolling = false;
-          });
-        }
-
-        startX = touchX;
-      },
-      { passive: false },
-    );
-  }
-};
 if (window.innerWidth <= 768) {
   document.querySelectorAll(".card-text-content").forEach((card) => {
     card.addEventListener("click", function (event) {
@@ -524,14 +486,11 @@ closeButtons.forEach((button) => {
 
 window.addEventListener("resize", () => {
   setDynamicHeight();
-  getScrollablePanels();
   getHeaderSubMenu();
 });
 document.addEventListener("DOMContentLoaded", () => {
   getHeaderSubMenu();
 });
 window.addEventListener("DOMContentLoaded", () => {
-  getScrollablePanels();
-
   popups.forEach((popup) => setModalEventListeners(popup));
 });

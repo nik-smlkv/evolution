@@ -11,10 +11,8 @@
 .block-text-title,
 .gallery__body,
 .line,
-.panels-overflow,
 .parallax-container,
 .position-img,
-.scroll-container,
 .section__body,
 .showcase__items,
 .split-parent,
@@ -269,18 +267,26 @@
 
 .parallax-container {
 	width: 100%;
-	height: 100%;
+	height: 100vh;
 	position: relative;
-	display: flex;
-	justify-content: center;
 	background: #000;
-	max-height: calc(var(--vh) * 100);
 }
 
 .parallax-container img {
+	position: absolute;
+	inset: 0;
+	display: block;
+	width: 100%;
 	height: 100%;
 	object-fit: cover;
 	opacity: 0.9;
+}
+
+/* The scroll animation moves the image up by at most 7% of its own height. */
+@media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+	.parallax-container img {
+		height: 108%;
+	}
 }
 
 .apartment__img img,
@@ -488,7 +494,6 @@ header::before {
 
 .placeholder-container,
 .position-img,
-.scroll-card,
 .section-relative,
 .swiper-statistic {
 	position: relative;
@@ -815,15 +820,6 @@ h2.title {
 	align-items: center
 }
 
-.section-complex .block-title {
-	padding-right: 20px;
-}
-
-.section__body.section-complex {
-	padding: 0;
-	padding-left: clamp(20px, 5.6vw, 121px);
-}
-
 .block-name .title {
 	width: 100%;
 	max-width: 900px;
@@ -833,10 +829,15 @@ h2.title {
 }
 
 .section-complex {
-	align-items: start;
-	justify-content: start;
-	overflow: visible;
-	gap: 56px
+	--features-inset: clamp(20px, 5.6vw, 108px);
+	--features-card-width: clamp(290px, 37.5vw, 720px);
+	--features-card-gap: clamp(32px, 4.17vw, 80px);
+	display: grid;
+	grid-template-columns: clamp(218px, 27.2vw, 522px) minmax(0, 1fr);
+	gap: clamp(24px, 2.92vw, 56px);
+	align-items: stretch;
+	margin-inline-start: max(0px, calc((100% - 1920px) / 2));
+	padding: clamp(40px, 3.96vw, 76px) 0 clamp(36px, 2.71vw, 52px) var(--features-inset);
 }
 
 .important-span {
@@ -858,7 +859,6 @@ h2.title {
 
 
 
-.scroll-card,
 .slider-card-body {
 	justify-content: start
 }
@@ -905,19 +905,29 @@ h2.title {
 	font-size: var(--fz-second-title)
 }
 
-.scroll-card img {
-	width: 720px;
-	height: 480px
-}
-
-
 .min-height {
 	min-height: 576px
 }
 
 .scroll-card {
-	gap: 40px;
-	align-items: start
+	position: relative;
+	flex: 0 0 auto;
+	width: var(--features-card-width);
+	gap: clamp(20px, 2.08vw, 40px);
+	align-items: start;
+}
+
+.scroll-card img {
+	display: block;
+	width: 100%;
+	aspect-ratio: 3 / 2;
+	height: auto;
+	object-fit: cover;
+}
+
+.scroll-card .btn-style {
+	align-items: center;
+	cursor: default;
 }
 
 .swiper-statistic {
@@ -1025,16 +1035,24 @@ h2.title {
 }
 
 .block-title-scroll {
-	background-color: var(--wh-color);
-	flex: 0 0 522px;
-	padding-right: 80px
+	justify-content: space-between;
+	gap: 24px;
+}
+
+#features-heading {
+	font-size: clamp(36px, 4.17vw, 80px);
+	line-height: 1;
+}
+
+.block-title-scroll p {
+	line-height: 1.45;
 }
 
 .scroll-card:not(:last-child)::before {
 	content: '';
 	position: absolute;
 	width: 1px;
-	right: -40px;
+	right: calc(var(--features-card-gap) / -2);
 	height: 100%;
 	background: var(--signature-color)
 }
@@ -1271,25 +1289,32 @@ input.input-event[value=""]+.input-placeholder {
 }
 
 .scroll-card-container {
-	gap: 80px
-}
-
-#panels #panels-container {
-	display: -webkit-box;
-	display: -ms-flexbox;
 	display: flex;
-	-ms-flex-wrap: nowrap;
-	flex-wrap: nowrap;
-	padding: 0;
-	overflow: hidden
+	width: max-content;
+	gap: var(--features-card-gap);
+	padding-right: var(--features-inset);
 }
 
-#panels #panels-container .panel {
-	position: relative;
-	width: 100%;
-	display: -webkit-box;
-	display: -ms-flexbox;
-	display: flex
+.features-viewport {
+	overflow-x: auto;
+	overscroll-behavior-inline: contain;
+	scrollbar-width: thin;
+	scroll-snap-type: x mandatory;
+	touch-action: pan-x pan-y pinch-zoom;
+}
+
+.features-viewport:focus-visible {
+	outline: 2px solid var(--blue-color);
+	outline-offset: -2px;
+}
+
+.features-viewport .scroll-card {
+	scroll-snap-align: start;
+}
+
+.section-complex[data-features-pinned] .features-viewport {
+	overflow: clip;
+	scroll-snap-type: none;
 }
 
 .change-title,
@@ -1834,10 +1859,6 @@ span.irs.irs--round.js-irs-0 {
 	.block-name {
 		padding: 0 max(20px, 6.29%);
 	}
-
-	.section__body.section-complex {
-		padding-left: max(20px, 6.29%);
-	}
 }
 
 @media(max-width: 1600px) {
@@ -1849,12 +1870,6 @@ span.irs.irs--round.js-irs-0 {
 	.block-name {
 		padding: 0 max(20px, 3.29%);
 	}
-
-	.section__body.section-complex {
-		padding-left: max(20px, 3.29%);
-	}
-
-
 	.block-name p {
 		font-size: 19px;
 		margin-top: 5px;
@@ -1879,12 +1894,6 @@ span.irs.irs--round.js-irs-0 {
 	.block-title {
 		height: 540px;
 	}
-
-	.scroll-card img {
-		height: 444px;
-	}
-
-
 	.materials-title {
 		max-width: 768px;
 	}
@@ -2104,12 +2113,7 @@ span.irs.irs--round.js-irs-0 {
 		gap: 0
 	}
 
-	.parallax-container {
-		max-height: 100%;
-	}
-
 	.parallax-container img {
-		min-height: clamp(678px, 10vw, 960px);
 		object-position: 30%;
 	}
 
@@ -2182,10 +2186,6 @@ span.irs.irs--round.js-irs-0 {
 
 	.footer-address__block img {
 		max-width: 100%;
-	}
-
-	.scroll-card-container {
-		gap: 24px;
 	}
 
 	.pointer {
@@ -2343,10 +2343,6 @@ span.irs.irs--round.js-irs-0 {
 		line-height: 126%
 	}
 
-	.scroll-card:not(:last-child)::before {
-		right: -16px;
-	}
-
 	.about-button {
 		width: 100px;
 		height: 100px;
@@ -2383,31 +2379,23 @@ span.irs.irs--round.js-irs-0 {
 		flex-direction: column
 	}
 
-	#panels {
-		width: 100%;
-		overflow: hidden
-	}
-
 	.infrastructure__content .section__body {
 		gap: 109px
 	}
 
-	#panels #panels-container {
-		overflow: visible;
-		gap: 40px
+	.section-complex {
+		--features-card-width: min(80vw, 480px);
+		grid-template-columns: minmax(0, 1fr);
+		gap: 32px;
 	}
 
-	.scroll-card-container {
-		flex-wrap: nowrap;
-		width: 100%;
-		overflow-y: hidden;
-		overflow-x: scroll;
-		justify-content: start
+	.block-title-scroll {
+		max-width: 522px;
+		padding-right: var(--features-inset);
 	}
 
-
-	#panels #panels-container .panel {
-		overflow: visible
+	#features-heading {
+		font-size: 40px;
 	}
 
 	.available-apartments__list {
@@ -2431,8 +2419,7 @@ span.irs.irs--round.js-irs-0 {
 		height: 100%
 	}
 
-	.block-text,
-	.block-title-scroll {
+	.block-text {
 		gap: 40px
 	}
 
@@ -2466,13 +2453,6 @@ span.irs.irs--round.js-irs-0 {
 		gap: 0px;
 	}
 
-
-	.scroll-card img {
-		width: 250px;
-		height: 185px
-	}
-
-	#panels-container,
 	.form-flex {
 		flex-direction: column
 	}
@@ -2497,17 +2477,6 @@ span.irs.irs--round.js-irs-0 {
 		font-size: clamp(12px, 3.7vw, 16px)
 	}
 
-	.panels-container .block-title {
-		width: 100%;
-		max-width: 100%;
-		flex: 1 1 auto
-	}
-
-	.block-title-scroll {
-		padding-right: 0;
-		flex: 1 1 auto
-	}
-
 	.flex-wrap {
 		flex-wrap: wrap;
 		flex-direction: column
@@ -2516,10 +2485,6 @@ span.irs.irs--round.js-irs-0 {
 	.block-description {
 		flex-wrap: wrap;
 		gap: 24px
-	}
-
-	.scroll-card-container {
-		gap: 32px
 	}
 
 	.block-info__list {
@@ -3450,25 +3415,18 @@ section {
 	}
 }
 
-@media(min-width: 2600px) {
-	.parallax-container {
-		max-height: 120vh;
-	}
-}
-
 @media(max-width: 1920px) {
 	.parallax-container {
 		height: 90vh;
-	}
-
-	.parallax-container img {
-		height: 100vh;
+		height: 90svh;
 	}
 }
 
 @media(max-width: 767.99px) {
 	.parallax-container {
-		height: 100%;
+		height: 100vh;
+		height: 100svh;
+		min-height: 560px;
 	}
 
 	.gallery_nav__body {

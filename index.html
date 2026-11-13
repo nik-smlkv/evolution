@@ -61,8 +61,8 @@
     <link rel="stylesheet" href="./style/globals.css?v=1.0.10" />
     <link rel="stylesheet" href="./style/font.css?v=1.0.5" />
     <link rel="stylesheet" href="./style/variables.css?v=1.0.5" />
-    <link rel="stylesheet" href="./style/style.min.css?v=1.0.10" />
-    <link rel="stylesheet" href="./style/materials-scroll.css?v=1.0.5" />
+    <link rel="stylesheet" href="./style/style.min.css?v=1.0.11" />
+    <link rel="stylesheet" href="./style/materials-scroll.css?v=1.0.6" />
     <link rel="stylesheet" href="./style/house-switcher.css?v=1.0.9" />
     <link rel="stylesheet" href="./style/splitting.css?v=1.0.5" />
     <link rel="stylesheet" href="./style/swiper-bundle.min.css?v=1.0.5" />
@@ -75,8 +75,8 @@
     <link rel="stylesheet" href="./style/home-footer.css?v=1.0.1" />
     <link rel="stylesheet" href="./style/contact-form.css?v=1.0.3" />
     <link rel="stylesheet" href="./style/lead-form.css?v=1.0.1" />
-    <link rel="stylesheet" href="./style/render-gallery.css?v=1.0.2" />
-    <link rel="stylesheet" href="./style/hero-title.css?v=1.0.4" />
+    <link rel="stylesheet" href="./style/render-gallery.css?v=1.0.3" />
+    <link rel="stylesheet" href="./style/hero-title.css?v=1.0.5" />
     <script src="./js/swiper-bundle.min.js?v=1.0.5"></script>
     <script src="./js/jquery-3.6.4.min.js?v=1.0.5"></script>
     <script src="./js/printThis.js?v=1.0.5"></script>
@@ -333,20 +333,15 @@
                   </div>
                   <svg
                     class="about-arrow"
-                    width="15"
-                    height="15"
-                    viewBox="0 0 7 31"
+                    width="13"
+                    height="24"
+                    viewBox="0 0 13 24"
                     fill="none"
+                    aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
-                      d="M6.5 0.999999L6.5 21"
-                      stroke="white"
-                      stroke-linecap="square"
-                      stroke-linejoin="round"
-                    />
-                    <path
-                      d="M1.5 17L6.5 22L11.5 17"
+                      d="M6.5 1V22M1.5 17L6.5 22L11.5 17"
                       stroke="white"
                       stroke-linecap="square"
                       stroke-linejoin="round"
@@ -365,7 +360,7 @@
                       class="main-img"
                       src="./assets/images/site/hero/main.webp"
                       srcset="./assets/images/site/hero/main-1200.webp 1200w, ./assets/images/site/hero/main-1920.webp 1920w, ./assets/images/site/hero/main.webp 2688w"
-                      sizes="(min-width: 1920px) 1056px, 55vw"
+                      sizes="(min-width: 1920px) 1100px, 100vw"
                       alt="Stambeni kompleks Evolution Residence na Voždovcu"
                       width="2688" height="1930" decoding="async" loading="eager" fetchpriority="high"
                     />
@@ -381,7 +376,7 @@
                       class="moving-img"
                       src="./assets/images/site/hero/detail.webp"
                       srcset="./assets/images/site/hero/detail-1200.webp 1200w, ./assets/images/site/hero/detail-1920.webp 1920w, ./assets/images/site/hero/detail.webp 2688w"
-                      sizes="(min-width: 1920px) 1056px, 55vw"
+                      sizes="(min-width: 1920px) 1100px, 100vw"
                       alt="" width="2688" height="1930" decoding="async" loading="eager"
                     />
                   </picture>
@@ -490,78 +485,71 @@
               </p>
             </div>
           </section>
-          <section class="scroll-container white-bg-block" id="features">
-            <div class="section__body section-complex flex-style-row">
-              <div id="panels">
-                <div id="panels-container" class="panels-overflow">
-                  <div class="block-title block-title-scroll flex-style-column">
-                    <div class="text-overflow">
-                      <h2
-                        data-key="h2_feat"
-                        class="title tt-up title-dark split-text ezd-animtext title-flex-style"
-                      >
-                        OSOBINE KOMPLEKSA
-                      </h2>
-                    </div>
-                    <p data-key="p_guest">
-                      Kompleks Evolution Residence predstavlja novu eru u građevinskoj industriji, unapređujući standarde stanovanja kroz luksuzne sadrzaje poput bazena, modernih SPA i fitness centara, čineći život u njemu savršenim za savremene i udobne uslove. Kompleks se sastoji od četiri lamele, a recepcija će biti na raspolaganju stanarima za sve njihove svakodnevne potrebe, kao i da pruži gostima prijatan i topao doček.
+          <section class="white-bg-block" id="features" aria-labelledby="features-heading">
+            <div class="section-complex">
+              <div class="block-title-scroll flex-style-column">
+                <h2 id="features-heading" data-key="h2_feat" class="title tt-up title-dark">
+                  OSOBINE KOMPLEKSA
+                </h2>
+                <p data-key="p_guest">
+                  Kompleks Evolution Residence predstavlja novu eru u građevinskoj industriji, unapređujući standarde stanovanja kroz luksuzne sadrzaje poput bazena, modernih SPA i fitness centara, čineći život u njemu savršenim za savremene i udobne uslove. Kompleks se sastoji od četiri lamele, a recepcija će biti na raspolaganju stanarima za sve njihove svakodnevne potrebe, kao i da pruži gostima prijatan i topao doček.
+                </p>
+              </div>
+              <div class="features-viewport" tabindex="0" data-lenis-prevent-touch role="group" aria-labelledby="features-heading">
+                <div class="scroll-card-container">
+                  <div class="scroll-card flex-style-column">
+                    <img src="./assets/images/site/amenities/spa.jpg" srcset="./assets/images/site/amenities/spa-780.webp 780w, ./assets/images/site/amenities/spa.jpg 1950w" sizes="(width < 768px) min(80vw, 480px), max(290px, min(37.5vw, 720px))" alt="" width="1950" height="1300" decoding="async" loading="lazy" fetchpriority="low" />
+                    <p
+                      class="btn-style btn-color-gray tt-up"
+                      data-key="p_spa"
+                    >
+                      SPA CENTAR
                     </p>
                   </div>
-                  <div class="scroll-card-container flex-style-row">
-                    <div class="scroll-card flex-style-column panel">
-                      <img src="./assets/images/site/amenities/swimming.jpg" srcset="./assets/images/site/amenities/swimming-780.webp 780w, ./assets/images/site/amenities/swimming.jpg 1950w" sizes="(max-width: 767px) 80vw, 720px" alt="swimming" width="1950" height="1300" decoding="async" loading="lazy" fetchpriority="low" />
-                      <p
-                        class="btn-style btn-color-gray tt-up"
-                        data-key="p_swim"
-                      >
-                        BAZEN
-                      </p>
-                    </div>
-                    <div class="scroll-card flex-style-column panel">
-                      <img src="./assets/images/site/amenities/fitness.jpg" srcset="./assets/images/site/amenities/fitness-780.webp 780w, ./assets/images/site/amenities/fitness.jpg 1950w" sizes="(max-width: 767px) 80vw, 720px" alt="fitness" width="1950" height="1300" decoding="async" loading="lazy" fetchpriority="low" />
-                      <p
-                        class="btn-style btn-color-gray tt-up"
-                        data-key="p_fit"
-                      >
-                        FITNESS CENTAR
-                      </p>
-                    </div>
-                    <div class="scroll-card flex-style-column panel">
-                      <img src="./assets/images/site/amenities/spa.jpg" srcset="./assets/images/site/amenities/spa-780.webp 780w, ./assets/images/site/amenities/spa.jpg 1950w" sizes="(max-width: 767px) 80vw, 720px" alt="spa" width="1950" height="1300" decoding="async" loading="lazy" fetchpriority="low" />
-                      <p
-                        class="btn-style btn-color-gray tt-up"
-                        data-key="p_spa"
-                      >
-                        SPA CENTAR
-                      </p>
-                    </div>
-                    <div class="scroll-card flex-style-column panel">
-                      <img src="./assets/images/site/amenities/lobby.jpg" srcset="./assets/images/site/amenities/lobby-780.webp 780w, ./assets/images/site/amenities/lobby.jpg 1950w" sizes="(max-width: 767px) 80vw, 720px" alt="lobby" width="1950" height="1300" decoding="async" loading="lazy" fetchpriority="low" />
-                      <p
-                        class="btn-style btn-color-gray tt-up"
-                        data-key="p_lob"
-                      >
-                        LOBI
-                      </p>
-                    </div>
-                    <div class="scroll-card flex-style-column panel">
-                      <img src="./assets/images/site/amenities/commercial.jpg" srcset="./assets/images/site/amenities/commercial-780.webp 780w, ./assets/images/site/amenities/commercial.jpg 1950w" sizes="(max-width: 767px) 80vw, 720px" alt="commercial" width="1950" height="1300" decoding="async" loading="lazy" fetchpriority="low" />
-                      <p
-                        class="btn-style btn-color-gray tt-up"
-                        data-key="p_prem"
-                      >
-                        POSLOVNE PROSTORIJE
-                      </p>
-                    </div>
-                    <div class="scroll-card flex-style-column panel">
-                      <img src="./assets/images/site/amenities/parking.jpg" srcset="./assets/images/site/amenities/parking-780.webp 780w, ./assets/images/site/amenities/parking.jpg 1950w" sizes="(max-width: 767px) 80vw, 720px" alt="" width="1950" height="1300" decoding="async" loading="lazy" fetchpriority="low" />
-                      <p
-                        class="btn-style btn-color-gray tt-up"
-                        data-key="p_park"
-                      >
-                        PARKING
-                      </p>
-                    </div>
+                  <div class="scroll-card flex-style-column">
+                    <img src="./assets/images/site/amenities/lobby.jpg" srcset="./assets/images/site/amenities/lobby-780.webp 780w, ./assets/images/site/amenities/lobby.jpg 1950w" sizes="(width < 768px) min(80vw, 480px), max(290px, min(37.5vw, 720px))" alt="" width="1950" height="1300" decoding="async" loading="lazy" fetchpriority="low" />
+                    <p
+                      class="btn-style btn-color-gray tt-up"
+                      data-key="p_lob"
+                    >
+                      LOBI
+                    </p>
+                  </div>
+                  <div class="scroll-card flex-style-column">
+                    <img src="./assets/images/site/amenities/swimming.jpg" srcset="./assets/images/site/amenities/swimming-780.webp 780w, ./assets/images/site/amenities/swimming.jpg 1950w" sizes="(width < 768px) min(80vw, 480px), max(290px, min(37.5vw, 720px))" alt="" width="1950" height="1300" decoding="async" loading="lazy" fetchpriority="low" />
+                    <p
+                      class="btn-style btn-color-gray tt-up"
+                      data-key="p_swim"
+                    >
+                      BAZEN
+                    </p>
+                  </div>
+                  <div class="scroll-card flex-style-column">
+                    <img src="./assets/images/site/amenities/fitness.jpg" srcset="./assets/images/site/amenities/fitness-780.webp 780w, ./assets/images/site/amenities/fitness.jpg 1950w" sizes="(width < 768px) min(80vw, 480px), max(290px, min(37.5vw, 720px))" alt="" width="1950" height="1300" decoding="async" loading="lazy" fetchpriority="low" />
+                    <p
+                      class="btn-style btn-color-gray tt-up"
+                      data-key="p_fit"
+                    >
+                      FITNESS CENTAR
+                    </p>
+                  </div>
+                  <div class="scroll-card flex-style-column">
+                    <img src="./assets/images/site/amenities/commercial.jpg" srcset="./assets/images/site/amenities/commercial-780.webp 780w, ./assets/images/site/amenities/commercial.jpg 1950w" sizes="(width < 768px) min(80vw, 480px), max(290px, min(37.5vw, 720px))" alt="" width="1950" height="1300" decoding="async" loading="lazy" fetchpriority="low" />
+                    <p
+                      class="btn-style btn-color-gray tt-up"
+                      data-key="p_prem"
+                    >
+                      POSLOVNE PROSTORIJE
+                    </p>
+                  </div>
+                  <div class="scroll-card flex-style-column">
+                    <img src="./assets/images/site/amenities/parking.jpg" srcset="./assets/images/site/amenities/parking-780.webp 780w, ./assets/images/site/amenities/parking.jpg 1950w" sizes="(width < 768px) min(80vw, 480px), max(290px, min(37.5vw, 720px))" alt="" width="1950" height="1300" decoding="async" loading="lazy" fetchpriority="low" />
+                    <p
+                      class="btn-style btn-color-gray tt-up"
+                      data-key="p_park"
+                    >
+                      PARKING
+                    </p>
                   </div>
                 </div>
               </div>
@@ -1021,8 +1009,34 @@
                     srcset="./assets/images/site/gallery/render-06-800.webp 800w, ./assets/images/site/gallery/render-06-1280.webp 1280w, ./assets/images/site/gallery/render-06.jpg 1920w"
                     sizes="100vw" width="1920" height="1275" alt="" decoding="async" />
                 </template>
+                <template data-render-frame>
+                  <img class="render-gallery__image" src="./assets/images/site/gallery/render-07.jpg"
+                    srcset="./assets/images/site/gallery/render-07-800.webp 800w, ./assets/images/site/gallery/render-07-1280.webp 1280w, ./assets/images/site/gallery/render-07.jpg 1920w"
+                    sizes="100vw" width="1920" height="1086" alt="" decoding="async" />
+                </template>
+                <template data-render-frame>
+                  <img class="render-gallery__image" src="./assets/images/site/gallery/render-08.jpg"
+                    srcset="./assets/images/site/gallery/render-08-800.webp 800w, ./assets/images/site/gallery/render-08-1280.webp 1280w, ./assets/images/site/gallery/render-08.jpg 1920w"
+                    sizes="100vw" width="1920" height="1071" alt="" decoding="async" />
+                </template>
+                <template data-render-frame>
+                  <img class="render-gallery__image" src="./assets/images/site/gallery/render-09.jpg"
+                    srcset="./assets/images/site/gallery/render-09-800.webp 800w, ./assets/images/site/gallery/render-09-1280.webp 1280w, ./assets/images/site/gallery/render-09.jpg 1920w"
+                    sizes="100vw" width="1920" height="1070" alt="" decoding="async" />
+                </template>
                 <div class="render-gallery__controls">
                   <div class="render-gallery__track" aria-hidden="true"><span class="render-gallery__thumb"></span></div>
+                  <div class="render-gallery__navigation">
+                    <button class="render-gallery__step" type="button" data-render-step="-1" aria-disabled="true">
+                      <span class="render-gallery__label" data-key="materials_previous">Prethodni slajd</span>
+                      <img src="./assets/images/shared/icons/chevron.svg" width="11" height="6" alt="" />
+                    </button>
+                    <span class="render-gallery__count" aria-live="polite"></span>
+                    <button class="render-gallery__step" type="button" data-render-step="1">
+                      <span class="render-gallery__label" data-key="materials_next">Sledeći slajd</span>
+                      <img src="./assets/images/shared/icons/chevron.svg" width="11" height="6" alt="" />
+                    </button>
+                  </div>
                   <button class="render-gallery__skip" type="button" data-render-skip data-key="gallery_skip">Preskoči</button>
                 </div>
               </div>
@@ -1416,13 +1430,13 @@
     <script src="./js/lenis.js?v=1.0.5"></script>
     <script src="./js/locomotive-scroll.min.js?v=1.0.5"></script>
     <script src="./js/splitting.min.js?v=1.0.5"></script>
-    <script src="./js/animation.min.js?v=1.0.6"></script>
+    <script src="./js/animation.min.js?v=1.0.7"></script>
     <script src="./js/ion.rangeSlider.min.js?v=1.0.5"></script>
     <script type="module" src="./js/form.js?v=1.0.10"></script>
     <script type="module" src="./js/deferred-media.js?v=1.0.1"></script>
-    <script type="module" src="./js/home-sliders.js?v=1.0.6"></script>
-    <script type="module" src="./js/render-gallery.js?v=1.0.1"></script>
+    <script type="module" src="./js/home-sliders.js?v=1.0.8"></script>
+    <script type="module" src="./js/render-gallery.js?v=1.0.3"></script>
     <script src="./js/house-menu.js?v=1.0.3"></script>
-    <script type="module" src="./js/script.js?v=1.0.25" defer></script>
+    <script type="module" src="./js/script.js?v=1.0.28" defer></script>
   </body>
 </html>

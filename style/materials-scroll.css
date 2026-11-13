@@ -134,6 +134,37 @@
   outline-offset: 3px;
 }
 
+.materials-controls__button[aria-disabled="true"] {
+  opacity: 0.45;
+  cursor: default;
+}
+
+@media (max-width: 767.99px) {
+  .materials-deck {
+    touch-action: pan-y pinch-zoom;
+  }
+
+  .materials-slide--next {
+    transition-duration: 420ms;
+  }
+
+  .materials-controls {
+    position: absolute;
+    z-index: 2;
+    top: calc(100vw * 1086 / 1920 - 12px);
+    right: 12px;
+    transform: translateY(-100%);
+    padding: 4px 6px 4px 14px;
+    gap: 8px;
+    border-radius: 32px;
+  }
+
+  .materials-controls__button {
+    width: 44px;
+    height: 44px;
+  }
+}
+
 .materials-controls__label {
   position: absolute;
   width: 1px;

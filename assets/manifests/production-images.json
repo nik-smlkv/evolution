@@ -4,8 +4,8 @@
   "summary": {
     "before_files": 3852,
     "before_bytes": 1527010844,
-    "production_files": 822,
-    "production_bytes": 254086849,
+    "production_files": 831,
+    "production_bytes": 265385270,
     "available_tchaikovsky": 308,
     "unavailable_tchaikovsky": 95,
     "available_vivaldi_records": 60,
@@ -18920,6 +18920,213 @@
           "source_sha256": "d6848392bbff3050fc56ba2e32933d602dfc4b19fac59791ee033a3a77ed7563",
           "selected_sha256": "f555f3422b046ea8e513421f0791a56726074b2ea93f4ffc5f0f406126347868",
           "lossless_webp_candidate_bytes": 3243032
+        }
+      ]
+    },
+    {
+      "path": "assets/images/site/gallery/render-07-1280.webp",
+      "bytes": 1157102,
+      "sha256": "6a9461b8260fdfa5af3ab880798e261e52791d67e75405f268f3a373109a7d81",
+      "roles": [
+        "index.html/img.srcset"
+      ],
+      "responsive_derivative": {
+        "source": "assets/images/site/gallery/render-07.jpg",
+        "source_sha256": "061863b6c340a35bdd4f91a986f3a1937f9b3d3d6b0fa9bbaaa7390cf58a5912",
+        "width": 1280,
+        "height": 724,
+        "encoding": "lossless-webp"
+      },
+      "selections": [
+        {
+          "requested": "assets/images/site/gallery/render-07-1280.webp",
+          "chosen": "assets/images/site/gallery/render-07-1280.webp",
+          "source_bytes": 1157102,
+          "selected_bytes": 1157102,
+          "source_sha256": "6a9461b8260fdfa5af3ab880798e261e52791d67e75405f268f3a373109a7d81",
+          "selected_sha256": "6a9461b8260fdfa5af3ab880798e261e52791d67e75405f268f3a373109a7d81"
+        }
+      ]
+    },
+    {
+      "path": "assets/images/site/gallery/render-07-800.webp",
+      "bytes": 469666,
+      "sha256": "0fe73f0776e173528cd8627f34dccb4e4c1e7dffcb94e9db4a31c2da0d7dbc6c",
+      "roles": [
+        "index.html/img.srcset"
+      ],
+      "responsive_derivative": {
+        "source": "assets/images/site/gallery/render-07.jpg",
+        "source_sha256": "061863b6c340a35bdd4f91a986f3a1937f9b3d3d6b0fa9bbaaa7390cf58a5912",
+        "width": 800,
+        "height": 452,
+        "encoding": "lossless-webp"
+      },
+      "selections": [
+        {
+          "requested": "assets/images/site/gallery/render-07-800.webp",
+          "chosen": "assets/images/site/gallery/render-07-800.webp",
+          "source_bytes": 469666,
+          "selected_bytes": 469666,
+          "source_sha256": "0fe73f0776e173528cd8627f34dccb4e4c1e7dffcb94e9db4a31c2da0d7dbc6c",
+          "selected_sha256": "0fe73f0776e173528cd8627f34dccb4e4c1e7dffcb94e9db4a31c2da0d7dbc6c"
+        }
+      ]
+    },
+    {
+      "path": "assets/images/site/gallery/render-07.jpg",
+      "bytes": 2175743,
+      "sha256": "061863b6c340a35bdd4f91a986f3a1937f9b3d3d6b0fa9bbaaa7390cf58a5912",
+      "roles": [
+        "index.html/img.src",
+        "index.html/img.srcset"
+      ],
+      "selections": [
+        {
+          "requested": "assets/images/site/gallery/render-07.jpg",
+          "chosen": "assets/images/site/gallery/render-07.jpg",
+          "source_bytes": 2446070,
+          "selected_bytes": 2175743,
+          "source_sha256": "7512f1e1bdc002400657002fa00f4743d15a6e392e1a3acb709ebafeca20aff7",
+          "selected_sha256": "061863b6c340a35bdd4f91a986f3a1937f9b3d3d6b0fa9bbaaa7390cf58a5912"
+        }
+      ]
+    },
+    {
+      "path": "assets/images/site/gallery/render-08-1280.webp",
+      "bytes": 1218072,
+      "sha256": "eafdf82f8960391df4aa013876260a38c3c837b4f79a3e6fdc215305e00b0794",
+      "roles": [
+        "index.html/img.srcset"
+      ],
+      "responsive_derivative": {
+        "source": "assets/images/site/gallery/render-08.jpg",
+        "source_sha256": "ac3a7f2fd70111559f45ccda2bf786b3f983b430bbfc88fb6bbc6497270415b3",
+        "width": 1280,
+        "height": 714,
+        "encoding": "lossless-webp"
+      },
+      "selections": [
+        {
+          "requested": "assets/images/site/gallery/render-08-1280.webp",
+          "chosen": "assets/images/site/gallery/render-08-1280.webp",
+          "source_bytes": 1218072,
+          "selected_bytes": 1218072,
+          "source_sha256": "eafdf82f8960391df4aa013876260a38c3c837b4f79a3e6fdc215305e00b0794",
+          "selected_sha256": "eafdf82f8960391df4aa013876260a38c3c837b4f79a3e6fdc215305e00b0794"
+        }
+      ]
+    },
+    {
+      "path": "assets/images/site/gallery/render-08-800.webp",
+      "bytes": 490668,
+      "sha256": "76fc4e380af85d5890c6facfe0a52fa6ed946c6656c74bf7de28c1e819790e4c",
+      "roles": [
+        "index.html/img.srcset"
+      ],
+      "responsive_derivative": {
+        "source": "assets/images/site/gallery/render-08.jpg",
+        "source_sha256": "ac3a7f2fd70111559f45ccda2bf786b3f983b430bbfc88fb6bbc6497270415b3",
+        "width": 800,
+        "height": 446,
+        "encoding": "lossless-webp"
+      },
+      "selections": [
+        {
+          "requested": "assets/images/site/gallery/render-08-800.webp",
+          "chosen": "assets/images/site/gallery/render-08-800.webp",
+          "source_bytes": 490668,
+          "selected_bytes": 490668,
+          "source_sha256": "76fc4e380af85d5890c6facfe0a52fa6ed946c6656c74bf7de28c1e819790e4c",
+          "selected_sha256": "76fc4e380af85d5890c6facfe0a52fa6ed946c6656c74bf7de28c1e819790e4c"
+        }
+      ]
+    },
+    {
+      "path": "assets/images/site/gallery/render-08.jpg",
+      "bytes": 2233947,
+      "sha256": "ac3a7f2fd70111559f45ccda2bf786b3f983b430bbfc88fb6bbc6497270415b3",
+      "roles": [
+        "index.html/img.src",
+        "index.html/img.srcset"
+      ],
+      "selections": [
+        {
+          "requested": "assets/images/site/gallery/render-08.jpg",
+          "chosen": "assets/images/site/gallery/render-08.jpg",
+          "source_bytes": 2495551,
+          "selected_bytes": 2233947,
+          "source_sha256": "85c4cabe7c1d38d97148a02096dd64b511b8777f097eb87af241937bc789debe",
+          "selected_sha256": "ac3a7f2fd70111559f45ccda2bf786b3f983b430bbfc88fb6bbc6497270415b3"
+        }
+      ]
+    },
+    {
+      "path": "assets/images/site/gallery/render-09-1280.webp",
+      "bytes": 1152886,
+      "sha256": "031923e944dd5237036504c3f450b5f9a9926cece0ce15a24821f1bae2a6c899",
+      "roles": [
+        "index.html/img.srcset"
+      ],
+      "responsive_derivative": {
+        "source": "assets/images/site/gallery/render-09.jpg",
+        "source_sha256": "479fa5ea9075bb12fa635acc1be76c2b372b6b7ce4d44d77f12dfead7bed6c1b",
+        "width": 1280,
+        "height": 713,
+        "encoding": "lossless-webp"
+      },
+      "selections": [
+        {
+          "requested": "assets/images/site/gallery/render-09-1280.webp",
+          "chosen": "assets/images/site/gallery/render-09-1280.webp",
+          "source_bytes": 1152886,
+          "selected_bytes": 1152886,
+          "source_sha256": "031923e944dd5237036504c3f450b5f9a9926cece0ce15a24821f1bae2a6c899",
+          "selected_sha256": "031923e944dd5237036504c3f450b5f9a9926cece0ce15a24821f1bae2a6c899"
+        }
+      ]
+    },
+    {
+      "path": "assets/images/site/gallery/render-09-800.webp",
+      "bytes": 477234,
+      "sha256": "12db02d488b9c267020c6d8265afbec38240b649c76ec5c0ac6202af60d0e399",
+      "roles": [
+        "index.html/img.srcset"
+      ],
+      "responsive_derivative": {
+        "source": "assets/images/site/gallery/render-09.jpg",
+        "source_sha256": "479fa5ea9075bb12fa635acc1be76c2b372b6b7ce4d44d77f12dfead7bed6c1b",
+        "width": 800,
+        "height": 446,
+        "encoding": "lossless-webp"
+      },
+      "selections": [
+        {
+          "requested": "assets/images/site/gallery/render-09-800.webp",
+          "chosen": "assets/images/site/gallery/render-09-800.webp",
+          "source_bytes": 477234,
+          "selected_bytes": 477234,
+          "source_sha256": "12db02d488b9c267020c6d8265afbec38240b649c76ec5c0ac6202af60d0e399",
+          "selected_sha256": "12db02d488b9c267020c6d8265afbec38240b649c76ec5c0ac6202af60d0e399"
+        }
+      ]
+    },
+    {
+      "path": "assets/images/site/gallery/render-09.jpg",
+      "bytes": 1923103,
+      "sha256": "479fa5ea9075bb12fa635acc1be76c2b372b6b7ce4d44d77f12dfead7bed6c1b",
+      "roles": [
+        "index.html/img.src",
+        "index.html/img.srcset"
+      ],
+      "selections": [
+        {
+          "requested": "assets/images/site/gallery/render-09.jpg",
+          "chosen": "assets/images/site/gallery/render-09.jpg",
+          "source_bytes": 2112971,
+          "selected_bytes": 1923103,
+          "source_sha256": "435593e5c7246c5dedece39af15363e342ff14fbbea507d2409a8e3c185cced2",
+          "selected_sha256": "479fa5ea9075bb12fa635acc1be76c2b372b6b7ce4d44d77f12dfead7bed6c1b"
         }
       ]
     },

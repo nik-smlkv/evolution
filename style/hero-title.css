@@ -22,6 +22,37 @@
   display: none;
 }
 
+.main-block .about-button {
+  padding: 0;
+}
+
+.main-block .about-button .scale-text {
+  max-width: min(76%, 129px);
+  line-height: 1.25;
+}
+
+.main-block .about-arrow {
+  position: absolute;
+  top: 68%;
+  right: auto;
+  left: 50%;
+  width: clamp(9px, 1vw, 12px);
+  height: auto;
+  translate: -50%;
+  animation-name: hero-arrow-nudge;
+}
+
+@keyframes hero-arrow-nudge {
+  from { transform: translateY(0); }
+  to { transform: translateY(3px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .main-block .about-arrow {
+    animation: none;
+  }
+}
+
 @media (min-width: 768px) {
   .main-block .section__body-main {
     --hero-gutter: min(6.25vw, 120px);
@@ -74,13 +105,54 @@
     left: calc(-1 * min(3.90625vw, 75px));
     width: min(7.8125vw, 150px);
     height: min(7.8125vw, 150px);
-    padding: 0;
-    gap: min(0.68vw, 13px);
+  }
+}
+
+@media (width < 1920px) {
+  .main-block .section__body-main.block-height {
+    /* The photo fills the viewport below the header. Keep the next video offscreen. */
+    --hero-header-height: 90px;
+    min-height: calc(100dvh - var(--hero-header-height) + 1px);
+    max-height: none;
+    height: auto;
+    margin-top: 0;
+  }
+
+  .main-block .section__body-main > .block-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    transition: none;
+  }
+
+  .main-block .position-img > picture img {
+    object-position: center 20%;
+  }
+}
+
+@media (768px <= width < 1920px) {
+  .main-block .main-block-relative {
+    top: min(11vh, 8vw);
+  }
+
+  .main-block .about-button {
+    --hero-button-size: clamp(84px, 7.8125vw, 150px);
+    top: clamp(0px, 48%, calc(100% - var(--hero-button-size) - 16px));
+    left: 33%;
+    width: var(--hero-button-size);
+    height: var(--hero-button-size);
+    font-size: clamp(11px, 1vw, 16px);
   }
 }
 
 @media (max-width: 767.99px) {
   .main-block .main-block-relative {
+    position: absolute;
+    top: clamp(24px, 7vh, 64px);
+    bottom: auto;
     z-index: 4;
   }
 
@@ -88,10 +160,22 @@
     --fz-title: min(12vw, 90px);
     /* Include the side gutters and a possible reserved scrollbar in the fit. */
     font-size: min(var(--fz-title), calc((100vw - 56px) / 6));
+    text-shadow: 0 2px 12px rgb(22 29 45 / 55%);
   }
 
   .main-block .main-title .title-span {
     --fz-title: min(10vw, 76px);
     margin-left: 0;
+  }
+
+  .main-block .about-button {
+    top: auto;
+    bottom: clamp(16px, 4vh, 40px);
+  }
+}
+
+@media (max-width: 600px) {
+  .main-block .section__body-main.block-height {
+    --hero-header-height: 72px;
   }
 }

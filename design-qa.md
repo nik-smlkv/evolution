@@ -1,3 +1,16 @@
+# Homepage follow-up verification
+
+final result: passed
+
+- **Complex Features:** compared the first screenshot with the English section in the in-app browser at a 1920 CSS px content width. The reference artboard and live section are shown together in `features-comparison.png`. The title and description align in the left column; the photo rail starts at x686 with 720 × 480 photos on an 800 px pitch. The order is SPA, lobby, swimming pool, fitness, commercial premises and parking. The page keeps its existing localized description and fonts. The mobile rail reached Parking at its maximum horizontal scroll without widening the page.
+- **Image coverage:** checked the two full-width photos at 390, 1366, 1935 and 3440 viewport widths. The photo fills its container on mobile; the desktop photo still covers the bottom edge at the maximum parallax shift. The gallery route now aligns the first frame with the top of the viewport, with the header above it.
+- **Gallery and Materials:** all nine gallery frames appeared in order at 390 × 844, with the outgoing image still filling the stage while the new one moved. Verified 9 → 8 and Skip to the form. The three added full-size renders decode to the same pixels as the supplied JPGs. Materials switches to the second slide and back using visible controls at the image edge; vertical page scrolling remains free on touch layouts. Browser testing used a resized viewport; physical touch gestures were not exercised.
+- **Hero:** checked 320, 390, 1366, 1920 and 1935 px. Below 1920 the two image layers fill the area under the header. At and above 1920 the previous framing is preserved as requested. The label center matches the button center and the arrow is 9–12 px wide.
+
+Captures: `features-desktop-section.jpg`, `features-comparison.png`, `features-mobile.jpg`, `gallery-mobile-final.jpg`, and `hero-1366.jpg` in this chat's visualization folder. No local browser errors observed; all 58 Node tests and the production and route checks passed.
+
+---
+
 # Catalog, gallery and contact verification
 
 final result: passed
