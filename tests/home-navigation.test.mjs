@@ -7,7 +7,7 @@ const source = readFileSync(new URL("../js/home-navigation.js", import.meta.url)
   .replace(/^import homeRoutes[^\n]+;/, `const homeRoutes = ${JSON.stringify(homeRoutes)};`);
 const { normalizeHomeUrl, homeSectionUrl, isHomeUrl, getHomeSection, isPlainNavigation } =
   await import(`data:text/javascript;base64,${Buffer.from(source).toString("base64")}`);
-const filters = "house=tchaikovsky&house=vivaldi&type=b&floor=4%2F3&property=10&view=grid&kvadrati-od=26&stanovi-do=109";
+const filters = "house=tchaikovsky&house=vivaldi&type=b&floor=4%2F3&property=10&view=grid&kvadrati-od=26&stanovi-do=109&unit=A30";
 
 test("home and section routes remove all catalog filters while preserving unrelated parameters", () => {
   for (const root of ["https://site.test/", "https://site.test/evolution/", "https://site.test/dist/"]) {

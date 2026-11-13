@@ -1,8 +1,8 @@
 import { langArr } from "./languages/languages.js?v=1.0.8";
-import { openModal, closeModal, setModalEventListeners } from "./modal.js?v=1.0.5";
-import { openPriceRequest } from "./price-request.js?v=1.0.3";
+import { openModal, closeModal, setModalEventListeners } from "./modal.js?v=1.0.6";
+import { openPriceRequest } from "./price-request.js?v=1.0.4";
 import { initializeHeaderNavigation } from "./header-navigation.js?v=1.0.1";
-import { initializeHomeNavigation, isPlainNavigation, normalizeHomeUrl } from "./home-navigation.js?v=1.0.3";
+import { initializeHomeNavigation, isPlainNavigation, normalizeHomeUrl } from "./home-navigation.js?v=1.0.4";
 import { getSelectedHouse } from "./house-context.js?v=1.0.1";
 import "./input-capabilities.js?v=1.0.0";
 const assetsRootUrl = new URL("../", import.meta.url);

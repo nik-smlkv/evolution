@@ -173,6 +173,7 @@ export function closeModal(modal) {
 	if (!modal.matches(".popup_type_form_quarter, .popup_type_property")) {
 		modal.classList.remove("popup_is-opened");
 		unlockWhenIdle();
+		modal.dispatchEvent(new Event("modal:close", { bubbles: true }));
 		return;
 	}
 
@@ -203,6 +204,7 @@ export function closeModal(modal) {
 	panel.addEventListener('transitionend', onTransitionEnd);
 	const duration = Math.max(...getComputedStyle(panel).transitionDuration.split(',').map((value) => parseFloat(value) * (value.trim().endsWith('ms') ? 1 : 1000)));
 	timeout = setTimeout(finish, duration + 80);
+	modal.dispatchEvent(new Event("modal:close", { bubbles: true }));
 }
 
 function closeModalEsc(evt) {

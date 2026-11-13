@@ -21,7 +21,7 @@ const waitForImage = (image) => image.decode
   });
 
 try {
-  const { catalogReady, refreshCatalogLayout } = await import("./requestt.js?v=1.0.60");
+  const { catalogReady, refreshCatalogLayout, initializeCatalogModalUrl } = await import("./requestt.js?v=1.0.61");
   await catalogReady;
   await document.fonts.ready;
 
@@ -56,6 +56,7 @@ try {
   refreshCatalogLayout();
   document.querySelector(".catalog-startup").remove();
   document.querySelector(".catalog-skeleton").remove();
+  initializeCatalogModalUrl();
 } catch (error) {
   console.error("Catalog could not be initialized", error);
   wrapper.setAttribute("aria-busy", "false");

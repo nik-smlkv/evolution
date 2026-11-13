@@ -1,6 +1,6 @@
 import homeRoutes from "./home-routes.js?v=1.0.2";
 
-const catalogParameters = ["house", "type", "floor", "property", "view", "kvadrati-od", "stanovi-do"];
+const catalogParameters = ["house", "type", "floor", "property", "view", "kvadrati-od", "stanovi-do", "unit"];
 const sectionRoutes = new Map(Object.entries(homeRoutes).map(([route, section]) => [section, route]));
 
 export function isHomeUrl(value, root) {

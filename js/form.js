@@ -1,8 +1,9 @@
-import { getSelectedHouse } from "./house-context.js?v=1.0.1";
+import { getSelectedHouse, resolveHouse } from "./house-context.js?v=1.0.1";
 import { initializeLeadValidation } from "./validation.js?v=1.0.7";
+import { directLeadWebhookUrl } from "./lead-settings.js?v=1.0.0";
 
 const siteRoot = new URL("../", import.meta.url);
-const endpoint = new URL("../lead.php", import.meta.url);
+const phpEndpoint = new URL("../lead.php", import.meta.url);
 const language = document.documentElement.lang === "en" ? "en" : "sr";
 const serverErrors = new Set(["invalid", "rate_limited", "upstream", "unavailable"]);
 const copy = {
@@ -75,15 +76,47 @@ function propertyDetails(form) {
   };
 }
 
+function bitrixPayload({ name, phone, email, house, property }) {
+  const houseName = resolveHouse({ house })?.name ?? "Nije izabran";
+  let comments = `Objekat: ${houseName}`;
+  if (property?.type === "apartments") {
+    const plan = property.planUrl ? `. Tlocrt stana na sajtu https://evolutionresidence.rs${property.planUrl}` : "";
+    comments = `Saznati cenu stana '${comments}, Površina:${property.area}, Krilo zgrade:${property.wing}, Sprat: ${property.floor}, Broj stana: ${property.unit}${plan}'`;
+  } else if (property) {
+    const label = property.type === "parking" ? "parking mesta" : "poslovnog prostora";
+    const details = [comments];
+    for (const [value, caption] of [[property.wing, "Krilo zgrade"], [property.floor, "Sprat"], [property.unit, "Broj"]]) {
+      if (value) details.push(`${caption}: ${value}`);
+    }
+    comments = `Saznati cenu ${label} '${details.join(", ")}'`;
+  }
+  return {
+    fields: {
+      TITLE: "Complete CRM form 'Prijava za konsultacije sa sajta (evolutionresidence.rs)'",
+      NAME: name,
+      PHONE: [{ VALUE: phone, VALUE_TYPE: "WORK" }],
+      EMAIL: [{ VALUE: email, VALUE_TYPE: "WORK" }],
+      COMMENTS: comments,
+    },
+    params: { REGISTER_SONET_EVENT: "Y" },
+  };
+}
+
 async function sendLead(payload) {
-  const response = await fetch(endpoint, {
+  const response = await fetch(directLeadWebhookUrl || phpEndpoint, {
     method: "POST",
     headers: { Accept: "application/json", "Content-Type": "application/json" },
-    body: JSON.stringify(payload),
+    body: JSON.stringify(directLeadWebhookUrl ? bitrixPayload(payload) : payload),
     redirect: "error",
     signal: AbortSignal.timeout(25_000),
   });
   const result = await response.json().catch(() => null);
+  if (directLeadWebhookUrl) {
+    const id = result?.result;
+    const positiveId = (Number.isSafeInteger(id) && id > 0) || (typeof id === "string" && /^[1-9]\d*$/.test(id));
+    if (response.ok && positiveId && !Object.hasOwn(result, "error")) return;
+    throw new Error(response.status === 429 ? "rate_limited" : "upstream");
+  }
   if (response.status === 200 && result?.ok === true) return;
   if (serverErrors.has(result?.error)) throw new Error(result.error);
   throw new Error(response.status === 429 ? "rate_limited" : "upstream");

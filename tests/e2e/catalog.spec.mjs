@@ -12,6 +12,27 @@ const query = (page) => Object.fromEntries(new URL(page.url()).searchParams);
 const units = (page) => cards(page).locator(".apartment-card-item__name").allTextContents();
 const usesFilterAccordion = (page) => page.viewportSize().width <= 700;
 
+test("catalog detail links reopen a unit and follow browser history", async ({ page }) => {
+  await openCatalog(page, "tchaikovsky", "/search-by-parameters.html?house=tchaikovsky&utm_source=test");
+  const dialog = page.locator(".popup_type_house");
+  const card = cards(page).filter({ hasText: "A30" }).first();
+  await card.click();
+  await expect(dialog).toHaveClass(/popup_is-opened/);
+  await expect.poll(() => query(page)).toEqual({ house: "tchaikovsky", utm_source: "test", unit: "A30" });
+  await page.goBack();
+  await expect(dialog).not.toHaveClass(/popup_is-opened/);
+  await page.goForward();
+  await expect(dialog.locator(".js-apartment-number")).toHaveText("A30");
+  await expect(dialog).toHaveClass(/popup_is-opened/);
+  await page.reload();
+  await expect(dialog).toHaveClass(/popup_is-opened/);
+  await closeDetails(dialog);
+  await expect.poll(() => query(page)).toEqual({ house: "tchaikovsky", utm_source: "test" });
+  await page.goto("/search-by-parameters.html?house=tchaikovsky&unit=A15");
+  await expect.poll(() => query(page)).toEqual({ house: "tchaikovsky" });
+  await expect(dialog).not.toHaveClass(/popup_is-opened/);
+});
+
 async function openCatalog(page, house, path = `/search-by-parameters.html?house=${house}`) {
   await page.goto(path, { waitUntil: "domcontentloaded" });
   await expect(page.locator("body")).toHaveAttribute("data-catalog-house", house);

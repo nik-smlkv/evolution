@@ -1,5 +1,5 @@
-import { openModal, closeModal, setModalEventListeners } from "../modal.js?v=1.0.5";
-import { openPriceRequest } from "../price-request.js?v=1.0.3";
+import { openModal, closeModal, setModalEventListeners } from "../modal.js?v=1.0.6";
+import { openPriceRequest } from "../price-request.js?v=1.0.4";
 import { optimizedImageUrl } from "../optimized-images.js?v=1.0.6";
 
 const dialogs = new Map();
@@ -135,5 +135,5 @@ export function openPropertyDetails(property, houseName) {
     state.image.removeAttribute("src");
   }
   state.dialog.querySelector(".property-dialog__body").scrollTop = 0;
-  openModal(state.dialog);
+  return openModal(state.dialog);
 }

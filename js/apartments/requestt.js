@@ -1,7 +1,7 @@
 import { loadHouse } from "./houses.js?v=1.0.16";
 import { tchaikovskyFloorLevels } from "./tchaikovsky-floors.js?v=1.0.5";
-import { openModal } from "../modal.js?v=1.0.5";
-import { openPropertyDetails } from "./property-dialogs.js?v=1.0.9";
+import { closeModal, openModal } from "../modal.js?v=1.0.6";
+import { openPropertyDetails } from "./property-dialogs.js?v=1.0.10";
 import { tchaikovskyOtherProperties } from "./tchaikovsky-properties.js?v=1.0.1";
 import { createDeferredPlan, deferPlanImages, activatePlanImages, createPlanImageLoader } from "./deferred-plan.js?v=1.0.2";
 import { isTchaikovskyApartmentAvailable } from "./tchaikovsky-availability.js?v=1.0.2";
@@ -19,6 +19,7 @@ const apartmentData = JSON.parse(catalog.apartments)
   .filter((apartment) => house !== "tchaikovsky" || isTchaikovskyApartmentAvailable(apartment))
   .map((apartment) => ({ ...apartment, propertyType: "apartments" }));
 const data = house === "tchaikovsky" ? [...apartmentData, ...tchaikovskyOtherProperties] : apartmentData;
+let catalogInitialized = false;
 let selectedPropertyType = house === "tchaikovsky" && ["commercial", "parking"].includes(new URLSearchParams(location.search).get("property"))
   ? new URLSearchParams(location.search).get("property") : "apartments";
 const propertyData = () => data.filter((item) => item.propertyType === selectedPropertyType);
@@ -96,18 +97,6 @@ const whenDocumentReady = (callback) => new Promise((resolve, reject) => {
   }
 });
 
-const setTchaikovskyPlanPopup = (apartment) => {
-  const popup = document.querySelector(".popup_type_house");
-  if (!popup || !apartment) return;
-
-  popup.querySelector(".js-apartment-wing").textContent = apartment.buldingWing.replace("Lamela", "").trim();
-  popup.querySelector(".js-apartment-floor").textContent = apartment.floor ?? "";
-  popup.querySelector(".js-apartment-area").textContent = formatModalArea(apartment);
-  popup.querySelector(".js-apartment-number").textContent = formatModalApartmentNumber(apartment.apartmentNumber);
-  popup.querySelector(".apartment__img").src = apartment.planImg;
-  openModal(popup);
-};
-
 const ensureFloorPlan = createDeferredPlan(() => whenDocumentReady(async () => {
   if (house === "vivaldi") {
     if (!legacyFloorPlans) throw new Error("Floor plan template is missing");
@@ -117,11 +106,11 @@ const ensureFloorPlan = createDeferredPlan(() => whenDocumentReady(async () => {
     plans.querySelectorAll(".floors-res").forEach((plan) => { plan.style.display = "none"; });
     legacyFloorPlans.parentElement.replaceChildren(plans);
     vivaldiFloorPlansInitialized = true;
-    getVisiblePolygons(data);
+    bindVivaldiPolygons(data);
     return;
   }
   const { initializeTchaikovskyFloorPlan } = await import("./floor-plan.js?v=1.0.28");
-  tchaikovskyFloorPlan = await initializeTchaikovskyFloorPlan(apartmentData, setTchaikovskyPlanPopup, (level) => {
+  tchaikovskyFloorPlan = await initializeTchaikovskyFloorPlan(apartmentData, (apartment) => openCatalogRecord(apartment), (level) => {
     if (!level || document.body.dataset.catalogView !== "plan") return;
     selectedFloor = level.label;
     document.querySelectorAll(".apartments__filter .filter__btn_floor").forEach((button) => {
@@ -131,7 +120,7 @@ const ensureFloorPlan = createDeferredPlan(() => whenDocumentReady(async () => {
     updateURL();
   }, (property) => {
     const record = tchaikovskyOtherProperties.find((item) => item.propertyType === property.propertyType && item.unit === property.unit);
-    if (record) openPropertyDetails(record, catalog.name);
+    if (record) openCatalogRecord(record);
   }, (type) => setPropertyType(type, false));
   return tchaikovskyFloorPlan;
 }));
@@ -246,7 +235,10 @@ const applyURLParams = () => {
 };
 
 const updateURL = () => {
-  const params = new URLSearchParams();
+  if (!catalogInitialized) return;
+  const url = new URL(location.href);
+  const params = url.searchParams;
+  for (const key of ["property", "view", "type", "floor", "kvadrati-od", "stanovi-do"]) params.delete(key);
   params.set("house", house);
   if (selectedPropertyType !== "apartments") params.set("property", selectedPropertyType);
   if (document.body.dataset.catalogView === "plan") params.set("view", "plan");
@@ -269,11 +261,7 @@ const updateURL = () => {
       params.set("stanovi-do", inputTo.value);
   }
 
-  const newURL = params.toString()
-    ? `${window.location.pathname}?${params.toString()}`
-    : window.location.pathname;
-
-  window.history.pushState({}, "", newURL);
+  if (url.href !== location.href) history.pushState(null, "", url);
 };
 
 const getFirstApartment = () => {
@@ -528,22 +516,25 @@ const setupFloorFilter = (targetSelector) => {
   });
 };
 
-const getVisiblePolygons = (data) => {
-  const availableFloors = data.map((item) => item.floor.toLowerCase());
-  const availableFloorName = data.map((item) =>
-    item.apartmentNumber.replace("STAN", "").toLowerCase(),
-  );
-  const splitNames = availableFloorName.map((name) => {
-    const trimmed = name.trim().toUpperCase();
-    const letter = trimmed.match(/[A-Z]/)[0];
-    const number = trimmed.match(/\d+/)[0];
-    return { letter, number };
+const bindVivaldiPolygons = (apartments) => {
+  const recordsByPolygon = new Map();
+  for (const apartment of apartments) {
+    const number = formatCardApartmentNumber(apartment.apartmentNumber);
+    const [, wing, unit] = number.match(/^([A-Z])\s*(\d+)$/i) ?? [];
+    if (!wing || !apartment.floor) continue;
+    const id = `${wing.toUpperCase()}_${apartment.floor.toLowerCase()}_${unit}`;
+    if (!recordsByPolygon.has(id)) recordsByPolygon.set(id, apartment);
+  }
+
+  document.querySelectorAll(".houses-plan .enabled").forEach((polygon) => {
+    const apartment = recordsByPolygon.get(polygon.id);
+    if (apartment) {
+      polygon.addEventListener("click", () => openCatalogRecord(apartment));
+    } else {
+      polygon.classList.remove("enabled");
+      polygon.classList.add("disabled");
+    }
   });
-  const combined = availableFloorName.map((name, index) => {
-    const floor = availableFloors[index];
-    return `${splitNames[index].letter.toUpperCase()}_${floor.toLowerCase()}_${splitNames[index].number}`;
-  });
-  setEventCurrentPolygon(combined, data);
 };
 
 const currentHouses = document.querySelectorAll(".current_home");
@@ -552,47 +543,6 @@ currentHouses.forEach((currentHouse) => {
     openModal(popupCurrentHouse);
   });
 });
-
-function setEventCurrentPolygon(combined, data) {
-  const polygons = document.querySelectorAll(".enabled");
-  polygons.forEach((item) => {
-    if (!combined.includes(item.id)) {
-      item.classList.remove("enabled");
-      item.classList.add("disabled");
-    }
-    item.addEventListener("click", (evt) => {
-      const currentPolygon = evt.target;
-      const polygonId = currentPolygon.id;
-      const matched = combined.find((entry) => entry.includes(polygonId));
-      console.log(matched, combined);
-      if (matched) {
-        const letter = matched[0];
-        const number = matched.split("_")[2];
-        const searchKey = letter + number;
-        console.log(searchKey);
-        const matchedData = data.find((item) =>
-          item.apartmentNumber.toLowerCase().includes(searchKey.toLowerCase()),
-        );
-        document.querySelector(
-          ".popup_type_house .js-apartment-wing",
-        ).textContent = matchedData.buldingWing;
-        document.querySelector(
-          ".popup_type_house .js-apartment-floor",
-        ).textContent = matchedData.floor;
-        document.querySelector(
-          ".popup_type_house .js-apartment-area",
-        ).textContent = formatModalArea(matchedData);
-        document.querySelector(
-          ".popup_type_house .js-apartment-number",
-        ).textContent = formatModalApartmentNumber(matchedData.apartmentNumber);
-        document.querySelector(".popup_type_house .apartment__img").src =
-          matchedData.planImg;
-      }
-
-      openModal(popupCurrentHouse);
-    });
-  });
-}
 
 async function handleFilteredHousePlans(selectedFloor) {
   if (house === "vivaldi" && !vivaldiFloorPlansInitialized) return;
@@ -785,59 +735,122 @@ const filtersReady = whenDocumentReady(() => {
   applyURLParams();
 });
 
+const recordUnit = (record) => formatCardApartmentNumber(record.unit ?? record.apartmentNumber)
+  .replace(/\s+/g, "").toUpperCase();
+let modalRecord;
+let modalRequest = 0;
+let modalReady = false;
+
+const recordDialog = (record) => record.propertyType === "apartments"
+  ? popupCurrentHouse : document.querySelector(`.popup_type_property_${record.propertyType}`);
+
+function removeUnitFromUrl() {
+  const url = new URL(location.href);
+  if (!url.searchParams.has("unit")) return;
+  url.searchParams.delete("unit");
+  history.replaceState(null, "", url);
+}
+
+function closeCatalogRecord() {
+  if (!modalRecord) return;
+  const dialog = recordDialog(modalRecord);
+  modalRecord = undefined;
+  ++modalRequest;
+  const priceForm = document.querySelector(".popup_type_form_quarter.popup_is-opened");
+  if (priceForm) closeModal(priceForm);
+  closeModal(dialog);
+}
+
+async function openCatalogRecord(record, fromUrl = false) {
+  if (modalRecord !== record) closeCatalogRecord();
+  modalRecord = record;
+  const request = ++modalRequest;
+  activeCardId = String(record.id);
+  for (const card of apartmentCards.children) {
+    card.classList.toggle("active", card.dataset.key === activeCardId);
+  }
+
+  let opened;
+  if (record.propertyType === "apartments") {
+    const wing = record.buldingWing.replace("Lamela", "").trim();
+    const image = document.querySelector(".apartment-card__content .apartment__img");
+    if (image) {
+      apartmentFancyBox.href = record.planImg;
+      image.src = record.planImg;
+    }
+    document.querySelector(".js-apartment-wing").textContent = wing;
+    document.querySelector(".js-apartment-floor").textContent = record.floor ?? "";
+    document.querySelector(".js-apartment-area").textContent = formatArea(record);
+    document.querySelector(".js-apartment-number").textContent = record.apartmentNumber;
+    popupCurrentHouse.querySelector(".js-apartment-wing").textContent = wing;
+    popupCurrentHouse.querySelector(".js-apartment-floor").textContent = record.floor ?? "";
+    popupCurrentHouse.querySelector(".js-apartment-area").textContent = formatModalArea(record);
+    popupCurrentHouse.querySelector(".js-apartment-number").textContent = formatModalApartmentNumber(record.apartmentNumber);
+    popupCurrentHouse.querySelector(".apartment__img").src = record.planImg;
+    opened = await openModal(popupCurrentHouse);
+  } else {
+    opened = await openPropertyDetails(record, catalog.name);
+  }
+  if (request !== modalRequest) return;
+  if (!opened) {
+    modalRecord = undefined;
+    if (fromUrl) removeUnitFromUrl();
+    return;
+  }
+
+  const url = new URL(location.href);
+  if (!fromUrl) {
+    url.searchParams.set("house", house);
+    if (record.propertyType === "apartments") url.searchParams.delete("property");
+    else url.searchParams.set("property", record.propertyType);
+  }
+  url.searchParams.set("unit", recordUnit(record));
+  if (url.href === location.href) return;
+  if (fromUrl) history.replaceState(history.state, "", url);
+  else history.pushState({ catalogModal: true }, "", url);
+}
+
+function restoreCatalogRecord() {
+  if (!modalReady) return;
+  const params = new URLSearchParams(location.search);
+  const unit = params.get("unit")?.trim().replace(/\s+/g, "").toUpperCase();
+  const type = params.get("property") || "apartments";
+  const record = unit && data.find((item) => item.propertyType === type && recordUnit(item) === unit);
+  if (!record) {
+    closeCatalogRecord();
+    removeUnitFromUrl();
+    return;
+  }
+  if (record !== modalRecord) void openCatalogRecord(record, true);
+}
+
+export function initializeCatalogModalUrl() {
+  modalReady = true;
+  window.addEventListener("popstate", restoreCatalogRecord);
+  document.addEventListener("modal:close", (event) => {
+    if (!modalRecord || event.target !== recordDialog(modalRecord)) return;
+    modalRecord = undefined;
+    ++modalRequest;
+    if (history.state?.catalogModal) history.back();
+    else removeUnitFromUrl();
+  });
+  restoreCatalogRecord();
+}
+
 const cardEventsReady = whenDocumentReady(() => {
-  const openApartment = (item) => {
-      const apartmentCardsList = document.querySelectorAll(".apartment__item");
-      apartmentCardsList.forEach((item) => {
-        item.classList.remove("active");
-      });
-      item.classList.add("active");
-      const apartmentId = item.getAttribute("data-key");
-      activeCardId = apartmentId;
-      let currentItem = data.find((apartment) => apartment.id == apartmentId);
-      if (currentItem) {
-        if (currentItem.propertyType !== "apartments") {
-          openPropertyDetails(currentItem, catalog.name);
-          return;
-        }
-        // Обновляем данные в секции с информацией
-        const imgElement = document.querySelector(
-          ".apartment-card__content .apartment__img",
-        );
-        let apartmentFancyBox = document.querySelector(".apartment__fancybox");
-        if (imgElement) {
-          apartmentFancyBox.setAttribute("href", currentItem.planImg);
-          imgElement.src = currentItem.planImg;
-        }
-        document.querySelector(".js-apartment-wing").textContent =
-          currentItem.buldingWing.replace("Lamela", "").trim();
-        document.querySelector(".js-apartment-floor").textContent =
-          currentItem.floor ?? "";
-        document.querySelector(".js-apartment-area").textContent = formatArea(currentItem);
-        document.querySelector(".js-apartment-number").textContent =
-          currentItem.apartmentNumber;
-        document.querySelector(".popup_type_house .js-apartment-wing").textContent =
-          currentItem.buldingWing.replace("Lamela", "").trim();
-        document.querySelector(".popup_type_house .js-apartment-floor").textContent =
-          currentItem.floor ?? "";
-        document.querySelector(".popup_type_house .js-apartment-area").textContent =
-          formatModalArea(currentItem);
-        document.querySelector(".popup_type_house .js-apartment-number").textContent =
-          formatModalApartmentNumber(currentItem.apartmentNumber);
-        document.querySelector(".popup_type_house .apartment__img").src =
-          currentItem.planImg;
-        openModal(popupCurrentHouse);
-      }
+  const openCard = (item) => {
+    const record = propertyData().find((entry) => String(entry.id) === item.dataset.key);
+    if (record) void openCatalogRecord(record);
   };
   apartmentCards.addEventListener("click", (event) => {
     const item = event.target.closest(".apartment__item");
-    if (item) openApartment(item);
+    if (item) openCard(item);
   });
   apartmentCards.addEventListener("keydown", (event) => {
     const item = event.target.closest(".apartment__item");
     if (item && (event.key === "Enter" || event.key === " ")) {
       event.preventDefault();
-      openApartment(item);
+      openCard(item);
     }
   });
 });
@@ -857,9 +870,11 @@ document.querySelector("[data-reset-filters]")?.addEventListener("click", () => 
   if (slider) slider.update({ from: areaBounds.min, to: areaBounds.max });
   document.querySelector("#example_2_input_from").value = areaBounds.min;
   document.querySelector("#example_2_input_to").value = areaBounds.max;
-  const params = new URLSearchParams({ house });
-  if (document.body.dataset.catalogView === "plan") params.set("view", "plan");
-  window.history.replaceState({}, "", `${window.location.pathname}?${params}`);
+  const url = new URL(location.href);
+  for (const key of ["property", "type", "floor", "kvadrati-od", "stanovi-do", "unit"]) url.searchParams.delete(key);
+  url.searchParams.set("house", house);
+  if (document.body.dataset.catalogView === "plan") url.searchParams.set("view", "plan");
+  history.replaceState(null, "", url);
 });
 
 if (window.innerWidth <= 767) {
@@ -877,6 +892,7 @@ if (window.innerWidth <= 767) {
 export const catalogReady = Promise.all([viewControlsReady, viewButtonReady, filtersReady, cardEventsReady])
   .then(async () => {
     if (document.body.dataset.catalogView === "plan") await activeFloorPlan;
+    catalogInitialized = true;
   });
 
 export function refreshCatalogLayout() {
