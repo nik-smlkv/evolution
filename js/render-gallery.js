@@ -14,6 +14,9 @@ for (const gallery of document.querySelectorAll("[data-render-gallery]")) {
   const frames = [firstFrame];
   const pending = new Map();
   const frameCount = sources.length + 1;
+  const lastIndex = frameCount - 1;
+  const wheelPause = 170;
+  const swipeDistance = 36;
   const header = document.querySelector("header");
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   const compact = window.matchMedia("(max-width: 767px), (pointer: coarse)");
@@ -21,6 +24,8 @@ for (const gallery of document.querySelectorAll("[data-render-gallery]")) {
   let transition;
   let requestedIndex = 0;
   let scheduledFrame = 0;
+  let lastCapturedWheel = -Infinity;
+  let swipe;
 
   function loadFrame(index) {
     if (frames[index]) return Promise.resolve(frames[index]);
@@ -67,19 +72,24 @@ for (const gallery of document.querySelectorAll("[data-render-gallery]")) {
 
   function updateSteps() {
     previous?.setAttribute("aria-disabled", String(requestedIndex === 0));
-    next?.setAttribute("aria-disabled", String(requestedIndex === frameCount - 1));
+    next?.setAttribute("aria-disabled", String(requestedIndex === lastIndex));
+  }
+
+  function scrollPosition() {
+    const { top, bottom, height } = gallery.getBoundingClientRect();
+    const travel = height - stage.getBoundingClientRect().height;
+    const progress = travel > 0 ? Math.max(0, Math.min(1, -top / travel)) : 0;
+    return { top, bottom, travel, progress, index: Math.round(progress * lastIndex) };
+  }
+
+  function isPinned({ top, travel }) {
+    return travel > 0 && top <= 2 && top + travel >= -2;
   }
 
   function update() {
     scheduledFrame = 0;
-    const { top, bottom, height } = gallery.getBoundingClientRect();
-    if (bottom <= 0 || top >= window.innerHeight) return;
-
-    const travel = height - stage.getBoundingClientRect().height;
-    if (travel <= 0) return;
-    const progress = Math.max(0, Math.min(1, -top / travel));
-    const position = progress * frameCount;
-    const index = Math.min(frameCount - 1, Math.round(position));
+    const { top, bottom, travel, progress, index } = scrollPosition();
+    if (bottom <= 0 || top >= window.innerHeight || travel <= 0) return;
     gallery.style.setProperty("--render-progress", progress);
 
     if (index !== requestedIndex) {
@@ -93,7 +103,7 @@ for (const gallery of document.querySelectorAll("[data-render-gallery]")) {
     }
 
     if (index > 0 && !frames[index - 1]) loadFrame(index - 1);
-    if (index < frameCount - 1 && !frames[index + 1]) loadFrame(index + 1);
+    if (index < lastIndex && !frames[index + 1]) loadFrame(index + 1);
   }
 
   function scheduleUpdate() {
@@ -105,13 +115,9 @@ for (const gallery of document.querySelectorAll("[data-render-gallery]")) {
     scheduleUpdate();
   }
 
-  function step(direction) {
-    const target = requestedIndex + direction;
-    if (target < 0 || target >= frameCount) return;
-
-    const { top, height } = gallery.getBoundingClientRect();
-    const travel = height - stage.getBoundingClientRect().height;
-    const scrollTop = window.scrollY + top + target * travel / frameCount;
+  function goToFrame(index, { top, travel } = scrollPosition()) {
+    if (index < 0 || index > lastIndex) return;
+    const scrollTop = window.scrollY + top + index * travel / lastIndex;
     if (typeof lenis !== "undefined") {
       lenis.resize();
       lenis.scrollTo(scrollTop, { immediate: true });
@@ -121,8 +127,83 @@ for (const gallery of document.querySelectorAll("[data-render-gallery]")) {
     scheduleUpdate();
   }
 
-  previous?.addEventListener("click", () => step(-1));
-  next?.addEventListener("click", () => step(1));
+  function stepOnWheel(event) {
+    if (event.defaultPrevented || !event.cancelable || event.ctrlKey || event.metaKey || event.shiftKey ||
+        Math.abs(event.deltaY) <= Math.abs(event.deltaX) ||
+        event.target.closest?.("[data-lenis-prevent], [data-lenis-prevent-wheel], [aria-modal='true']") ||
+        document.querySelector(".popup_is-opened, body.header-menu-open")) return;
+    if (typeof lenis !== "undefined" && (lenis.isStopped || lenis.isLocked)) return;
+
+    const position = scrollPosition();
+    if (position.top >= window.innerHeight || position.bottom <= 0 || position.travel <= 0) return;
+    const now = performance.now();
+    const consume = () => {
+      event.preventDefault();
+      event.stopPropagation();
+      lastCapturedWheel = now;
+    };
+
+    // A trackpad sends a stream of wheel events, including its momentum tail.
+    // Let a fresh gesture leave at either end, but keep the current burst on its frame.
+    if (now - lastCapturedWheel < wheelPause) {
+      consume();
+      return;
+    }
+
+    const direction = Math.sign(event.deltaY);
+    let target = position.index + direction;
+    if (!isPinned(position)) {
+      const delta = event.deltaY * (event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? window.innerHeight : 1);
+      const distanceToEnd = position.top + position.travel;
+      if (direction > 0 && position.top > 0 && delta >= position.top) target = 0;
+      else if (direction < 0 && distanceToEnd < 0 && delta <= distanceToEnd) target = lastIndex;
+      else return;
+    }
+    if (target < 0 || target > lastIndex) return;
+
+    consume();
+    goToFrame(target, position);
+  }
+
+  stage.addEventListener("touchstart", (event) => {
+    swipe = undefined;
+    if (event.touches.length !== 1 || event.target.closest?.("button") || !isPinned(scrollPosition())) return;
+    const touch = event.touches[0];
+    swipe = { x: touch.clientX, y: touch.clientY, direction: 0, committed: false };
+  }, { passive: true });
+
+  stage.addEventListener("touchmove", (event) => {
+    if (!swipe || event.touches.length !== 1 || !event.cancelable) {
+      swipe = undefined;
+      return;
+    }
+    const touch = event.touches[0];
+    const x = touch.clientX - swipe.x;
+    const y = swipe.y - touch.clientY;
+    if (!swipe.direction) {
+      if (Math.max(Math.abs(x), Math.abs(y)) < 5) return;
+      const direction = Math.sign(y);
+      const { index } = scrollPosition();
+      if (Math.abs(y) <= Math.abs(x) || index + direction < 0 || index + direction > lastIndex) {
+        swipe = undefined;
+        return;
+      }
+      swipe.direction = direction;
+    }
+    event.preventDefault();
+    if (!swipe.committed && y * swipe.direction >= swipeDistance) {
+      swipe.committed = true;
+      goToFrame(scrollPosition().index + swipe.direction);
+    }
+  }, { passive: false });
+
+  const endSwipe = () => { swipe = undefined; };
+  stage.addEventListener("touchend", endSwipe, { passive: true });
+  stage.addEventListener("touchcancel", endSwipe, { passive: true });
+  window.addEventListener("wheel", stepOnWheel, { capture: true, passive: false });
+
+  previous?.addEventListener("click", () => goToFrame(requestedIndex - 1));
+  next?.addEventListener("click", () => goToFrame(requestedIndex + 1));
   skip.addEventListener("click", () => {
     if (!form.hasAttribute("tabindex")) form.tabIndex = -1;
     form.focus({ preventScroll: true });
