@@ -60,7 +60,7 @@
     align-items: flex-start;
     flex-direction: row;
     justify-content: flex-start;
-    /* Leave one pixel below the fold so the video's observer stays inactive at the boundary. */
+    /* Keep the hero at least as tall as the viewport below the header. */
     min-height: max(min(40.78125vw, 783px), calc(100vh - 89px));
     height: auto;
     margin-top: 0;
@@ -110,7 +110,7 @@
 
 @media (width < 1920px) {
   .main-block .section__body-main.block-height {
-    /* The photo fills the viewport below the header. Keep the next video offscreen. */
+    /* The photo fills the viewport below the header. */
     --hero-header-height: 90px;
     min-height: calc(100dvh - var(--hero-header-height) + 1px);
     max-height: none;

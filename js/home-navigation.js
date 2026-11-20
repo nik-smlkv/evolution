@@ -65,6 +65,7 @@ export function initializeHomeNavigation({ root, closeMenu, scrollTo }) {
   const bindings = [
     ...Array.from(document.querySelectorAll(".menu__item_link[data-target]"), (link) => [link, link.dataset.target]),
     [document.querySelector(".header__logo"), "main"],
+    [document.querySelector(".about-button"), "about-project"],
     [document.querySelector(".js-scroll-form"), "form"],
   ].filter(([link, section]) => link && (section === "main" || sectionRoutes.has(section)));
 

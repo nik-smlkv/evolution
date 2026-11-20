@@ -71,32 +71,8 @@
 	padding: 56px 0px;
 }
 
-.block-video {
-	height: 100vh;
-	position: relative;
-}
-
 .footer-address__block img {
 	max-width: 62%;
-}
-
-.video__wrapper {
-
-	width: 25vw;
-	height: 25vh;
-	margin: 0 auto;
-	overflow: hidden;
-	position: relative;
-	z-index: 1;
-	transition: transform 0.3s ease;
-
-}
-
-
-.block-video video {
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
 }
 
 .popup_type_house .popup__content {
@@ -175,13 +151,6 @@
 
 .td-underline {
 	margin-left: 5px;
-}
-
-.video {
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
-	object-position: center
 }
 
 .footer__body,
@@ -2364,11 +2333,6 @@ span.irs.irs--round.js-irs-0 {
 		padding: 20px 0px;
 	}
 
-	.scroll-to-video {
-		visibility: visible
-	}
-
-
 	.slider-navigation__block {
 		left: unset;
 		right: 0
@@ -2584,16 +2548,6 @@ span.irs.irs--round.js-irs-0 {
 	.section__body-main.block-height {
 		height: 100%;
 
-	}
-
-	.scroll-to-video {
-		height: 100%;
-
-	}
-
-	.scroll-to-video .video {
-		height: 100%;
-		min-height: 500px;
 	}
 
 	.block-image img {
@@ -2820,11 +2774,6 @@ section {
 	.header-block .header__logo {
 		display: block;
 
-	}
-
-	.video__wrapper {
-		width: 100%;
-		height: 100%;
 	}
 
 	.card-cash .card-text-content,

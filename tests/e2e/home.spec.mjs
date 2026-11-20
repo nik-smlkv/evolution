@@ -337,7 +337,11 @@ test("the gallery covers the pinned Materials slide below the financing cards", 
   })).toEqual({ pinned: true, seamOverSlide: true, gap: 0, belowSeam: true, paddingTop: "180px", paddingBottom: "180px" });
 });
 
-test("the hero loads responsive images and reveals the deferred video on scroll", async ({ page, isMobile }) => {
+test("the hero loads responsive images and leads directly to About without video", async ({ page }) => {
+  const videoRequests = [];
+  page.on("request", (request) => {
+    if (request.resourceType() === "media" || /evolution-video\.mp4/.test(request.url())) videoRequests.push(request.url());
+  });
   await page.goto("/");
   const compactHero = await page.evaluate(() => matchMedia("(max-width: 767.99px)").matches);
   const pictureFiles = compactHero
@@ -349,16 +353,12 @@ test("the hero loads responsive images and reveals the deferred video on scroll"
       .toMatch(pictureFiles[i]);
   }
 
-  const video = page.locator("video[data-deferred-video]");
-  const source = video.locator("source");
-  if (!isMobile) {
-    await expect(video).not.toBeInViewport();
-    await expect(source).toHaveAttribute("data-src", /\/videos\/evolution-video\.mp4$/);
-  }
-  await video.scrollIntoViewIfNeeded();
-  await expect(video).toBeInViewport();
-  await expect(source).toHaveAttribute("src", /\/videos\/evolution-video\.mp4$/);
-  await expect(video).toHaveAttribute("preload", "metadata");
+  await expect(page.locator("video, .block-video, .scroll-to-video")).toHaveCount(0);
+  expect(await page.locator(".main-block").evaluate((hero) => hero.nextElementSibling.id)).toBe("about-project");
+  await page.locator(".about-button").click();
+  await expectRoute(page, "/about-project/");
+  await expect(page.locator("#about-project")).toBeInViewport();
+  expect(videoRequests).toEqual([]);
 });
 
 test("the full Evolution word fits the hero across breakpoints", async ({ page }, testInfo) => {
