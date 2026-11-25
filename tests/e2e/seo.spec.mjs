@@ -7,14 +7,14 @@ const buildings = [
   { name: "Vivaldi", slug: "vivaldi" },
 ];
 const housePath = (slug) => `search-by-parameters/${slug}/`;
-const publishedPaths = ["", catalog, ...buildings.map(({ slug }) => housePath(slug))];
+const publishedPaths = ["", catalog];
 const locales = [
   { lang: "sr", prefix: "" },
   { lang: "en", prefix: "en/" },
 ];
 const siteURL = (root, path) => new URL(path, root.endsWith("/") ? root : `${root}/`).href;
 
-test("robots and sitemap point to the eight crawlable pages served by the build", async ({ baseURL, page, request }) => {
+test("robots and sitemap point to the four crawlable pages served by the build", async ({ baseURL, page, request }) => {
   const routes = locales.flatMap(({ lang, prefix }) => publishedPaths.map((path) => ({
     lang,
     path,
@@ -64,6 +64,7 @@ test("robots and sitemap point to the eight crawlable pages served by the build"
       robots: attributes('head meta[name="robots"]', "content"),
       refresh: attributes('head meta[http-equiv="refresh" i]', "content"),
       headings: Array.from(document.querySelectorAll("main h1"), (element) => element.textContent.trim()),
+      houseOfferCount: document.querySelectorAll('[data-key="home_house_offer"]').length,
       houseLinks: path === "" ? attributes("main a[href]", "href").map((href) => new URL(href, base).href) : [],
     };
   }), htmlPages);
@@ -84,64 +85,55 @@ test("robots and sitemap point to the eight crawlable pages served by the build"
     expect(actual.headings, route.url).toEqual([expect.stringMatching(/\S/)]);
     if (route.path === "") {
       expect(actual.title, route.url).toEqual(["Evolution Residence – Vaš San je Naša Obaveza"]);
-      const prefix = route.lang === "en" ? "en/" : "";
-      expect(actual.houseLinks, route.url).toEqual(expect.arrayContaining(
-        buildings.map(({ slug }) => siteURL(baseURL, prefix + housePath(slug))),
-      ));
+      expect(actual.houseOfferCount, route.url).toBe(0);
+      for (const { prefix } of locales) {
+        for (const { slug } of buildings) {
+          expect(actual.houseLinks, route.url).not.toContain(siteURL(baseURL, prefix + housePath(slug)));
+        }
+      }
     }
     titles.add(actual.title[0]);
   }
   expect(titles.size).toBe(routes.length - 1);
 });
 
-test.describe("house pages without JavaScript", () => {
+test.describe("legacy house links without JavaScript", () => {
   test.use({ javaScriptEnabled: false });
 
   for (const { name, slug } of buildings) {
-    test(`${name} has a readable landing page, image and locale links`, async ({ baseURL, page }) => {
-      const path = housePath(slug);
-      const response = await page.goto(siteURL(baseURL, path));
-      expect(response.status()).toBe(200);
-      await expect(page).toHaveURL(siteURL(baseURL, path));
-
-      for (const { lang, prefix } of locales) {
+    for (const { lang, prefix } of locales) {
+      test(`${name} redirects directly to the ${lang} catalog`, async ({ baseURL, page }) => {
+        await page.goto(siteURL(baseURL, prefix + housePath(slug)));
+        await expect(page).toHaveURL(siteURL(baseURL, `${prefix}${catalog}?house=${slug}`));
         await expect(page.locator("html")).toHaveAttribute("lang", lang);
-        await expect(page.getByRole("heading", { name, level: 1 })).toBeVisible();
-        await expect(page.locator("main figure img")).toBeVisible();
-        await expect.poll(() => page.locator("main figure img").evaluate((image) => image.naturalWidth)).toBeGreaterThan(0);
-        await expect.poll(() => page.locator('link[rel="stylesheet"]').evaluateAll(
-          (stylesheets) => stylesheets.length > 0 && stylesheets.every((link) => link.sheet),
-        )).toBe(true);
-
-        const catalogURL = siteURL(baseURL, `${prefix}${catalog}?house=${slug}`);
-        const links = await page.getByRole("main").getByRole("link").evaluateAll((anchors) => anchors.map(({ href }) => href));
-        expect(links).toEqual(expect.arrayContaining([catalogURL, `${catalogURL}&view=plan`]));
-        const otherSlug = buildings.find((building) => building.slug !== slug).slug;
-        const footerLinks = await page.locator("footer a").evaluateAll((anchors) => anchors.map(({ href }) => href));
-        expect(footerLinks).toContain(siteURL(baseURL, prefix + housePath(otherSlug)));
-
-        const otherLocale = lang === "sr" ? { prefix: "en/", name: "English" } : { prefix: "", name: "Srpski" };
-        await page.getByRole("link", { name: otherLocale.name, exact: true }).click();
-        await expect(page).toHaveURL(siteURL(baseURL, otherLocale.prefix + path));
-      }
-    });
+        await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", siteURL(production, prefix + catalog));
+        await expect(page.locator("#apartments")).toBeVisible();
+        await expect(page.locator("main figure")).toHaveCount(0);
+      });
+    }
   }
 
-  test("a project-folder preview preserves locale links and assets", async ({ baseURL, page }) => {
+  test("a project-folder legacy link redirects to its localized catalog", async ({ baseURL, page }) => {
     const preview = siteURL(baseURL, "preview/");
-    const path = housePath("vivaldi");
-    await page.goto(siteURL(preview, `en/${path}`));
-    await expect(page.getByRole("heading", { name: "Vivaldi", level: 1 })).toBeVisible();
-    const image = page.locator("main figure img");
-    await expect.poll(() => image.evaluate((element) => element.naturalWidth)).toBeGreaterThan(0);
-    expect(await image.evaluate((element) => element.currentSrc)).toContain(siteURL(preview, "assets/images/"));
-
-    await page.getByRole("link", { name: "Srpski", exact: true }).click();
-    await expect(page).toHaveURL(siteURL(preview, path));
-    await page.getByRole("link", { name: "Pogledajte stanove", exact: true }).click();
-    await expect(page).toHaveURL(siteURL(preview, `${catalog}?house=vivaldi`));
-    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", siteURL(production, catalog));
+    await page.goto(siteURL(preview, `en/${housePath("vivaldi")}`));
+    await expect(page).toHaveURL(siteURL(preview, `en/${catalog}?house=vivaldi`));
+    await expect(page.locator("html")).toHaveAttribute("lang", "en");
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", siteURL(production, `en/${catalog}`));
+    await expect(page.locator("#apartments")).toBeVisible();
   });
+});
+
+test("legacy house redirects preserve query and hash while selecting the house from the path", async ({ baseURL, page }) => {
+  const preview = siteURL(baseURL, "preview/");
+  await page.goto(siteURL(preview, `en/${housePath("tchaikovsky")}?house=vivaldi&view=plan&utm_source=legacy#form`));
+  await expect(page).toHaveURL((url) => url.pathname === "/preview/en/search-by-parameters.html"
+    && url.searchParams.get("house") === "tchaikovsky"
+    && url.searchParams.get("view") === "plan"
+    && url.searchParams.get("utm_source") === "legacy"
+    && url.hash === "#form");
+  await expect(page.locator(".catalog-plan-button")).toBeEnabled();
+  await expect(page.locator("body")).toHaveAttribute("data-catalog-house", "tchaikovsky");
+  await expect(page.locator("body")).toHaveAttribute("data-catalog-view", "plan");
 });
 
 test("catalog filters keep their locale canonical and survive language navigation", async ({ baseURL, page }) => {

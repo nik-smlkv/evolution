@@ -146,6 +146,8 @@ class RuntimeGraph:
         entries.extend(slug + "/index.html" for slug in routes)
         if (self.root / LOCALE_CONFIG).is_file():
             entries.extend(f"en/{slug}/index.html" for slug in routes)
+            # Retired house URLs remain as redirects even without incoming links.
+            entries.extend(f"en/{entry}" for entry in ENTRY_POINTS if entry.startswith("search-by-parameters/"))
         for name in OPTIONAL_ROOT_FILES:
             path = self.root / name
             if path.exists() or path.is_symlink():
