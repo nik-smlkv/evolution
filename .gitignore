@@ -1,5 +1,6 @@
 /archive/
 /assets/sources/
+/config/lead-settings.local.js
 /dist/
 /dist.zip
 /node_modules/

@@ -5,28 +5,49 @@ const contact = {
   phone: "381601234567",
   mail: "visitor@example.test",
 };
-const contactPayload = { name: contact.name, phone: contact.phone, email: contact.mail };
+const bitrixEndpoint = "https://crm.example.test/rest/test/crm.lead.add.json";
+const contactFields = {
+  TITLE: "Complete CRM form 'Prijava za konsultacije sa sajta (evolutionresidence.rs)'",
+  NAME: contact.name,
+  PHONE: [{ VALUE: contact.phone, VALUE_TYPE: "WORK" }],
+  EMAIL: [{ VALUE: contact.mail, VALUE_TYPE: "WORK" }],
+};
+const houseNames = { tchaikovsky: "Tchaikovsky", vivaldi: "Vivaldi" };
+const bitrixSubmission = (comments) => ({
+  fields: { ...contactFields, COMMENTS: comments },
+  params: { REGISTER_SONET_EVENT: "Y" },
+});
 const sent = "Vaš upit je uspešno poslat.";
 
-async function mockLead(page, baseURL, { statuses = [200], pauseFirst = false } = {}) {
+async function mockLead(page, baseURL, { statuses = [200], results = [], pauseFirst = false } = {}) {
   const mock = { submissions: [] };
   const origin = new URL(baseURL).origin;
   let releaseFirst;
   const firstResponse = pauseFirst ? new Promise((resolve) => { releaseFirst = resolve; }) : null;
-  await page.route((url) => url.origin === origin && url.pathname === "/lead.php", async (route) => {
+  await page.route((url) => url.origin === origin && url.pathname.endsWith("/js/lead-settings.js"), (route) => route.fulfill({
+    contentType: "application/javascript",
+    body: `export const directLeadWebhookUrl = ${JSON.stringify(bitrixEndpoint)};`,
+  }));
+  await page.route(bitrixEndpoint, async (route) => {
     const request = route.request();
+    const headers = {
+      "access-control-allow-origin": origin,
+      "access-control-allow-methods": "POST, OPTIONS",
+      "access-control-allow-headers": "content-type, accept",
+    };
+    if (request.method() === "OPTIONS") return route.fulfill({ status: 204, headers });
     if (request.method() !== "POST") return route.abort("blockedbyclient");
 
     const index = mock.submissions.length;
     const status = statuses[index] ?? statuses.at(-1);
     mock.submissions.push(request.postDataJSON());
     if (index === 0) await firstResponse;
-    const json = {
-      200: { ok: true },
-      429: { error: "rate_limited" },
-      502: { error: "upstream" },
+    const json = results[index] ?? {
+      200: { result: 12345 },
+      429: { error: "QUERY_LIMIT_EXCEEDED" },
+      502: { error: "INTERNAL_SERVER_ERROR" },
     }[status];
-    const headers = status === 429 ? { "retry-after": "30" } : undefined;
+    if (status === 429) headers["retry-after"] = "30";
     return route.fulfill({ status, json, headers });
   });
   return { mock, releaseFirst };
@@ -93,12 +114,9 @@ for (const house of [null, "tchaikovsky", "vivaldi"]) {
     await fillContact(form);
     await submitButton(form).click();
     await expect(formStatus(form)).toHaveText(sent);
-    expect(mock.submissions).toEqual([{
-      ...contactPayload,
-      kind: "callback",
-      house,
-      property: null,
-    }]);
+    expect(mock.submissions).toEqual([
+      bitrixSubmission(`Objekat: ${houseNames[house] ?? "Nije izabran"}`),
+    ]);
     await expect(form.locator('input[name="name"]')).toHaveValue("");
   });
 }
@@ -139,13 +157,20 @@ for (const [house, property, dialogSelector, requestSelector] of [
     await fillContact(form);
     await submitButton(form).click();
     await expect(formStatus(form)).toHaveText(sent);
-    expect(mock.submissions).toEqual([{
-      ...contactPayload,
-      kind: "price",
-      house,
-      property: { type: property, unit: expect.any(String), ...expectedDetails },
-    }]);
-    expect(mock.submissions[0].property.unit.replace(/\s+/g, "")).toBe(unit.replace(/\s+/g, ""));
+    expect(mock.submissions).toEqual([bitrixSubmission(expect.any(String))]);
+    const comments = mock.submissions[0].fields.COMMENTS;
+    expect(comments).toContain(`Objekat: ${houseNames[house]}`);
+    if (expectedDetails.wing) expect(comments.replace(/\s+/g, "")).toContain(`Krilozgrade:${expectedDetails.wing.replace(/\s+/g, "")}`);
+    if (expectedDetails.floor) expect(comments.replace(/\s+/g, "")).toContain(`Sprat:${expectedDetails.floor.replace(/\s+/g, "")}`);
+    if (property === "apartments") {
+      expect(comments).toMatch(/^Saznati cenu stana '/);
+      expect(comments).toContain(`Površina:${expectedDetails.area}`);
+      expect(comments).toContain(`Tlocrt stana na sajtu https://evolutionresidence.rs${expectedDetails.planUrl}`);
+      expect(comments.replace(/\s+/g, "")).toContain(`Brojstana:${unit.replace(/\s+/g, "")}`);
+    } else {
+      expect(comments).toMatch(property === "parking" ? /^Saznati cenu parking mesta '/ : /^Saznati cenu poslovnog prostora '/);
+      expect(comments.replace(/\s+/g, "")).toContain(`Broj:${unit.replace(/\s+/g, "")}`);
+    }
     await expect(form.locator('input[name="name"]')).toHaveValue("");
   });
 }
@@ -194,4 +219,24 @@ test("a rate-limited callback preserves contact details for a later retry", asyn
   expect(mock.submissions).toHaveLength(2);
   expect(mock.submissions[1]).toEqual(mock.submissions[0]);
   await expect(form.locator('input[name="name"]')).toHaveValue("");
+});
+
+test("a Bitrix success requires a positive lead ID and no API error", async ({ page, baseURL }) => {
+  const results = [{ result: 0 }, { result: "invalid" }, { result: 12345, error: "ACCESS_DENIED" }, { result: "12345" }];
+  const { mock } = await mockLead(page, baseURL, { results });
+  await page.goto("/en/request-callback/");
+  const form = callbackForm(page);
+  await fillContact(form);
+  for (let index = 0; index < results.length; index += 1) {
+    await submitButton(form).click();
+    if (index < results.length - 1) {
+      await expect(formStatus(form)).toHaveText("Your request could not be sent. Please try again.");
+      await expect(form.locator('input[name="name"]')).toHaveValue(contact.name);
+      await expect(submitButton(form)).toBeEnabled();
+    } else {
+      await expect(formStatus(form)).toHaveText("Your request has been sent.");
+      await expect(form.locator('input[name="name"]')).toHaveValue("");
+    }
+    expect(mock.submissions).toHaveLength(index + 1);
+  }
 });

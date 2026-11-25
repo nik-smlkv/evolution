@@ -1,9 +1,8 @@
 import { getSelectedHouse, resolveHouse } from "./house-context.js?v=1.0.1";
 import { initializeLeadValidation } from "./validation.js?v=1.0.7";
-import { directLeadWebhookUrl } from "./lead-settings.js?v=1.0.0";
+import { directLeadWebhookUrl } from "./lead-settings.js?v=1.0.1";
 
 const siteRoot = new URL("../", import.meta.url);
-const phpEndpoint = new URL("../lead.php", import.meta.url);
 const language = document.documentElement.lang === "en" ? "en" : "sr";
 const serverErrors = new Set(["invalid", "rate_limited", "upstream", "unavailable"]);
 const copy = {
@@ -103,22 +102,18 @@ function bitrixPayload({ name, phone, email, house, property }) {
 }
 
 async function sendLead(payload) {
-  const response = await fetch(directLeadWebhookUrl || phpEndpoint, {
+  if (!directLeadWebhookUrl) throw new Error("unavailable");
+  const response = await fetch(directLeadWebhookUrl, {
     method: "POST",
     headers: { Accept: "application/json", "Content-Type": "application/json" },
-    body: JSON.stringify(directLeadWebhookUrl ? bitrixPayload(payload) : payload),
+    body: JSON.stringify(bitrixPayload(payload)),
     redirect: "error",
     signal: AbortSignal.timeout(25_000),
   });
   const result = await response.json().catch(() => null);
-  if (directLeadWebhookUrl) {
-    const id = result?.result;
-    const positiveId = (Number.isSafeInteger(id) && id > 0) || (typeof id === "string" && /^[1-9]\d*$/.test(id));
-    if (response.ok && positiveId && !Object.hasOwn(result, "error")) return;
-    throw new Error(response.status === 429 ? "rate_limited" : "upstream");
-  }
-  if (response.status === 200 && result?.ok === true) return;
-  if (serverErrors.has(result?.error)) throw new Error(result.error);
+  const id = result?.result;
+  const positiveId = (Number.isSafeInteger(id) && id > 0) || (typeof id === "string" && /^[1-9]\d*$/.test(id));
+  if (response.ok && positiveId && !Object.hasOwn(result, "error")) return;
   throw new Error(response.status === 429 ? "rate_limited" : "upstream");
 }
 

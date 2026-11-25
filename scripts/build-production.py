@@ -33,7 +33,9 @@ ENTRY_POINTS = (
     "search-by-parameters/tchaikovsky/index.html",
     "search-by-parameters/vivaldi/index.html",
 )
-OPTIONAL_ROOT_FILES = ("robots.txt", "sitemap.xml", ".htaccess", "lead.php")
+OPTIONAL_ROOT_FILES = ("robots.txt", "sitemap.xml", ".htaccess")
+LEAD_SETTINGS = "js/lead-settings.js"
+LOCAL_LEAD_SETTINGS = "config/lead-settings.local.js"
 IMAGE_MANIFEST = "assets/manifests/production-images.json"
 IMAGE_PREFIX = "assets/images/"
 FORBIDDEN_PREFIXES = (
@@ -68,6 +70,33 @@ class RuntimeGraph:
         self.queue = []
         self.edges = []
         self.images = {}
+        self.source_overrides = {}
+
+    def load_local_lead_settings(self):
+        path = self.root / LOCAL_LEAD_SETTINGS
+        if not path.exists() and not path.is_symlink():
+            return
+        if path.is_symlink() or not path.resolve().is_relative_to(self.root) or not path.is_file():
+            raise BuildError("Invalid local lead configuration file")
+        # Only a constant URL is allowed: the override cannot add code or imports
+        # that would bypass the runtime dependency graph.
+        whitespace = r"(?:\s|//[^\n]*(?:\n|$))*"
+        declaration = r'export\s+const\s+directLeadWebhookUrl\s*=\s*("(?:[^"\\\x00-\x1f]|\\.)*")\s*;'
+        match = re.fullmatch(whitespace + declaration + whitespace, path.read_text())
+        if not match:
+            raise BuildError("Local lead configuration must export a single HTTPS webhook URL")
+        try:
+            url = json.loads(match[1])
+            parsed = urlsplit(url)
+            valid = parsed.scheme == "https" and parsed.hostname and not any(char.isspace() for char in url)
+        except ValueError:
+            valid = False
+        if not valid:
+            raise BuildError("Local lead configuration must export a single HTTPS webhook URL")
+        self.source_overrides[LEAD_SETTINGS] = path
+
+    def source_path(self, relative):
+        return self.source_overrides.get(relative, self.root / relative)
 
     def project_path(self, value):
         candidate = self.root / value
@@ -75,7 +104,7 @@ class RuntimeGraph:
         if not resolved.is_relative_to(self.root):
             raise BuildError("Dependency escapes the project: " + str(value))
         relative = candidate.relative_to(self.root).as_posix()
-        if relative.startswith(FORBIDDEN_PREFIXES) or (
+        if relative == LOCAL_LEAD_SETTINGS or relative.startswith(FORBIDDEN_PREFIXES) or (
             candidate.name.startswith(".") and relative not in OPTIONAL_ROOT_FILES
         ):
             raise BuildError("Non-production dependency: " + relative)
@@ -177,6 +206,7 @@ class RuntimeGraph:
             self.include(relative)
 
     def collect(self):
+        self.load_local_lead_settings()
         self.load_image_manifest()
         for entry in self.entry_points():
             self.include(entry)
@@ -190,7 +220,8 @@ class RuntimeGraph:
             elif extension == ".css":
                 self.css(path.read_text(), path)
             elif extension == ".js":
-                self.javascript(path.read_text(), path)
+                source = self.source_path(path.relative_to(self.root).as_posix())
+                self.javascript(source.read_text(), path)
             elif extension == ".svg":
                 svg = ET.parse(path)
                 for element in svg.iter():
@@ -271,8 +302,8 @@ class RuntimeHTML(HTMLParser):
 
 
 def build_report(graph):
-    entries = [{"path": path, "bytes": (graph.root / path).stat().st_size,
-                "sha256": sha256(graph.root / path)} for path in sorted(graph.files)]
+    entries = [{"path": path, "bytes": graph.source_path(path).stat().st_size,
+                "sha256": sha256(graph.source_path(path))} for path in sorted(graph.files)]
     return {"version": 1, "files": entries,
             "summary": {"files": len(entries), "images": len(graph.images),
                         "bytes": sum(item["bytes"] for item in entries),
@@ -283,11 +314,11 @@ def build_archive(graph, report, destination):
     if destination.exists():
         raise BuildError("Archive already exists; existing files are never replaced: " + str(destination))
     destination.parent.mkdir(parents=True, exist_ok=True)
-    compressed_text = {".html", ".css", ".js", ".php", ".svg", ".webmanifest"}
+    compressed_text = {".html", ".css", ".js", ".svg", ".webmanifest"}
     try:
         with zipfile.ZipFile(destination, mode="x") as archive:
             for entry in report["files"]:
-                path = graph.root / entry["path"]
+                path = graph.source_path(entry["path"])
                 compression = zipfile.ZIP_DEFLATED if path.suffix.lower() in compressed_text else zipfile.ZIP_STORED
                 archive.write(path, arcname=entry["path"], compress_type=compression, compresslevel=9)
     except FileExistsError as error:
@@ -338,7 +369,7 @@ def main():
         for entry in report["files"]:
             target = output / entry["path"]
             target.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copy2(graph.root / entry["path"], target)
+            shutil.copy2(graph.source_path(entry["path"]), target)
             if sha256(target) != entry["sha256"]:
                 raise BuildError("Copied file integrity check failed: " + entry["path"])
     if args.report:

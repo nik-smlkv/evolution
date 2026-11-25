@@ -23,7 +23,6 @@ function fixture(t) {
     "search-by-parameters.html": '<img src="./assets/images/plan.svg"><link rel="manifest" href="./assets/images/site.webmanifest"><a href="https://other.test/">External</a>',
     "search-by-parameters/tchaikovsky/index.html": '<meta http-equiv="refresh" content="0; url=../../search-by-parameters.html?house=tchaikovsky">',
     "search-by-parameters/vivaldi/index.html": '<meta http-equiv="refresh" content="0; url=../../search-by-parameters.html?house=vivaldi">',
-    "lead.php": '<?php echo json_encode(["ok" => true]);',
     "style/site.css": '@font-face{src:url("../fonts/site.woff2")}body{background:url("data:image/svg+xml;base64,PHN2Zz4=")}',
     "fonts/site.woff2": "font bytes",
     "videos/site.mp4": "video bytes",
@@ -41,7 +40,7 @@ function fixture(t) {
     .filter(([path]) => path.startsWith("assets/images/"))
     .map(([path, bytes]) => ({ path, bytes: Buffer.byteLength(bytes), sha256: hash(bytes) }));
   write("assets/manifests/production-images.json", JSON.stringify({ files: images }));
-  for (const path of ["assets/sources/original.png", "archive/unavailable.png", "tests/dev.test.mjs", "scripts/tool.py", "design-qa.md", "js/unused.js", "style/unused.css", ".git/config", ".env", "local-config.php"]) write(path, "local only");
+  for (const path of ["assets/sources/original.png", "archive/unavailable.png", "tests/dev.test.mjs", "scripts/tool.py", "design-qa.md", "js/unused.js", "style/unused.css", ".git/config", ".env", "lead.php", "local-config.php"]) write(path, "local only");
   return { root, base, write, images, sources };
 }
 
@@ -69,6 +68,60 @@ test("production build follows imports, fonts, video, SVG and manifest icons whi
   assert.deepEqual(files(output), Object.keys(sources).sort());
   for (const [path, bytes] of Object.entries(sources)) assert.equal(hash(readFileSync(join(output, path))), hash(bytes), path);
   assert.equal(JSON.parse(result.stdout).files, Object.keys(sources).length);
+});
+
+test("production folders and ZIPs preserve local direct lead settings without packaging private config or PHP", (t) => {
+  const { root, base, sources, write } = fixture(t);
+  const settingsPath = "js/lead-settings.js";
+  const localPath = "config/lead-settings.local.js";
+  const placeholder = 'export const directLeadWebhookUrl = "";\n';
+  const configured = '// Deployment settings\nexport const directLeadWebhookUrl = "https://crm.example.test/rest/test/crm.lead.add.json";\n';
+  write("js/main.js", sources["js/main.js"] + '\nimport "./lead-settings.js";');
+  write(settingsPath, placeholder);
+  write(localPath, configured);
+  const output = join(base, "deploy");
+  const reportPath = join(base, "report.json");
+  const result = run(root, ["--output", output, "--report", reportPath]);
+  assert.equal(result.status, 0, result.stderr);
+  assert.equal(readFileSync(join(output, settingsPath), "utf8"), configured);
+  assert.equal(readFileSync(join(root, settingsPath), "utf8"), placeholder);
+  assert.equal(existsSync(join(output, localPath)), false);
+  assert.equal(existsSync(join(output, "lead.php")), false);
+  const entry = JSON.parse(readFileSync(reportPath, "utf8")).files.find(({ path }) => path === settingsPath);
+  assert.deepEqual(entry, { path: settingsPath, bytes: Buffer.byteLength(configured), sha256: hash(configured) });
+  assert.ok(!result.stdout.includes("crm.example.test"));
+
+  const archive = join(base, "production.zip");
+  const zipped = run(root, ["--archive", archive]);
+  assert.equal(zipped.status, 0, zipped.stderr);
+  const inspection = spawnSync("python3", ["-B", "-c", "import zipfile,hashlib,json,sys; z=zipfile.ZipFile(sys.argv[1]); print(json.dumps({n:hashlib.sha256(z.read(n)).hexdigest() for n in z.namelist()}))", archive], { encoding: "utf8" });
+  assert.equal(inspection.status, 0, inspection.stderr);
+  const archived = JSON.parse(inspection.stdout);
+  assert.equal(archived[settingsPath], hash(configured));
+  assert.equal(Object.hasOwn(archived, localPath), false);
+  assert.equal(Object.hasOwn(archived, "lead.php"), false);
+});
+
+test("production build rejects executable or non-HTTPS local lead settings and direct private config references", (t) => {
+  const { root, write, sources } = fixture(t);
+  const localPath = "config/lead-settings.local.js";
+  const configured = 'export const directLeadWebhookUrl = "https://crm.example.test/rest/test/crm.lead.add.json";';
+  for (const invalid of [
+    configured.replace("https:", "http:"),
+    configured + '\nimport "./extra.js";',
+    configured.replace('"https://crm.example.test/rest/test/crm.lead.add.json"', 'new URL("https://crm.example.test")'),
+  ]) {
+    write(localPath, invalid);
+    const result = run(root, ["--check"]);
+    assert.notEqual(result.status, 0);
+    assert.match(result.stderr, /Local lead configuration must export a single HTTPS webhook URL/);
+    assert.ok(!result.stderr.includes("crm.example.test"));
+  }
+  write(localPath, configured);
+  write("index.html", sources["index.html"] + `<script type="module" src="./${localPath}"></script>`);
+  const exposed = run(root, ["--check"]);
+  assert.notEqual(exposed.status, 0);
+  assert.match(exposed.stderr, /Non-production dependency/);
 });
 
 test("configured home routes deploy with document-base dependencies and without development route config", (t) => {
