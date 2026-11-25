@@ -92,46 +92,46 @@ async function getHouses() {
 // Пример использования
 
 const closeHeaderMenu = initializeHeaderNavigation();
-const heroCards = [...document.querySelectorAll(".residence-hero__card")];
-if (heroCards.length && "IntersectionObserver" in window &&
-    !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-  const photos = heroCards.map((card) => card.querySelector(".residence-hero__photo"));
-  photos.forEach((photo) => { photo.dataset.maskReveal = "pending"; });
+const hero = document.querySelector(".residence-hero[data-hero-reveal]");
+if (hero) {
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const photos = [...hero.querySelectorAll(".residence-hero__photo")];
+  let observer;
+  const finishReveal = () => {
+    observer?.disconnect();
+    hero.dataset.heroReveal = "complete";
+    reducedMotion.removeEventListener("change", onMotionChange);
+    hero.removeEventListener("animationend", onAnimationEnd);
+  };
+  const onMotionChange = () => {
+    if (reducedMotion.matches) finishReveal();
+  };
+  const onAnimationEnd = (event) => {
+    if (event.target === photos.at(-1) && event.animationName === "residence-photo-reveal") {
+      finishReveal();
+    }
+  };
 
-  // Decode the pair first so the second photo cannot reveal before the first.
-  Promise.all(photos.map((photo) => photo.decode?.().catch(() => {}))).then(() => {
-    const photoObserver = new IntersectionObserver((entries) => {
-      for (const entry of entries) {
-        if (!entry.isIntersecting || entry.intersectionRatio < 0.15) continue;
-        entry.target.querySelector(".residence-hero__photo").dataset.maskReveal = "visible";
-        photoObserver.unobserve(entry.target);
-      }
-    }, { threshold: 0.15 });
-    heroCards.forEach((card) => photoObserver.observe(card));
-  });
-}
-
-const heroTitle = document.querySelector(".residence-hero__title");
-if (heroTitle && "ResizeObserver" in window && "IntersectionObserver" in window) {
-  heroTitle.dataset.revealed = "initial";
-  const header = document.querySelector("header");
-  let titleObserver;
-  let titleReady = false;
-
-  // Paint the hidden starting position before revealing the words in order.
-  requestAnimationFrame(() => requestAnimationFrame(() => {
-    titleReady = true;
-    titleObserver?.observe(heroTitle);
-  }));
-
-  // Keep the trigger at the lower edge of the responsive, fixed header.
-  new ResizeObserver(() => {
-    titleObserver?.disconnect();
-    titleObserver = new IntersectionObserver(([entry]) => {
-      heroTitle.dataset.revealed = String(entry.intersectionRatio >= 0.8);
-    }, { rootMargin: `-${header.offsetHeight}px 0px 0px`, threshold: 0.8 });
-    if (titleReady) titleObserver.observe(heroTitle);
-  }).observe(header);
+  if (reducedMotion.matches || !("IntersectionObserver" in window)) {
+    finishReveal();
+  } else {
+    reducedMotion.addEventListener("change", onMotionChange);
+    hero.addEventListener("animationend", onAnimationEnd);
+    // The HTML is hidden from first paint. Prepare every visual before starting
+    // the single CSS timeline: Evolution → Residence → left photo → right photo.
+    Promise.all([...hero.querySelectorAll("img")].map((image) => image.decode().catch(() => {}))).then(() => {
+      if (hero.dataset.heroReveal !== "pending") return;
+      observer = new IntersectionObserver(([entry]) => {
+        if (!entry.isIntersecting || entry.intersectionRatio < 0.8) return;
+        hero.dataset.heroReveal = "playing";
+        observer.disconnect();
+      }, {
+        rootMargin: `-${document.querySelector("header").offsetHeight}px 0px 0px`,
+        threshold: 0.8,
+      });
+      observer.observe(hero.querySelector(".residence-hero__title"));
+    });
+  }
 }
 const popups = document.querySelectorAll(".popup");
 

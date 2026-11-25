@@ -439,26 +439,95 @@ test("the residence hero fits the wordmark and both cards at the design widths",
   }
 });
 
-test("the residence hero title reappears Evolution first and Residence second", async ({ page }) => {
+test("the residence hero stays hidden on slow connections and reveals all four visuals consecutively", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  let releaseScript;
+  let releasePhoto;
+  const scriptReady = new Promise((resolve) => { releaseScript = resolve; });
+  const photoReady = new Promise((resolve) => { releasePhoto = resolve; });
+  await page.route("**/js/script.js?*", async (route) => {
+    await scriptReady;
+    await route.continue();
+  });
+  await page.route("**/residence-aerial-*", async (route) => {
+    await photoReady;
+    await route.continue();
+  });
+  await page.addInitScript(() => {
+    window.heroAnimationEvents = [];
+    for (const type of ["animationstart", "animationend"]) {
+      document.addEventListener(type, (event) => {
+        if (!["residence-word-reveal", "residence-photo-reveal"].includes(event.animationName)) return;
+        const images = [...document.querySelectorAll(".residence-hero img")];
+        window.heroAnimationEvents.push({ type, index: images.indexOf(event.target), time: performance.now() });
+      });
+    }
+  });
+  await page.goto("/en/", { waitUntil: "commit" });
+  const hero = page.locator(".residence-hero");
+  const content = hero.locator(".residence-hero__inner");
+  const photos = hero.locator(".residence-hero__photo");
+  // A loaded photo must stay hidden even while the main module is still downloading.
+  await expect.poll(() => photos.first().evaluate((image) => image.naturalWidth)).toBeGreaterThan(0);
+  await expect(content).toHaveCSS("visibility", "hidden");
+  await expect(hero.locator(".residence-hero__link").first()).toBeHidden();
+  releaseScript();
+  await page.waitForLoadState("domcontentloaded");
+  await expect(hero).toHaveAttribute("data-hero-reveal", "pending");
+  await expect(content).toHaveCSS("visibility", "hidden");
+  // No stage can start before the second photo has decoded.
+  expect(await page.evaluate(() => window.heroAnimationEvents)).toEqual([]);
+  releasePhoto();
+  await expect(hero).toHaveAttribute("data-hero-reveal", "complete");
+  const events = await page.evaluate(() => window.heroAnimationEvents);
+  expect(events.map(({ type, index }) => [type, index])).toEqual([
+    ["animationstart", 0], ["animationend", 0],
+    ["animationstart", 1], ["animationend", 1],
+    ["animationstart", 2], ["animationend", 2],
+    ["animationstart", 3], ["animationend", 3],
+  ]);
+  for (const index of [2, 4, 6]) {
+    expect(events[index].time - events[index - 1].time).toBeLessThan(50);
+  }
+  await expect(content).toBeVisible();
+  for (const photo of await photos.all()) await expect(photo).toHaveCSS("clip-path", "none");
+  for (const link of await hero.locator(".residence-hero__link").all()) await expect(link).toBeVisible();
+});
+
+test("the residence hero immediately reveals everything when reduced motion is enabled", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "no-preference" });
   await page.goto("/");
-  const title = page.locator(".residence-hero__title");
-  const words = title.locator(".residence-hero__word img");
-  const opacity = () => words.evaluateAll((nodes) => nodes.map((word) => getComputedStyle(word).opacity));
-  await expect.poll(opacity).toEqual(["1", "1"]);
-  const duration = await words.first().evaluate((word) => parseFloat(getComputedStyle(word).transitionDuration));
-  expect(duration).toBeGreaterThan(0);
-  await title.evaluate((element) => window.scrollBy({ top: element.getBoundingClientRect().bottom + 32, behavior: "instant" }));
-  await expect.poll(opacity).toEqual(["0", "0"]);
-  await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
-  await expect.poll(async () => {
-    const [evolution, residence] = (await opacity()).map(Number);
-    return evolution > 0.1 && residence === 0;
-  }).toBe(true);
-  await expect.poll(opacity).toEqual(["1", "1"]);
-
+  const hero = page.locator(".residence-hero");
+  await expect(hero).toHaveAttribute("data-hero-reveal", "playing");
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await title.evaluate((element) => window.scrollBy({ top: element.getBoundingClientRect().bottom + 32, behavior: "instant" }));
-  await expect(title).toHaveAttribute("data-revealed", "false");
-  expect(await opacity()).toEqual(["1", "1"]);
+  await expect(hero).toHaveAttribute("data-hero-reveal", "complete");
+  await page.reload();
+  await expect(hero).toHaveAttribute("data-hero-reveal", "complete");
+  await expect(hero.locator(".residence-hero__inner")).toBeVisible();
+  for (const image of await hero.locator("img").all()) {
+    await expect(image).toHaveCSS("animation-name", "none");
+    await expect(image).toHaveCSS("opacity", "1");
+    await expect(image).toHaveCSS("clip-path", "none");
+  }
+});
+
+test("the residence hero remains visible if its main module fails to load", async ({ page }) => {
+  await page.route("**/js/header-navigation.js?*", (route) => route.abort("failed"));
+  await page.goto("/");
+  const hero = page.locator(".residence-hero");
+  await expect(hero).toHaveAttribute("data-hero-reveal", "complete");
+  await expect(hero.locator(".residence-hero__inner")).toBeVisible();
+  for (const link of await hero.locator(".residence-hero__link").all()) await expect(link).toBeVisible();
+});
+
+test.describe("without JavaScript", () => {
+  test.use({ javaScriptEnabled: false });
+  test("the residence hero keeps its photos and apartment links visible", async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: "no-preference" });
+    await page.goto("/en/");
+    const hero = page.locator(".residence-hero");
+    await expect(hero.locator(".residence-hero__inner")).toBeVisible();
+    for (const photo of await hero.locator(".residence-hero__photo").all()) await expect(photo).toBeVisible();
+    for (const link of await hero.locator(".residence-hero__link").all()) await expect(link).toBeVisible();
+  });
 });
