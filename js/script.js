@@ -97,6 +97,13 @@ if (heroTitle && "ResizeObserver" in window && "IntersectionObserver" in window)
   heroTitle.dataset.revealed = "initial";
   const header = document.querySelector("header");
   let titleObserver;
+  let titleReady = false;
+
+  // Paint the hidden starting position before revealing the words in order.
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    titleReady = true;
+    titleObserver?.observe(heroTitle);
+  }));
 
   // Keep the trigger at the lower edge of the responsive, fixed header.
   new ResizeObserver(() => {
@@ -104,7 +111,7 @@ if (heroTitle && "ResizeObserver" in window && "IntersectionObserver" in window)
     titleObserver = new IntersectionObserver(([entry]) => {
       heroTitle.dataset.revealed = String(entry.intersectionRatio >= 0.8);
     }, { rootMargin: `-${header.offsetHeight}px 0px 0px`, threshold: 0.8 });
-    titleObserver.observe(heroTitle);
+    if (titleReady) titleObserver.observe(heroTitle);
   }).observe(header);
 }
 const popups = document.querySelectorAll(".popup");

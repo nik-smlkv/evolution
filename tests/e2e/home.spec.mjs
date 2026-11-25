@@ -384,7 +384,7 @@ test("the gallery covers the pinned Materials slide below the financing cards", 
   })).toEqual({ pinned: true, seamOverSlide: true, gap: 0, belowSeam: true, paddingTop: "180px", paddingBottom: "180px" });
 });
 
-test("the residence hero loads both photos and opens each localized house catalog", async ({ page, isMobile }) => {
+test("the residence hero loads both photos and opens each localized house floor plan", async ({ page, isMobile }) => {
   for (const [home, selected] of [["/", 0], ["/en/", 1]]) {
     await page.goto(home);
     const hero = page.locator(".residence-hero");
@@ -397,21 +397,22 @@ test("the residence hero loads both photos and opens each localized house catalo
       const card = cards.nth(i);
       await expect(card.locator(".residence-hero__name")).toHaveText(new RegExp(name, "i"));
       const link = card.locator(".residence-hero__link");
-      await expect(link).toHaveAttribute("href", `.${home}search-by-parameters.html?house=${name.toLowerCase()}`);
+      await expect(link).toHaveAttribute("href", `.${home}search-by-parameters.html?house=${name.toLowerCase()}&view=plan`);
       const image = card.locator(".residence-hero__photo");
       const expected = i === 0
-        ? /\/residence-street-(?:compact-1080|480|832|1664)\.webp$/
-        : /\/residence-aerial-(?:480|832|1664)\.webp$/;
-      await expect.poll(() => image.evaluate((element) => element.naturalWidth ? element.currentSrc : "")).toMatch(expected);
+        ? /\/(?:residence-street-(?:compact-1080|480|832|1664)\.webp|render-14-full\.jpg)$/
+        : /\/residence-aerial-(?:(?:480|832|1664)\.webp|full\.jpg)$/;
+      await expect.poll(() => image.evaluate((element) => element.naturalWidth ? new URL(element.currentSrc).pathname : "")).toMatch(expected);
     }
 
     await expect(hero.locator("video")).toHaveCount(0);
     expect(await hero.evaluate((element) => element.nextElementSibling.id)).toBe("about-project");
     const house = selected === 0 ? "tchaikovsky" : "vivaldi";
     await activate(cards.nth(selected).locator(".residence-hero__link"), isMobile);
-    await expectRoute(page, `${home}search-by-parameters.html`, `?house=${house}`);
+    await expectRoute(page, `${home}search-by-parameters.html`, `?house=${house}&view=plan`);
     await expect(page.locator("body")).toHaveAttribute("data-catalog-house", house);
-    await expect(page.locator(".available-apartments__list .apartment__item").first()).toBeVisible();
+    await expect(page.locator("body")).toHaveAttribute("data-catalog-view", "plan");
+    await expect(page.locator(".houses-plans_container .houses-plan")).toBeVisible();
   }
 });
 
@@ -438,7 +439,7 @@ test("the residence hero fits the wordmark and both cards at the design widths",
   }
 });
 
-test("the residence hero title leaves on scroll and reappears on return", async ({ page }) => {
+test("the residence hero title reappears Evolution first and Residence second", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "no-preference" });
   await page.goto("/");
   const title = page.locator(".residence-hero__title");
@@ -450,6 +451,10 @@ test("the residence hero title leaves on scroll and reappears on return", async 
   await title.evaluate((element) => window.scrollBy({ top: element.getBoundingClientRect().bottom + 32, behavior: "instant" }));
   await expect.poll(opacity).toEqual(["0", "0"]);
   await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
+  await expect.poll(async () => {
+    const [evolution, residence] = (await opacity()).map(Number);
+    return evolution > 0.1 && residence === 0;
+  }).toBe(true);
   await expect.poll(opacity).toEqual(["1", "1"]);
 
   await page.emulateMedia({ reducedMotion: "reduce" });

@@ -4,8 +4,8 @@
   "summary": {
     "before_files": 3852,
     "before_bytes": 1527010844,
-    "production_files": 906,
-    "production_bytes": 288201695,
+    "production_files": 911,
+    "production_bytes": 329748433,
     "available_tchaikovsky": 308,
     "unavailable_tchaikovsky": 95,
     "available_vivaldi_records": 60,
@@ -20630,8 +20630,8 @@
     },
     {
       "path": "assets/images/site/gallery/render-10-1280.webp",
-      "bytes": 339180,
-      "sha256": "513abf1c4d3625cd18dc802dfa285edd1b702e37ae28eac0d260c73e21abff47",
+      "bytes": 1302484,
+      "sha256": "55f8df80da0e16460e182cc732bc8bee939e294380b250fb729d5f90d1bd1f8a",
       "roles": [
         "index.html/img.src",
         "index.html/img.srcset"
@@ -20639,75 +20639,135 @@
       "responsive_derivative": {
         "source": "hf_20261125_090926_13aba732-1f9e-4ce6-8b60-7e8332d5a604 1.jpg",
         "source_sha256": "70bb8af3e6a0e1b55071ad2e7677df10d88358b6f1318a534547df5628e9d465",
+        "source_width": 2200,
+        "source_height": 1229,
         "width": 1280,
         "height": 715,
-        "encoding": "webp-quality-91-sharp-yuv"
+        "encoding": "webp-lossless-method6-quality100",
+        "resize": "lanczos",
+        "pixel_verification": {
+          "method": "decoded RGB equals source after documented crop/resize",
+          "rgb_sha256": "76fc570b96f4b34ed1f529b3242e3a89662f24dd816509f4f36c5d883222ec42",
+          "decoded_rgb_sha256": "76fc570b96f4b34ed1f529b3242e3a89662f24dd816509f4f36c5d883222ec42",
+          "exact": true
+        }
       },
       "selections": [
         {
           "requested": "assets/images/site/gallery/render-10-1280.webp",
           "chosen": "assets/images/site/gallery/render-10-1280.webp",
-          "source_bytes": 339180,
-          "selected_bytes": 339180,
-          "source_sha256": "513abf1c4d3625cd18dc802dfa285edd1b702e37ae28eac0d260c73e21abff47",
-          "selected_sha256": "513abf1c4d3625cd18dc802dfa285edd1b702e37ae28eac0d260c73e21abff47"
+          "source_bytes": 1302484,
+          "selected_bytes": 1302484,
+          "source_sha256": "55f8df80da0e16460e182cc732bc8bee939e294380b250fb729d5f90d1bd1f8a",
+          "selected_sha256": "55f8df80da0e16460e182cc732bc8bee939e294380b250fb729d5f90d1bd1f8a"
         }
       ]
     },
     {
       "path": "assets/images/site/gallery/render-10-1920.webp",
-      "bytes": 648850,
-      "sha256": "96a59f64792eef1e0d24430c7bb4c9f575aff3bd5d236ecb848aa5cf4c9655bf",
+      "bytes": 2769284,
+      "sha256": "02d36faf2ace420ec61082b1ddf1e0ce61dc9ca147c9d9f9fe4d904acd166d6d",
       "roles": [
         "index.html/img.srcset"
       ],
       "responsive_derivative": {
         "source": "hf_20261125_090926_13aba732-1f9e-4ce6-8b60-7e8332d5a604 1.jpg",
         "source_sha256": "70bb8af3e6a0e1b55071ad2e7677df10d88358b6f1318a534547df5628e9d465",
+        "source_width": 2200,
+        "source_height": 1229,
         "width": 1920,
         "height": 1073,
-        "encoding": "webp-quality-91-sharp-yuv"
+        "encoding": "webp-lossless-method6-quality100",
+        "resize": "lanczos",
+        "pixel_verification": {
+          "method": "decoded RGB equals source after documented crop/resize",
+          "rgb_sha256": "b555e195d1600ce4b6079ec5059586b9c89f6237c4d8f19798dc16708a83819b",
+          "decoded_rgb_sha256": "b555e195d1600ce4b6079ec5059586b9c89f6237c4d8f19798dc16708a83819b",
+          "exact": true
+        }
       },
       "selections": [
         {
           "requested": "assets/images/site/gallery/render-10-1920.webp",
           "chosen": "assets/images/site/gallery/render-10-1920.webp",
-          "source_bytes": 648850,
-          "selected_bytes": 648850,
-          "source_sha256": "96a59f64792eef1e0d24430c7bb4c9f575aff3bd5d236ecb848aa5cf4c9655bf",
-          "selected_sha256": "96a59f64792eef1e0d24430c7bb4c9f575aff3bd5d236ecb848aa5cf4c9655bf"
+          "source_bytes": 2769284,
+          "selected_bytes": 2769284,
+          "source_sha256": "02d36faf2ace420ec61082b1ddf1e0ce61dc9ca147c9d9f9fe4d904acd166d6d",
+          "selected_sha256": "02d36faf2ace420ec61082b1ddf1e0ce61dc9ca147c9d9f9fe4d904acd166d6d"
         }
       ]
     },
     {
       "path": "assets/images/site/gallery/render-10-800.webp",
-      "bytes": 153654,
-      "sha256": "f3191446899827a79f8d2cfdbc195c52de03aaeff0cc6d5626ab7e3a17533b74",
+      "bytes": 536748,
+      "sha256": "04a69d1cc998b9bcef507fae6458c8b136ada1de92f3659b56946289adde7953",
       "roles": [
         "index.html/img.srcset"
       ],
       "responsive_derivative": {
         "source": "hf_20261125_090926_13aba732-1f9e-4ce6-8b60-7e8332d5a604 1.jpg",
         "source_sha256": "70bb8af3e6a0e1b55071ad2e7677df10d88358b6f1318a534547df5628e9d465",
+        "source_width": 2200,
+        "source_height": 1229,
         "width": 800,
         "height": 447,
-        "encoding": "webp-quality-91-sharp-yuv"
+        "encoding": "webp-lossless-method6-quality100",
+        "resize": "lanczos",
+        "pixel_verification": {
+          "method": "decoded RGB equals source after documented crop/resize",
+          "rgb_sha256": "b633f58351ce33ffc8cdf71b268249990653c8e24c1ef3f6b2ecdd42ec868740",
+          "decoded_rgb_sha256": "b633f58351ce33ffc8cdf71b268249990653c8e24c1ef3f6b2ecdd42ec868740",
+          "exact": true
+        }
       },
       "selections": [
         {
           "requested": "assets/images/site/gallery/render-10-800.webp",
           "chosen": "assets/images/site/gallery/render-10-800.webp",
-          "source_bytes": 153654,
-          "selected_bytes": 153654,
-          "source_sha256": "f3191446899827a79f8d2cfdbc195c52de03aaeff0cc6d5626ab7e3a17533b74",
-          "selected_sha256": "f3191446899827a79f8d2cfdbc195c52de03aaeff0cc6d5626ab7e3a17533b74"
+          "source_bytes": 536748,
+          "selected_bytes": 536748,
+          "source_sha256": "04a69d1cc998b9bcef507fae6458c8b136ada1de92f3659b56946289adde7953",
+          "selected_sha256": "04a69d1cc998b9bcef507fae6458c8b136ada1de92f3659b56946289adde7953"
+        }
+      ]
+    },
+    {
+      "path": "assets/images/site/gallery/render-10-full.jpg",
+      "roles": [
+        "index.html/img.srcset"
+      ],
+      "bytes": 3060533,
+      "sha256": "8274659c05e1a809b0e03f743f47238bae66a02c20407e9a72fcc36e95050945",
+      "responsive_derivative": {
+        "source": "hf_20261125_090926_13aba732-1f9e-4ce6-8b60-7e8332d5a604 1.jpg",
+        "source_sha256": "70bb8af3e6a0e1b55071ad2e7677df10d88358b6f1318a534547df5628e9d465",
+        "source_width": 2200,
+        "source_height": 1229,
+        "width": 2200,
+        "height": 1229,
+        "encoding": "jpegtran-optimized-progressive",
+        "pixel_verification": {
+          "method": "djpeg -rgb decoded PPM equality to original JPEG",
+          "rgb_ppm_sha256": "f009a2009914e3e63ee226f167d50010b98949bfdb86b62e9e46b03b1bf1104e",
+          "decoded_rgb_ppm_sha256": "f009a2009914e3e63ee226f167d50010b98949bfdb86b62e9e46b03b1bf1104e",
+          "exact": true
+        }
+      },
+      "selections": [
+        {
+          "requested": "assets/images/site/gallery/render-10-full.jpg",
+          "chosen": "assets/images/site/gallery/render-10-full.jpg",
+          "source_bytes": 3408824,
+          "selected_bytes": 3060533,
+          "source_sha256": "70bb8af3e6a0e1b55071ad2e7677df10d88358b6f1318a534547df5628e9d465",
+          "selected_sha256": "8274659c05e1a809b0e03f743f47238bae66a02c20407e9a72fcc36e95050945"
         }
       ]
     },
     {
       "path": "assets/images/site/gallery/render-11-1280.webp",
-      "bytes": 380724,
-      "sha256": "c2d5aabd90f37db81db549f6b796c1078b49898b554d32ceb50e92a5e54da7e5",
+      "bytes": 1398016,
+      "sha256": "704f16071512fb6a4d2c04121c750b7e31282901e0b7f20ecc5c0222564a8c71",
       "roles": [
         "index.html/img.src",
         "index.html/img.srcset"
@@ -20715,75 +20775,135 @@
       "responsive_derivative": {
         "source": "hf_20261125_122903_b0a8a58a-1c3f-467e-87d9-8796bf2d6205 1.jpg",
         "source_sha256": "f9fd371519285ed5dbaec55e0381fafe020e82d9b0bab1f4e2f5c4015a313410",
+        "source_width": 2200,
+        "source_height": 1239,
         "width": 1280,
         "height": 721,
-        "encoding": "webp-quality-91-sharp-yuv"
+        "encoding": "webp-lossless-method6-quality100",
+        "resize": "lanczos",
+        "pixel_verification": {
+          "method": "decoded RGB equals source after documented crop/resize",
+          "rgb_sha256": "e12af093663be2f85eeed66b2ee4f8d7c79eb360561908314ea05d4156b4de93",
+          "decoded_rgb_sha256": "e12af093663be2f85eeed66b2ee4f8d7c79eb360561908314ea05d4156b4de93",
+          "exact": true
+        }
       },
       "selections": [
         {
           "requested": "assets/images/site/gallery/render-11-1280.webp",
           "chosen": "assets/images/site/gallery/render-11-1280.webp",
-          "source_bytes": 380724,
-          "selected_bytes": 380724,
-          "source_sha256": "c2d5aabd90f37db81db549f6b796c1078b49898b554d32ceb50e92a5e54da7e5",
-          "selected_sha256": "c2d5aabd90f37db81db549f6b796c1078b49898b554d32ceb50e92a5e54da7e5"
+          "source_bytes": 1398016,
+          "selected_bytes": 1398016,
+          "source_sha256": "704f16071512fb6a4d2c04121c750b7e31282901e0b7f20ecc5c0222564a8c71",
+          "selected_sha256": "704f16071512fb6a4d2c04121c750b7e31282901e0b7f20ecc5c0222564a8c71"
         }
       ]
     },
     {
       "path": "assets/images/site/gallery/render-11-1920.webp",
-      "bytes": 731378,
-      "sha256": "c8a6738bd58dc5441d6a50b3bd530ce954f3eeb7bcaf83fc07d9b5bae36fa7a9",
+      "bytes": 2973698,
+      "sha256": "223d6c3b5f01ad62d1f02538b0d98f77b9568a0a44d0baa6f2a0b811b4bd4c3b",
       "roles": [
         "index.html/img.srcset"
       ],
       "responsive_derivative": {
         "source": "hf_20261125_122903_b0a8a58a-1c3f-467e-87d9-8796bf2d6205 1.jpg",
         "source_sha256": "f9fd371519285ed5dbaec55e0381fafe020e82d9b0bab1f4e2f5c4015a313410",
+        "source_width": 2200,
+        "source_height": 1239,
         "width": 1920,
         "height": 1081,
-        "encoding": "webp-quality-91-sharp-yuv"
+        "encoding": "webp-lossless-method6-quality100",
+        "resize": "lanczos",
+        "pixel_verification": {
+          "method": "decoded RGB equals source after documented crop/resize",
+          "rgb_sha256": "bb83164863e9452f23fce26aa3a17afd2dbdfb7584b5d82fe9105e842004d54d",
+          "decoded_rgb_sha256": "bb83164863e9452f23fce26aa3a17afd2dbdfb7584b5d82fe9105e842004d54d",
+          "exact": true
+        }
       },
       "selections": [
         {
           "requested": "assets/images/site/gallery/render-11-1920.webp",
           "chosen": "assets/images/site/gallery/render-11-1920.webp",
-          "source_bytes": 731378,
-          "selected_bytes": 731378,
-          "source_sha256": "c8a6738bd58dc5441d6a50b3bd530ce954f3eeb7bcaf83fc07d9b5bae36fa7a9",
-          "selected_sha256": "c8a6738bd58dc5441d6a50b3bd530ce954f3eeb7bcaf83fc07d9b5bae36fa7a9"
+          "source_bytes": 2973698,
+          "selected_bytes": 2973698,
+          "source_sha256": "223d6c3b5f01ad62d1f02538b0d98f77b9568a0a44d0baa6f2a0b811b4bd4c3b",
+          "selected_sha256": "223d6c3b5f01ad62d1f02538b0d98f77b9568a0a44d0baa6f2a0b811b4bd4c3b"
         }
       ]
     },
     {
       "path": "assets/images/site/gallery/render-11-800.webp",
-      "bytes": 164758,
-      "sha256": "7e523c680d5760f46a3aaadd5d70d0b2cb5f9ae029f979815953af87a3939362",
+      "bytes": 571380,
+      "sha256": "f7be6fc0160471ec2d744da2fb24ae5af29a538c04aa88ccc5b1075837cf29ef",
       "roles": [
         "index.html/img.srcset"
       ],
       "responsive_derivative": {
         "source": "hf_20261125_122903_b0a8a58a-1c3f-467e-87d9-8796bf2d6205 1.jpg",
         "source_sha256": "f9fd371519285ed5dbaec55e0381fafe020e82d9b0bab1f4e2f5c4015a313410",
+        "source_width": 2200,
+        "source_height": 1239,
         "width": 800,
         "height": 451,
-        "encoding": "webp-quality-91-sharp-yuv"
+        "encoding": "webp-lossless-method6-quality100",
+        "resize": "lanczos",
+        "pixel_verification": {
+          "method": "decoded RGB equals source after documented crop/resize",
+          "rgb_sha256": "23f52636b4f96afb0284d8f7fd0eb77594d973c3930d05f3f2dd7793efe98a90",
+          "decoded_rgb_sha256": "23f52636b4f96afb0284d8f7fd0eb77594d973c3930d05f3f2dd7793efe98a90",
+          "exact": true
+        }
       },
       "selections": [
         {
           "requested": "assets/images/site/gallery/render-11-800.webp",
           "chosen": "assets/images/site/gallery/render-11-800.webp",
-          "source_bytes": 164758,
-          "selected_bytes": 164758,
-          "source_sha256": "7e523c680d5760f46a3aaadd5d70d0b2cb5f9ae029f979815953af87a3939362",
-          "selected_sha256": "7e523c680d5760f46a3aaadd5d70d0b2cb5f9ae029f979815953af87a3939362"
+          "source_bytes": 571380,
+          "selected_bytes": 571380,
+          "source_sha256": "f7be6fc0160471ec2d744da2fb24ae5af29a538c04aa88ccc5b1075837cf29ef",
+          "selected_sha256": "f7be6fc0160471ec2d744da2fb24ae5af29a538c04aa88ccc5b1075837cf29ef"
+        }
+      ]
+    },
+    {
+      "path": "assets/images/site/gallery/render-11-full.jpg",
+      "roles": [
+        "index.html/img.srcset"
+      ],
+      "bytes": 3324853,
+      "sha256": "cd07b1e5319bc910303efe79be875bda7bc44cb0635b07843e4424d5fb4202f1",
+      "responsive_derivative": {
+        "source": "hf_20261125_122903_b0a8a58a-1c3f-467e-87d9-8796bf2d6205 1.jpg",
+        "source_sha256": "f9fd371519285ed5dbaec55e0381fafe020e82d9b0bab1f4e2f5c4015a313410",
+        "source_width": 2200,
+        "source_height": 1239,
+        "width": 2200,
+        "height": 1239,
+        "encoding": "jpegtran-optimized-progressive",
+        "pixel_verification": {
+          "method": "djpeg -rgb decoded PPM equality to original JPEG",
+          "rgb_ppm_sha256": "de89e17895bff23e6b8d82ecaff48055bf9376165d48fefd01d30554b78a9657",
+          "decoded_rgb_ppm_sha256": "de89e17895bff23e6b8d82ecaff48055bf9376165d48fefd01d30554b78a9657",
+          "exact": true
+        }
+      },
+      "selections": [
+        {
+          "requested": "assets/images/site/gallery/render-11-full.jpg",
+          "chosen": "assets/images/site/gallery/render-11-full.jpg",
+          "source_bytes": 3731913,
+          "selected_bytes": 3324853,
+          "source_sha256": "f9fd371519285ed5dbaec55e0381fafe020e82d9b0bab1f4e2f5c4015a313410",
+          "selected_sha256": "cd07b1e5319bc910303efe79be875bda7bc44cb0635b07843e4424d5fb4202f1"
         }
       ]
     },
     {
       "path": "assets/images/site/gallery/render-12-1280.webp",
-      "bytes": 175600,
-      "sha256": "8de6a8c4a540b737503dfb62ae609e5a04f3fc8cca527916b141d6915c46eed8",
+      "bytes": 960648,
+      "sha256": "7280e68327fed2df8ab228a16f9307573db2c171712a0cd96b5b8bfa5d40065c",
       "roles": [
         "index.html/img.src",
         "index.html/img.srcset"
@@ -20791,75 +20911,101 @@
       "responsive_derivative": {
         "source": "a3/2.jpg",
         "source_sha256": "888378d3d39d60f3516fb7242ff4916f1f53864380e8c58282eaa3d953342dd5",
+        "source_width": 2200,
+        "source_height": 1231,
         "width": 1280,
         "height": 716,
-        "encoding": "webp-quality-91-sharp-yuv"
+        "encoding": "webp-lossless-method6-quality100",
+        "resize": "lanczos",
+        "pixel_verification": {
+          "method": "decoded RGB equals source after documented crop/resize",
+          "rgb_sha256": "beae99a8f2ec749176bc0bde197037bb74e1681ce3155595eabbf44023f0c14b",
+          "decoded_rgb_sha256": "beae99a8f2ec749176bc0bde197037bb74e1681ce3155595eabbf44023f0c14b",
+          "exact": true
+        }
       },
       "selections": [
         {
           "requested": "assets/images/site/gallery/render-12-1280.webp",
           "chosen": "assets/images/site/gallery/render-12-1280.webp",
-          "source_bytes": 175600,
-          "selected_bytes": 175600,
-          "source_sha256": "8de6a8c4a540b737503dfb62ae609e5a04f3fc8cca527916b141d6915c46eed8",
-          "selected_sha256": "8de6a8c4a540b737503dfb62ae609e5a04f3fc8cca527916b141d6915c46eed8"
-        }
-      ]
-    },
-    {
-      "path": "assets/images/site/gallery/render-12-1920.webp",
-      "bytes": 289892,
-      "sha256": "194c5cd01e8f6cdc67635e77aa828f0ad30e129a4b8d41dc5854ecec2fced970",
-      "roles": [
-        "index.html/img.srcset"
-      ],
-      "responsive_derivative": {
-        "source": "a3/2.jpg",
-        "source_sha256": "888378d3d39d60f3516fb7242ff4916f1f53864380e8c58282eaa3d953342dd5",
-        "width": 1920,
-        "height": 1074,
-        "encoding": "webp-quality-91-sharp-yuv"
-      },
-      "selections": [
-        {
-          "requested": "assets/images/site/gallery/render-12-1920.webp",
-          "chosen": "assets/images/site/gallery/render-12-1920.webp",
-          "source_bytes": 289892,
-          "selected_bytes": 289892,
-          "source_sha256": "194c5cd01e8f6cdc67635e77aa828f0ad30e129a4b8d41dc5854ecec2fced970",
-          "selected_sha256": "194c5cd01e8f6cdc67635e77aa828f0ad30e129a4b8d41dc5854ecec2fced970"
+          "source_bytes": 960648,
+          "selected_bytes": 960648,
+          "source_sha256": "7280e68327fed2df8ab228a16f9307573db2c171712a0cd96b5b8bfa5d40065c",
+          "selected_sha256": "7280e68327fed2df8ab228a16f9307573db2c171712a0cd96b5b8bfa5d40065c"
         }
       ]
     },
     {
       "path": "assets/images/site/gallery/render-12-800.webp",
-      "bytes": 88312,
-      "sha256": "4e1f464b25352544196cb4b67727b9080b7b9f22f20d6c83f144ac1048e46ad7",
+      "bytes": 398504,
+      "sha256": "f78fe43aedffd99b169c99163ec26fe6f95fbed9c583b4922909c73f13de8ca3",
       "roles": [
         "index.html/img.srcset"
       ],
       "responsive_derivative": {
         "source": "a3/2.jpg",
         "source_sha256": "888378d3d39d60f3516fb7242ff4916f1f53864380e8c58282eaa3d953342dd5",
+        "source_width": 2200,
+        "source_height": 1231,
         "width": 800,
         "height": 448,
-        "encoding": "webp-quality-91-sharp-yuv"
+        "encoding": "webp-lossless-method6-quality100",
+        "resize": "lanczos",
+        "pixel_verification": {
+          "method": "decoded RGB equals source after documented crop/resize",
+          "rgb_sha256": "4696a8968ad254fdcde82b3df166acc8ddda2a7ec66714bcf020c92c0bd9463f",
+          "decoded_rgb_sha256": "4696a8968ad254fdcde82b3df166acc8ddda2a7ec66714bcf020c92c0bd9463f",
+          "exact": true
+        }
       },
       "selections": [
         {
           "requested": "assets/images/site/gallery/render-12-800.webp",
           "chosen": "assets/images/site/gallery/render-12-800.webp",
-          "source_bytes": 88312,
-          "selected_bytes": 88312,
-          "source_sha256": "4e1f464b25352544196cb4b67727b9080b7b9f22f20d6c83f144ac1048e46ad7",
-          "selected_sha256": "4e1f464b25352544196cb4b67727b9080b7b9f22f20d6c83f144ac1048e46ad7"
+          "source_bytes": 398504,
+          "selected_bytes": 398504,
+          "source_sha256": "f78fe43aedffd99b169c99163ec26fe6f95fbed9c583b4922909c73f13de8ca3",
+          "selected_sha256": "f78fe43aedffd99b169c99163ec26fe6f95fbed9c583b4922909c73f13de8ca3"
+        }
+      ]
+    },
+    {
+      "path": "assets/images/site/gallery/render-12-full.jpg",
+      "roles": [
+        "index.html/img.srcset"
+      ],
+      "bytes": 1708255,
+      "sha256": "bf76c76409f0058888c001398c9dacf955e5bf598add2ec01437f12a2f1be98c",
+      "responsive_derivative": {
+        "source": "a3/2.jpg",
+        "source_sha256": "888378d3d39d60f3516fb7242ff4916f1f53864380e8c58282eaa3d953342dd5",
+        "source_width": 2200,
+        "source_height": 1231,
+        "width": 2200,
+        "height": 1231,
+        "encoding": "jpegtran-optimized-progressive",
+        "pixel_verification": {
+          "method": "djpeg -rgb decoded PPM equality to original JPEG",
+          "rgb_ppm_sha256": "eb6fad5f7d0ddad9058c4eeb9cfc468bde0529440c1c2838fbffc0c83597a907",
+          "decoded_rgb_ppm_sha256": "eb6fad5f7d0ddad9058c4eeb9cfc468bde0529440c1c2838fbffc0c83597a907",
+          "exact": true
+        }
+      },
+      "selections": [
+        {
+          "requested": "assets/images/site/gallery/render-12-full.jpg",
+          "chosen": "assets/images/site/gallery/render-12-full.jpg",
+          "source_bytes": 1913521,
+          "selected_bytes": 1708255,
+          "source_sha256": "888378d3d39d60f3516fb7242ff4916f1f53864380e8c58282eaa3d953342dd5",
+          "selected_sha256": "bf76c76409f0058888c001398c9dacf955e5bf598add2ec01437f12a2f1be98c"
         }
       ]
     },
     {
       "path": "assets/images/site/gallery/render-13-1280.webp",
-      "bytes": 338254,
-      "sha256": "167426764aa0b30b8a2c57f6d3876da715280df5ad1c6eb7d1d8ed200e09a1ce",
+      "bytes": 1310752,
+      "sha256": "2290b90c709896be22d17d72e892e4800d9392d03d09e70b43134eaecb2a67f3",
       "roles": [
         "index.html/img.src",
         "index.html/img.srcset"
@@ -20867,75 +21013,135 @@
       "responsive_derivative": {
         "source": "a3/1.jpg",
         "source_sha256": "971db61442896e8059d1301ee9f686bfbe6a2772793775efbfb1b147f62d5960",
+        "source_width": 2200,
+        "source_height": 1231,
         "width": 1280,
         "height": 716,
-        "encoding": "webp-quality-91-sharp-yuv"
+        "encoding": "webp-lossless-method6-quality100",
+        "resize": "lanczos",
+        "pixel_verification": {
+          "method": "decoded RGB equals source after documented crop/resize",
+          "rgb_sha256": "b77419a0fb562b252ce463f45ef6e1195e4b70d74475d9a818c43c0c66dec062",
+          "decoded_rgb_sha256": "b77419a0fb562b252ce463f45ef6e1195e4b70d74475d9a818c43c0c66dec062",
+          "exact": true
+        }
       },
       "selections": [
         {
           "requested": "assets/images/site/gallery/render-13-1280.webp",
           "chosen": "assets/images/site/gallery/render-13-1280.webp",
-          "source_bytes": 338254,
-          "selected_bytes": 338254,
-          "source_sha256": "167426764aa0b30b8a2c57f6d3876da715280df5ad1c6eb7d1d8ed200e09a1ce",
-          "selected_sha256": "167426764aa0b30b8a2c57f6d3876da715280df5ad1c6eb7d1d8ed200e09a1ce"
+          "source_bytes": 1310752,
+          "selected_bytes": 1310752,
+          "source_sha256": "2290b90c709896be22d17d72e892e4800d9392d03d09e70b43134eaecb2a67f3",
+          "selected_sha256": "2290b90c709896be22d17d72e892e4800d9392d03d09e70b43134eaecb2a67f3"
         }
       ]
     },
     {
       "path": "assets/images/site/gallery/render-13-1920.webp",
-      "bytes": 660116,
-      "sha256": "691f1509225c0090a73088e60ad4b3aadb422c698c5df747dfd0a3d4dc859651",
+      "bytes": 2806300,
+      "sha256": "0fdfa03ee8d394ca1a8042b807aceb22e43ca5a54ef53957dc7470baf5916e11",
       "roles": [
         "index.html/img.srcset"
       ],
       "responsive_derivative": {
         "source": "a3/1.jpg",
         "source_sha256": "971db61442896e8059d1301ee9f686bfbe6a2772793775efbfb1b147f62d5960",
+        "source_width": 2200,
+        "source_height": 1231,
         "width": 1920,
         "height": 1074,
-        "encoding": "webp-quality-91-sharp-yuv"
+        "encoding": "webp-lossless-method6-quality100",
+        "resize": "lanczos",
+        "pixel_verification": {
+          "method": "decoded RGB equals source after documented crop/resize",
+          "rgb_sha256": "9173a901932d559d376b9a4ffe50c83383fd5f107712b8e6cbdfbaf25db62fff",
+          "decoded_rgb_sha256": "9173a901932d559d376b9a4ffe50c83383fd5f107712b8e6cbdfbaf25db62fff",
+          "exact": true
+        }
       },
       "selections": [
         {
           "requested": "assets/images/site/gallery/render-13-1920.webp",
           "chosen": "assets/images/site/gallery/render-13-1920.webp",
-          "source_bytes": 660116,
-          "selected_bytes": 660116,
-          "source_sha256": "691f1509225c0090a73088e60ad4b3aadb422c698c5df747dfd0a3d4dc859651",
-          "selected_sha256": "691f1509225c0090a73088e60ad4b3aadb422c698c5df747dfd0a3d4dc859651"
+          "source_bytes": 2806300,
+          "selected_bytes": 2806300,
+          "source_sha256": "0fdfa03ee8d394ca1a8042b807aceb22e43ca5a54ef53957dc7470baf5916e11",
+          "selected_sha256": "0fdfa03ee8d394ca1a8042b807aceb22e43ca5a54ef53957dc7470baf5916e11"
         }
       ]
     },
     {
       "path": "assets/images/site/gallery/render-13-800.webp",
-      "bytes": 148480,
-      "sha256": "aba85c090367243605abe490675778b3676420af1cee3cd3277b1e8da45d4965",
+      "bytes": 534254,
+      "sha256": "9ab858b78f63490f63ef051b8a5b123c5f47a7caf1560f75b7a016b3367aa2f3",
       "roles": [
         "index.html/img.srcset"
       ],
       "responsive_derivative": {
         "source": "a3/1.jpg",
         "source_sha256": "971db61442896e8059d1301ee9f686bfbe6a2772793775efbfb1b147f62d5960",
+        "source_width": 2200,
+        "source_height": 1231,
         "width": 800,
         "height": 448,
-        "encoding": "webp-quality-91-sharp-yuv"
+        "encoding": "webp-lossless-method6-quality100",
+        "resize": "lanczos",
+        "pixel_verification": {
+          "method": "decoded RGB equals source after documented crop/resize",
+          "rgb_sha256": "51baea9f4f6a20626b4c093a4671ad604a31b007d2f0498216609962b9c6e3ab",
+          "decoded_rgb_sha256": "51baea9f4f6a20626b4c093a4671ad604a31b007d2f0498216609962b9c6e3ab",
+          "exact": true
+        }
       },
       "selections": [
         {
           "requested": "assets/images/site/gallery/render-13-800.webp",
           "chosen": "assets/images/site/gallery/render-13-800.webp",
-          "source_bytes": 148480,
-          "selected_bytes": 148480,
-          "source_sha256": "aba85c090367243605abe490675778b3676420af1cee3cd3277b1e8da45d4965",
-          "selected_sha256": "aba85c090367243605abe490675778b3676420af1cee3cd3277b1e8da45d4965"
+          "source_bytes": 534254,
+          "selected_bytes": 534254,
+          "source_sha256": "9ab858b78f63490f63ef051b8a5b123c5f47a7caf1560f75b7a016b3367aa2f3",
+          "selected_sha256": "9ab858b78f63490f63ef051b8a5b123c5f47a7caf1560f75b7a016b3367aa2f3"
+        }
+      ]
+    },
+    {
+      "path": "assets/images/site/gallery/render-13-full.jpg",
+      "roles": [
+        "index.html/img.srcset"
+      ],
+      "bytes": 3153494,
+      "sha256": "fa6db50058a79650157de2cea0d7c9d7ab965177b28b21f5f1dec5a47548a0b4",
+      "responsive_derivative": {
+        "source": "a3/1.jpg",
+        "source_sha256": "971db61442896e8059d1301ee9f686bfbe6a2772793775efbfb1b147f62d5960",
+        "source_width": 2200,
+        "source_height": 1231,
+        "width": 2200,
+        "height": 1231,
+        "encoding": "jpegtran-optimized-progressive",
+        "pixel_verification": {
+          "method": "djpeg -rgb decoded PPM equality to original JPEG",
+          "rgb_ppm_sha256": "4a9582c86eaafe0ec90dfe6edb4186ca5f6d82f59d7c72bf28c0103c6af041cf",
+          "decoded_rgb_ppm_sha256": "4a9582c86eaafe0ec90dfe6edb4186ca5f6d82f59d7c72bf28c0103c6af041cf",
+          "exact": true
+        }
+      },
+      "selections": [
+        {
+          "requested": "assets/images/site/gallery/render-13-full.jpg",
+          "chosen": "assets/images/site/gallery/render-13-full.jpg",
+          "source_bytes": 3519487,
+          "selected_bytes": 3153494,
+          "source_sha256": "971db61442896e8059d1301ee9f686bfbe6a2772793775efbfb1b147f62d5960",
+          "selected_sha256": "fa6db50058a79650157de2cea0d7c9d7ab965177b28b21f5f1dec5a47548a0b4"
         }
       ]
     },
     {
       "path": "assets/images/site/gallery/render-14-1280.webp",
-      "bytes": 330118,
-      "sha256": "cd8dbd6f00c3b84374ec5dadee58d6f54c4642e8143d1b6a6f796b6907f06b18",
+      "bytes": 1338462,
+      "sha256": "6f0167427c35a8643a018323bd43c6c4eee0f67370123c8b13f155a355fa78ea",
       "roles": [
         "index.html/img.src",
         "index.html/img.srcset"
@@ -20943,75 +21149,101 @@
       "responsive_derivative": {
         "source": "home1 1.jpg",
         "source_sha256": "f9c441ed388052bad2413e36494b6b5d6f3b421382fa5217f017c4133b691037",
+        "source_width": 2200,
+        "source_height": 1330,
         "width": 1280,
         "height": 774,
-        "encoding": "webp-quality-91-sharp-yuv"
+        "encoding": "webp-lossless-method6-quality100",
+        "resize": "lanczos",
+        "pixel_verification": {
+          "method": "decoded RGB equals source after documented crop/resize",
+          "rgb_sha256": "ad68f7a8ab567c7cc5ffea6d93a6ae670da6fd69fb828f1648c70a64813881a2",
+          "decoded_rgb_sha256": "ad68f7a8ab567c7cc5ffea6d93a6ae670da6fd69fb828f1648c70a64813881a2",
+          "exact": true
+        }
       },
       "selections": [
         {
           "requested": "assets/images/site/gallery/render-14-1280.webp",
           "chosen": "assets/images/site/gallery/render-14-1280.webp",
-          "source_bytes": 330118,
-          "selected_bytes": 330118,
-          "source_sha256": "cd8dbd6f00c3b84374ec5dadee58d6f54c4642e8143d1b6a6f796b6907f06b18",
-          "selected_sha256": "cd8dbd6f00c3b84374ec5dadee58d6f54c4642e8143d1b6a6f796b6907f06b18"
-        }
-      ]
-    },
-    {
-      "path": "assets/images/site/gallery/render-14-1920.webp",
-      "bytes": 596680,
-      "sha256": "cde7e10a05772e93c93ce4f3c2db93e3955eeba8b8f3406e2322250cb6aede1a",
-      "roles": [
-        "index.html/img.srcset"
-      ],
-      "responsive_derivative": {
-        "source": "home1 1.jpg",
-        "source_sha256": "f9c441ed388052bad2413e36494b6b5d6f3b421382fa5217f017c4133b691037",
-        "width": 1920,
-        "height": 1161,
-        "encoding": "webp-quality-91-sharp-yuv"
-      },
-      "selections": [
-        {
-          "requested": "assets/images/site/gallery/render-14-1920.webp",
-          "chosen": "assets/images/site/gallery/render-14-1920.webp",
-          "source_bytes": 596680,
-          "selected_bytes": 596680,
-          "source_sha256": "cde7e10a05772e93c93ce4f3c2db93e3955eeba8b8f3406e2322250cb6aede1a",
-          "selected_sha256": "cde7e10a05772e93c93ce4f3c2db93e3955eeba8b8f3406e2322250cb6aede1a"
+          "source_bytes": 1338462,
+          "selected_bytes": 1338462,
+          "source_sha256": "6f0167427c35a8643a018323bd43c6c4eee0f67370123c8b13f155a355fa78ea",
+          "selected_sha256": "6f0167427c35a8643a018323bd43c6c4eee0f67370123c8b13f155a355fa78ea"
         }
       ]
     },
     {
       "path": "assets/images/site/gallery/render-14-800.webp",
-      "bytes": 148308,
-      "sha256": "b86cf4f1b483110f54226781ab5029ace91a6f64fc7d52e00b9329c34e2a118a",
+      "bytes": 547746,
+      "sha256": "0555300086abf7b21955c9870cad61ed7017fee9baaf38fe8d736899c4849818",
       "roles": [
         "index.html/img.srcset"
       ],
       "responsive_derivative": {
         "source": "home1 1.jpg",
         "source_sha256": "f9c441ed388052bad2413e36494b6b5d6f3b421382fa5217f017c4133b691037",
+        "source_width": 2200,
+        "source_height": 1330,
         "width": 800,
         "height": 484,
-        "encoding": "webp-quality-91-sharp-yuv"
+        "encoding": "webp-lossless-method6-quality100",
+        "resize": "lanczos",
+        "pixel_verification": {
+          "method": "decoded RGB equals source after documented crop/resize",
+          "rgb_sha256": "ffa0c4960473570f2e3dcee8d518b9aa6c1e0c72ddb6934c20d70921eddb0a2e",
+          "decoded_rgb_sha256": "ffa0c4960473570f2e3dcee8d518b9aa6c1e0c72ddb6934c20d70921eddb0a2e",
+          "exact": true
+        }
       },
       "selections": [
         {
           "requested": "assets/images/site/gallery/render-14-800.webp",
           "chosen": "assets/images/site/gallery/render-14-800.webp",
-          "source_bytes": 148308,
-          "selected_bytes": 148308,
-          "source_sha256": "b86cf4f1b483110f54226781ab5029ace91a6f64fc7d52e00b9329c34e2a118a",
-          "selected_sha256": "b86cf4f1b483110f54226781ab5029ace91a6f64fc7d52e00b9329c34e2a118a"
+          "source_bytes": 547746,
+          "selected_bytes": 547746,
+          "source_sha256": "0555300086abf7b21955c9870cad61ed7017fee9baaf38fe8d736899c4849818",
+          "selected_sha256": "0555300086abf7b21955c9870cad61ed7017fee9baaf38fe8d736899c4849818"
+        }
+      ]
+    },
+    {
+      "path": "assets/images/site/gallery/render-14-full.jpg",
+      "roles": [
+        "index.html/img.srcset"
+      ],
+      "bytes": 2791329,
+      "sha256": "cb9702181155219e01fc234275a686f8b9e6a573f063628b0c25fc99905f7afe",
+      "responsive_derivative": {
+        "source": "home1 1.jpg",
+        "source_sha256": "f9c441ed388052bad2413e36494b6b5d6f3b421382fa5217f017c4133b691037",
+        "source_width": 2200,
+        "source_height": 1330,
+        "width": 2200,
+        "height": 1330,
+        "encoding": "jpegtran-optimized-progressive",
+        "pixel_verification": {
+          "method": "djpeg -rgb decoded PPM equality to original JPEG",
+          "rgb_ppm_sha256": "34e6c94712401b6629504d61c89d87065480c66a1d9f775ced061dcea95f4483",
+          "decoded_rgb_ppm_sha256": "34e6c94712401b6629504d61c89d87065480c66a1d9f775ced061dcea95f4483",
+          "exact": true
+        }
+      },
+      "selections": [
+        {
+          "requested": "assets/images/site/gallery/render-14-full.jpg",
+          "chosen": "assets/images/site/gallery/render-14-full.jpg",
+          "source_bytes": 3102860,
+          "selected_bytes": 2791329,
+          "source_sha256": "f9c441ed388052bad2413e36494b6b5d6f3b421382fa5217f017c4133b691037",
+          "selected_sha256": "cb9702181155219e01fc234275a686f8b9e6a573f063628b0c25fc99905f7afe"
         }
       ]
     },
     {
       "path": "assets/images/site/gallery/render-15-1280.webp",
-      "bytes": 387060,
-      "sha256": "182e859f0036f4bb8fafb010c945727cfe9040df83d7272dd63597a571244fcc",
+      "bytes": 1403854,
+      "sha256": "dd782e82367c017d5878b880bf1680e12e3b41e369c877b2adf99a59749639bb",
       "roles": [
         "index.html/img.src",
         "index.html/img.srcset"
@@ -21019,68 +21251,128 @@
       "responsive_derivative": {
         "source": "hf_20261125_123556_aaf3c64b-f275-4ba9-b1ef-4f79bd5e48ff 1.jpg",
         "source_sha256": "08949ccafbdd39ec52fcb8d39af4979233f00e9bd1fc4ac45475a13ee63599eb",
+        "source_width": 2200,
+        "source_height": 1247,
         "width": 1280,
         "height": 726,
-        "encoding": "webp-quality-91-sharp-yuv"
+        "encoding": "webp-lossless-method6-quality100",
+        "resize": "lanczos",
+        "pixel_verification": {
+          "method": "decoded RGB equals source after documented crop/resize",
+          "rgb_sha256": "b250be4682f15a1e5d011b4abe862336abf9691cc50284b25fdde9a3b29f3795",
+          "decoded_rgb_sha256": "b250be4682f15a1e5d011b4abe862336abf9691cc50284b25fdde9a3b29f3795",
+          "exact": true
+        }
       },
       "selections": [
         {
           "requested": "assets/images/site/gallery/render-15-1280.webp",
           "chosen": "assets/images/site/gallery/render-15-1280.webp",
-          "source_bytes": 387060,
-          "selected_bytes": 387060,
-          "source_sha256": "182e859f0036f4bb8fafb010c945727cfe9040df83d7272dd63597a571244fcc",
-          "selected_sha256": "182e859f0036f4bb8fafb010c945727cfe9040df83d7272dd63597a571244fcc"
+          "source_bytes": 1403854,
+          "selected_bytes": 1403854,
+          "source_sha256": "dd782e82367c017d5878b880bf1680e12e3b41e369c877b2adf99a59749639bb",
+          "selected_sha256": "dd782e82367c017d5878b880bf1680e12e3b41e369c877b2adf99a59749639bb"
         }
       ]
     },
     {
       "path": "assets/images/site/gallery/render-15-1920.webp",
-      "bytes": 736004,
-      "sha256": "d58336cfe1bd2d5f6e0e1d5593ad703333814db6d63c336419eb06205c49baad",
+      "bytes": 2978422,
+      "sha256": "a63120b0944fbab1b0873a882c68ecd1b68dd905502db06b250ce11f365e4387",
       "roles": [
         "index.html/img.srcset"
       ],
       "responsive_derivative": {
         "source": "hf_20261125_123556_aaf3c64b-f275-4ba9-b1ef-4f79bd5e48ff 1.jpg",
         "source_sha256": "08949ccafbdd39ec52fcb8d39af4979233f00e9bd1fc4ac45475a13ee63599eb",
+        "source_width": 2200,
+        "source_height": 1247,
         "width": 1920,
         "height": 1088,
-        "encoding": "webp-quality-91-sharp-yuv"
+        "encoding": "webp-lossless-method6-quality100",
+        "resize": "lanczos",
+        "pixel_verification": {
+          "method": "decoded RGB equals source after documented crop/resize",
+          "rgb_sha256": "d25f11641f14069f7d7ec3c6b8ccfe95874038824ad1d226d1ca1b2505f15994",
+          "decoded_rgb_sha256": "d25f11641f14069f7d7ec3c6b8ccfe95874038824ad1d226d1ca1b2505f15994",
+          "exact": true
+        }
       },
       "selections": [
         {
           "requested": "assets/images/site/gallery/render-15-1920.webp",
           "chosen": "assets/images/site/gallery/render-15-1920.webp",
-          "source_bytes": 736004,
-          "selected_bytes": 736004,
-          "source_sha256": "d58336cfe1bd2d5f6e0e1d5593ad703333814db6d63c336419eb06205c49baad",
-          "selected_sha256": "d58336cfe1bd2d5f6e0e1d5593ad703333814db6d63c336419eb06205c49baad"
+          "source_bytes": 2978422,
+          "selected_bytes": 2978422,
+          "source_sha256": "a63120b0944fbab1b0873a882c68ecd1b68dd905502db06b250ce11f365e4387",
+          "selected_sha256": "a63120b0944fbab1b0873a882c68ecd1b68dd905502db06b250ce11f365e4387"
         }
       ]
     },
     {
       "path": "assets/images/site/gallery/render-15-800.webp",
-      "bytes": 164944,
-      "sha256": "e6afd9bed31bc26deb695791843cf283bab8dcde11b77666c047591e949d1004",
+      "bytes": 573134,
+      "sha256": "8f6ac1048eaee39e990342ddcb92250f70417afc2925fcb9c846b9e8336bd2d8",
       "roles": [
         "index.html/img.srcset"
       ],
       "responsive_derivative": {
         "source": "hf_20261125_123556_aaf3c64b-f275-4ba9-b1ef-4f79bd5e48ff 1.jpg",
         "source_sha256": "08949ccafbdd39ec52fcb8d39af4979233f00e9bd1fc4ac45475a13ee63599eb",
+        "source_width": 2200,
+        "source_height": 1247,
         "width": 800,
         "height": 453,
-        "encoding": "webp-quality-91-sharp-yuv"
+        "encoding": "webp-lossless-method6-quality100",
+        "resize": "lanczos",
+        "pixel_verification": {
+          "method": "decoded RGB equals source after documented crop/resize",
+          "rgb_sha256": "6d65a545327cd85830bc969aee9a6e0b16d103b23675ae02a5c96e2b8bd24807",
+          "decoded_rgb_sha256": "6d65a545327cd85830bc969aee9a6e0b16d103b23675ae02a5c96e2b8bd24807",
+          "exact": true
+        }
       },
       "selections": [
         {
           "requested": "assets/images/site/gallery/render-15-800.webp",
           "chosen": "assets/images/site/gallery/render-15-800.webp",
-          "source_bytes": 164944,
-          "selected_bytes": 164944,
-          "source_sha256": "e6afd9bed31bc26deb695791843cf283bab8dcde11b77666c047591e949d1004",
-          "selected_sha256": "e6afd9bed31bc26deb695791843cf283bab8dcde11b77666c047591e949d1004"
+          "source_bytes": 573134,
+          "selected_bytes": 573134,
+          "source_sha256": "8f6ac1048eaee39e990342ddcb92250f70417afc2925fcb9c846b9e8336bd2d8",
+          "selected_sha256": "8f6ac1048eaee39e990342ddcb92250f70417afc2925fcb9c846b9e8336bd2d8"
+        }
+      ]
+    },
+    {
+      "path": "assets/images/site/gallery/render-15-full.jpg",
+      "roles": [
+        "index.html/img.srcset"
+      ],
+      "bytes": 3271832,
+      "sha256": "10d6a780e82bc28fb68f574e437070b46e6a05981f4cbd7a7df69f4c40afd1c4",
+      "responsive_derivative": {
+        "source": "hf_20261125_123556_aaf3c64b-f275-4ba9-b1ef-4f79bd5e48ff 1.jpg",
+        "source_sha256": "08949ccafbdd39ec52fcb8d39af4979233f00e9bd1fc4ac45475a13ee63599eb",
+        "source_width": 2200,
+        "source_height": 1247,
+        "width": 2200,
+        "height": 1247,
+        "encoding": "jpegtran-optimized-progressive",
+        "pixel_verification": {
+          "method": "djpeg -rgb decoded PPM equality to original JPEG",
+          "rgb_ppm_sha256": "4093744856d95130a9c18c1e2ddb3e453213ebb76174bf12ffd58ebee2a439e8",
+          "decoded_rgb_ppm_sha256": "4093744856d95130a9c18c1e2ddb3e453213ebb76174bf12ffd58ebee2a439e8",
+          "exact": true
+        }
+      },
+      "selections": [
+        {
+          "requested": "assets/images/site/gallery/render-15-full.jpg",
+          "chosen": "assets/images/site/gallery/render-15-full.jpg",
+          "source_bytes": 3670219,
+          "selected_bytes": 3271832,
+          "source_sha256": "08949ccafbdd39ec52fcb8d39af4979233f00e9bd1fc4ac45475a13ee63599eb",
+          "selected_sha256": "10d6a780e82bc28fb68f574e437070b46e6a05981f4cbd7a7df69f4c40afd1c4"
         }
       ]
     },
@@ -21152,58 +21444,76 @@
     },
     {
       "path": "assets/images/site/hero/residence-aerial-1664.webp",
-      "bytes": 502194,
-      "sha256": "8f065cdbef33192e7fba419189481779d1b028efd57434512bab5963d9ecc839",
+      "bytes": 2225846,
+      "sha256": "75b9323b09c20db739737da8d08793cfc07b1cb74df67ddc7188516c2335d7b2",
       "roles": [
         "index.html/img.srcset"
       ],
       "responsive_derivative": {
         "source": "home22 1.jpg",
         "source_sha256": "58077fc4fa68e18e7fb0cd5a896b11a8f3a3104ccde58b8813302ab40bfdbaf1",
+        "source_width": 2400,
+        "source_height": 1451,
         "width": 1664,
         "height": 1006,
-        "encoding": "webp-quality-91-sharp-yuv"
+        "encoding": "webp-lossless-method6-quality100",
+        "resize": "lanczos",
+        "pixel_verification": {
+          "method": "decoded RGB equals source after documented crop/resize",
+          "rgb_sha256": "ef985a19b6f0a058aeb01fac8fe753e3093d9c0a44d29ec98b755f43586c4944",
+          "decoded_rgb_sha256": "ef985a19b6f0a058aeb01fac8fe753e3093d9c0a44d29ec98b755f43586c4944",
+          "exact": true
+        }
       },
       "selections": [
         {
           "requested": "assets/images/site/hero/residence-aerial-1664.webp",
           "chosen": "assets/images/site/hero/residence-aerial-1664.webp",
-          "source_bytes": 502194,
-          "selected_bytes": 502194,
-          "source_sha256": "8f065cdbef33192e7fba419189481779d1b028efd57434512bab5963d9ecc839",
-          "selected_sha256": "8f065cdbef33192e7fba419189481779d1b028efd57434512bab5963d9ecc839"
+          "source_bytes": 2225846,
+          "selected_bytes": 2225846,
+          "source_sha256": "75b9323b09c20db739737da8d08793cfc07b1cb74df67ddc7188516c2335d7b2",
+          "selected_sha256": "75b9323b09c20db739737da8d08793cfc07b1cb74df67ddc7188516c2335d7b2"
         }
       ]
     },
     {
       "path": "assets/images/site/hero/residence-aerial-480.webp",
-      "bytes": 81604,
-      "sha256": "f5edb2d1b0cebf122a19ea8c98ecfaf7e40e55aafbb351389c94966668fac701",
+      "bytes": 225186,
+      "sha256": "ae7d6326851ac412421c347ffbc8043fe645dd855d30f700faba9cf8c22ef3b7",
       "roles": [
         "index.html/img.srcset"
       ],
       "responsive_derivative": {
         "source": "home22 1.jpg",
         "source_sha256": "58077fc4fa68e18e7fb0cd5a896b11a8f3a3104ccde58b8813302ab40bfdbaf1",
+        "source_width": 2400,
+        "source_height": 1451,
         "width": 480,
         "height": 290,
-        "encoding": "webp-quality-95-sharp-yuv"
+        "encoding": "webp-lossless-method6-quality100",
+        "resize": "lanczos",
+        "pixel_verification": {
+          "method": "decoded RGB equals source after documented crop/resize",
+          "rgb_sha256": "362f47847c9f46e82730cd236f9a3a232169266f47c159eef17112055821797f",
+          "decoded_rgb_sha256": "362f47847c9f46e82730cd236f9a3a232169266f47c159eef17112055821797f",
+          "exact": true
+        }
       },
       "selections": [
         {
           "requested": "assets/images/site/hero/residence-aerial-480.webp",
           "chosen": "assets/images/site/hero/residence-aerial-480.webp",
-          "source_bytes": 81604,
-          "selected_bytes": 81604,
-          "source_sha256": "f5edb2d1b0cebf122a19ea8c98ecfaf7e40e55aafbb351389c94966668fac701",
-          "selected_sha256": "f5edb2d1b0cebf122a19ea8c98ecfaf7e40e55aafbb351389c94966668fac701"
+          "source_bytes": 225186,
+          "selected_bytes": 225186,
+          "source_sha256": "ae7d6326851ac412421c347ffbc8043fe645dd855d30f700faba9cf8c22ef3b7",
+          "selected_sha256": "ae7d6326851ac412421c347ffbc8043fe645dd855d30f700faba9cf8c22ef3b7"
         }
       ]
     },
     {
       "path": "assets/images/site/hero/residence-aerial-832.webp",
-      "bytes": 210554,
-      "sha256": "70f4abf476f513be4c55f8a553c3a36b6b9c114aa98c7c1a77b67051ff0fbbb6",
+      "bytes": 627394,
+      "sha256": "9528d4f9def1fbcaff0a8c0f9df33b615f609a699d505eaa46e4d26b53aa843b",
       "roles": [
         "index.html/img.src",
         "index.html/img.srcset"
@@ -21211,125 +21521,203 @@
       "responsive_derivative": {
         "source": "home22 1.jpg",
         "source_sha256": "58077fc4fa68e18e7fb0cd5a896b11a8f3a3104ccde58b8813302ab40bfdbaf1",
+        "source_width": 2400,
+        "source_height": 1451,
         "width": 832,
         "height": 503,
-        "encoding": "webp-quality-95-sharp-yuv"
+        "encoding": "webp-lossless-method6-quality100",
+        "resize": "lanczos",
+        "pixel_verification": {
+          "method": "decoded RGB equals source after documented crop/resize",
+          "rgb_sha256": "ccb83d0bb31572ba8b4ac25d6c1cbffa3ade9cc04684438043b4534ee5a31acf",
+          "decoded_rgb_sha256": "ccb83d0bb31572ba8b4ac25d6c1cbffa3ade9cc04684438043b4534ee5a31acf",
+          "exact": true
+        }
       },
       "selections": [
         {
           "requested": "assets/images/site/hero/residence-aerial-832.webp",
           "chosen": "assets/images/site/hero/residence-aerial-832.webp",
-          "source_bytes": 210554,
-          "selected_bytes": 210554,
-          "source_sha256": "70f4abf476f513be4c55f8a553c3a36b6b9c114aa98c7c1a77b67051ff0fbbb6",
-          "selected_sha256": "70f4abf476f513be4c55f8a553c3a36b6b9c114aa98c7c1a77b67051ff0fbbb6"
+          "source_bytes": 627394,
+          "selected_bytes": 627394,
+          "source_sha256": "9528d4f9def1fbcaff0a8c0f9df33b615f609a699d505eaa46e4d26b53aa843b",
+          "selected_sha256": "9528d4f9def1fbcaff0a8c0f9df33b615f609a699d505eaa46e4d26b53aa843b"
+        }
+      ]
+    },
+    {
+      "path": "assets/images/site/hero/residence-aerial-full.jpg",
+      "roles": [
+        "index.html/img.srcset"
+      ],
+      "bytes": 3110996,
+      "sha256": "6169fe3fa833318c8fb78a9f6aa2e90c09e0d2227dd0111c279848f2ba386bf0",
+      "responsive_derivative": {
+        "source": "home22 1.jpg",
+        "source_sha256": "58077fc4fa68e18e7fb0cd5a896b11a8f3a3104ccde58b8813302ab40bfdbaf1",
+        "source_width": 2400,
+        "source_height": 1451,
+        "width": 2400,
+        "height": 1451,
+        "encoding": "jpegtran-optimized-progressive",
+        "pixel_verification": {
+          "method": "djpeg -rgb decoded PPM equality to original JPEG",
+          "rgb_ppm_sha256": "82fe748c1917cf27c3d63a38153d96acb28615efad3137278b0115ef0dc2d549",
+          "decoded_rgb_ppm_sha256": "82fe748c1917cf27c3d63a38153d96acb28615efad3137278b0115ef0dc2d549",
+          "exact": true
+        }
+      },
+      "selections": [
+        {
+          "requested": "assets/images/site/hero/residence-aerial-full.jpg",
+          "chosen": "assets/images/site/hero/residence-aerial-full.jpg",
+          "source_bytes": 3502659,
+          "selected_bytes": 3110996,
+          "source_sha256": "58077fc4fa68e18e7fb0cd5a896b11a8f3a3104ccde58b8813302ab40bfdbaf1",
+          "selected_sha256": "6169fe3fa833318c8fb78a9f6aa2e90c09e0d2227dd0111c279848f2ba386bf0"
         }
       ]
     },
     {
       "path": "assets/images/site/hero/residence-street-1664.webp",
-      "bytes": 441628,
-      "sha256": "74577936a0a83356e2fc90005c01befcd3686bba50d807fdaffc06cd353eabee",
+      "bytes": 2152560,
+      "sha256": "bb4bba946abdbc50522018585ae2d9581acf6421be5b7b3f8a894e9f215aed5f",
       "roles": [
         "index.html/img.srcset"
       ],
       "responsive_derivative": {
         "source": "home1 1.jpg",
-        "source_sha256": "e009dc1382c27a435391a26990c4755e1bb4cfdaa274a1306f1a82c3c0e65455",
+        "source_sha256": "f9c441ed388052bad2413e36494b6b5d6f3b421382fa5217f017c4133b691037",
+        "source_width": 2200,
+        "source_height": 1330,
         "width": 1664,
         "height": 1006,
-        "encoding": "webp-quality-91-sharp-yuv"
+        "encoding": "webp-lossless-method6-quality100",
+        "resize": "lanczos",
+        "pixel_verification": {
+          "method": "decoded RGB equals source after documented crop/resize",
+          "rgb_sha256": "e2c2e24e5aefe335adb4cdc155ec6ed88dbb985a93c55cf37eb0416ffe89c46e",
+          "decoded_rgb_sha256": "e2c2e24e5aefe335adb4cdc155ec6ed88dbb985a93c55cf37eb0416ffe89c46e",
+          "exact": true
+        }
       },
       "selections": [
         {
           "requested": "assets/images/site/hero/residence-street-1664.webp",
           "chosen": "assets/images/site/hero/residence-street-1664.webp",
-          "source_bytes": 441628,
-          "selected_bytes": 441628,
-          "source_sha256": "74577936a0a83356e2fc90005c01befcd3686bba50d807fdaffc06cd353eabee",
-          "selected_sha256": "74577936a0a83356e2fc90005c01befcd3686bba50d807fdaffc06cd353eabee"
+          "source_bytes": 2152560,
+          "selected_bytes": 2152560,
+          "source_sha256": "bb4bba946abdbc50522018585ae2d9581acf6421be5b7b3f8a894e9f215aed5f",
+          "selected_sha256": "bb4bba946abdbc50522018585ae2d9581acf6421be5b7b3f8a894e9f215aed5f"
         }
       ]
     },
     {
       "path": "assets/images/site/hero/residence-street-480.webp",
-      "bytes": 71212,
-      "sha256": "28dfc5b2eb6c00180e7f10f8b16e61e4b7c74b2dc5c4e11e6a66ebc22cc7b58f",
+      "bytes": 207770,
+      "sha256": "0b8f53cf9f80de0cce52ab6dff3c3cf4a9cb8ff96986c79e2f4184e993606532",
       "roles": [
         "index.html/img.srcset"
       ],
       "responsive_derivative": {
         "source": "home1 1.jpg",
-        "source_sha256": "e009dc1382c27a435391a26990c4755e1bb4cfdaa274a1306f1a82c3c0e65455",
+        "source_sha256": "f9c441ed388052bad2413e36494b6b5d6f3b421382fa5217f017c4133b691037",
+        "source_width": 2200,
+        "source_height": 1330,
         "width": 480,
         "height": 290,
-        "encoding": "webp-quality-95-sharp-yuv"
+        "encoding": "webp-lossless-method6-quality100",
+        "resize": "lanczos",
+        "pixel_verification": {
+          "method": "decoded RGB equals source after documented crop/resize",
+          "rgb_sha256": "018644175e1428754a3cd68e809601ea286dd98f660a27738ce8e56ce1837f9f",
+          "decoded_rgb_sha256": "018644175e1428754a3cd68e809601ea286dd98f660a27738ce8e56ce1837f9f",
+          "exact": true
+        }
       },
       "selections": [
         {
           "requested": "assets/images/site/hero/residence-street-480.webp",
           "chosen": "assets/images/site/hero/residence-street-480.webp",
-          "source_bytes": 71212,
-          "selected_bytes": 71212,
-          "source_sha256": "28dfc5b2eb6c00180e7f10f8b16e61e4b7c74b2dc5c4e11e6a66ebc22cc7b58f",
-          "selected_sha256": "28dfc5b2eb6c00180e7f10f8b16e61e4b7c74b2dc5c4e11e6a66ebc22cc7b58f"
+          "source_bytes": 207770,
+          "selected_bytes": 207770,
+          "source_sha256": "0b8f53cf9f80de0cce52ab6dff3c3cf4a9cb8ff96986c79e2f4184e993606532",
+          "selected_sha256": "0b8f53cf9f80de0cce52ab6dff3c3cf4a9cb8ff96986c79e2f4184e993606532"
         }
       ]
     },
     {
       "path": "assets/images/site/hero/residence-street-832.webp",
-      "bytes": 180154,
-      "sha256": "5272038b7ec86952d74bf94a536074c0b5aeef807197c51f6e42dfcd025c3bc7",
+      "bytes": 589836,
+      "sha256": "52d02e150d99b6f9ae7e8171435839cc10ac5c50f50f8fb38697205459509009",
       "roles": [
         "index.html/img.src",
         "index.html/img.srcset"
       ],
       "responsive_derivative": {
         "source": "home1 1.jpg",
-        "source_sha256": "e009dc1382c27a435391a26990c4755e1bb4cfdaa274a1306f1a82c3c0e65455",
+        "source_sha256": "f9c441ed388052bad2413e36494b6b5d6f3b421382fa5217f017c4133b691037",
+        "source_width": 2200,
+        "source_height": 1330,
         "width": 832,
         "height": 503,
-        "encoding": "webp-quality-95-sharp-yuv"
+        "encoding": "webp-lossless-method6-quality100",
+        "resize": "lanczos",
+        "pixel_verification": {
+          "method": "decoded RGB equals source after documented crop/resize",
+          "rgb_sha256": "f988ece109e758a9b7ff6bca13b703310dc1698b8bae130c6a3daec5cb975741",
+          "decoded_rgb_sha256": "f988ece109e758a9b7ff6bca13b703310dc1698b8bae130c6a3daec5cb975741",
+          "exact": true
+        }
       },
       "selections": [
         {
           "requested": "assets/images/site/hero/residence-street-832.webp",
           "chosen": "assets/images/site/hero/residence-street-832.webp",
-          "source_bytes": 180154,
-          "selected_bytes": 180154,
-          "source_sha256": "5272038b7ec86952d74bf94a536074c0b5aeef807197c51f6e42dfcd025c3bc7",
-          "selected_sha256": "5272038b7ec86952d74bf94a536074c0b5aeef807197c51f6e42dfcd025c3bc7"
+          "source_bytes": 589836,
+          "selected_bytes": 589836,
+          "source_sha256": "52d02e150d99b6f9ae7e8171435839cc10ac5c50f50f8fb38697205459509009",
+          "selected_sha256": "52d02e150d99b6f9ae7e8171435839cc10ac5c50f50f8fb38697205459509009"
         }
       ]
     },
     {
       "path": "assets/images/site/hero/residence-street-compact-1080.webp",
-      "bytes": 226384,
-      "sha256": "9e2a28b2ca04aed4c5476eb2aa1871aa343baf54b2a1c95f16e58b1220ac3e10",
+      "bytes": 889210,
+      "sha256": "ad0e3c1678fda7c787f9d19738c0cbca408e175b571513a245419584eaa3900c",
       "roles": [
         "index.html/source.srcset"
       ],
       "responsive_derivative": {
         "source": "assets/sources/originals/site/hero/residence-street-compact.png",
         "source_sha256": "a44bc5692a6e2a09132fc6136e7916aa242b46a5a76df2edc33e39b4908b0f18",
+        "source_width": 2688,
+        "source_height": 1937,
         "width": 1080,
         "height": 676,
-        "encoding": "webp-quality-93-sharp-yuv",
+        "encoding": "webp-lossless-method6-quality100",
+        "resize": "lanczos",
         "crop": {
           "x": 0,
           "y": 128,
           "width": 2688,
           "height": 1682
+        },
+        "pixel_verification": {
+          "method": "decoded RGB equals source after documented crop/resize",
+          "rgb_sha256": "66e2b6716a07e5b597dc9abc4d1071066ad930974d7eb9a3528869aa7a600572",
+          "decoded_rgb_sha256": "66e2b6716a07e5b597dc9abc4d1071066ad930974d7eb9a3528869aa7a600572",
+          "exact": true
         }
       },
       "selections": [
         {
           "requested": "assets/images/site/hero/residence-street-compact-1080.webp",
           "chosen": "assets/images/site/hero/residence-street-compact-1080.webp",
-          "source_bytes": 226384,
-          "selected_bytes": 226384,
-          "source_sha256": "9e2a28b2ca04aed4c5476eb2aa1871aa343baf54b2a1c95f16e58b1220ac3e10",
-          "selected_sha256": "9e2a28b2ca04aed4c5476eb2aa1871aa343baf54b2a1c95f16e58b1220ac3e10"
+          "source_bytes": 889210,
+          "selected_bytes": 889210,
+          "source_sha256": "ad0e3c1678fda7c787f9d19738c0cbca408e175b571513a245419584eaa3900c",
+          "selected_sha256": "ad0e3c1678fda7c787f9d19738c0cbca408e175b571513a245419584eaa3900c"
         }
       ]
     },

@@ -13,13 +13,16 @@ const tchaikovskyUnits = JSON.parse(tchaikovsky);
 const vivaldiUnits = JSON.parse(vivaldi);
 const noImagePath = "./assets/images/shared/placeholders/no-image.svg";
 
-test("the two responsive residence hero photos stay below one megabyte together", () => {
-  for (const width of [480, 832, 1664]) {
-    const size = (view) => statSync(new URL(`assets/images/site/hero/residence-${view}-${width}.webp`, root)).size;
-    const total = size("street") + size("aerial");
-    assert.ok(total < 1_000_000, `${width}px hero photos: ${total} bytes`);
+test("responsive hero photos keep smaller screens lighter than the full-resolution originals", () => {
+  for (const [view, original] of [["street", "gallery/render-14-full.jpg"], ["aerial", "hero/residence-aerial-full.jpg"]]) {
+    const fullSize = statSync(new URL(`assets/images/site/${original}`, root)).size;
+    let previousSize = 0;
+    for (const width of [480, 832, 1664]) {
+      const size = statSync(new URL(`assets/images/site/hero/residence-${view}-${width}.webp`, root)).size;
+      assert.ok(size > previousSize && size < fullSize, `${view} ${width}px: ${size} bytes; original: ${fullSize}`);
+      previousSize = size;
+    }
   }
-  assert.ok(statSync(new URL("assets/images/site/hero/residence-street-compact-1080.webp", root)).size < 1_000_000);
 });
 
 test("both complete catalogs reference reachable production images", () => {

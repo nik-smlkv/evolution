@@ -115,6 +115,7 @@
   font: 400 16px/1.2 "Manrope-Buttons", sans-serif;
   text-align: center;
   text-transform: uppercase;
+  transition: var(--tr-btn);
 }
 
 .residence-hero__link:focus-visible {
@@ -124,9 +125,9 @@
 
 @media (hover: hover) {
   .residence-hero__link:hover {
-    color: var(--primary-main-color);
-    border-color: white;
-    background: white;
+    color: var(--wh-color);
+    border-color: var(--blue-color);
+    background: var(--blue-color);
   }
 }
 
@@ -136,7 +137,7 @@
   }
 
   .residence-hero__title[data-revealed="true"] .residence-hero__word:last-child img {
-    transition-delay: 75ms;
+    transition-delay: 1s;
   }
 
   .residence-hero__title:is([data-revealed="initial"], [data-revealed="false"]) img {
