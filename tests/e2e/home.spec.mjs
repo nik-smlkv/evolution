@@ -74,18 +74,20 @@ test("home section aliases keep the clean path when switching languages", async 
   await expect(page.getByRole("link", { name: "Srpski", exact: true })).toHaveAttribute("aria-current", "page");
 });
 
-test("the scroll gallery remains available by direct link in both languages", async ({ page, isMobile }) => {
-  await page.goto("/gallery/");
+test("the header opens the scroll gallery and preserves its route when switching languages", async ({ page, isMobile }) => {
+  await page.goto("/");
+  const gallery = page.locator('header a[data-target="render-gallery"]');
+  await revealHeaderItem(page, gallery, isMobile);
+  await activate(gallery, isMobile);
   await expectRoute(page, "/gallery/");
   await expect(page.locator("#render-gallery .render-gallery__stage")).toBeInViewport();
-  await expect(page.locator('header a[data-target="render-gallery"]')).toHaveCount(0);
   const tabTitle = "Evolution Residence – Vaš San je Naša Obaveza";
   await expect(page).toHaveTitle(tabTitle);
 
   await activate(page.getByRole("link", { name: "English", exact: true }), isMobile);
   await expectRoute(page, "/en/gallery/");
   await expect(page.locator("#render-gallery .render-gallery__stage")).toBeInViewport();
-  await expect(page.locator('header a[data-target="render-gallery"]')).toHaveCount(0);
+  expect(await gallery.evaluate((link) => new URL(link.href).pathname)).toBe("/en/gallery/");
   await expect(page).toHaveTitle(tabTitle);
 });
 
@@ -116,6 +118,51 @@ test("the responsive apartments menu opens and shows both uppercase house links"
   else await toggle.press("Escape");
   await expect(toggle).toHaveAttribute("aria-expanded", "false");
   await expect(page.locator(".house-menu__list")).toBeHidden();
+});
+
+test("the apartments button stays consistent from the homepage through both catalogs", async ({ page, isMobile }) => {
+  if (!isMobile) await page.setViewportSize({ width: 1920, height: 900 });
+  await page.goto("/en/");
+  const toggle = page.locator("header .house-menu__toggle");
+  let homeStyle;
+  for (const house of ["", "tchaikovsky", "vivaldi"]) {
+    if (house) {
+      await toggle.press("Enter");
+      await expect(toggle).toHaveAttribute("aria-expanded", "true");
+      const choice = page.locator("header .house-menu__list").getByRole("link", { name: new RegExp(house, "i") });
+      await activate(choice, isMobile);
+      await expectRoute(page, "/en/search-by-parameters.html", `?house=${house}`);
+      await expect(page.locator("body")).toHaveAttribute("data-catalog-house", house);
+    }
+
+    await page.evaluate(() => document.fonts.ready);
+    await revealHeaderItem(page, toggle, isMobile);
+    await expect(toggle).toHaveAccessibleName(/^apartments$/i);
+    await expect(toggle).toHaveAttribute("aria-expanded", "false");
+    const style = await toggle.evaluate((button) => {
+      const css = getComputedStyle(button);
+      return {
+        headerHeight: button.closest("header").offsetHeight,
+        width: button.offsetWidth,
+        height: button.offsetHeight,
+        font: css.fontFamily,
+        fontSize: css.fontSize,
+        padding: css.paddingInline,
+        border: css.border,
+        radius: css.borderRadius,
+      };
+    });
+    if (house) {
+      expect(style).toEqual(homeStyle);
+    } else {
+      homeStyle = style;
+      if (!isMobile) {
+        expect(style.headerHeight).toBe(88);
+        expect(style.height).toBe(56);
+        expect(Math.abs(style.width - 181)).toBeLessThanOrEqual(2);
+      }
+    }
+  }
 });
 
 test("the infrastructure carousel moves on the first click and loops", async ({ page, isMobile }) => {
@@ -337,53 +384,76 @@ test("the gallery covers the pinned Materials slide below the financing cards", 
   })).toEqual({ pinned: true, seamOverSlide: true, gap: 0, belowSeam: true, paddingTop: "180px", paddingBottom: "180px" });
 });
 
-test("the hero loads responsive images and leads directly to About without video", async ({ page }) => {
-  const videoRequests = [];
-  page.on("request", (request) => {
-    if (request.resourceType() === "media" || /evolution-video\.mp4/.test(request.url())) videoRequests.push(request.url());
-  });
-  await page.goto("/");
-  const compactHero = await page.evaluate(() => matchMedia("(max-width: 767.99px)").matches);
-  const pictureFiles = compactHero
-    ? [/\/main-(780|1200)\.webp$/, /\/detail-(780|1200)\.webp$/]
-    : [/\/main(?:-(1200|1920))?\.webp$/, /\/detail(?:-(1200|1920))?\.webp$/];
-  for (const [i, selector] of [".main-img", ".moving-img"].entries()) {
-    const image = page.locator(`.main-block ${selector}`);
-    await expect.poll(() => image.evaluate((element) => element.naturalWidth > 0 ? element.currentSrc : ""))
-      .toMatch(pictureFiles[i]);
-  }
+test("the residence hero loads both photos and opens each localized house catalog", async ({ page, isMobile }) => {
+  for (const [home, selected] of [["/", 0], ["/en/", 1]]) {
+    await page.goto(home);
+    const hero = page.locator(".residence-hero");
+    const title = hero.getByRole("heading", { level: 1, name: /Evolution Residence/i });
+    const cards = hero.locator(".residence-hero__card");
+    await expect(title).toBeInViewport();
+    await expect(cards).toHaveCount(2);
 
-  await expect(page.locator("video, .block-video, .scroll-to-video")).toHaveCount(0);
-  expect(await page.locator(".main-block").evaluate((hero) => hero.nextElementSibling.id)).toBe("about-project");
-  await page.locator(".about-button").click();
-  await expectRoute(page, "/about-project/");
-  await expect(page.locator("#about-project")).toBeInViewport();
-  expect(videoRequests).toEqual([]);
+    for (const [i, name] of ["Tchaikovsky", "Vivaldi"].entries()) {
+      const card = cards.nth(i);
+      await expect(card.locator(".residence-hero__name")).toHaveText(new RegExp(name, "i"));
+      const link = card.locator(".residence-hero__link");
+      await expect(link).toHaveAttribute("href", `.${home}search-by-parameters.html?house=${name.toLowerCase()}`);
+      const image = card.locator(".residence-hero__photo");
+      const expected = i === 0
+        ? /\/residence-street-(?:compact-1080|480|832|1664)\.webp$/
+        : /\/residence-aerial-(?:480|832|1664)\.webp$/;
+      await expect.poll(() => image.evaluate((element) => element.naturalWidth ? element.currentSrc : "")).toMatch(expected);
+    }
+
+    await expect(hero.locator("video")).toHaveCount(0);
+    expect(await hero.evaluate((element) => element.nextElementSibling.id)).toBe("about-project");
+    const house = selected === 0 ? "tchaikovsky" : "vivaldi";
+    await activate(cards.nth(selected).locator(".residence-hero__link"), isMobile);
+    await expectRoute(page, `${home}search-by-parameters.html`, `?house=${house}`);
+    await expect(page.locator("body")).toHaveAttribute("data-catalog-house", house);
+    await expect(page.locator(".available-apartments__list .apartment__item").first()).toBeVisible();
+  }
 });
 
-test("the full Evolution word fits the hero across breakpoints", async ({ page }, testInfo) => {
-  test.skip(testInfo.project.name !== "desktop-chromium", "This desktop viewport sweep covers the responsive breakpoints.");
+test("the residence hero fits the wordmark and both cards at the design widths", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "desktop-chromium", "A single viewport sweep covers the design widths.");
   await page.goto("/");
-  await page.evaluate(() => document.fonts.ready);
-  const evolution = page.getByRole("heading", { level: 1 }).getByText("Evolution", { exact: true });
-
-  for (const [width, height] of [[320, 640], [390, 844], [768, 1024], [1024, 768], [1280, 720], [1470, 900], [1920, 783], [1920, 450], [2560, 1050]]) {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  const hero = page.locator(".residence-hero");
+  for (const [width, height] of [[320, 640], [390, 844], [768, 1024], [1280, 699], [1400, 735], [1920, 976]]) {
     await page.setViewportSize({ width, height });
-    await expect(evolution).toBeVisible();
-    await expect.poll(() => evolution.evaluate((element) => {
-      const range = document.createRange();
-      range.selectNodeContents(element);
-      const hero = element.closest(".section__body-main");
-      const photo = hero.querySelector(".position-img").getBoundingClientRect();
-      const desktop = matchMedia("(min-width: 768px)").matches;
-      const wordmark = hero.querySelector(".hero-wordmark");
-      const text = desktop ? wordmark.getBoundingClientRect() : range.getBoundingClientRect();
-      // On desktop the upper 168 units of the supplied wordmark are EVOLUTION.
-      const titleBottom = desktop ? text.top + text.height * 168 / 355 : text.bottom;
-      return text.width > 0 && text.left >= 0 && text.right <= document.documentElement.clientWidth
-        && text.top >= 0 && titleBottom <= window.innerHeight
-        && (!desktop || (wordmark.naturalWidth > 0 && text.right > photo.left
-          && titleBottom > photo.top && text.top < photo.bottom));
-    }), { message: `EVOLUTION fits at ${width}×${height}` }).toBe(true);
+    const layout = await hero.evaluate((element) => {
+      const rects = (selector) => [...element.querySelectorAll(selector)].map((node) => node.getBoundingClientRect());
+      const words = rects(".residence-hero__word img");
+      const [first, second] = rects(".residence-hero__photo");
+      const fits = (rect) => rect.width > 0 && rect.left >= -1 && rect.right <= document.documentElement.clientWidth + 1;
+      return {
+        fits: words.length === 2 && words.every((rect) => fits(rect) && rect.bottom <= innerHeight)
+          && [first, second, ...rects(".residence-hero__link")].every(fits),
+        arrangement: first.right <= second.left + 1 && Math.abs(first.top - second.top) < 2 ? "row"
+          : first.bottom <= second.top + 1 && Math.abs(first.left - second.left) < 2 ? "column" : "overlap",
+      };
+    });
+    expect(layout, `hero at ${width}×${height}`).toEqual({ fits: true, arrangement: width < 768 ? "column" : "row" });
   }
+});
+
+test("the residence hero title leaves on scroll and reappears on return", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  await page.goto("/");
+  const title = page.locator(".residence-hero__title");
+  const words = title.locator(".residence-hero__word img");
+  const opacity = () => words.evaluateAll((nodes) => nodes.map((word) => getComputedStyle(word).opacity));
+  await expect.poll(opacity).toEqual(["1", "1"]);
+  const duration = await words.first().evaluate((word) => parseFloat(getComputedStyle(word).transitionDuration));
+  expect(duration).toBeGreaterThan(0);
+  await title.evaluate((element) => window.scrollBy({ top: element.getBoundingClientRect().bottom + 32, behavior: "instant" }));
+  await expect.poll(opacity).toEqual(["0", "0"]);
+  await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
+  await expect.poll(opacity).toEqual(["1", "1"]);
+
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await title.evaluate((element) => window.scrollBy({ top: element.getBoundingClientRect().bottom + 32, behavior: "instant" }));
+  await expect(title).toHaveAttribute("data-revealed", "false");
+  expect(await opacity()).toEqual(["1", "1"]);
 });

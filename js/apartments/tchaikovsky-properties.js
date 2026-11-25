@@ -1,7 +1,8 @@
 // Public specifications from the supplied commercial and parking schedules.
 // Commercial: "Коммерческие помещения"!A2:D29; parking: "Parking Schedule"!A2:D526.
 // Commercial A05–A07 span two levels; their supplied areas are combined totals.
-// Images remain unset until the category photographs are supplied.
+import commercialImages from "./tchaikovsky-commercial-images.js?v=1.0.0";
+
 const commercialSpecifications = [
   ["A01", 123.09, ["2000"]],
   ["A02", 108.03, ["2000"]],
@@ -89,6 +90,7 @@ const evParking = new Set([154, 155, 169, 231, 232, 233, 248, 287, 288]);
 
 const makeProperty = (propertyType, unit, area, planLevels) => {
   const labels = planLevels.map((level) => floorLabels[level]);
+  const images = propertyType === "commercial" ? commercialImages[unit] : null;
   return {
     id: `${propertyType}:${unit}`,
     propertyType,
@@ -99,9 +101,10 @@ const makeProperty = (propertyType, unit, area, planLevels) => {
     floorLabels: labels,
     planLevels,
     area,
-    image: null,
+    image: images?.planImg ?? null,
     apartmentImg: null,
-    planImg: null,
+    planImg: images?.planImg ?? null,
+    previewImg: images?.previewImg ?? null,
   };
 };
 

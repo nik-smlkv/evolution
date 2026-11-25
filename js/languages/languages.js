@@ -1,5 +1,6 @@
 export const langArr = {
 	en: {
+		home_choose_apartments: `Choose apartments`,
 		home_house_offer: `Explore the apartments in`,
 		home_house_and: `and`,
 		catalog_noscript: `Enable JavaScript to view the apartment catalog.`,
@@ -128,6 +129,7 @@ export const langArr = {
 		link_about: `About Project `,
 		link_features: `Features`,
 		link_infrastructure: `Infrastructure`,
+		link_gallery: `Gallery`,
 		link_apartments: `Apartments`,
 		gallery_skip: `Skip`,
 		materials_previous: `Previous slide`,
@@ -148,6 +150,7 @@ export const langArr = {
 		p_belrg: `Belgrade`,
 	},
 	srb: {
+		home_choose_apartments: `Izaberi stanove`,
 		home_house_offer: `Pogledajte ponudu stanova u zgradama`,
 		home_house_and: `i`,
 		catalog_noscript: `Omogućite JavaScript za prikaz kataloga stanova.`,
@@ -288,6 +291,7 @@ export const langArr = {
 		link_about_btn: `O projektu`,
 		link_features: `O nama`,
 		link_infrastructure: `Infrastruktura`,
+		link_gallery: `Galerija`,
 		link_apartments: `Stanovi`,
 		gallery_skip: `Preskoči`,
 		materials_previous: `Prethodni slajd`,

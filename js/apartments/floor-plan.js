@@ -1,6 +1,6 @@
 import { tchaikovskyFloorLevels, tchaikovskyFloorAssignments } from "./tchaikovsky-floors.js?v=1.0.5";
 import { tchaikovskyUpperFloorMarkers } from "./tchaikovsky-plan-markers.js?v=1.0.1";
-import { commercialPlanUnitAliases } from "./tchaikovsky-properties.js?v=1.0.1";
+import { commercialPlanUnitAliases } from "./tchaikovsky-properties.js?v=1.0.2";
 import { isTchaikovskyApartmentAvailable } from "./tchaikovsky-availability.js?v=1.0.2";
 import { optimizedImageUrl } from "../optimized-images.js?v=1.0.6";
 import { animatePlanFloorChange, clonePlanLayer } from "./plan-transition.js?v=1.0.1";

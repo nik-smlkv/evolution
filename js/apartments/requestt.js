@@ -1,8 +1,8 @@
 import { loadHouse } from "./houses.js?v=1.0.16";
 import { tchaikovskyFloorLevels } from "./tchaikovsky-floors.js?v=1.0.5";
 import { closeModal, openModal } from "../modal.js?v=1.0.6";
-import { openPropertyDetails } from "./property-dialogs.js?v=1.0.10";
-import { tchaikovskyOtherProperties } from "./tchaikovsky-properties.js?v=1.0.1";
+import { openPropertyDetails } from "./property-dialogs.js?v=1.0.11";
+import { tchaikovskyOtherProperties } from "./tchaikovsky-properties.js?v=1.0.2";
 import { createDeferredPlan, deferPlanImages, activatePlanImages, createPlanImageLoader } from "./deferred-plan.js?v=1.0.2";
 import { isTchaikovskyApartmentAvailable } from "./tchaikovsky-availability.js?v=1.0.2";
 import { initializeCatalogFilterControls } from "./catalog-filter-controls.js?v=1.0.4";
@@ -109,7 +109,7 @@ const ensureFloorPlan = createDeferredPlan(() => whenDocumentReady(async () => {
     bindVivaldiPolygons(data);
     return;
   }
-  const { initializeTchaikovskyFloorPlan } = await import("./floor-plan.js?v=1.0.28");
+  const { initializeTchaikovskyFloorPlan } = await import("./floor-plan.js?v=1.0.29");
   tchaikovskyFloorPlan = await initializeTchaikovskyFloorPlan(apartmentData, (apartment) => openCatalogRecord(apartment), (level) => {
     if (!level || document.body.dataset.catalogView !== "plan") return;
     selectedFloor = level.label;
@@ -410,11 +410,12 @@ const renderNextApartmentCards = () => {
   );
   const columns = getCardColumnCount();
   const markup = batch.map((item, index) => {
-    const placeholder = !item.apartmentImg ? {
+    const suppliedImage = item.previewImg || item.apartmentImg || item.planImg;
+    const placeholder = !suppliedImage ? {
       parking: { image: "./assets/images/shared/placeholders/parking.webp", description: "Parking space" },
       commercial: { image: "./assets/images/shared/placeholders/commercial.webp", description: "Commercial space" },
     }[item.propertyType] : null;
-    const img = optimizedImageUrl(item.apartmentImg || placeholder?.image);
+    const img = optimizedImageUrl(suppliedImage || placeholder?.image);
     const imageDescription = placeholder?.description || `Plan of ${formatCardApartmentNumber(item.apartmentNumber)}`;
     const number = formatCardApartmentNumber(item.apartmentNumber);
     const firstRow = document.body.dataset.catalogView === "grid" && renderedCardCount + index < columns;

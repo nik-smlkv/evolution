@@ -77,6 +77,36 @@ test("check rejects missing aliases and stale homepage copies or browser maps un
   assert.equal(run(root, ["--check"]).status, 0);
 });
 
+test("catalog regeneration shares the header and gallery and preserves catalog targets", (t) => {
+  const { root, source, write } = fixture(t);
+  const header = '<header><a href="./">Home</a><a data-lang="en" href="./en/">EN</a><a href="./" data-lang="srb">SRB</a></header>';
+  const gallery = '<section data-render-gallery><img src="./gallery.webp"><button aria-controls="form" data-render-skip>Skip</button></section>';
+  write("index.html", source.replace("<body>", `<body>\r\n    ${header}\r\n    ${gallery}`));
+  const filename = "search-by-parameters.html";
+  const template = `<title>Catalog</title>
+<!-- Shared site header generated from index.html -->
+OLD HEADER
+<!-- End shared site header -->
+<main>Available apartments
+  <!-- Shared render gallery generated from index.html -->
+  OLD GALLERY
+  <!-- End shared render gallery -->
+</main>
+`;
+  write(filename, template);
+  const generated = run(root);
+  assert.equal(generated.status, 0, generated.stderr);
+  const catalog = readFileSync(join(root, filename), "utf8");
+  assert.equal(catalog, template.replace("OLD HEADER", header
+    .replace('href="./en/"', 'href="./en/search-by-parameters.html"')
+    .replace('href="./" data-lang="srb"', 'href="./search-by-parameters.html" data-lang="srb"'))
+    .replace("OLD GALLERY", gallery));
+  write(filename, catalog.replace(">Home<", ">Old header<"));
+  assert.match(run(root, ["--check"]).stderr, /Stale.*search-by-parameters\.html/);
+  assert.equal(run(root).status, 0);
+  assert.equal(readFileSync(join(root, filename), "utf8"), catalog);
+});
+
 test("configuration rejects traversal, reserved or existing pages and missing or ambiguous targets", (t) => {
   const { root, source, write } = fixture(t);
   for (const slug of ["../outside", "About", "a/b", "assets", "search-by-parameters"]) {

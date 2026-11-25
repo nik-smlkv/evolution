@@ -6,16 +6,17 @@ for (const gallery of document.querySelectorAll("[data-render-gallery]")) {
   const previous = controls?.querySelector('[data-render-step="-1"]');
   const next = controls?.querySelector('[data-render-step="1"]');
   const count = controls?.querySelector(".render-gallery__count");
-  const form = document.getElementById("form");
+  const skipTarget = document.getElementById(skip?.getAttribute("aria-controls") || "form");
   const sources = Array.from(gallery.querySelectorAll("template[data-render-frame]"),
     (template) => template.content.querySelector("img"));
-  if (!firstFrame || !skip || !form || !sources.length || sources.some((source) => !source)) continue;
+  if (!firstFrame || !skip || !skipTarget || !sources.length || sources.some((source) => !source)) continue;
 
   const frames = [firstFrame];
   const pending = new Map();
   const frameCount = sources.length + 1;
   const lastIndex = frameCount - 1;
-  const wheelPause = 170;
+  const wheelIdle = 100;
+  const wheelThreshold = 16;
   const swipeDistance = 36;
   const header = document.querySelector("header");
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -24,7 +25,8 @@ for (const gallery of document.querySelectorAll("[data-render-gallery]")) {
   let transition;
   let requestedIndex = 0;
   let scheduledFrame = 0;
-  let lastCapturedWheel = -Infinity;
+  let skipping = false;
+  let wheelGesture;
   let swipe;
 
   function loadFrame(index) {
@@ -44,7 +46,7 @@ for (const gallery of document.querySelectorAll("[data-render-gallery]")) {
 
   function showRequestedFrame() {
     const incoming = frames[requestedIndex];
-    if (transition || !incoming?.naturalWidth || requestedIndex === activeIndex) return;
+    if (skipping || transition || !incoming?.naturalWidth || requestedIndex === activeIndex) return;
     const outgoing = frames[activeIndex];
     const start = requestedIndex > activeIndex ? "100%" : "-100%";
     activeIndex = requestedIndex;
@@ -56,7 +58,7 @@ for (const gallery of document.querySelectorAll("[data-render-gallery]")) {
     // Keep the previous image in place until the moving image covers it.
     outgoing.classList.add("is-outgoing");
     transition = incoming.animate([{ transform: `translateY(${start})` }, { transform: "translateY(0)" }], {
-      duration: compact.matches ? 340 : 620,
+      duration: compact.matches ? 340 : 440,
       easing: "cubic-bezier(0.4, 0, 0.2, 1)",
     });
     transition.onfinish = () => {
@@ -91,13 +93,13 @@ for (const gallery of document.querySelectorAll("[data-render-gallery]")) {
     const { top, bottom, travel, progress, index } = scrollPosition();
     if (bottom <= 0 || top >= window.innerHeight || travel <= 0) return;
     gallery.style.setProperty("--render-progress", progress);
+    if (skipping) return;
 
     if (index !== requestedIndex) {
       requestedIndex = index;
       updateSteps();
       loadFrame(index).then((frame) => {
         if (!frame || requestedIndex !== index) return;
-        if (transition && activeIndex !== index) transition.finish();
         showRequestedFrame();
       });
     }
@@ -116,7 +118,7 @@ for (const gallery of document.querySelectorAll("[data-render-gallery]")) {
   }
 
   function goToFrame(index, { top, travel } = scrollPosition()) {
-    if (index < 0 || index > lastIndex) return;
+    if (skipping || index < 0 || index > lastIndex) return;
     const scrollTop = window.scrollY + top + index * travel / lastIndex;
     if (typeof lenis !== "undefined") {
       lenis.resize();
@@ -128,46 +130,76 @@ for (const gallery of document.querySelectorAll("[data-render-gallery]")) {
   }
 
   function stepOnWheel(event) {
-    if (event.defaultPrevented || !event.cancelable || event.ctrlKey || event.metaKey || event.shiftKey ||
-        Math.abs(event.deltaY) <= Math.abs(event.deltaX) ||
+    const { deltaMode, deltaX, deltaY } = event;
+    if (skipping || event.defaultPrevented || !event.cancelable || event.ctrlKey || event.metaKey || event.shiftKey ||
+        Math.abs(deltaY) <= Math.abs(deltaX) ||
         event.target.closest?.("[data-lenis-prevent], [data-lenis-prevent-wheel], [aria-modal='true']") ||
         document.querySelector(".popup_is-opened, body.header-menu-open")) return;
-    if (typeof lenis !== "undefined" && (lenis.isStopped || lenis.isLocked)) return;
+    const scroller = typeof lenis === "undefined" ? null : lenis;
+    if (scroller?.isStopped || scroller?.isLocked) return;
 
     const position = scrollPosition();
-    if (position.top >= window.innerHeight || position.bottom <= 0 || position.travel <= 0) return;
-    const now = performance.now();
-    const consume = () => {
-      event.preventDefault();
-      event.stopPropagation();
-      lastCapturedWheel = now;
-    };
-
-    // A trackpad sends a stream of wheel events, including its momentum tail.
-    // Let a fresh gesture leave at either end, but keep the current burst on its frame.
-    if (now - lastCapturedWheel < wheelPause) {
-      consume();
+    if (position.top >= window.innerHeight || position.bottom <= 0 || position.travel <= 0) {
+      wheelGesture = undefined;
       return;
     }
 
-    const direction = Math.sign(event.deltaY);
+    const delta = deltaY * (deltaMode === 1 ? 16 : deltaMode === 2 ? window.innerHeight : 1);
+    const direction = Math.sign(delta);
+    const distance = Math.abs(delta);
+    const pinned = isPinned(position);
     let target = position.index + direction;
-    if (!isPinned(position)) {
-      const delta = event.deltaY * (event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? window.innerHeight : 1);
+    if (!pinned) {
       const distanceToEnd = position.top + position.travel;
-      if (direction > 0 && position.top > 0 && delta >= position.top) target = 0;
-      else if (direction < 0 && distanceToEnd < 0 && delta <= distanceToEnd) target = lastIndex;
-      else return;
+      const movement = delta + (scroller ? scroller.targetScroll - window.scrollY : 0);
+      if (direction > 0 && position.top > 0 && movement >= position.top) target = 0;
+      else if (direction < 0 && distanceToEnd < 0 && movement <= distanceToEnd) target = lastIndex;
+      else {
+        wheelGesture = undefined;
+        return;
+      }
     }
-    if (target < 0 || target > lastIndex) return;
 
-    consume();
+    const now = performance.now();
+    const recent = wheelGesture && now - wheelGesture.lastEvent < wheelIdle;
+    const sameDirection = recent && wheelGesture.direction === direction;
+    const reversing = recent && !sameDirection && wheelGesture.committedAt !== null;
+    if (reversing) wheelGesture.reverseDistance += distance;
+    // A renewed swipe can arrive before the previous swipe's momentum stops.
+    const renewed = sameDirection && wheelGesture.settling && distance >= wheelThreshold * 0.75;
+    const reversed = reversing && wheelGesture.reverseDistance >= wheelThreshold;
+    const continuing = recent && wheelGesture.committedAt !== null && !renewed && !reversed;
+    if (!continuing && (target < 0 || target > lastIndex)) {
+      wheelGesture = undefined;
+      return;
+    }
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (continuing) {
+      wheelGesture.lastEvent = now;
+      if (sameDirection) {
+        wheelGesture.reverseDistance = 0;
+        if (distance <= wheelThreshold / 4 && now - wheelGesture.committedAt >= wheelIdle) {
+          wheelGesture.settling = true;
+        }
+      }
+      return;
+    }
+
+    if (!sameDirection || renewed) {
+      wheelGesture = { direction, lastEvent: now, distance: 0, reverseDistance: 0, committedAt: null, settling: false };
+    }
+    wheelGesture.lastEvent = now;
+    wheelGesture.distance += distance;
+    if (pinned && !renewed && !reversed && wheelGesture.distance < wheelThreshold) return;
+    wheelGesture.committedAt = now;
     goToFrame(target, position);
   }
 
   stage.addEventListener("touchstart", (event) => {
     swipe = undefined;
-    if (event.touches.length !== 1 || event.target.closest?.("button") || !isPinned(scrollPosition())) return;
+    if (skipping || event.touches.length !== 1 || event.target.closest?.("button") || !isPinned(scrollPosition())) return;
     const touch = event.touches[0];
     swipe = { x: touch.clientX, y: touch.clientY, direction: 0, committed: false };
   }, { passive: true });
@@ -205,15 +237,40 @@ for (const gallery of document.querySelectorAll("[data-render-gallery]")) {
   previous?.addEventListener("click", () => goToFrame(requestedIndex - 1));
   next?.addEventListener("click", () => goToFrame(requestedIndex + 1));
   skip.addEventListener("click", () => {
-    if (!form.hasAttribute("tabindex")) form.tabIndex = -1;
-    form.focus({ preventScroll: true });
+    if (skipping) return;
+    wheelGesture = undefined;
+    if (!skipTarget.hasAttribute("tabindex")) skipTarget.tabIndex = -1;
+    skipTarget.focus({ preventScroll: true });
     const offset = -(header?.offsetHeight ?? 0);
+    const immediate = reducedMotion.matches;
+    const finishSkip = () => {
+      skipping = false;
+      scheduleUpdate();
+    };
     if (typeof lenis !== "undefined") {
+      if (lenis.isStopped || lenis.isLocked) return;
+      skipping = !immediate;
       lenis.resize();
-      lenis.scrollTo(form, { offset, immediate: true });
+      lenis.scrollTo(skipTarget, {
+        offset,
+        immediate,
+        lock: true,
+        duration: 0.85,
+        easing: (progress) => progress * progress * (3 - 2 * progress),
+        onComplete: finishSkip,
+      });
+    } else if (!immediate && window.gsap?.plugins.scrollTo) {
+      skipping = true;
+      window.gsap.to(window, {
+        duration: 0.85,
+        ease: "power1.inOut",
+        scrollTo: { y: skipTarget, offsetY: -offset, autoKill: true, onAutoKill: finishSkip },
+        onComplete: finishSkip,
+        onInterrupt: finishSkip,
+      });
     } else {
-      const top = window.scrollY + form.getBoundingClientRect().top + offset;
-      window.scrollTo({ top, behavior: "instant" });
+      const top = window.scrollY + skipTarget.getBoundingClientRect().top + offset;
+      window.scrollTo({ top, behavior: immediate ? "instant" : "smooth" });
     }
   });
 

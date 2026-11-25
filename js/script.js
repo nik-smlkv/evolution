@@ -1,8 +1,8 @@
-import { langArr } from "./languages/languages.js?v=1.0.8";
+import { langArr } from "./languages/languages.js?v=1.0.10";
 import { openModal, closeModal, setModalEventListeners } from "./modal.js?v=1.0.6";
 import { openPriceRequest } from "./price-request.js?v=1.0.4";
-import { initializeHeaderNavigation } from "./header-navigation.js?v=1.0.1";
-import { initializeHomeNavigation, isPlainNavigation, normalizeHomeUrl } from "./home-navigation.js?v=1.0.5";
+import { initializeHeaderNavigation } from "./header-navigation.js?v=1.0.2";
+import { initializeHomeNavigation, isPlainNavigation, normalizeHomeUrl } from "./home-navigation.js?v=1.0.6";
 import { getSelectedHouse } from "./house-context.js?v=1.0.1";
 import "./input-capabilities.js?v=1.0.0";
 const assetsRootUrl = new URL("../", import.meta.url);
@@ -92,6 +92,21 @@ async function getHouses() {
 // Пример использования
 
 const closeHeaderMenu = initializeHeaderNavigation();
+const heroTitle = document.querySelector(".residence-hero__title");
+if (heroTitle && "ResizeObserver" in window && "IntersectionObserver" in window) {
+  heroTitle.dataset.revealed = "initial";
+  const header = document.querySelector("header");
+  let titleObserver;
+
+  // Keep the trigger at the lower edge of the responsive, fixed header.
+  new ResizeObserver(() => {
+    titleObserver?.disconnect();
+    titleObserver = new IntersectionObserver(([entry]) => {
+      heroTitle.dataset.revealed = String(entry.intersectionRatio >= 0.8);
+    }, { rootMargin: `-${header.offsetHeight}px 0px 0px`, threshold: 0.8 });
+    titleObserver.observe(heroTitle);
+  }).observe(header);
+}
 const popups = document.querySelectorAll(".popup");
 
 const getHeaderSubMenu = () => {

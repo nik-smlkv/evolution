@@ -16,7 +16,7 @@
     <meta property="og:url" content="https://evolutionresidence.rs/" />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="sr_RS" />
-    <meta property="og:image" content="https://evolutionresidence.rs/assets/images/site/hero/main-1200.webp" />
+    <meta property="og:image" content="https://evolutionresidence.rs/assets/images/site/hero/aerial-compact.webp" />
     <meta name="twitter:card" content="summary_large_image" />
     <script type="application/ld+json">
       {
@@ -63,7 +63,7 @@
     <link rel="stylesheet" href="./style/globals.css?v=1.0.10" />
     <link rel="stylesheet" href="./style/font.css?v=1.0.5" />
     <link rel="stylesheet" href="./style/variables.css?v=1.0.5" />
-    <link rel="stylesheet" href="./style/style.min.css?v=1.0.12" />
+    <link rel="stylesheet" href="./style/style.min.css?v=1.0.13" />
     <link rel="stylesheet" href="./style/materials-scroll.css?v=1.0.6" />
     <link rel="stylesheet" href="./style/house-switcher.css?v=1.0.9" />
     <link rel="stylesheet" href="./style/splitting.css?v=1.0.5" />
@@ -72,13 +72,13 @@
     <link rel="stylesheet" href="./style/fancybox.css?v=1.0.6" />
     <link rel="stylesheet" href="./style/odometer.min.css?v=1.0.5" />
     <link rel="stylesheet" href="./style/ion.rangeSlider.min.css?v=1.0.6" />
-    <link rel="stylesheet" href="./style/header-responsive.css?v=1.0.3" />
+    <link rel="stylesheet" href="./style/header-responsive.css?v=1.0.5" />
     <link rel="stylesheet" href="./style/price-request.css?v=1.0.4" />
     <link rel="stylesheet" href="./style/home-footer.css?v=1.0.1" />
     <link rel="stylesheet" href="./style/contact-form.css?v=1.0.3" />
     <link rel="stylesheet" href="./style/lead-form.css?v=1.0.1" />
     <link rel="stylesheet" href="./style/render-gallery.css?v=1.0.3" />
-    <link rel="stylesheet" href="./style/hero-title.css?v=1.0.5" />
+    <link rel="stylesheet" href="./style/hero-title.css?v=1.0.7" />
     <script src="./js/swiper-bundle.min.js?v=1.0.5"></script>
     <script src="./js/jquery-3.6.4.min.js?v=1.0.5"></script>
     <script src="./js/printThis.js?v=1.0.5"></script>
@@ -263,7 +263,9 @@
                     >Infrastruktura</a
                   >
                 </li>
-
+                <li class="menu__item">
+                  <a href="./gallery/" class="menu__item_link" data-key="link_gallery" data-target="render-gallery">Galerija</a>
+                </li>
                 <li class="menu__item">
                   <a
                     href="./financing/"
@@ -309,81 +311,45 @@
       </header>
       <main class="flex-style-column">
         <div class="main-gap flex-style-column" id="main">
-          <section
-            class="block-dark no-gap padding-top flex-style-column main-block section-relative"
-          >
-            <div
-              class="section__body section__body-main flex-style-row block-height"
-            >
-              <div class="main-block-relative">
-                <h1
-                  class="title main-title flex-style-column tt-up split-text ezd-animtext"
-                >
-                  <span>Evolution</span>
-                  <span class="title-span">residence</span>
-                  <img class="hero-wordmark" src="./assets/images/site/hero/wordmark.svg"
-                    width="1127" height="355" alt="" />
-                </h1>
-              </div>
-
-              <div class="block-image scale-image">
-                <a
-                  class="about-button tt-up text-light flex-style-column gap-button"
-                  href="./about-project/"
-                >
-                  <div class="scale-text" data-key="link_about_btn">
-                    O projektu
+          <section class="residence-hero padding-top" aria-labelledby="residence-hero-heading">
+            <div class="residence-hero__inner">
+              <h1 class="residence-hero__title" id="residence-hero-heading">
+                <span class="residence-hero__accessible-title">Evolution Residence</span>
+                <span class="residence-hero__word">
+                  <img src="./assets/images/site/hero/evolution.svg" width="620" height="120" alt="" />
+                </span>
+                <span class="residence-hero__word">
+                  <img src="./assets/images/site/hero/residence.svg" width="290" height="73" alt="" />
+                </span>
+              </h1>
+              <div class="residence-hero__cards">
+                <article class="residence-hero__card" aria-labelledby="hero-tchaikovsky">
+                  <picture>
+                    <source media="(max-width: 1023px)" srcset="./assets/images/site/hero/residence-street-compact-1080.webp" />
+                    <img class="residence-hero__photo" src="./assets/images/site/hero/residence-street-832.webp"
+                      srcset="./assets/images/site/hero/residence-street-480.webp 480w, ./assets/images/site/hero/residence-street-832.webp 832w, ./assets/images/site/hero/residence-street-1664.webp 1664w"
+                      sizes="(min-width: 1774px) 827px, (min-width: 1024px) calc(50vw - 60px), (min-width: 768px) calc(50vw - 44px), calc(100vw - 32px)"
+                      width="832" height="503" alt="Tchaikovsky" fetchpriority="high" />
+                  </picture>
+                  <div class="residence-hero__details">
+                    <h2 class="residence-hero__name" id="hero-tchaikovsky"><span aria-hidden="true">01</span>Tchaikovsky</h2>
+                    <a class="residence-hero__link" href="./search-by-parameters.html?house=tchaikovsky" aria-labelledby="hero-tchaikovsky-cta hero-tchaikovsky">
+                      <span id="hero-tchaikovsky-cta" data-key="home_choose_apartments">Izaberi stanove</span>
+                    </a>
                   </div>
-                  <svg
-                    class="about-arrow"
-                    width="13"
-                    height="24"
-                    viewBox="0 0 13 24"
-                    fill="none"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M6.5 1V22M1.5 17L6.5 22L11.5 17"
-                      stroke="white"
-                      stroke-linecap="square"
-                      stroke-linejoin="round"
-                    />
-                  </svg>
-                </a>
-                <div class="position-img">
-                  <picture style="display: contents">
-                    <source
-                      media="(max-width: 767.99px)"
-                      type="image/webp"
-                      srcset="./assets/images/site/hero/main-780.webp 780w, ./assets/images/site/hero/main-1200.webp 1200w"
-                      sizes="100vw"
-                    />
-                    <img
-                      class="main-img"
-                      src="./assets/images/site/hero/main.webp"
-                      srcset="./assets/images/site/hero/main-1200.webp 1200w, ./assets/images/site/hero/main-1920.webp 1920w, ./assets/images/site/hero/main.webp 2688w"
-                      sizes="(min-width: 1920px) 1100px, 100vw"
-                      alt="Stambeni kompleks Evolution Residence na Voždovcu"
-                      width="2688" height="1930" decoding="async" loading="eager" fetchpriority="high"
-                    />
-                  </picture>
-                  <picture style="display: contents">
-                    <source
-                      media="(max-width: 767.99px)"
-                      type="image/webp"
-                      srcset="./assets/images/site/hero/detail-780.webp 780w, ./assets/images/site/hero/detail-1200.webp 1200w"
-                      sizes="100vw"
-                    />
-                    <img
-                      class="moving-img"
-                      src="./assets/images/site/hero/detail.webp"
-                      srcset="./assets/images/site/hero/detail-1200.webp 1200w, ./assets/images/site/hero/detail-1920.webp 1920w, ./assets/images/site/hero/detail.webp 2688w"
-                      sizes="(min-width: 1920px) 1100px, 100vw"
-                      alt="" width="2688" height="1930" decoding="async" loading="eager"
-                    />
-                  </picture>
-                </div>
+                </article>
+                <article class="residence-hero__card" aria-labelledby="hero-vivaldi">
+                  <img class="residence-hero__photo" src="./assets/images/site/hero/residence-aerial-832.webp"
+                    srcset="./assets/images/site/hero/residence-aerial-480.webp 480w, ./assets/images/site/hero/residence-aerial-832.webp 832w, ./assets/images/site/hero/residence-aerial-1664.webp 1664w"
+                    sizes="(min-width: 1774px) 827px, (min-width: 1024px) calc(50vw - 60px), (min-width: 768px) calc(50vw - 44px), calc(100vw - 32px)"
+                    width="832" height="503" alt="Vivaldi" decoding="async" />
+                  <div class="residence-hero__details">
+                    <h2 class="residence-hero__name" id="hero-vivaldi"><span aria-hidden="true">02</span>Vivaldi</h2>
+                    <a class="residence-hero__link" href="./search-by-parameters.html?house=vivaldi" aria-labelledby="hero-vivaldi-cta hero-vivaldi">
+                      <span id="hero-vivaldi-cta" data-key="home_choose_apartments">Izaberi stanove</span>
+                    </a>
+                  </div>
+                </article>
               </div>
             </div>
           </section>
@@ -967,28 +933,43 @@
           <div class="flex-style-column">
             <section class="render-gallery" id="render-gallery" data-render-gallery aria-label="Evolution Residence">
               <div class="render-gallery__stage">
-                <img class="render-gallery__image is-active" src="./assets/images/site/gallery/render-01.jpg"
-                  srcset="./assets/images/site/gallery/render-01-800.webp 800w, ./assets/images/site/gallery/render-01-1280.webp 1280w, ./assets/images/site/gallery/render-01.jpg 2688w"
-                  sizes="100vw" width="2688" height="1520" alt="" decoding="async" loading="lazy" fetchpriority="low" />
+                <img class="render-gallery__image is-active" src="./assets/images/site/gallery/render-10-1280.webp"
+                  srcset="./assets/images/site/gallery/render-10-800.webp 800w, ./assets/images/site/gallery/render-10-1280.webp 1280w, ./assets/images/site/gallery/render-10-1920.webp 1920w"
+                  sizes="100vw" width="1280" height="715" alt="" decoding="async" loading="lazy" fetchpriority="low" />
+                <template data-render-frame>
+                  <img class="render-gallery__image" src="./assets/images/site/gallery/render-11-1280.webp"
+                    srcset="./assets/images/site/gallery/render-11-800.webp 800w, ./assets/images/site/gallery/render-11-1280.webp 1280w, ./assets/images/site/gallery/render-11-1920.webp 1920w"
+                    sizes="100vw" width="1280" height="721" alt="" decoding="async" />
+                </template>
+                <template data-render-frame>
+                  <img class="render-gallery__image" src="./assets/images/site/gallery/render-12-1280.webp"
+                    srcset="./assets/images/site/gallery/render-12-800.webp 800w, ./assets/images/site/gallery/render-12-1280.webp 1280w, ./assets/images/site/gallery/render-12-1920.webp 1920w"
+                    sizes="100vw" width="1280" height="716" alt="" decoding="async" />
+                </template>
+                <template data-render-frame>
+                  <img class="render-gallery__image" src="./assets/images/site/gallery/render-13-1280.webp"
+                    srcset="./assets/images/site/gallery/render-13-800.webp 800w, ./assets/images/site/gallery/render-13-1280.webp 1280w, ./assets/images/site/gallery/render-13-1920.webp 1920w"
+                    sizes="100vw" width="1280" height="716" alt="" decoding="async" />
+                </template>
+                <template data-render-frame>
+                  <img class="render-gallery__image" src="./assets/images/site/gallery/render-14-1280.webp"
+                    srcset="./assets/images/site/gallery/render-14-800.webp 800w, ./assets/images/site/gallery/render-14-1280.webp 1280w, ./assets/images/site/gallery/render-14-1920.webp 1920w"
+                    sizes="100vw" width="1280" height="774" alt="" decoding="async" />
+                </template>
+                <template data-render-frame>
+                  <img class="render-gallery__image" src="./assets/images/site/gallery/render-15-1280.webp"
+                    srcset="./assets/images/site/gallery/render-15-800.webp 800w, ./assets/images/site/gallery/render-15-1280.webp 1280w, ./assets/images/site/gallery/render-15-1920.webp 1920w"
+                    sizes="100vw" width="1280" height="726" alt="" decoding="async" />
+                </template>
                 <template data-render-frame>
                   <img class="render-gallery__image" src="./assets/images/site/gallery/render-03.jpg"
                     srcset="./assets/images/site/gallery/render-03-800.webp 800w, ./assets/images/site/gallery/render-03-1280.webp 1280w, ./assets/images/site/gallery/render-03.jpg 1920w"
                     sizes="100vw" width="1920" height="1086" alt="" decoding="async" />
                 </template>
                 <template data-render-frame>
-                  <img class="render-gallery__image" src="./assets/images/site/gallery/render-04.jpg"
-                    srcset="./assets/images/site/gallery/render-04-800.webp 800w, ./assets/images/site/gallery/render-04-1280.webp 1280w, ./assets/images/site/gallery/render-04.jpg 1920w"
-                    sizes="100vw" width="1920" height="1138" alt="" decoding="async" />
-                </template>
-                <template data-render-frame>
                   <img class="render-gallery__image" src="./assets/images/site/gallery/render-08.jpg"
                     srcset="./assets/images/site/gallery/render-08-800.webp 800w, ./assets/images/site/gallery/render-08-1280.webp 1280w, ./assets/images/site/gallery/render-08.jpg 1920w"
                     sizes="100vw" width="1920" height="1071" alt="" decoding="async" />
-                </template>
-                <template data-render-frame>
-                  <img class="render-gallery__image" src="./assets/images/site/gallery/render-07.jpg"
-                    srcset="./assets/images/site/gallery/render-07-800.webp 800w, ./assets/images/site/gallery/render-07-1280.webp 1280w, ./assets/images/site/gallery/render-07.jpg 1920w"
-                    sizes="100vw" width="1920" height="1086" alt="" decoding="async" />
                 </template>
                 <template data-render-frame>
                   <img class="render-gallery__image" src="./assets/images/site/gallery/render-09.jpg"
@@ -999,16 +980,6 @@
                   <img class="render-gallery__image" src="./assets/images/site/gallery/render-02.jpg"
                     srcset="./assets/images/site/gallery/render-02-800.webp 800w, ./assets/images/site/gallery/render-02-1280.webp 1280w, ./assets/images/site/gallery/render-02.jpg 1920w"
                     sizes="100vw" width="1920" height="1086" alt="" decoding="async" />
-                </template>
-                <template data-render-frame>
-                  <img class="render-gallery__image" src="./assets/images/site/gallery/render-05.jpg"
-                    srcset="./assets/images/site/gallery/render-05-800.webp 800w, ./assets/images/site/gallery/render-05-1280.webp 1280w, ./assets/images/site/gallery/render-05.jpg 1920w"
-                    sizes="100vw" width="1920" height="1086" alt="" decoding="async" />
-                </template>
-                <template data-render-frame>
-                  <img class="render-gallery__image" src="./assets/images/site/gallery/render-06.jpg"
-                    srcset="./assets/images/site/gallery/render-06-800.webp 800w, ./assets/images/site/gallery/render-06-1280.webp 1280w, ./assets/images/site/gallery/render-06.jpg 1920w"
-                    sizes="100vw" width="1920" height="1275" alt="" decoding="async" />
                 </template>
                 <div class="render-gallery__controls">
                   <div class="render-gallery__track" aria-hidden="true"><span class="render-gallery__thumb"></span></div>
@@ -1023,7 +994,7 @@
                       <img src="./assets/images/shared/icons/chevron.svg" width="11" height="6" alt="" />
                     </button>
                   </div>
-                  <button class="render-gallery__skip" type="button" data-render-skip data-key="gallery_skip">Preskoči</button>
+                  <button class="render-gallery__skip" type="button" data-render-skip aria-controls="form" data-key="gallery_skip">Preskoči</button>
                 </div>
               </div>
             </section>
@@ -1420,8 +1391,8 @@
     <script src="./js/ion.rangeSlider.min.js?v=1.0.5"></script>
     <script type="module" src="./js/form.js?v=1.0.11"></script>
     <script type="module" src="./js/home-sliders.js?v=1.0.8"></script>
-    <script type="module" src="./js/render-gallery.js?v=1.0.4"></script>
+    <script type="module" src="./js/render-gallery.js?v=1.0.6"></script>
     <script src="./js/house-menu.js?v=1.0.3"></script>
-    <script type="module" src="./js/script.js?v=1.0.30" defer></script>
+    <script type="module" src="./js/script.js?v=1.0.33" defer></script>
   </body>
 </html>

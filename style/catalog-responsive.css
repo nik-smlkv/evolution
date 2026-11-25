@@ -7,7 +7,7 @@ body.catalog-grid-view { touch-action: pan-x pan-y; }
 /* Both buildings share the grid, filter and responsive page frame. */
 body.catalog-grid-view .wrapper { font-family: "Manrope-Variable", var(--ff-main); background: #fafafa; gap: 0; }
 body.catalog-grid-view .main-gap { gap: 0; }
-body.catalog-grid-view #apartments { padding-top: 88px; gap: 0; }
+body.catalog-grid-view #apartments { padding-top: var(--site-header-height, 88px); gap: 0; }
 body.catalog-grid-view .block-search-parameters { padding: 40px 0 0; height: 224px; justify-content: center; }
 body.catalog-grid-view .title__body { gap: 24px; overflow: visible; }
 body.catalog-grid-view .title__content { align-items: center; flex-wrap: nowrap; }
@@ -104,9 +104,6 @@ body.catalog-grid-view .apartment-card-item:focus-visible { outline: 1px solid #
 }
 
 @media (max-width: 1000px) {
-  body.catalog-grid-view #apartments { padding-top: 88px; }
-  body.catalog-grid-view header,
-  body.catalog-grid-view header .header__body { min-height: 88px; }
   body.catalog-grid-view .block-search-parameters { height: 189px; padding-top: 0; }
   body.catalog-grid-view .title__body { padding-inline: 32px; }
   body.catalog-grid-view .title-apartment { font-size: 40px; }
@@ -157,18 +154,10 @@ body.catalog-grid-view .apartment-card-item:focus-visible { outline: 1px solid #
 }
 
 @media (max-width: 600px) {
-  body.catalog-grid-view #apartments { padding-top: 72px; }
-  body.catalog-grid-view header,
-  body.catalog-grid-view header .header__body { min-height: 72px; }
   body.catalog-grid-view .block-search-parameters { height: 232px; padding: 40px 0 24px; }
   body.catalog-grid-view .title__content { flex-direction: column; align-items: center; gap: 16px; }
   body.catalog-grid-view .title__body { padding-inline: 20px; }
   body.catalog-grid-view .catalog-plan-button { display: inline-flex; width: 272px; max-width: 100%; min-width: 0; min-height: 56px; font-size: 16px; }
-  body.catalog-grid-view header .header__body { gap: 12px; }
-  body.catalog-grid-view header .header__logo { flex-basis: 120px; width: 120px; max-width: 120px; }
-  body.catalog-grid-view header .header-block,
-  body.catalog-grid-view header .content-header { display: flex; }
-  body.catalog-grid-view header .lang_switch_list { flex-basis: 82px; width: 82px; min-width: 82px; }
   body.catalog-grid-view .available-apartments__list { grid-template-columns: minmax(0, 1fr); gap: 16px; }
   body.catalog-grid-view .apartment-card-item { max-width: 350px; justify-self: center; }
   body.catalog-grid-view #form { padding: 80px 20px 56px; gap: 32px; }

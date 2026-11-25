@@ -500,15 +500,6 @@ footer {
 	height: 100%
 }
 
-.moving-img {
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	bottom: 0;
-	left: 0;
-	z-index: 3
-}
-
 .footer-address__content {
 	justify-content: center;
 	align-items: start;

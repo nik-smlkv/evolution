@@ -1,11 +1,11 @@
 {
   "version": 1,
-  "policy": "Only currently used assets; pixel-exact format substitutions and explicit responsive derivatives; platform icon compatibility preserved",
+  "policy": "Only currently used assets; pixel-exact format substitutions, explicit responsive derivatives and bounded-error hero encoding; platform icon compatibility preserved",
   "summary": {
     "before_files": 3852,
     "before_bytes": 1527010844,
-    "production_files": 831,
-    "production_bytes": 265385270,
+    "production_files": 906,
+    "production_bytes": 288201695,
     "available_tchaikovsky": 308,
     "unavailable_tchaikovsky": 95,
     "available_vivaldi_records": 60,
@@ -15017,6 +15017,1574 @@
       ]
     },
     {
+      "path": "assets/images/projects/tchaikovsky/commercial/plans/a/a01.webp",
+      "bytes": 1000658,
+      "sha256": "6a7e27da33dd3fd21dd690f21343caa5f8fd3d1037bc65332dc42567e7c60786",
+      "roles": [
+        "commercial/A01/planImg",
+        "commercial/A01/image"
+      ],
+      "selections": [
+        {
+          "requested": "assets/images/projects/tchaikovsky/commercial/plans/a/a01.jpg",
+          "chosen": "assets/images/projects/tchaikovsky/commercial/plans/a/a01.webp",
+          "source_bytes": 1241417,
+          "selected_bytes": 1000658,
+          "source_sha256": "293a19faee98742796faa19c34e231ad17af8fb00a370774bcaa5c439c808d3a",
+          "selected_sha256": "6a7e27da33dd3fd21dd690f21343caa5f8fd3d1037bc65332dc42567e7c60786",
+          "pixel_exact_proof": {
+            "width": 1347,
+            "height": 2222,
+            "rgb_sha256": "55234d52b442d240ad278e5dc2cdc5b55039441c4a4a3d15cdd177a90c3ff235",
+            "metadata": {
+              "icc_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "exif_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "xmp_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "orientation": 1
+            }
+          }
+        }
+      ]
+    },
+    {
+      "path": "assets/images/projects/tchaikovsky/commercial/plans/a/a02.webp",
+      "bytes": 1376368,
+      "sha256": "e8e11a2f5c6455640004f01a93a973c245879c466bd94916640e9c48bf5c3cbd",
+      "roles": [
+        "commercial/A02/planImg",
+        "commercial/A02/image"
+      ],
+      "selections": [
+        {
+          "requested": "assets/images/projects/tchaikovsky/commercial/plans/a/a02.jpg",
+          "chosen": "assets/images/projects/tchaikovsky/commercial/plans/a/a02.webp",
+          "source_bytes": 1770687,
+          "selected_bytes": 1376368,
+          "source_sha256": "24eeff2da286f64f54a5014ea4e56a74e483bc6981ab980befcb3eca4531ce09",
+          "selected_sha256": "e8e11a2f5c6455640004f01a93a973c245879c466bd94916640e9c48bf5c3cbd",
+          "pixel_exact_proof": {
+            "width": 1311,
+            "height": 3868,
+            "rgb_sha256": "2cc72ea0d6b707437d782cd0b03803591ec3959ed27fe321c3eaa34a7ffde524",
+            "metadata": {
+              "icc_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "exif_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "xmp_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "orientation": 1
+            }
+          }
+        }
+      ]
+    },
+    {
+      "path": "assets/images/projects/tchaikovsky/commercial/plans/a/a03.webp",
+      "bytes": 1464354,
+      "sha256": "86c1ff57d68c9028ff0ce30d987d3e5d265aa1c6795e1450112b6ead9c45dfd7",
+      "roles": [
+        "commercial/A03/planImg",
+        "commercial/A03/image"
+      ],
+      "selections": [
+        {
+          "requested": "assets/images/projects/tchaikovsky/commercial/plans/a/a03.jpg",
+          "chosen": "assets/images/projects/tchaikovsky/commercial/plans/a/a03.webp",
+          "source_bytes": 1898418,
+          "selected_bytes": 1464354,
+          "source_sha256": "fad4f25bcbe102dc2432bc6a6185c5fc5001a81ad63b9b7621fb2b2b43badf20",
+          "selected_sha256": "86c1ff57d68c9028ff0ce30d987d3e5d265aa1c6795e1450112b6ead9c45dfd7",
+          "pixel_exact_proof": {
+            "width": 1317,
+            "height": 4198,
+            "rgb_sha256": "84621429b4cfab0e7b12899b04bd4a56eb9ad0e6d5d1b107b29ace3981b055bc",
+            "metadata": {
+              "icc_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "exif_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "xmp_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "orientation": 1
+            }
+          }
+        }
+      ]
+    },
+    {
+      "path": "assets/images/projects/tchaikovsky/commercial/plans/a/a04.webp",
+      "bytes": 1600652,
+      "sha256": "3c46620c915ef68713ac3b12e6e67d9744073a3f7f8bd6977e36d4a8aa64a50f",
+      "roles": [
+        "commercial/A04/planImg",
+        "commercial/A04/image"
+      ],
+      "selections": [
+        {
+          "requested": "assets/images/projects/tchaikovsky/commercial/plans/a/a04.jpg",
+          "chosen": "assets/images/projects/tchaikovsky/commercial/plans/a/a04.webp",
+          "source_bytes": 1895550,
+          "selected_bytes": 1600652,
+          "source_sha256": "06b3ee43449e2de3e1e5fff979a1e39f07dab2f6d60d59bd7372c09a554014f2",
+          "selected_sha256": "3c46620c915ef68713ac3b12e6e67d9744073a3f7f8bd6977e36d4a8aa64a50f",
+          "pixel_exact_proof": {
+            "width": 1322,
+            "height": 4198,
+            "rgb_sha256": "1f755ebf2464871ba39c7e7cd9d5f9eb283103c08712427f8e75ea8ced638a7a",
+            "metadata": {
+              "icc_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "exif_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "xmp_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "orientation": 1
+            }
+          }
+        }
+      ]
+    },
+    {
+      "path": "assets/images/projects/tchaikovsky/commercial/plans/a/a05.webp",
+      "bytes": 3064054,
+      "sha256": "1495038305955d22448e3181435e8af9a19449e14bf5ef7d61afe54477d2eb2d",
+      "roles": [
+        "commercial/A05/planImg",
+        "commercial/A05/image"
+      ],
+      "selections": [
+        {
+          "requested": "assets/images/projects/tchaikovsky/commercial/plans/a/a05.jpg",
+          "chosen": "assets/images/projects/tchaikovsky/commercial/plans/a/a05.webp",
+          "source_bytes": 4048772,
+          "selected_bytes": 3064054,
+          "source_sha256": "31aa09fb1ac0c5270451d25fb1f174c16e967beb54ea9d6ed462417613fe3960",
+          "selected_sha256": "1495038305955d22448e3181435e8af9a19449e14bf5ef7d61afe54477d2eb2d",
+          "pixel_exact_proof": {
+            "width": 3566,
+            "height": 4432,
+            "rgb_sha256": "41547d97183aff9b488c95cbaa613cb8b1fd660245e848242e989faf6089a4d4",
+            "metadata": {
+              "icc_sha256": "3f6d674174f3804eb0dabdac90ae17486e898c5063a66f861c116ea033da8301",
+              "exif_sha256": "9e68f280d7e2ef3a642f3c39fe99b7657ba6f32cdea97366a51d41c83891245a",
+              "xmp_sha256": "c6189a40cc7b8d9e0096aa5dd10c40ea019a58c25192822f53ef76384de845e2",
+              "orientation": 1
+            }
+          }
+        }
+      ]
+    },
+    {
+      "path": "assets/images/projects/tchaikovsky/commercial/plans/a/a06.webp",
+      "bytes": 2492570,
+      "sha256": "04bff4c152aede3d39c690879656db38f81f58374da001dadeed31ea1163cdd9",
+      "roles": [
+        "commercial/A06/planImg",
+        "commercial/A06/image"
+      ],
+      "selections": [
+        {
+          "requested": "assets/images/projects/tchaikovsky/commercial/plans/a/a06.jpg",
+          "chosen": "assets/images/projects/tchaikovsky/commercial/plans/a/a06.webp",
+          "source_bytes": 3328852,
+          "selected_bytes": 2492570,
+          "source_sha256": "2aef53091727a0beac4ebf89d83d7afe06dce044d67946b104490fd9064fed9b",
+          "selected_sha256": "04bff4c152aede3d39c690879656db38f81f58374da001dadeed31ea1163cdd9",
+          "pixel_exact_proof": {
+            "width": 2842,
+            "height": 4426,
+            "rgb_sha256": "1c1cdb05952338cd7c05e7126088a9fac2540f5dc5a56176a14e933612b31c90",
+            "metadata": {
+              "icc_sha256": "3f6d674174f3804eb0dabdac90ae17486e898c5063a66f861c116ea033da8301",
+              "exif_sha256": "e28f857778fd9f448c064bd965305797b8a56391173001459bf725e31d5d6c2a",
+              "xmp_sha256": "0fd15cf2be249d97e3605b2b90694917e094769257d3bd5a2adadb6df0e306fd",
+              "orientation": 1
+            }
+          }
+        }
+      ]
+    },
+    {
+      "path": "assets/images/projects/tchaikovsky/commercial/plans/a/a07.webp",
+      "bytes": 3293998,
+      "sha256": "dee47494c44b935885cf4d1a18e845341db57563b7b05a73ca5e873b8700b9c7",
+      "roles": [
+        "commercial/A07/planImg",
+        "commercial/A07/image"
+      ],
+      "selections": [
+        {
+          "requested": "assets/images/projects/tchaikovsky/commercial/plans/a/a07.jpg",
+          "chosen": "assets/images/projects/tchaikovsky/commercial/plans/a/a07.webp",
+          "source_bytes": 4680646,
+          "selected_bytes": 3293998,
+          "source_sha256": "71c7377967195b548a28bdfd410e188ec0e1e791abdfcd95ecdc1a0b21e86487",
+          "selected_sha256": "dee47494c44b935885cf4d1a18e845341db57563b7b05a73ca5e873b8700b9c7",
+          "pixel_exact_proof": {
+            "width": 4335,
+            "height": 4425,
+            "rgb_sha256": "db7a74bad22c45286ea1c5888ef5a4bbf050ac9b44b62206d7a54e829c902726",
+            "metadata": {
+              "icc_sha256": "3f6d674174f3804eb0dabdac90ae17486e898c5063a66f861c116ea033da8301",
+              "exif_sha256": "a11e5fdc4a0d75c1c7b316d192cca4e21ec965854bacbb429694408fa0899122",
+              "xmp_sha256": "c79a1e39c578f34852fa165cf50dc0cdabfdd61fe99b6e2ab6b9e475ad081463",
+              "orientation": 1
+            }
+          }
+        }
+      ]
+    },
+    {
+      "path": "assets/images/projects/tchaikovsky/commercial/plans/b/b08.webp",
+      "bytes": 2407742,
+      "sha256": "e5a7988ac29b0bcfd0dc4b8c6af8b62fd244ae403c954b494a7c8df1e60a1990",
+      "roles": [
+        "commercial/B08/planImg",
+        "commercial/B08/image"
+      ],
+      "selections": [
+        {
+          "requested": "assets/images/projects/tchaikovsky/commercial/plans/b/b08.jpg",
+          "chosen": "assets/images/projects/tchaikovsky/commercial/plans/b/b08.webp",
+          "source_bytes": 3161166,
+          "selected_bytes": 2407742,
+          "source_sha256": "db014ee8d508073ac0463649b22b25a9a141033b88c8a229f1a033da50bdee91",
+          "selected_sha256": "e5a7988ac29b0bcfd0dc4b8c6af8b62fd244ae403c954b494a7c8df1e60a1990",
+          "pixel_exact_proof": {
+            "width": 2852,
+            "height": 3973,
+            "rgb_sha256": "7ad6f672660d17a4371282faa9e4abc581c1cb60e34da2378af8916d073068af",
+            "metadata": {
+              "icc_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "exif_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "xmp_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "orientation": 1
+            }
+          }
+        }
+      ]
+    },
+    {
+      "path": "assets/images/projects/tchaikovsky/commercial/plans/b/b09.webp",
+      "bytes": 1454490,
+      "sha256": "fa2e44c89abe6fbccb862cdcf504408ae177842b1d7c03be9b9781bf2a444368",
+      "roles": [
+        "commercial/B09/planImg",
+        "commercial/B09/image"
+      ],
+      "selections": [
+        {
+          "requested": "assets/images/projects/tchaikovsky/commercial/plans/b/b09.jpg",
+          "chosen": "assets/images/projects/tchaikovsky/commercial/plans/b/b09.webp",
+          "source_bytes": 1864327,
+          "selected_bytes": 1454490,
+          "source_sha256": "f878c6252456ee2bf2d1b0d605d8ffd12a85831629037705a51c86b63eae3838",
+          "selected_sha256": "fa2e44c89abe6fbccb862cdcf504408ae177842b1d7c03be9b9781bf2a444368",
+          "pixel_exact_proof": {
+            "width": 1295,
+            "height": 3976,
+            "rgb_sha256": "deac17f51d4f3b0497e4c0ca842b4eff077352d430444570d3d92f80f55d224e",
+            "metadata": {
+              "icc_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "exif_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "xmp_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "orientation": 1
+            }
+          }
+        }
+      ]
+    },
+    {
+      "path": "assets/images/projects/tchaikovsky/commercial/plans/b/b10.webp",
+      "bytes": 1450324,
+      "sha256": "c766b5fcd6987dfb08cc33fffb6c43d64256476f5c66681a56dbc20690635944",
+      "roles": [
+        "commercial/B10/planImg",
+        "commercial/B10/image"
+      ],
+      "selections": [
+        {
+          "requested": "assets/images/projects/tchaikovsky/commercial/plans/b/b10.jpg",
+          "chosen": "assets/images/projects/tchaikovsky/commercial/plans/b/b10.webp",
+          "source_bytes": 1861408,
+          "selected_bytes": 1450324,
+          "source_sha256": "6777a5457a375c4532603d993c815ac0a2dbbdfcb40c9f0c2c2a0a6b9a515de9",
+          "selected_sha256": "c766b5fcd6987dfb08cc33fffb6c43d64256476f5c66681a56dbc20690635944",
+          "pixel_exact_proof": {
+            "width": 1311,
+            "height": 3975,
+            "rgb_sha256": "efda7480b6fa70e3365bb8d00ef03415e482f0ca231fbed01a1d361f5df2e99a",
+            "metadata": {
+              "icc_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "exif_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "xmp_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "orientation": 1
+            }
+          }
+        }
+      ]
+    },
+    {
+      "path": "assets/images/projects/tchaikovsky/commercial/plans/b/b11.webp",
+      "bytes": 2115848,
+      "sha256": "0ea4c9eb6274d1c0f2463c77eea03d5a3b3d6da13826f3c2222d7d7066780e9e",
+      "roles": [
+        "commercial/B11/planImg",
+        "commercial/B11/image"
+      ],
+      "selections": [
+        {
+          "requested": "assets/images/projects/tchaikovsky/commercial/plans/b/b11.jpg",
+          "chosen": "assets/images/projects/tchaikovsky/commercial/plans/b/b11.webp",
+          "source_bytes": 2743536,
+          "selected_bytes": 2115848,
+          "source_sha256": "fe27fbbe7da9160343ade51ec4e8466f4f2bbd1ab9a4e5eeb23cf8b254468a34",
+          "selected_sha256": "0ea4c9eb6274d1c0f2463c77eea03d5a3b3d6da13826f3c2222d7d7066780e9e",
+          "pixel_exact_proof": {
+            "width": 2113,
+            "height": 3991,
+            "rgb_sha256": "bb6307e81ef728f3ea1a3f021b676cbe122c8db75b58482e80b2745a7f5ead86",
+            "metadata": {
+              "icc_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "exif_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "xmp_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "orientation": 1
+            }
+          }
+        }
+      ]
+    },
+    {
+      "path": "assets/images/projects/tchaikovsky/commercial/plans/b/b12.webp",
+      "bytes": 243698,
+      "sha256": "4c06775ad64458e9e1b1e07de29fea244e19b1dc10b65e4a5fcfdf0e57512bf0",
+      "roles": [
+        "commercial/B12/planImg",
+        "commercial/B12/image"
+      ],
+      "selections": [
+        {
+          "requested": "assets/images/projects/tchaikovsky/commercial/plans/b/b12.jpg",
+          "chosen": "assets/images/projects/tchaikovsky/commercial/plans/b/b12.webp",
+          "source_bytes": 3249369,
+          "selected_bytes": 243698,
+          "source_sha256": "36a0284490d584d30590a7eec88b01333b1878ad972f7e2af9f9026c2946830a",
+          "selected_sha256": "4c06775ad64458e9e1b1e07de29fea244e19b1dc10b65e4a5fcfdf0e57512bf0",
+          "pixel_exact_proof": {
+            "width": 3762,
+            "height": 3121,
+            "rgb_sha256": "cdd63782a6fcbdf6d955fce0ad08c0d7277821bd142755134e4b7f8d1600f084",
+            "metadata": {
+              "icc_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "exif_sha256": "bb2a74af83acc8170d7b17a2ab66a6b8267af30218781a3f3e29a2921bd68e0d",
+              "xmp_sha256": "a751b8ce58852ebf9a43a72ba0d4805b35c94470f1086525ce5ef9f00e98db85",
+              "orientation": 6
+            }
+          }
+        }
+      ]
+    },
+    {
+      "path": "assets/images/projects/tchaikovsky/commercial/plans/b/b19.webp",
+      "bytes": 108348,
+      "sha256": "3aec228a09f1138d9b4896848eea4fa6d88f3bce2c5449fe08697ae8d32976ff",
+      "roles": [
+        "commercial/B19/planImg",
+        "commercial/B19/image"
+      ],
+      "selections": [
+        {
+          "requested": "assets/images/projects/tchaikovsky/commercial/plans/b/b19.jpg",
+          "chosen": "assets/images/projects/tchaikovsky/commercial/plans/b/b19.webp",
+          "source_bytes": 893512,
+          "selected_bytes": 108348,
+          "source_sha256": "5baf00a705ed1bded98ac6bdb35f9d92181b5c0e112683b08032457bbfeb604a",
+          "selected_sha256": "3aec228a09f1138d9b4896848eea4fa6d88f3bce2c5449fe08697ae8d32976ff",
+          "pixel_exact_proof": {
+            "width": 3154,
+            "height": 1434,
+            "rgb_sha256": "b9c3c2affeae04913eb3ed3108d27d12e2f13dc5dacb78433281c3cfa7359592",
+            "metadata": {
+              "icc_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "exif_sha256": "bb2a74af83acc8170d7b17a2ab66a6b8267af30218781a3f3e29a2921bd68e0d",
+              "xmp_sha256": "a751b8ce58852ebf9a43a72ba0d4805b35c94470f1086525ce5ef9f00e98db85",
+              "orientation": 6
+            }
+          }
+        }
+      ]
+    },
+    {
+      "path": "assets/images/projects/tchaikovsky/commercial/plans/b/b20.webp",
+      "bytes": 74210,
+      "sha256": "0134f41052029744019e67e2aadbe9e7caf6408348415cf2e91250586532fd4f",
+      "roles": [
+        "commercial/B20/planImg",
+        "commercial/B20/image"
+      ],
+      "selections": [
+        {
+          "requested": "assets/images/projects/tchaikovsky/commercial/plans/b/b20.jpg",
+          "chosen": "assets/images/projects/tchaikovsky/commercial/plans/b/b20.webp",
+          "source_bytes": 1118683,
+          "selected_bytes": 74210,
+          "source_sha256": "8a27290c7c62711b74aca7b4e5da19a244686eb517b059a6775627c70cd328ff",
+          "selected_sha256": "0134f41052029744019e67e2aadbe9e7caf6408348415cf2e91250586532fd4f",
+          "pixel_exact_proof": {
+            "width": 1577,
+            "height": 1873,
+            "rgb_sha256": "fedcbbbc0c6996bbff63ff23c2daaf2e6a4382f06fb9cacdf596b0a6f51b555c",
+            "metadata": {
+              "icc_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "exif_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "xmp_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "orientation": 1
+            }
+          }
+        }
+      ]
+    },
+    {
+      "path": "assets/images/projects/tchaikovsky/commercial/plans/b/b21.webp",
+      "bytes": 157770,
+      "sha256": "402f4337a2e67a575d1c6d9e5060467174b2e2baf9c841e04b3179d0ea2bec0d",
+      "roles": [
+        "commercial/B21/planImg",
+        "commercial/B21/image"
+      ],
+      "selections": [
+        {
+          "requested": "assets/images/projects/tchaikovsky/commercial/plans/b/b21.jpg",
+          "chosen": "assets/images/projects/tchaikovsky/commercial/plans/b/b21.webp",
+          "source_bytes": 1504238,
+          "selected_bytes": 157770,
+          "source_sha256": "93a32de638004ec0d97e8d699c1ac8d7c09102f46a25d380c961c6a15da654c1",
+          "selected_sha256": "402f4337a2e67a575d1c6d9e5060467174b2e2baf9c841e04b3179d0ea2bec0d",
+          "pixel_exact_proof": {
+            "width": 3156,
+            "height": 2364,
+            "rgb_sha256": "4bf60cd363e5a119f3cd2ea428169abd6e9411770c0ec4ee508d2121498221e5",
+            "metadata": {
+              "icc_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "exif_sha256": "bb2a74af83acc8170d7b17a2ab66a6b8267af30218781a3f3e29a2921bd68e0d",
+              "xmp_sha256": "a751b8ce58852ebf9a43a72ba0d4805b35c94470f1086525ce5ef9f00e98db85",
+              "orientation": 6
+            }
+          }
+        }
+      ]
+    },
+    {
+      "path": "assets/images/projects/tchaikovsky/commercial/plans/b/b22.webp",
+      "bytes": 84310,
+      "sha256": "d59296cc8e2cd733a6176ce6d3717af66100ea81ac10da0cefe901780280ba4e",
+      "roles": [
+        "commercial/B22/planImg",
+        "commercial/B22/image"
+      ],
+      "selections": [
+        {
+          "requested": "assets/images/projects/tchaikovsky/commercial/plans/b/b22.jpg",
+          "chosen": "assets/images/projects/tchaikovsky/commercial/plans/b/b22.webp",
+          "source_bytes": 1376445,
+          "selected_bytes": 84310,
+          "source_sha256": "158ac3c3195d847d584a67023c4685830f54c3f5bab7ef0babb01b22f3b631b5",
+          "selected_sha256": "d59296cc8e2cd733a6176ce6d3717af66100ea81ac10da0cefe901780280ba4e",
+          "pixel_exact_proof": {
+            "width": 1578,
+            "height": 2259,
+            "rgb_sha256": "c1173d33ff9d41cfde048633135338af236e224b88b33a6c8f7d6777354a6d84",
+            "metadata": {
+              "icc_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "exif_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "xmp_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "orientation": 1
+            }
+          }
+        }
+      ]
+    },
+    {
+      "path": "assets/images/projects/tchaikovsky/commercial/plans/b/b23.webp",
+      "bytes": 110274,
+      "sha256": "83224794796876eb0685f5991c9e97f60e7202d9cfe19d9472fbb58242f18a2e",
+      "roles": [
+        "commercial/B23/planImg",
+        "commercial/B23/image"
+      ],
+      "selections": [
+        {
+          "requested": "assets/images/projects/tchaikovsky/commercial/plans/b/b23.jpg",
+          "chosen": "assets/images/projects/tchaikovsky/commercial/plans/b/b23.webp",
+          "source_bytes": 871995,
+          "selected_bytes": 110274,
+          "source_sha256": "7cfc3a6afa3802512156b6fab977985859179ad108e6dc721f6d354d49c028d5",
+          "selected_sha256": "83224794796876eb0685f5991c9e97f60e7202d9cfe19d9472fbb58242f18a2e",
+          "pixel_exact_proof": {
+            "width": 3154,
+            "height": 1388,
+            "rgb_sha256": "c29470e1e7b5df6c58189cb4c8545bf4f32a80a50135d7dfd79522f7695c11c0",
+            "metadata": {
+              "icc_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "exif_sha256": "bb2a74af83acc8170d7b17a2ab66a6b8267af30218781a3f3e29a2921bd68e0d",
+              "xmp_sha256": "a751b8ce58852ebf9a43a72ba0d4805b35c94470f1086525ce5ef9f00e98db85",
+              "orientation": 6
+            }
+          }
+        }
+      ]
+    },
+    {
+      "path": "assets/images/projects/tchaikovsky/commercial/plans/b/b24.webp",
+      "bytes": 1131830,
+      "sha256": "166646d89f4a55d42f437f04f1bc8ac8593de08c58754ab4500ed08be16f7723",
+      "roles": [
+        "commercial/B24/planImg",
+        "commercial/B24/image"
+      ],
+      "selections": [
+        {
+          "requested": "assets/images/projects/tchaikovsky/commercial/plans/b/b24.jpg",
+          "chosen": "assets/images/projects/tchaikovsky/commercial/plans/b/b24.webp",
+          "source_bytes": 1449707,
+          "selected_bytes": 1131830,
+          "source_sha256": "08812fee65136abc7da717c33f4822fa341a2ef4b0204a993b4c2d16bd302e42",
+          "selected_sha256": "166646d89f4a55d42f437f04f1bc8ac8593de08c58754ab4500ed08be16f7723",
+          "pixel_exact_proof": {
+            "width": 2031,
+            "height": 1975,
+            "rgb_sha256": "7187dcbfd5a441d396cc9e2609360482574cd5223e78343c7caa55bd1022b250",
+            "metadata": {
+              "icc_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "exif_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "xmp_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "orientation": 1
+            }
+          }
+        }
+      ]
+    },
+    {
+      "path": "assets/images/projects/tchaikovsky/commercial/plans/b/b25.webp",
+      "bytes": 2554200,
+      "sha256": "06458abd95b4f539b09f0f57ffd5aa484f7b411708490a4b2aa72c78cfbfd439",
+      "roles": [
+        "commercial/B25/planImg",
+        "commercial/B25/image"
+      ],
+      "selections": [
+        {
+          "requested": "assets/images/projects/tchaikovsky/commercial/plans/b/b25.jpg",
+          "chosen": "assets/images/projects/tchaikovsky/commercial/plans/b/b25.webp",
+          "source_bytes": 2725757,
+          "selected_bytes": 2554200,
+          "source_sha256": "3327356b36f4d11ffcaaadca0ae3fc41f867134ef48a409b06a5a06e9b701655",
+          "selected_sha256": "06458abd95b4f539b09f0f57ffd5aa484f7b411708490a4b2aa72c78cfbfd439",
+          "pixel_exact_proof": {
+            "width": 1892,
+            "height": 3940,
+            "rgb_sha256": "cd244bdc5b475ecd0f6a8bd53796d834b27d6a2f13b6b06bfc0fab87cee4efd9",
+            "metadata": {
+              "icc_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "exif_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "xmp_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "orientation": 1
+            }
+          }
+        }
+      ]
+    },
+    {
+      "path": "assets/images/projects/tchaikovsky/commercial/plans/b/b26.webp",
+      "bytes": 1292786,
+      "sha256": "fdb31a329917537c480c4061c78164b8b5c4e4b7b9b55cd9b10928092599370b",
+      "roles": [
+        "commercial/B26/planImg",
+        "commercial/B26/image"
+      ],
+      "selections": [
+        {
+          "requested": "assets/images/projects/tchaikovsky/commercial/plans/b/b26.jpg",
+          "chosen": "assets/images/projects/tchaikovsky/commercial/plans/b/b26.webp",
+          "source_bytes": 1723327,
+          "selected_bytes": 1292786,
+          "source_sha256": "6978ea9cb99db41efcbb56a36064e703f155b68cad55386c39df0b31432e6914",
+          "selected_sha256": "fdb31a329917537c480c4061c78164b8b5c4e4b7b9b55cd9b10928092599370b",
+          "pixel_exact_proof": {
+            "width": 1196,
+            "height": 3800,
+            "rgb_sha256": "785a28aee3371c844a30d110cfac50907cad46c440ed5b78e043158971d43abc",
+            "metadata": {
+              "icc_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "exif_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "xmp_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "orientation": 1
+            }
+          }
+        }
+      ]
+    },
+    {
+      "path": "assets/images/projects/tchaikovsky/commercial/plans/b/b27.webp",
+      "bytes": 1297434,
+      "sha256": "5970e7ae271f2735d4bede6f212faefd9a9130c6e11d5b47ab299573577d9609",
+      "roles": [
+        "commercial/B27/planImg",
+        "commercial/B27/image"
+      ],
+      "selections": [
+        {
+          "requested": "assets/images/projects/tchaikovsky/commercial/plans/b/b27.jpg",
+          "chosen": "assets/images/projects/tchaikovsky/commercial/plans/b/b27.webp",
+          "source_bytes": 1728462,
+          "selected_bytes": 1297434,
+          "source_sha256": "b91fe472875fab3555ab740591d4bc86ac82cf35e63b56ec7040d52a9e9e587a",
+          "selected_sha256": "5970e7ae271f2735d4bede6f212faefd9a9130c6e11d5b47ab299573577d9609",
+          "pixel_exact_proof": {
+            "width": 1201,
+            "height": 3797,
+            "rgb_sha256": "a032b6b8aa9beadfcc6bbe09133238eb66211c4a9a8ceb16b2d2ce4cf21aace9",
+            "metadata": {
+              "icc_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "exif_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "xmp_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "orientation": 1
+            }
+          }
+        }
+      ]
+    },
+    {
+      "path": "assets/images/projects/tchaikovsky/commercial/plans/b/b28.webp",
+      "bytes": 2626352,
+      "sha256": "7e9768302d8ce95ff0124b79592bb598f9c718628c9f3d9465e83b2dd100fe47",
+      "roles": [
+        "commercial/B28/planImg",
+        "commercial/B28/image"
+      ],
+      "selections": [
+        {
+          "requested": "assets/images/projects/tchaikovsky/commercial/plans/b/b28.jpg",
+          "chosen": "assets/images/projects/tchaikovsky/commercial/plans/b/b28.webp",
+          "source_bytes": 3147202,
+          "selected_bytes": 2626352,
+          "source_sha256": "d8c8ee27ac01a5035b9a9f0a1c97d931234520cc6f1b970967ad27f5cfcd65b9",
+          "selected_sha256": "7e9768302d8ce95ff0124b79592bb598f9c718628c9f3d9465e83b2dd100fe47",
+          "pixel_exact_proof": {
+            "width": 2707,
+            "height": 3867,
+            "rgb_sha256": "f9451484a55fcfed6b2c70d448ce6eae9f85086d5f7b1eee4e660a7b7ea6b004",
+            "metadata": {
+              "icc_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "exif_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "xmp_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "orientation": 1
+            }
+          }
+        }
+      ]
+    },
+    {
+      "path": "assets/images/projects/tchaikovsky/commercial/plans/c/c13.webp",
+      "bytes": 162146,
+      "sha256": "99952750aa60763c47c39b7d61faf598e8a5ff66fba32ebcebf2eb4a05753021",
+      "roles": [
+        "commercial/C13/planImg",
+        "commercial/C13/image"
+      ],
+      "selections": [
+        {
+          "requested": "assets/images/projects/tchaikovsky/commercial/plans/c/c13.jpg",
+          "chosen": "assets/images/projects/tchaikovsky/commercial/plans/c/c13.webp",
+          "source_bytes": 2014429,
+          "selected_bytes": 162146,
+          "source_sha256": "eb2787e9891a673704d6701735e06bc47497c4d83df76287a45d1db825830d6f",
+          "selected_sha256": "99952750aa60763c47c39b7d61faf598e8a5ff66fba32ebcebf2eb4a05753021",
+          "pixel_exact_proof": {
+            "width": 4483,
+            "height": 1507,
+            "rgb_sha256": "aac95f7edb79273c01b181105703ca9217859aeefaf910263cea418aaef1d943",
+            "metadata": {
+              "icc_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "exif_sha256": "bb2a74af83acc8170d7b17a2ab66a6b8267af30218781a3f3e29a2921bd68e0d",
+              "xmp_sha256": "a751b8ce58852ebf9a43a72ba0d4805b35c94470f1086525ce5ef9f00e98db85",
+              "orientation": 6
+            }
+          }
+        }
+      ]
+    },
+    {
+      "path": "assets/images/projects/tchaikovsky/commercial/plans/c/c14.webp",
+      "bytes": 145284,
+      "sha256": "3041e5d74b1c5955acf155dee00087872ced7e25d6e82aae325ad267892f43cd",
+      "roles": [
+        "commercial/C14/planImg",
+        "commercial/C14/image"
+      ],
+      "selections": [
+        {
+          "requested": "assets/images/projects/tchaikovsky/commercial/plans/c/c14.jpg",
+          "chosen": "assets/images/projects/tchaikovsky/commercial/plans/c/c14.webp",
+          "source_bytes": 2601980,
+          "selected_bytes": 145284,
+          "source_sha256": "68c9637d5aa87037e4b9d116a41e401f22489586c97f7d40a5ba548fece8dbca",
+          "selected_sha256": "3041e5d74b1c5955acf155dee00087872ced7e25d6e82aae325ad267892f43cd",
+          "pixel_exact_proof": {
+            "width": 4474,
+            "height": 2310,
+            "rgb_sha256": "5eff9c45d0fba8cc44ac4ade58bc88b8c61f567e8e90b79bbbd5b6e0d73f1fbe",
+            "metadata": {
+              "icc_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "exif_sha256": "bb2a74af83acc8170d7b17a2ab66a6b8267af30218781a3f3e29a2921bd68e0d",
+              "xmp_sha256": "a751b8ce58852ebf9a43a72ba0d4805b35c94470f1086525ce5ef9f00e98db85",
+              "orientation": 6
+            }
+          }
+        }
+      ]
+    },
+    {
+      "path": "assets/images/projects/tchaikovsky/commercial/plans/c/c15.webp",
+      "bytes": 175328,
+      "sha256": "17ea6f936c0a25a7c0031d8e9443c4f4bcf3b520697ed7716a6da9209703299c",
+      "roles": [
+        "commercial/C15/planImg",
+        "commercial/C15/image"
+      ],
+      "selections": [
+        {
+          "requested": "assets/images/projects/tchaikovsky/commercial/plans/c/c15.jpg",
+          "chosen": "assets/images/projects/tchaikovsky/commercial/plans/c/c15.webp",
+          "source_bytes": 3267483,
+          "selected_bytes": 175328,
+          "source_sha256": "3098b8aacb92483c951f161eb9610d4007a3f245b358e2e8304299ca3d40fbd4",
+          "selected_sha256": "17ea6f936c0a25a7c0031d8e9443c4f4bcf3b520697ed7716a6da9209703299c",
+          "pixel_exact_proof": {
+            "width": 3086,
+            "height": 4491,
+            "rgb_sha256": "b8ae5de6dfd7fed23797e6532e3cdea5e0b5c7b9886e8379f7c5b43a6beddac3",
+            "metadata": {
+              "icc_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "exif_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "xmp_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "orientation": 1
+            }
+          }
+        }
+      ]
+    },
+    {
+      "path": "assets/images/projects/tchaikovsky/commercial/plans/c/c16.webp",
+      "bytes": 133980,
+      "sha256": "e718125fbf33095d816f33c1d52602d26d5f0167b7b153521c3d9983a3fc1a2f",
+      "roles": [
+        "commercial/C16/planImg",
+        "commercial/C16/image"
+      ],
+      "selections": [
+        {
+          "requested": "assets/images/projects/tchaikovsky/commercial/plans/c/c16.jpg",
+          "chosen": "assets/images/projects/tchaikovsky/commercial/plans/c/c16.webp",
+          "source_bytes": 1529894,
+          "selected_bytes": 133980,
+          "source_sha256": "3b620180848c0ee4ea86dab76506209f3e3db88a86ac67b443d4f4ab4a82d27b",
+          "selected_sha256": "e718125fbf33095d816f33c1d52602d26d5f0167b7b153521c3d9983a3fc1a2f",
+          "pixel_exact_proof": {
+            "width": 2758,
+            "height": 2551,
+            "rgb_sha256": "10737c1095779f2751d5f1541893875f445fd0bb7a5da63b7caf7f31c9eb82d6",
+            "metadata": {
+              "icc_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "exif_sha256": "1a042f1b8aa1b158edcd2d22907b2c5250f84f0c3deacbdbfca14a544035faee",
+              "xmp_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "orientation": 8
+            }
+          }
+        }
+      ]
+    },
+    {
+      "path": "assets/images/projects/tchaikovsky/commercial/plans/c/c17.webp",
+      "bytes": 130524,
+      "sha256": "61b7a4b2201fa0e3ef6a1fa26537bf074812bfd8bf4c21f7e50336e5ebd9ece4",
+      "roles": [
+        "commercial/C17/planImg",
+        "commercial/C17/image"
+      ],
+      "selections": [
+        {
+          "requested": "assets/images/projects/tchaikovsky/commercial/plans/c/c17.jpg",
+          "chosen": "assets/images/projects/tchaikovsky/commercial/plans/c/c17.webp",
+          "source_bytes": 1866980,
+          "selected_bytes": 130524,
+          "source_sha256": "c2988aae3ff38cfec271c6c45a06a5c0d6e4cc690b52c3fc970b66af59a1f3f4",
+          "selected_sha256": "61b7a4b2201fa0e3ef6a1fa26537bf074812bfd8bf4c21f7e50336e5ebd9ece4",
+          "pixel_exact_proof": {
+            "width": 2778,
+            "height": 2475,
+            "rgb_sha256": "184291b37057840d0709ca0be72d6f53708b9652a1e7766a02b7a98815d0543e",
+            "metadata": {
+              "icc_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "exif_sha256": "9d4d3396264fa737494a650d54471e6d445fea5bdcc2575ed1023c221ad32453",
+              "xmp_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "orientation": 6
+            }
+          }
+        }
+      ]
+    },
+    {
+      "path": "assets/images/projects/tchaikovsky/commercial/plans/c/c18.webp",
+      "bytes": 214378,
+      "sha256": "71b03394cb209757905fbe6b2df3fa66e6e636856380bd2555c8d2b76afa1472",
+      "roles": [
+        "commercial/C18/planImg",
+        "commercial/C18/image"
+      ],
+      "selections": [
+        {
+          "requested": "assets/images/projects/tchaikovsky/commercial/plans/c/c18.jpg",
+          "chosen": "assets/images/projects/tchaikovsky/commercial/plans/c/c18.webp",
+          "source_bytes": 4153491,
+          "selected_bytes": 214378,
+          "source_sha256": "b4a1d0a8dd0685d6f93c28ea638f0097ae9414f19bf5f603883097f710ac53a0",
+          "selected_sha256": "71b03394cb209757905fbe6b2df3fa66e6e636856380bd2555c8d2b76afa1472",
+          "pixel_exact_proof": {
+            "width": 4901,
+            "height": 3471,
+            "rgb_sha256": "8f743ded838996c8381b615865bb9db7521c292867b9507739e9a3dc68dbca86",
+            "metadata": {
+              "icc_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "exif_sha256": "bb2a74af83acc8170d7b17a2ab66a6b8267af30218781a3f3e29a2921bd68e0d",
+              "xmp_sha256": "a751b8ce58852ebf9a43a72ba0d4805b35c94470f1086525ce5ef9f00e98db85",
+              "orientation": 6
+            }
+          }
+        }
+      ]
+    },
+    {
+      "path": "assets/images/projects/tchaikovsky/commercial/previews/a/a01-640.webp",
+      "bytes": 66524,
+      "sha256": "c4223b8f5b2655920b43a4a4bbe0e9a9c8cc18be145a7290147a7ec152a66b76",
+      "roles": [
+        "commercial/A01/previewImg"
+      ],
+      "responsive_derivative": {
+        "source": "assets/images/projects/tchaikovsky/commercial/plans/a/a01.webp",
+        "source_sha256": "6a7e27da33dd3fd21dd690f21343caa5f8fd3d1037bc65332dc42567e7c60786",
+        "width": 388,
+        "height": 640,
+        "encoding": "lossless-webp",
+        "resize": "fit within 640x640"
+      },
+      "selections": [
+        {
+          "requested": "assets/images/projects/tchaikovsky/commercial/previews/a/a01-640.webp",
+          "chosen": "assets/images/projects/tchaikovsky/commercial/previews/a/a01-640.webp",
+          "source_bytes": 66524,
+          "selected_bytes": 66524,
+          "source_sha256": "c4223b8f5b2655920b43a4a4bbe0e9a9c8cc18be145a7290147a7ec152a66b76",
+          "selected_sha256": "c4223b8f5b2655920b43a4a4bbe0e9a9c8cc18be145a7290147a7ec152a66b76"
+        }
+      ]
+    },
+    {
+      "path": "assets/images/projects/tchaikovsky/commercial/previews/a/a02-640.webp",
+      "bytes": 34090,
+      "sha256": "a7e7bf206a737cebf8eb1cb27d493caff9730413e7cba98ce09ad581c096ecf5",
+      "roles": [
+        "commercial/A02/previewImg"
+      ],
+      "responsive_derivative": {
+        "source": "assets/images/projects/tchaikovsky/commercial/plans/a/a02.webp",
+        "source_sha256": "e8e11a2f5c6455640004f01a93a973c245879c466bd94916640e9c48bf5c3cbd",
+        "width": 217,
+        "height": 640,
+        "encoding": "lossless-webp",
+        "resize": "fit within 640x640"
+      },
+      "selections": [
+        {
+          "requested": "assets/images/projects/tchaikovsky/commercial/previews/a/a02-640.webp",
+          "chosen": "assets/images/projects/tchaikovsky/commercial/previews/a/a02-640.webp",
+          "source_bytes": 34090,
+          "selected_bytes": 34090,
+          "source_sha256": "a7e7bf206a737cebf8eb1cb27d493caff9730413e7cba98ce09ad581c096ecf5",
+          "selected_sha256": "a7e7bf206a737cebf8eb1cb27d493caff9730413e7cba98ce09ad581c096ecf5"
+        }
+      ]
+    },
+    {
+      "path": "assets/images/projects/tchaikovsky/commercial/previews/a/a03-640.webp",
+      "bytes": 27612,
+      "sha256": "bcfe305bf46d5d630719280c7a99ee5adcdfa1c94ac9089ac9f3fb270cf06c34",
+      "roles": [
+        "commercial/A03/previewImg"
+      ],
+      "responsive_derivative": {
+        "source": "assets/images/projects/tchaikovsky/commercial/plans/a/a03.webp",
+        "source_sha256": "86c1ff57d68c9028ff0ce30d987d3e5d265aa1c6795e1450112b6ead9c45dfd7",
+        "width": 201,
+        "height": 640,
+        "encoding": "lossless-webp",
+        "resize": "fit within 640x640"
+      },
+      "selections": [
+        {
+          "requested": "assets/images/projects/tchaikovsky/commercial/previews/a/a03-640.webp",
+          "chosen": "assets/images/projects/tchaikovsky/commercial/previews/a/a03-640.webp",
+          "source_bytes": 27612,
+          "selected_bytes": 27612,
+          "source_sha256": "bcfe305bf46d5d630719280c7a99ee5adcdfa1c94ac9089ac9f3fb270cf06c34",
+          "selected_sha256": "bcfe305bf46d5d630719280c7a99ee5adcdfa1c94ac9089ac9f3fb270cf06c34"
+        }
+      ]
+    },
+    {
+      "path": "assets/images/projects/tchaikovsky/commercial/previews/a/a04-640.webp",
+      "bytes": 29778,
+      "sha256": "95ab5c8196b33b2d69682ec7df9944263083571611fe561f51f9b50908056843",
+      "roles": [
+        "commercial/A04/previewImg"
+      ],
+      "responsive_derivative": {
+        "source": "assets/images/projects/tchaikovsky/commercial/plans/a/a04.webp",
+        "source_sha256": "3c46620c915ef68713ac3b12e6e67d9744073a3f7f8bd6977e36d4a8aa64a50f",
+        "width": 202,
+        "height": 640,
+        "encoding": "lossless-webp",
+        "resize": "fit within 640x640"
+      },
+      "selections": [
+        {
+          "requested": "assets/images/projects/tchaikovsky/commercial/previews/a/a04-640.webp",
+          "chosen": "assets/images/projects/tchaikovsky/commercial/previews/a/a04-640.webp",
+          "source_bytes": 29778,
+          "selected_bytes": 29778,
+          "source_sha256": "95ab5c8196b33b2d69682ec7df9944263083571611fe561f51f9b50908056843",
+          "selected_sha256": "95ab5c8196b33b2d69682ec7df9944263083571611fe561f51f9b50908056843"
+        }
+      ]
+    },
+    {
+      "path": "assets/images/projects/tchaikovsky/commercial/previews/a/a05-640.webp",
+      "bytes": 63710,
+      "sha256": "bd319345f1e42076c0e6763a2c6e4c039d8f99f47065dabbb94697bfbc0a9127",
+      "roles": [
+        "commercial/A05/previewImg"
+      ],
+      "responsive_derivative": {
+        "source": "assets/images/projects/tchaikovsky/commercial/plans/a/a05.webp",
+        "source_sha256": "1495038305955d22448e3181435e8af9a19449e14bf5ef7d61afe54477d2eb2d",
+        "width": 515,
+        "height": 640,
+        "encoding": "lossless-webp",
+        "resize": "fit within 640x640"
+      },
+      "selections": [
+        {
+          "requested": "assets/images/projects/tchaikovsky/commercial/previews/a/a05-640.webp",
+          "chosen": "assets/images/projects/tchaikovsky/commercial/previews/a/a05-640.webp",
+          "source_bytes": 63710,
+          "selected_bytes": 63710,
+          "source_sha256": "bd319345f1e42076c0e6763a2c6e4c039d8f99f47065dabbb94697bfbc0a9127",
+          "selected_sha256": "bd319345f1e42076c0e6763a2c6e4c039d8f99f47065dabbb94697bfbc0a9127"
+        }
+      ]
+    },
+    {
+      "path": "assets/images/projects/tchaikovsky/commercial/previews/a/a06-640.webp",
+      "bytes": 56438,
+      "sha256": "76fd57b943ff25d01d02524c4d006761d33ee6e04ea57e7cfbb9ef1f788e70aa",
+      "roles": [
+        "commercial/A06/previewImg"
+      ],
+      "responsive_derivative": {
+        "source": "assets/images/projects/tchaikovsky/commercial/plans/a/a06.webp",
+        "source_sha256": "04bff4c152aede3d39c690879656db38f81f58374da001dadeed31ea1163cdd9",
+        "width": 411,
+        "height": 640,
+        "encoding": "lossless-webp",
+        "resize": "fit within 640x640"
+      },
+      "selections": [
+        {
+          "requested": "assets/images/projects/tchaikovsky/commercial/previews/a/a06-640.webp",
+          "chosen": "assets/images/projects/tchaikovsky/commercial/previews/a/a06-640.webp",
+          "source_bytes": 56438,
+          "selected_bytes": 56438,
+          "source_sha256": "76fd57b943ff25d01d02524c4d006761d33ee6e04ea57e7cfbb9ef1f788e70aa",
+          "selected_sha256": "76fd57b943ff25d01d02524c4d006761d33ee6e04ea57e7cfbb9ef1f788e70aa"
+        }
+      ]
+    },
+    {
+      "path": "assets/images/projects/tchaikovsky/commercial/previews/a/a07-640.webp",
+      "bytes": 69296,
+      "sha256": "4639ed82190887f57eabce461c34f5a308d236e8ff2505b1400914ffbdecba32",
+      "roles": [
+        "commercial/A07/previewImg"
+      ],
+      "responsive_derivative": {
+        "source": "assets/images/projects/tchaikovsky/commercial/plans/a/a07.webp",
+        "source_sha256": "dee47494c44b935885cf4d1a18e845341db57563b7b05a73ca5e873b8700b9c7",
+        "width": 627,
+        "height": 640,
+        "encoding": "lossless-webp",
+        "resize": "fit within 640x640"
+      },
+      "selections": [
+        {
+          "requested": "assets/images/projects/tchaikovsky/commercial/previews/a/a07-640.webp",
+          "chosen": "assets/images/projects/tchaikovsky/commercial/previews/a/a07-640.webp",
+          "source_bytes": 69296,
+          "selected_bytes": 69296,
+          "source_sha256": "4639ed82190887f57eabce461c34f5a308d236e8ff2505b1400914ffbdecba32",
+          "selected_sha256": "4639ed82190887f57eabce461c34f5a308d236e8ff2505b1400914ffbdecba32"
+        }
+      ]
+    },
+    {
+      "path": "assets/images/projects/tchaikovsky/commercial/previews/b/b08-640.webp",
+      "bytes": 50038,
+      "sha256": "a433159b47741d5871b1761226d61340e0dd1ae64b11581556c17e0745aea794",
+      "roles": [
+        "commercial/B08/previewImg"
+      ],
+      "responsive_derivative": {
+        "source": "assets/images/projects/tchaikovsky/commercial/plans/b/b08.webp",
+        "source_sha256": "e5a7988ac29b0bcfd0dc4b8c6af8b62fd244ae403c954b494a7c8df1e60a1990",
+        "width": 459,
+        "height": 640,
+        "encoding": "lossless-webp",
+        "resize": "fit within 640x640"
+      },
+      "selections": [
+        {
+          "requested": "assets/images/projects/tchaikovsky/commercial/previews/b/b08-640.webp",
+          "chosen": "assets/images/projects/tchaikovsky/commercial/previews/b/b08-640.webp",
+          "source_bytes": 50038,
+          "selected_bytes": 50038,
+          "source_sha256": "a433159b47741d5871b1761226d61340e0dd1ae64b11581556c17e0745aea794",
+          "selected_sha256": "a433159b47741d5871b1761226d61340e0dd1ae64b11581556c17e0745aea794"
+        }
+      ]
+    },
+    {
+      "path": "assets/images/projects/tchaikovsky/commercial/previews/b/b09-640.webp",
+      "bytes": 29678,
+      "sha256": "81316f50fb5963f8ebcc9d62d6b4315bee8be8617e032622df770bbe0194efc3",
+      "roles": [
+        "commercial/B09/previewImg"
+      ],
+      "responsive_derivative": {
+        "source": "assets/images/projects/tchaikovsky/commercial/plans/b/b09.webp",
+        "source_sha256": "fa2e44c89abe6fbccb862cdcf504408ae177842b1d7c03be9b9781bf2a444368",
+        "width": 208,
+        "height": 640,
+        "encoding": "lossless-webp",
+        "resize": "fit within 640x640"
+      },
+      "selections": [
+        {
+          "requested": "assets/images/projects/tchaikovsky/commercial/previews/b/b09-640.webp",
+          "chosen": "assets/images/projects/tchaikovsky/commercial/previews/b/b09-640.webp",
+          "source_bytes": 29678,
+          "selected_bytes": 29678,
+          "source_sha256": "81316f50fb5963f8ebcc9d62d6b4315bee8be8617e032622df770bbe0194efc3",
+          "selected_sha256": "81316f50fb5963f8ebcc9d62d6b4315bee8be8617e032622df770bbe0194efc3"
+        }
+      ]
+    },
+    {
+      "path": "assets/images/projects/tchaikovsky/commercial/previews/b/b10-640.webp",
+      "bytes": 30138,
+      "sha256": "e9918f70efd1ec91ad5a8f2d8d1a9f46c6cc4d88229e80ba1afeed5697ff54b6",
+      "roles": [
+        "commercial/B10/previewImg"
+      ],
+      "responsive_derivative": {
+        "source": "assets/images/projects/tchaikovsky/commercial/plans/b/b10.webp",
+        "source_sha256": "c766b5fcd6987dfb08cc33fffb6c43d64256476f5c66681a56dbc20690635944",
+        "width": 211,
+        "height": 640,
+        "encoding": "lossless-webp",
+        "resize": "fit within 640x640"
+      },
+      "selections": [
+        {
+          "requested": "assets/images/projects/tchaikovsky/commercial/previews/b/b10-640.webp",
+          "chosen": "assets/images/projects/tchaikovsky/commercial/previews/b/b10-640.webp",
+          "source_bytes": 30138,
+          "selected_bytes": 30138,
+          "source_sha256": "e9918f70efd1ec91ad5a8f2d8d1a9f46c6cc4d88229e80ba1afeed5697ff54b6",
+          "selected_sha256": "e9918f70efd1ec91ad5a8f2d8d1a9f46c6cc4d88229e80ba1afeed5697ff54b6"
+        }
+      ]
+    },
+    {
+      "path": "assets/images/projects/tchaikovsky/commercial/previews/b/b11-640.webp",
+      "bytes": 44356,
+      "sha256": "ab4cd03dcdcd64439f7c8b91d57015fe97e97b13f31cfc186b47d913ba3f8f89",
+      "roles": [
+        "commercial/B11/previewImg"
+      ],
+      "responsive_derivative": {
+        "source": "assets/images/projects/tchaikovsky/commercial/plans/b/b11.webp",
+        "source_sha256": "0ea4c9eb6274d1c0f2463c77eea03d5a3b3d6da13826f3c2222d7d7066780e9e",
+        "width": 339,
+        "height": 640,
+        "encoding": "lossless-webp",
+        "resize": "fit within 640x640"
+      },
+      "selections": [
+        {
+          "requested": "assets/images/projects/tchaikovsky/commercial/previews/b/b11-640.webp",
+          "chosen": "assets/images/projects/tchaikovsky/commercial/previews/b/b11-640.webp",
+          "source_bytes": 44356,
+          "selected_bytes": 44356,
+          "source_sha256": "ab4cd03dcdcd64439f7c8b91d57015fe97e97b13f31cfc186b47d913ba3f8f89",
+          "selected_sha256": "ab4cd03dcdcd64439f7c8b91d57015fe97e97b13f31cfc186b47d913ba3f8f89"
+        }
+      ]
+    },
+    {
+      "path": "assets/images/projects/tchaikovsky/commercial/previews/b/b12-640.webp",
+      "bytes": 31622,
+      "sha256": "814ebacb49055e87060baa4d612ce08526abb15ca76735edaf34e0745cb944c6",
+      "roles": [
+        "commercial/B12/previewImg"
+      ],
+      "responsive_derivative": {
+        "source": "assets/images/projects/tchaikovsky/commercial/plans/b/b12.webp",
+        "source_sha256": "4c06775ad64458e9e1b1e07de29fea244e19b1dc10b65e4a5fcfdf0e57512bf0",
+        "width": 640,
+        "height": 531,
+        "encoding": "lossless-webp",
+        "resize": "fit within 640x640"
+      },
+      "selections": [
+        {
+          "requested": "assets/images/projects/tchaikovsky/commercial/previews/b/b12-640.webp",
+          "chosen": "assets/images/projects/tchaikovsky/commercial/previews/b/b12-640.webp",
+          "source_bytes": 31622,
+          "selected_bytes": 31622,
+          "source_sha256": "814ebacb49055e87060baa4d612ce08526abb15ca76735edaf34e0745cb944c6",
+          "selected_sha256": "814ebacb49055e87060baa4d612ce08526abb15ca76735edaf34e0745cb944c6"
+        }
+      ]
+    },
+    {
+      "path": "assets/images/projects/tchaikovsky/commercial/previews/b/b19-640.webp",
+      "bytes": 21930,
+      "sha256": "e901ef51be3681840232700ca79f4a196aede30dc232df499da2e7f75274e046",
+      "roles": [
+        "commercial/B19/previewImg"
+      ],
+      "responsive_derivative": {
+        "source": "assets/images/projects/tchaikovsky/commercial/plans/b/b19.webp",
+        "source_sha256": "3aec228a09f1138d9b4896848eea4fa6d88f3bce2c5449fe08697ae8d32976ff",
+        "width": 640,
+        "height": 291,
+        "encoding": "lossless-webp",
+        "resize": "fit within 640x640"
+      },
+      "selections": [
+        {
+          "requested": "assets/images/projects/tchaikovsky/commercial/previews/b/b19-640.webp",
+          "chosen": "assets/images/projects/tchaikovsky/commercial/previews/b/b19-640.webp",
+          "source_bytes": 21930,
+          "selected_bytes": 21930,
+          "source_sha256": "e901ef51be3681840232700ca79f4a196aede30dc232df499da2e7f75274e046",
+          "selected_sha256": "e901ef51be3681840232700ca79f4a196aede30dc232df499da2e7f75274e046"
+        }
+      ]
+    },
+    {
+      "path": "assets/images/projects/tchaikovsky/commercial/previews/b/b20-640.webp",
+      "bytes": 57396,
+      "sha256": "94321dfa45912555e706b32f1f25e2538458d2ce7d5ee833931fcb760b090b43",
+      "roles": [
+        "commercial/B20/previewImg"
+      ],
+      "responsive_derivative": {
+        "source": "assets/images/projects/tchaikovsky/commercial/plans/b/b20.webp",
+        "source_sha256": "0134f41052029744019e67e2aadbe9e7caf6408348415cf2e91250586532fd4f",
+        "width": 539,
+        "height": 640,
+        "encoding": "lossless-webp",
+        "resize": "fit within 640x640"
+      },
+      "selections": [
+        {
+          "requested": "assets/images/projects/tchaikovsky/commercial/previews/b/b20-640.webp",
+          "chosen": "assets/images/projects/tchaikovsky/commercial/previews/b/b20-640.webp",
+          "source_bytes": 57396,
+          "selected_bytes": 57396,
+          "source_sha256": "94321dfa45912555e706b32f1f25e2538458d2ce7d5ee833931fcb760b090b43",
+          "selected_sha256": "94321dfa45912555e706b32f1f25e2538458d2ce7d5ee833931fcb760b090b43"
+        }
+      ]
+    },
+    {
+      "path": "assets/images/projects/tchaikovsky/commercial/previews/b/b21-640.webp",
+      "bytes": 39014,
+      "sha256": "bff97f9688ff05bf54760e6eda2f4e365d2a96b01d8b39dba121de6f1a734d3e",
+      "roles": [
+        "commercial/B21/previewImg"
+      ],
+      "responsive_derivative": {
+        "source": "assets/images/projects/tchaikovsky/commercial/plans/b/b21.webp",
+        "source_sha256": "402f4337a2e67a575d1c6d9e5060467174b2e2baf9c841e04b3179d0ea2bec0d",
+        "width": 640,
+        "height": 479,
+        "encoding": "lossless-webp",
+        "resize": "fit within 640x640"
+      },
+      "selections": [
+        {
+          "requested": "assets/images/projects/tchaikovsky/commercial/previews/b/b21-640.webp",
+          "chosen": "assets/images/projects/tchaikovsky/commercial/previews/b/b21-640.webp",
+          "source_bytes": 39014,
+          "selected_bytes": 39014,
+          "source_sha256": "bff97f9688ff05bf54760e6eda2f4e365d2a96b01d8b39dba121de6f1a734d3e",
+          "selected_sha256": "bff97f9688ff05bf54760e6eda2f4e365d2a96b01d8b39dba121de6f1a734d3e"
+        }
+      ]
+    },
+    {
+      "path": "assets/images/projects/tchaikovsky/commercial/previews/b/b22-640.webp",
+      "bytes": 38212,
+      "sha256": "ca904982863243a2a42c76cfd1f71fc70a3ed8fb3e9fef611677a9f32a842e99",
+      "roles": [
+        "commercial/B22/previewImg"
+      ],
+      "responsive_derivative": {
+        "source": "assets/images/projects/tchaikovsky/commercial/plans/b/b22.webp",
+        "source_sha256": "d59296cc8e2cd733a6176ce6d3717af66100ea81ac10da0cefe901780280ba4e",
+        "width": 447,
+        "height": 640,
+        "encoding": "lossless-webp",
+        "resize": "fit within 640x640"
+      },
+      "selections": [
+        {
+          "requested": "assets/images/projects/tchaikovsky/commercial/previews/b/b22-640.webp",
+          "chosen": "assets/images/projects/tchaikovsky/commercial/previews/b/b22-640.webp",
+          "source_bytes": 38212,
+          "selected_bytes": 38212,
+          "source_sha256": "ca904982863243a2a42c76cfd1f71fc70a3ed8fb3e9fef611677a9f32a842e99",
+          "selected_sha256": "ca904982863243a2a42c76cfd1f71fc70a3ed8fb3e9fef611677a9f32a842e99"
+        }
+      ]
+    },
+    {
+      "path": "assets/images/projects/tchaikovsky/commercial/previews/b/b23-640.webp",
+      "bytes": 24328,
+      "sha256": "6af7f77885b8dc8763a8c5a9d37baa397fe6af310004937f5731cf6ca0107447",
+      "roles": [
+        "commercial/B23/previewImg"
+      ],
+      "responsive_derivative": {
+        "source": "assets/images/projects/tchaikovsky/commercial/plans/b/b23.webp",
+        "source_sha256": "83224794796876eb0685f5991c9e97f60e7202d9cfe19d9472fbb58242f18a2e",
+        "width": 640,
+        "height": 282,
+        "encoding": "lossless-webp",
+        "resize": "fit within 640x640"
+      },
+      "selections": [
+        {
+          "requested": "assets/images/projects/tchaikovsky/commercial/previews/b/b23-640.webp",
+          "chosen": "assets/images/projects/tchaikovsky/commercial/previews/b/b23-640.webp",
+          "source_bytes": 24328,
+          "selected_bytes": 24328,
+          "source_sha256": "6af7f77885b8dc8763a8c5a9d37baa397fe6af310004937f5731cf6ca0107447",
+          "selected_sha256": "6af7f77885b8dc8763a8c5a9d37baa397fe6af310004937f5731cf6ca0107447"
+        }
+      ]
+    },
+    {
+      "path": "assets/images/projects/tchaikovsky/commercial/previews/b/b24-640.webp",
+      "bytes": 92772,
+      "sha256": "8dcf3c41fc8238f7178315cef53565d969673ad1a5d29293cd90de5f7861ff84",
+      "roles": [
+        "commercial/B24/previewImg"
+      ],
+      "responsive_derivative": {
+        "source": "assets/images/projects/tchaikovsky/commercial/plans/b/b24.webp",
+        "source_sha256": "166646d89f4a55d42f437f04f1bc8ac8593de08c58754ab4500ed08be16f7723",
+        "width": 640,
+        "height": 622,
+        "encoding": "lossless-webp",
+        "resize": "fit within 640x640"
+      },
+      "selections": [
+        {
+          "requested": "assets/images/projects/tchaikovsky/commercial/previews/b/b24-640.webp",
+          "chosen": "assets/images/projects/tchaikovsky/commercial/previews/b/b24-640.webp",
+          "source_bytes": 92772,
+          "selected_bytes": 92772,
+          "source_sha256": "8dcf3c41fc8238f7178315cef53565d969673ad1a5d29293cd90de5f7861ff84",
+          "selected_sha256": "8dcf3c41fc8238f7178315cef53565d969673ad1a5d29293cd90de5f7861ff84"
+        }
+      ]
+    },
+    {
+      "path": "assets/images/projects/tchaikovsky/commercial/previews/b/b25-640.webp",
+      "bytes": 53612,
+      "sha256": "749b83937fe1813fe7c79284c7c26ff8c6cf06f0e4e57c07f644f2109c2d466c",
+      "roles": [
+        "commercial/B25/previewImg"
+      ],
+      "responsive_derivative": {
+        "source": "assets/images/projects/tchaikovsky/commercial/plans/b/b25.webp",
+        "source_sha256": "06458abd95b4f539b09f0f57ffd5aa484f7b411708490a4b2aa72c78cfbfd439",
+        "width": 307,
+        "height": 640,
+        "encoding": "lossless-webp",
+        "resize": "fit within 640x640"
+      },
+      "selections": [
+        {
+          "requested": "assets/images/projects/tchaikovsky/commercial/previews/b/b25-640.webp",
+          "chosen": "assets/images/projects/tchaikovsky/commercial/previews/b/b25-640.webp",
+          "source_bytes": 53612,
+          "selected_bytes": 53612,
+          "source_sha256": "749b83937fe1813fe7c79284c7c26ff8c6cf06f0e4e57c07f644f2109c2d466c",
+          "selected_sha256": "749b83937fe1813fe7c79284c7c26ff8c6cf06f0e4e57c07f644f2109c2d466c"
+        }
+      ]
+    },
+    {
+      "path": "assets/images/projects/tchaikovsky/commercial/previews/b/b26-640.webp",
+      "bytes": 29156,
+      "sha256": "da0dc64df5aec51e4e1eae71e0a64109ff6e3b72c4c2e3aafdbaab5d1b0a2f64",
+      "roles": [
+        "commercial/B26/previewImg"
+      ],
+      "responsive_derivative": {
+        "source": "assets/images/projects/tchaikovsky/commercial/plans/b/b26.webp",
+        "source_sha256": "fdb31a329917537c480c4061c78164b8b5c4e4b7b9b55cd9b10928092599370b",
+        "width": 201,
+        "height": 640,
+        "encoding": "lossless-webp",
+        "resize": "fit within 640x640"
+      },
+      "selections": [
+        {
+          "requested": "assets/images/projects/tchaikovsky/commercial/previews/b/b26-640.webp",
+          "chosen": "assets/images/projects/tchaikovsky/commercial/previews/b/b26-640.webp",
+          "source_bytes": 29156,
+          "selected_bytes": 29156,
+          "source_sha256": "da0dc64df5aec51e4e1eae71e0a64109ff6e3b72c4c2e3aafdbaab5d1b0a2f64",
+          "selected_sha256": "da0dc64df5aec51e4e1eae71e0a64109ff6e3b72c4c2e3aafdbaab5d1b0a2f64"
+        }
+      ]
+    },
+    {
+      "path": "assets/images/projects/tchaikovsky/commercial/previews/b/b27-640.webp",
+      "bytes": 28630,
+      "sha256": "d3ec3296726f489309726b9c77e86c57b74a13c6b3fc44409101cc683615f8ef",
+      "roles": [
+        "commercial/B27/previewImg"
+      ],
+      "responsive_derivative": {
+        "source": "assets/images/projects/tchaikovsky/commercial/plans/b/b27.webp",
+        "source_sha256": "5970e7ae271f2735d4bede6f212faefd9a9130c6e11d5b47ab299573577d9609",
+        "width": 202,
+        "height": 640,
+        "encoding": "lossless-webp",
+        "resize": "fit within 640x640"
+      },
+      "selections": [
+        {
+          "requested": "assets/images/projects/tchaikovsky/commercial/previews/b/b27-640.webp",
+          "chosen": "assets/images/projects/tchaikovsky/commercial/previews/b/b27-640.webp",
+          "source_bytes": 28630,
+          "selected_bytes": 28630,
+          "source_sha256": "d3ec3296726f489309726b9c77e86c57b74a13c6b3fc44409101cc683615f8ef",
+          "selected_sha256": "d3ec3296726f489309726b9c77e86c57b74a13c6b3fc44409101cc683615f8ef"
+        }
+      ]
+    },
+    {
+      "path": "assets/images/projects/tchaikovsky/commercial/previews/b/b28-640.webp",
+      "bytes": 54226,
+      "sha256": "552f7cd63ce8a67c6775c1de900a75a2a74ec6c6788cb33c53dde4b2486f502a",
+      "roles": [
+        "commercial/B28/previewImg"
+      ],
+      "responsive_derivative": {
+        "source": "assets/images/projects/tchaikovsky/commercial/plans/b/b28.webp",
+        "source_sha256": "7e9768302d8ce95ff0124b79592bb598f9c718628c9f3d9465e83b2dd100fe47",
+        "width": 448,
+        "height": 640,
+        "encoding": "lossless-webp",
+        "resize": "fit within 640x640"
+      },
+      "selections": [
+        {
+          "requested": "assets/images/projects/tchaikovsky/commercial/previews/b/b28-640.webp",
+          "chosen": "assets/images/projects/tchaikovsky/commercial/previews/b/b28-640.webp",
+          "source_bytes": 54226,
+          "selected_bytes": 54226,
+          "source_sha256": "552f7cd63ce8a67c6775c1de900a75a2a74ec6c6788cb33c53dde4b2486f502a",
+          "selected_sha256": "552f7cd63ce8a67c6775c1de900a75a2a74ec6c6788cb33c53dde4b2486f502a"
+        }
+      ]
+    },
+    {
+      "path": "assets/images/projects/tchaikovsky/commercial/previews/c/c13-640.webp",
+      "bytes": 15414,
+      "sha256": "e279894dfc99e59caa24f911a356147defbbabacd2e1f7e284796f5455dad6d2",
+      "roles": [
+        "commercial/C13/previewImg"
+      ],
+      "responsive_derivative": {
+        "source": "assets/images/projects/tchaikovsky/commercial/plans/c/c13.webp",
+        "source_sha256": "99952750aa60763c47c39b7d61faf598e8a5ff66fba32ebcebf2eb4a05753021",
+        "width": 640,
+        "height": 215,
+        "encoding": "lossless-webp",
+        "resize": "fit within 640x640"
+      },
+      "selections": [
+        {
+          "requested": "assets/images/projects/tchaikovsky/commercial/previews/c/c13-640.webp",
+          "chosen": "assets/images/projects/tchaikovsky/commercial/previews/c/c13-640.webp",
+          "source_bytes": 15414,
+          "selected_bytes": 15414,
+          "source_sha256": "e279894dfc99e59caa24f911a356147defbbabacd2e1f7e284796f5455dad6d2",
+          "selected_sha256": "e279894dfc99e59caa24f911a356147defbbabacd2e1f7e284796f5455dad6d2"
+        }
+      ]
+    },
+    {
+      "path": "assets/images/projects/tchaikovsky/commercial/previews/c/c14-640.webp",
+      "bytes": 18924,
+      "sha256": "407fccf1760f36403ed9ab396707e249ad2c59b06e83bb4bb3ed4aaa27be2c0f",
+      "roles": [
+        "commercial/C14/previewImg"
+      ],
+      "responsive_derivative": {
+        "source": "assets/images/projects/tchaikovsky/commercial/plans/c/c14.webp",
+        "source_sha256": "3041e5d74b1c5955acf155dee00087872ced7e25d6e82aae325ad267892f43cd",
+        "width": 640,
+        "height": 330,
+        "encoding": "lossless-webp",
+        "resize": "fit within 640x640"
+      },
+      "selections": [
+        {
+          "requested": "assets/images/projects/tchaikovsky/commercial/previews/c/c14-640.webp",
+          "chosen": "assets/images/projects/tchaikovsky/commercial/previews/c/c14-640.webp",
+          "source_bytes": 18924,
+          "selected_bytes": 18924,
+          "source_sha256": "407fccf1760f36403ed9ab396707e249ad2c59b06e83bb4bb3ed4aaa27be2c0f",
+          "selected_sha256": "407fccf1760f36403ed9ab396707e249ad2c59b06e83bb4bb3ed4aaa27be2c0f"
+        }
+      ]
+    },
+    {
+      "path": "assets/images/projects/tchaikovsky/commercial/previews/c/c15-640.webp",
+      "bytes": 20812,
+      "sha256": "9403a31446c245b04b8a922c9e2962b6469b8635144a8ac2e8c4f08ce4a2d334",
+      "roles": [
+        "commercial/C15/previewImg"
+      ],
+      "responsive_derivative": {
+        "source": "assets/images/projects/tchaikovsky/commercial/plans/c/c15.webp",
+        "source_sha256": "17ea6f936c0a25a7c0031d8e9443c4f4bcf3b520697ed7716a6da9209703299c",
+        "width": 440,
+        "height": 640,
+        "encoding": "lossless-webp",
+        "resize": "fit within 640x640"
+      },
+      "selections": [
+        {
+          "requested": "assets/images/projects/tchaikovsky/commercial/previews/c/c15-640.webp",
+          "chosen": "assets/images/projects/tchaikovsky/commercial/previews/c/c15-640.webp",
+          "source_bytes": 20812,
+          "selected_bytes": 20812,
+          "source_sha256": "9403a31446c245b04b8a922c9e2962b6469b8635144a8ac2e8c4f08ce4a2d334",
+          "selected_sha256": "9403a31446c245b04b8a922c9e2962b6469b8635144a8ac2e8c4f08ce4a2d334"
+        }
+      ]
+    },
+    {
+      "path": "assets/images/projects/tchaikovsky/commercial/previews/c/c16-640.webp",
+      "bytes": 32086,
+      "sha256": "0b450dbb728919df692af00e3425f232e6c27238e3f93216baf71b41954fdcc7",
+      "roles": [
+        "commercial/C16/previewImg"
+      ],
+      "responsive_derivative": {
+        "source": "assets/images/projects/tchaikovsky/commercial/plans/c/c16.webp",
+        "source_sha256": "e718125fbf33095d816f33c1d52602d26d5f0167b7b153521c3d9983a3fc1a2f",
+        "width": 640,
+        "height": 592,
+        "encoding": "lossless-webp",
+        "resize": "fit within 640x640"
+      },
+      "selections": [
+        {
+          "requested": "assets/images/projects/tchaikovsky/commercial/previews/c/c16-640.webp",
+          "chosen": "assets/images/projects/tchaikovsky/commercial/previews/c/c16-640.webp",
+          "source_bytes": 32086,
+          "selected_bytes": 32086,
+          "source_sha256": "0b450dbb728919df692af00e3425f232e6c27238e3f93216baf71b41954fdcc7",
+          "selected_sha256": "0b450dbb728919df692af00e3425f232e6c27238e3f93216baf71b41954fdcc7"
+        }
+      ]
+    },
+    {
+      "path": "assets/images/projects/tchaikovsky/commercial/previews/c/c17-640.webp",
+      "bytes": 38532,
+      "sha256": "e0e4104430a8986f8a1d1199c6be6b4ac02dd3295a42fd60731ecea5f8752574",
+      "roles": [
+        "commercial/C17/previewImg"
+      ],
+      "responsive_derivative": {
+        "source": "assets/images/projects/tchaikovsky/commercial/plans/c/c17.webp",
+        "source_sha256": "61b7a4b2201fa0e3ef6a1fa26537bf074812bfd8bf4c21f7e50336e5ebd9ece4",
+        "width": 640,
+        "height": 570,
+        "encoding": "lossless-webp",
+        "resize": "fit within 640x640"
+      },
+      "selections": [
+        {
+          "requested": "assets/images/projects/tchaikovsky/commercial/previews/c/c17-640.webp",
+          "chosen": "assets/images/projects/tchaikovsky/commercial/previews/c/c17-640.webp",
+          "source_bytes": 38532,
+          "selected_bytes": 38532,
+          "source_sha256": "e0e4104430a8986f8a1d1199c6be6b4ac02dd3295a42fd60731ecea5f8752574",
+          "selected_sha256": "e0e4104430a8986f8a1d1199c6be6b4ac02dd3295a42fd60731ecea5f8752574"
+        }
+      ]
+    },
+    {
+      "path": "assets/images/projects/tchaikovsky/commercial/previews/c/c18-640.webp",
+      "bytes": 23782,
+      "sha256": "f9d71d938fcd941ddca75f73ef7584e9f284638057b824dc4f247d8af25828ba",
+      "roles": [
+        "commercial/C18/previewImg"
+      ],
+      "responsive_derivative": {
+        "source": "assets/images/projects/tchaikovsky/commercial/plans/c/c18.webp",
+        "source_sha256": "71b03394cb209757905fbe6b2df3fa66e6e636856380bd2555c8d2b76afa1472",
+        "width": 640,
+        "height": 453,
+        "encoding": "lossless-webp",
+        "resize": "fit within 640x640"
+      },
+      "selections": [
+        {
+          "requested": "assets/images/projects/tchaikovsky/commercial/previews/c/c18-640.webp",
+          "chosen": "assets/images/projects/tchaikovsky/commercial/previews/c/c18-640.webp",
+          "source_bytes": 23782,
+          "selected_bytes": 23782,
+          "source_sha256": "f9d71d938fcd941ddca75f73ef7584e9f284638057b824dc4f247d8af25828ba",
+          "selected_sha256": "f9d71d938fcd941ddca75f73ef7584e9f284638057b824dc4f247d8af25828ba"
+        }
+      ]
+    },
+    {
       "path": "assets/images/projects/tchaikovsky/floors/backgrounds/level-1100.webp",
       "bytes": 1029988,
       "sha256": "e08f43e3ede6b182151fdea36e36c52a91a70133aa53a321620725ac3bd96520",
@@ -18784,76 +20352,6 @@
       ]
     },
     {
-      "path": "assets/images/site/gallery/render-05-1280.webp",
-      "bytes": 1312116,
-      "sha256": "97f41ed2a64a41450c968bd2964d87d13dd06a98867bf78ed9e728de7c1ddbb1",
-      "roles": [
-        "index.html/img.srcset"
-      ],
-      "responsive_derivative": {
-        "source": "assets/images/site/gallery/render-05.jpg",
-        "source_sha256": "534149b0e09554dec44c45e0c6fd1d06faddae424fe8beeabcd8bad302cb78f6",
-        "width": 1280,
-        "height": 724,
-        "encoding": "lossless-webp"
-      },
-      "selections": [
-        {
-          "requested": "assets/images/site/gallery/render-05-1280.webp",
-          "chosen": "assets/images/site/gallery/render-05-1280.webp",
-          "source_bytes": 1312116,
-          "selected_bytes": 1312116,
-          "source_sha256": "97f41ed2a64a41450c968bd2964d87d13dd06a98867bf78ed9e728de7c1ddbb1",
-          "selected_sha256": "97f41ed2a64a41450c968bd2964d87d13dd06a98867bf78ed9e728de7c1ddbb1"
-        }
-      ]
-    },
-    {
-      "path": "assets/images/site/gallery/render-05-800.webp",
-      "bytes": 545852,
-      "sha256": "045b7693b9750184f872e59ab8f6b6709c7728309b966fe0d5791aadd5333404",
-      "roles": [
-        "index.html/img.srcset"
-      ],
-      "responsive_derivative": {
-        "source": "assets/images/site/gallery/render-05.jpg",
-        "source_sha256": "534149b0e09554dec44c45e0c6fd1d06faddae424fe8beeabcd8bad302cb78f6",
-        "width": 800,
-        "height": 452,
-        "encoding": "lossless-webp"
-      },
-      "selections": [
-        {
-          "requested": "assets/images/site/gallery/render-05-800.webp",
-          "chosen": "assets/images/site/gallery/render-05-800.webp",
-          "source_bytes": 545852,
-          "selected_bytes": 545852,
-          "source_sha256": "045b7693b9750184f872e59ab8f6b6709c7728309b966fe0d5791aadd5333404",
-          "selected_sha256": "045b7693b9750184f872e59ab8f6b6709c7728309b966fe0d5791aadd5333404"
-        }
-      ]
-    },
-    {
-      "path": "assets/images/site/gallery/render-05.jpg",
-      "bytes": 2405358,
-      "sha256": "534149b0e09554dec44c45e0c6fd1d06faddae424fe8beeabcd8bad302cb78f6",
-      "roles": [
-        "index.html/img.src",
-        "index.html/img.srcset"
-      ],
-      "selections": [
-        {
-          "requested": "assets/images/site/gallery/render-05.jpg",
-          "chosen": "assets/images/site/gallery/render-05.jpg",
-          "source_bytes": 2704959,
-          "selected_bytes": 2405358,
-          "source_sha256": "f3dd9a0f85d3059165454b010d5a0672146edc0a7f2efec38eb6e2cbf7d4c0be",
-          "selected_sha256": "534149b0e09554dec44c45e0c6fd1d06faddae424fe8beeabcd8bad302cb78f6",
-          "lossless_webp_candidate_bytes": 2816850
-        }
-      ]
-    },
-    {
       "path": "assets/images/site/gallery/render-06-1280.webp",
       "bytes": 1579598,
       "sha256": "c7f1792c7c5863291f246316891dfcb61888c1fe0fc960812cf3cc3d28b88bae",
@@ -19131,197 +20629,759 @@
       ]
     },
     {
-      "path": "assets/images/site/hero/detail-1200.webp",
-      "bytes": 835918,
-      "sha256": "84589a45dbea00ecb1e93c9a946d45030459608f5e78eff833bfbc6cfa361cf5",
-      "roles": [
-        "index.html/img.srcset",
-        "index.html/source.srcset"
-      ],
-      "responsive_derivative": {
-        "source": "assets/images/site/hero/detail.webp",
-        "source_sha256": "bd79e4e4505a2b6c672abd32af8a4e0167a99bd5838c25fefa8fbcafadc6b7f7",
-        "width": 1200,
-        "height": 862,
-        "encoding": "lossless-webp"
-      },
-      "selections": [
-        {
-          "requested": "assets/images/site/hero/detail-1200.webp",
-          "chosen": "assets/images/site/hero/detail-1200.webp",
-          "source_bytes": 835918,
-          "selected_bytes": 835918,
-          "source_sha256": "84589a45dbea00ecb1e93c9a946d45030459608f5e78eff833bfbc6cfa361cf5",
-          "selected_sha256": "84589a45dbea00ecb1e93c9a946d45030459608f5e78eff833bfbc6cfa361cf5"
-        }
-      ]
-    },
-    {
-      "path": "assets/images/site/hero/detail-1920.webp",
-      "bytes": 2179444,
-      "sha256": "bd9277e09d2401a100779cb468ee50a27b0090beb4fff7072ff97d5fe17667c2",
-      "roles": [
-        "index.html/img.srcset"
-      ],
-      "responsive_derivative": {
-        "source": "assets/images/site/hero/detail.webp",
-        "source_sha256": "bd79e4e4505a2b6c672abd32af8a4e0167a99bd5838c25fefa8fbcafadc6b7f7",
-        "width": 1920,
-        "height": 1379,
-        "encoding": "lossless-webp"
-      },
-      "selections": [
-        {
-          "requested": "assets/images/site/hero/detail-1920.webp",
-          "chosen": "assets/images/site/hero/detail-1920.webp",
-          "source_bytes": 2179444,
-          "selected_bytes": 2179444,
-          "source_sha256": "bd9277e09d2401a100779cb468ee50a27b0090beb4fff7072ff97d5fe17667c2",
-          "selected_sha256": "bd9277e09d2401a100779cb468ee50a27b0090beb4fff7072ff97d5fe17667c2"
-        }
-      ]
-    },
-    {
-      "path": "assets/images/site/hero/detail-780.webp",
-      "bytes": 374036,
-      "sha256": "46ee01d847816e9089073caeb7090b426b70d526a4a397a7f17044ebbdbcb729",
-      "roles": [
-        "index.html/source.srcset"
-      ],
-      "responsive_derivative": {
-        "source": "assets/images/site/hero/detail.webp",
-        "source_sha256": "bd79e4e4505a2b6c672abd32af8a4e0167a99bd5838c25fefa8fbcafadc6b7f7",
-        "width": 780,
-        "height": 561,
-        "encoding": "lossless-webp"
-      },
-      "selections": [
-        {
-          "requested": "assets/images/site/hero/detail-780.webp",
-          "chosen": "assets/images/site/hero/detail-780.webp",
-          "source_bytes": 374036,
-          "selected_bytes": 374036,
-          "source_sha256": "46ee01d847816e9089073caeb7090b426b70d526a4a397a7f17044ebbdbcb729",
-          "selected_sha256": "46ee01d847816e9089073caeb7090b426b70d526a4a397a7f17044ebbdbcb729"
-        }
-      ]
-    },
-    {
-      "path": "assets/images/site/hero/detail.webp",
-      "bytes": 3931278,
-      "sha256": "bd79e4e4505a2b6c672abd32af8a4e0167a99bd5838c25fefa8fbcafadc6b7f7",
+      "path": "assets/images/site/gallery/render-10-1280.webp",
+      "bytes": 339180,
+      "sha256": "513abf1c4d3625cd18dc802dfa285edd1b702e37ae28eac0d260c73e21abff47",
       "roles": [
         "index.html/img.src",
         "index.html/img.srcset"
       ],
+      "responsive_derivative": {
+        "source": "hf_20261125_090926_13aba732-1f9e-4ce6-8b60-7e8332d5a604 1.jpg",
+        "source_sha256": "70bb8af3e6a0e1b55071ad2e7677df10d88358b6f1318a534547df5628e9d465",
+        "width": 1280,
+        "height": 715,
+        "encoding": "webp-quality-91-sharp-yuv"
+      },
       "selections": [
         {
-          "requested": "assets/images/site/hero/detail.webp",
-          "chosen": "assets/images/site/hero/detail.webp",
-          "source_bytes": 5998569,
-          "selected_bytes": 3931278,
-          "source_sha256": "f70d877cf2f594b6251b67bd0568d4e2a7f7512aa889a8f4f2e921a6ea53fe83",
-          "selected_sha256": "bd79e4e4505a2b6c672abd32af8a4e0167a99bd5838c25fefa8fbcafadc6b7f7",
-          "lossless_webp_candidate_bytes": 3982168
+          "requested": "assets/images/site/gallery/render-10-1280.webp",
+          "chosen": "assets/images/site/gallery/render-10-1280.webp",
+          "source_bytes": 339180,
+          "selected_bytes": 339180,
+          "source_sha256": "513abf1c4d3625cd18dc802dfa285edd1b702e37ae28eac0d260c73e21abff47",
+          "selected_sha256": "513abf1c4d3625cd18dc802dfa285edd1b702e37ae28eac0d260c73e21abff47"
         }
       ]
     },
     {
-      "path": "assets/images/site/hero/main-1200.webp",
-      "bytes": 1046408,
-      "sha256": "a81d2b4439b64d4d466c05a9cef8b8d83a9f5be9a23d9dbf04ccfdc110877bdc",
+      "path": "assets/images/site/gallery/render-10-1920.webp",
+      "bytes": 648850,
+      "sha256": "96a59f64792eef1e0d24430c7bb4c9f575aff3bd5d236ecb848aa5cf4c9655bf",
       "roles": [
+        "index.html/img.srcset"
+      ],
+      "responsive_derivative": {
+        "source": "hf_20261125_090926_13aba732-1f9e-4ce6-8b60-7e8332d5a604 1.jpg",
+        "source_sha256": "70bb8af3e6a0e1b55071ad2e7677df10d88358b6f1318a534547df5628e9d465",
+        "width": 1920,
+        "height": 1073,
+        "encoding": "webp-quality-91-sharp-yuv"
+      },
+      "selections": [
+        {
+          "requested": "assets/images/site/gallery/render-10-1920.webp",
+          "chosen": "assets/images/site/gallery/render-10-1920.webp",
+          "source_bytes": 648850,
+          "selected_bytes": 648850,
+          "source_sha256": "96a59f64792eef1e0d24430c7bb4c9f575aff3bd5d236ecb848aa5cf4c9655bf",
+          "selected_sha256": "96a59f64792eef1e0d24430c7bb4c9f575aff3bd5d236ecb848aa5cf4c9655bf"
+        }
+      ]
+    },
+    {
+      "path": "assets/images/site/gallery/render-10-800.webp",
+      "bytes": 153654,
+      "sha256": "f3191446899827a79f8d2cfdbc195c52de03aaeff0cc6d5626ab7e3a17533b74",
+      "roles": [
+        "index.html/img.srcset"
+      ],
+      "responsive_derivative": {
+        "source": "hf_20261125_090926_13aba732-1f9e-4ce6-8b60-7e8332d5a604 1.jpg",
+        "source_sha256": "70bb8af3e6a0e1b55071ad2e7677df10d88358b6f1318a534547df5628e9d465",
+        "width": 800,
+        "height": 447,
+        "encoding": "webp-quality-91-sharp-yuv"
+      },
+      "selections": [
+        {
+          "requested": "assets/images/site/gallery/render-10-800.webp",
+          "chosen": "assets/images/site/gallery/render-10-800.webp",
+          "source_bytes": 153654,
+          "selected_bytes": 153654,
+          "source_sha256": "f3191446899827a79f8d2cfdbc195c52de03aaeff0cc6d5626ab7e3a17533b74",
+          "selected_sha256": "f3191446899827a79f8d2cfdbc195c52de03aaeff0cc6d5626ab7e3a17533b74"
+        }
+      ]
+    },
+    {
+      "path": "assets/images/site/gallery/render-11-1280.webp",
+      "bytes": 380724,
+      "sha256": "c2d5aabd90f37db81db549f6b796c1078b49898b554d32ceb50e92a5e54da7e5",
+      "roles": [
+        "index.html/img.src",
+        "index.html/img.srcset"
+      ],
+      "responsive_derivative": {
+        "source": "hf_20261125_122903_b0a8a58a-1c3f-467e-87d9-8796bf2d6205 1.jpg",
+        "source_sha256": "f9fd371519285ed5dbaec55e0381fafe020e82d9b0bab1f4e2f5c4015a313410",
+        "width": 1280,
+        "height": 721,
+        "encoding": "webp-quality-91-sharp-yuv"
+      },
+      "selections": [
+        {
+          "requested": "assets/images/site/gallery/render-11-1280.webp",
+          "chosen": "assets/images/site/gallery/render-11-1280.webp",
+          "source_bytes": 380724,
+          "selected_bytes": 380724,
+          "source_sha256": "c2d5aabd90f37db81db549f6b796c1078b49898b554d32ceb50e92a5e54da7e5",
+          "selected_sha256": "c2d5aabd90f37db81db549f6b796c1078b49898b554d32ceb50e92a5e54da7e5"
+        }
+      ]
+    },
+    {
+      "path": "assets/images/site/gallery/render-11-1920.webp",
+      "bytes": 731378,
+      "sha256": "c8a6738bd58dc5441d6a50b3bd530ce954f3eeb7bcaf83fc07d9b5bae36fa7a9",
+      "roles": [
+        "index.html/img.srcset"
+      ],
+      "responsive_derivative": {
+        "source": "hf_20261125_122903_b0a8a58a-1c3f-467e-87d9-8796bf2d6205 1.jpg",
+        "source_sha256": "f9fd371519285ed5dbaec55e0381fafe020e82d9b0bab1f4e2f5c4015a313410",
+        "width": 1920,
+        "height": 1081,
+        "encoding": "webp-quality-91-sharp-yuv"
+      },
+      "selections": [
+        {
+          "requested": "assets/images/site/gallery/render-11-1920.webp",
+          "chosen": "assets/images/site/gallery/render-11-1920.webp",
+          "source_bytes": 731378,
+          "selected_bytes": 731378,
+          "source_sha256": "c8a6738bd58dc5441d6a50b3bd530ce954f3eeb7bcaf83fc07d9b5bae36fa7a9",
+          "selected_sha256": "c8a6738bd58dc5441d6a50b3bd530ce954f3eeb7bcaf83fc07d9b5bae36fa7a9"
+        }
+      ]
+    },
+    {
+      "path": "assets/images/site/gallery/render-11-800.webp",
+      "bytes": 164758,
+      "sha256": "7e523c680d5760f46a3aaadd5d70d0b2cb5f9ae029f979815953af87a3939362",
+      "roles": [
+        "index.html/img.srcset"
+      ],
+      "responsive_derivative": {
+        "source": "hf_20261125_122903_b0a8a58a-1c3f-467e-87d9-8796bf2d6205 1.jpg",
+        "source_sha256": "f9fd371519285ed5dbaec55e0381fafe020e82d9b0bab1f4e2f5c4015a313410",
+        "width": 800,
+        "height": 451,
+        "encoding": "webp-quality-91-sharp-yuv"
+      },
+      "selections": [
+        {
+          "requested": "assets/images/site/gallery/render-11-800.webp",
+          "chosen": "assets/images/site/gallery/render-11-800.webp",
+          "source_bytes": 164758,
+          "selected_bytes": 164758,
+          "source_sha256": "7e523c680d5760f46a3aaadd5d70d0b2cb5f9ae029f979815953af87a3939362",
+          "selected_sha256": "7e523c680d5760f46a3aaadd5d70d0b2cb5f9ae029f979815953af87a3939362"
+        }
+      ]
+    },
+    {
+      "path": "assets/images/site/gallery/render-12-1280.webp",
+      "bytes": 175600,
+      "sha256": "8de6a8c4a540b737503dfb62ae609e5a04f3fc8cca527916b141d6915c46eed8",
+      "roles": [
+        "index.html/img.src",
+        "index.html/img.srcset"
+      ],
+      "responsive_derivative": {
+        "source": "a3/2.jpg",
+        "source_sha256": "888378d3d39d60f3516fb7242ff4916f1f53864380e8c58282eaa3d953342dd5",
+        "width": 1280,
+        "height": 716,
+        "encoding": "webp-quality-91-sharp-yuv"
+      },
+      "selections": [
+        {
+          "requested": "assets/images/site/gallery/render-12-1280.webp",
+          "chosen": "assets/images/site/gallery/render-12-1280.webp",
+          "source_bytes": 175600,
+          "selected_bytes": 175600,
+          "source_sha256": "8de6a8c4a540b737503dfb62ae609e5a04f3fc8cca527916b141d6915c46eed8",
+          "selected_sha256": "8de6a8c4a540b737503dfb62ae609e5a04f3fc8cca527916b141d6915c46eed8"
+        }
+      ]
+    },
+    {
+      "path": "assets/images/site/gallery/render-12-1920.webp",
+      "bytes": 289892,
+      "sha256": "194c5cd01e8f6cdc67635e77aa828f0ad30e129a4b8d41dc5854ecec2fced970",
+      "roles": [
+        "index.html/img.srcset"
+      ],
+      "responsive_derivative": {
+        "source": "a3/2.jpg",
+        "source_sha256": "888378d3d39d60f3516fb7242ff4916f1f53864380e8c58282eaa3d953342dd5",
+        "width": 1920,
+        "height": 1074,
+        "encoding": "webp-quality-91-sharp-yuv"
+      },
+      "selections": [
+        {
+          "requested": "assets/images/site/gallery/render-12-1920.webp",
+          "chosen": "assets/images/site/gallery/render-12-1920.webp",
+          "source_bytes": 289892,
+          "selected_bytes": 289892,
+          "source_sha256": "194c5cd01e8f6cdc67635e77aa828f0ad30e129a4b8d41dc5854ecec2fced970",
+          "selected_sha256": "194c5cd01e8f6cdc67635e77aa828f0ad30e129a4b8d41dc5854ecec2fced970"
+        }
+      ]
+    },
+    {
+      "path": "assets/images/site/gallery/render-12-800.webp",
+      "bytes": 88312,
+      "sha256": "4e1f464b25352544196cb4b67727b9080b7b9f22f20d6c83f144ac1048e46ad7",
+      "roles": [
+        "index.html/img.srcset"
+      ],
+      "responsive_derivative": {
+        "source": "a3/2.jpg",
+        "source_sha256": "888378d3d39d60f3516fb7242ff4916f1f53864380e8c58282eaa3d953342dd5",
+        "width": 800,
+        "height": 448,
+        "encoding": "webp-quality-91-sharp-yuv"
+      },
+      "selections": [
+        {
+          "requested": "assets/images/site/gallery/render-12-800.webp",
+          "chosen": "assets/images/site/gallery/render-12-800.webp",
+          "source_bytes": 88312,
+          "selected_bytes": 88312,
+          "source_sha256": "4e1f464b25352544196cb4b67727b9080b7b9f22f20d6c83f144ac1048e46ad7",
+          "selected_sha256": "4e1f464b25352544196cb4b67727b9080b7b9f22f20d6c83f144ac1048e46ad7"
+        }
+      ]
+    },
+    {
+      "path": "assets/images/site/gallery/render-13-1280.webp",
+      "bytes": 338254,
+      "sha256": "167426764aa0b30b8a2c57f6d3876da715280df5ad1c6eb7d1d8ed200e09a1ce",
+      "roles": [
+        "index.html/img.src",
+        "index.html/img.srcset"
+      ],
+      "responsive_derivative": {
+        "source": "a3/1.jpg",
+        "source_sha256": "971db61442896e8059d1301ee9f686bfbe6a2772793775efbfb1b147f62d5960",
+        "width": 1280,
+        "height": 716,
+        "encoding": "webp-quality-91-sharp-yuv"
+      },
+      "selections": [
+        {
+          "requested": "assets/images/site/gallery/render-13-1280.webp",
+          "chosen": "assets/images/site/gallery/render-13-1280.webp",
+          "source_bytes": 338254,
+          "selected_bytes": 338254,
+          "source_sha256": "167426764aa0b30b8a2c57f6d3876da715280df5ad1c6eb7d1d8ed200e09a1ce",
+          "selected_sha256": "167426764aa0b30b8a2c57f6d3876da715280df5ad1c6eb7d1d8ed200e09a1ce"
+        }
+      ]
+    },
+    {
+      "path": "assets/images/site/gallery/render-13-1920.webp",
+      "bytes": 660116,
+      "sha256": "691f1509225c0090a73088e60ad4b3aadb422c698c5df747dfd0a3d4dc859651",
+      "roles": [
+        "index.html/img.srcset"
+      ],
+      "responsive_derivative": {
+        "source": "a3/1.jpg",
+        "source_sha256": "971db61442896e8059d1301ee9f686bfbe6a2772793775efbfb1b147f62d5960",
+        "width": 1920,
+        "height": 1074,
+        "encoding": "webp-quality-91-sharp-yuv"
+      },
+      "selections": [
+        {
+          "requested": "assets/images/site/gallery/render-13-1920.webp",
+          "chosen": "assets/images/site/gallery/render-13-1920.webp",
+          "source_bytes": 660116,
+          "selected_bytes": 660116,
+          "source_sha256": "691f1509225c0090a73088e60ad4b3aadb422c698c5df747dfd0a3d4dc859651",
+          "selected_sha256": "691f1509225c0090a73088e60ad4b3aadb422c698c5df747dfd0a3d4dc859651"
+        }
+      ]
+    },
+    {
+      "path": "assets/images/site/gallery/render-13-800.webp",
+      "bytes": 148480,
+      "sha256": "aba85c090367243605abe490675778b3676420af1cee3cd3277b1e8da45d4965",
+      "roles": [
+        "index.html/img.srcset"
+      ],
+      "responsive_derivative": {
+        "source": "a3/1.jpg",
+        "source_sha256": "971db61442896e8059d1301ee9f686bfbe6a2772793775efbfb1b147f62d5960",
+        "width": 800,
+        "height": 448,
+        "encoding": "webp-quality-91-sharp-yuv"
+      },
+      "selections": [
+        {
+          "requested": "assets/images/site/gallery/render-13-800.webp",
+          "chosen": "assets/images/site/gallery/render-13-800.webp",
+          "source_bytes": 148480,
+          "selected_bytes": 148480,
+          "source_sha256": "aba85c090367243605abe490675778b3676420af1cee3cd3277b1e8da45d4965",
+          "selected_sha256": "aba85c090367243605abe490675778b3676420af1cee3cd3277b1e8da45d4965"
+        }
+      ]
+    },
+    {
+      "path": "assets/images/site/gallery/render-14-1280.webp",
+      "bytes": 330118,
+      "sha256": "cd8dbd6f00c3b84374ec5dadee58d6f54c4642e8143d1b6a6f796b6907f06b18",
+      "roles": [
+        "index.html/img.src",
+        "index.html/img.srcset"
+      ],
+      "responsive_derivative": {
+        "source": "home1 1.jpg",
+        "source_sha256": "f9c441ed388052bad2413e36494b6b5d6f3b421382fa5217f017c4133b691037",
+        "width": 1280,
+        "height": 774,
+        "encoding": "webp-quality-91-sharp-yuv"
+      },
+      "selections": [
+        {
+          "requested": "assets/images/site/gallery/render-14-1280.webp",
+          "chosen": "assets/images/site/gallery/render-14-1280.webp",
+          "source_bytes": 330118,
+          "selected_bytes": 330118,
+          "source_sha256": "cd8dbd6f00c3b84374ec5dadee58d6f54c4642e8143d1b6a6f796b6907f06b18",
+          "selected_sha256": "cd8dbd6f00c3b84374ec5dadee58d6f54c4642e8143d1b6a6f796b6907f06b18"
+        }
+      ]
+    },
+    {
+      "path": "assets/images/site/gallery/render-14-1920.webp",
+      "bytes": 596680,
+      "sha256": "cde7e10a05772e93c93ce4f3c2db93e3955eeba8b8f3406e2322250cb6aede1a",
+      "roles": [
+        "index.html/img.srcset"
+      ],
+      "responsive_derivative": {
+        "source": "home1 1.jpg",
+        "source_sha256": "f9c441ed388052bad2413e36494b6b5d6f3b421382fa5217f017c4133b691037",
+        "width": 1920,
+        "height": 1161,
+        "encoding": "webp-quality-91-sharp-yuv"
+      },
+      "selections": [
+        {
+          "requested": "assets/images/site/gallery/render-14-1920.webp",
+          "chosen": "assets/images/site/gallery/render-14-1920.webp",
+          "source_bytes": 596680,
+          "selected_bytes": 596680,
+          "source_sha256": "cde7e10a05772e93c93ce4f3c2db93e3955eeba8b8f3406e2322250cb6aede1a",
+          "selected_sha256": "cde7e10a05772e93c93ce4f3c2db93e3955eeba8b8f3406e2322250cb6aede1a"
+        }
+      ]
+    },
+    {
+      "path": "assets/images/site/gallery/render-14-800.webp",
+      "bytes": 148308,
+      "sha256": "b86cf4f1b483110f54226781ab5029ace91a6f64fc7d52e00b9329c34e2a118a",
+      "roles": [
+        "index.html/img.srcset"
+      ],
+      "responsive_derivative": {
+        "source": "home1 1.jpg",
+        "source_sha256": "f9c441ed388052bad2413e36494b6b5d6f3b421382fa5217f017c4133b691037",
+        "width": 800,
+        "height": 484,
+        "encoding": "webp-quality-91-sharp-yuv"
+      },
+      "selections": [
+        {
+          "requested": "assets/images/site/gallery/render-14-800.webp",
+          "chosen": "assets/images/site/gallery/render-14-800.webp",
+          "source_bytes": 148308,
+          "selected_bytes": 148308,
+          "source_sha256": "b86cf4f1b483110f54226781ab5029ace91a6f64fc7d52e00b9329c34e2a118a",
+          "selected_sha256": "b86cf4f1b483110f54226781ab5029ace91a6f64fc7d52e00b9329c34e2a118a"
+        }
+      ]
+    },
+    {
+      "path": "assets/images/site/gallery/render-15-1280.webp",
+      "bytes": 387060,
+      "sha256": "182e859f0036f4bb8fafb010c945727cfe9040df83d7272dd63597a571244fcc",
+      "roles": [
+        "index.html/img.src",
+        "index.html/img.srcset"
+      ],
+      "responsive_derivative": {
+        "source": "hf_20261125_123556_aaf3c64b-f275-4ba9-b1ef-4f79bd5e48ff 1.jpg",
+        "source_sha256": "08949ccafbdd39ec52fcb8d39af4979233f00e9bd1fc4ac45475a13ee63599eb",
+        "width": 1280,
+        "height": 726,
+        "encoding": "webp-quality-91-sharp-yuv"
+      },
+      "selections": [
+        {
+          "requested": "assets/images/site/gallery/render-15-1280.webp",
+          "chosen": "assets/images/site/gallery/render-15-1280.webp",
+          "source_bytes": 387060,
+          "selected_bytes": 387060,
+          "source_sha256": "182e859f0036f4bb8fafb010c945727cfe9040df83d7272dd63597a571244fcc",
+          "selected_sha256": "182e859f0036f4bb8fafb010c945727cfe9040df83d7272dd63597a571244fcc"
+        }
+      ]
+    },
+    {
+      "path": "assets/images/site/gallery/render-15-1920.webp",
+      "bytes": 736004,
+      "sha256": "d58336cfe1bd2d5f6e0e1d5593ad703333814db6d63c336419eb06205c49baad",
+      "roles": [
+        "index.html/img.srcset"
+      ],
+      "responsive_derivative": {
+        "source": "hf_20261125_123556_aaf3c64b-f275-4ba9-b1ef-4f79bd5e48ff 1.jpg",
+        "source_sha256": "08949ccafbdd39ec52fcb8d39af4979233f00e9bd1fc4ac45475a13ee63599eb",
+        "width": 1920,
+        "height": 1088,
+        "encoding": "webp-quality-91-sharp-yuv"
+      },
+      "selections": [
+        {
+          "requested": "assets/images/site/gallery/render-15-1920.webp",
+          "chosen": "assets/images/site/gallery/render-15-1920.webp",
+          "source_bytes": 736004,
+          "selected_bytes": 736004,
+          "source_sha256": "d58336cfe1bd2d5f6e0e1d5593ad703333814db6d63c336419eb06205c49baad",
+          "selected_sha256": "d58336cfe1bd2d5f6e0e1d5593ad703333814db6d63c336419eb06205c49baad"
+        }
+      ]
+    },
+    {
+      "path": "assets/images/site/gallery/render-15-800.webp",
+      "bytes": 164944,
+      "sha256": "e6afd9bed31bc26deb695791843cf283bab8dcde11b77666c047591e949d1004",
+      "roles": [
+        "index.html/img.srcset"
+      ],
+      "responsive_derivative": {
+        "source": "hf_20261125_123556_aaf3c64b-f275-4ba9-b1ef-4f79bd5e48ff 1.jpg",
+        "source_sha256": "08949ccafbdd39ec52fcb8d39af4979233f00e9bd1fc4ac45475a13ee63599eb",
+        "width": 800,
+        "height": 453,
+        "encoding": "webp-quality-91-sharp-yuv"
+      },
+      "selections": [
+        {
+          "requested": "assets/images/site/gallery/render-15-800.webp",
+          "chosen": "assets/images/site/gallery/render-15-800.webp",
+          "source_bytes": 164944,
+          "selected_bytes": 164944,
+          "source_sha256": "e6afd9bed31bc26deb695791843cf283bab8dcde11b77666c047591e949d1004",
+          "selected_sha256": "e6afd9bed31bc26deb695791843cf283bab8dcde11b77666c047591e949d1004"
+        }
+      ]
+    },
+    {
+      "path": "assets/images/site/hero/aerial-780.webp",
+      "bytes": 632196,
+      "sha256": "3338af6c5f25faa8cdc1f35e589d1b3b3a2247d867b31bdf85b355b155544b3d",
+      "roles": [
+        "index.html/img.srcset"
+      ],
+      "responsive_derivative": {
+        "source": "assets/sources/originals/site/hero/aerial.png",
+        "source_sha256": "b2c3ef90100e3f5b8809da15064edf4c04af6d72b2f4db2f4e684bad7f0d0264",
+        "width": 780,
+        "height": 556,
+        "encoding": "lossless-webp"
+      },
+      "selections": [
+        {
+          "requested": "assets/images/site/hero/aerial-780.webp",
+          "chosen": "assets/images/site/hero/aerial-780.webp",
+          "source_bytes": 632196,
+          "selected_bytes": 632196,
+          "source_sha256": "3338af6c5f25faa8cdc1f35e589d1b3b3a2247d867b31bdf85b355b155544b3d",
+          "selected_sha256": "3338af6c5f25faa8cdc1f35e589d1b3b3a2247d867b31bdf85b355b155544b3d"
+        }
+      ]
+    },
+    {
+      "path": "assets/images/site/hero/aerial-compact.webp",
+      "bytes": 983698,
+      "sha256": "97c428ab264fe5881fed397aeeabffe6e3c3b411772361abbac89880f84c3d17",
+      "roles": [
+        "index.html/img.src",
         "index.html/img.srcset",
         "index.html/meta.og:image",
-        "index.html/source.srcset",
         "search-by-parameters.html/meta.og:image"
       ],
-      "responsive_derivative": {
-        "source": "assets/images/site/hero/main.webp",
-        "source_sha256": "a2880e1ea25bd561718116f2b37ad2abc9e2aa75ca523bf8b1bcd1ecb6ceb07f",
-        "width": 1200,
-        "height": 862,
-        "encoding": "lossless-webp"
-      },
       "selections": [
         {
-          "requested": "assets/images/site/hero/main-1200.webp",
-          "chosen": "assets/images/site/hero/main-1200.webp",
-          "source_bytes": 1046408,
-          "selected_bytes": 1046408,
-          "source_sha256": "a81d2b4439b64d4d466c05a9cef8b8d83a9f5be9a23d9dbf04ccfdc110877bdc",
-          "selected_sha256": "a81d2b4439b64d4d466c05a9cef8b8d83a9f5be9a23d9dbf04ccfdc110877bdc"
+          "requested": "assets/images/site/hero/aerial-compact.webp",
+          "chosen": "assets/images/site/hero/aerial-compact.webp",
+          "source_bytes": 983698,
+          "selected_bytes": 983698,
+          "source_sha256": "97c428ab264fe5881fed397aeeabffe6e3c3b411772361abbac89880f84c3d17",
+          "selected_sha256": "97c428ab264fe5881fed397aeeabffe6e3c3b411772361abbac89880f84c3d17"
         }
-      ]
+      ],
+      "optimized_from": {
+        "source": "assets/sources/originals/site/hero/aerial.png",
+        "source_sha256": "b2c3ef90100e3f5b8809da15064edf4c04af6d72b2f4db2f4e684bad7f0d0264",
+        "source_bytes": 1834759,
+        "width": 1099,
+        "height": 783,
+        "encoding": "lossless-webp-after-7-bit-rgb-quantization",
+        "max_channel_error": 1,
+        "mean_channel_error": 0.549559935093283,
+        "psnr_rgb": 50.730652973006784
+      }
     },
     {
-      "path": "assets/images/site/hero/main-1920.webp",
-      "bytes": 2670608,
-      "sha256": "52cd38dbdad99bdf86378041bb99c3980d83804283866bff85da9c703414d2c2",
+      "path": "assets/images/site/hero/evolution.svg",
+      "bytes": 3305,
+      "sha256": "8261f38d01043e099d3ed7945ac06f68bd631429385aa5386ac94452a667343f",
+      "roles": [
+        "index.html/img.src"
+      ],
+      "selections": []
+    },
+    {
+      "path": "assets/images/site/hero/residence-aerial-1664.webp",
+      "bytes": 502194,
+      "sha256": "8f065cdbef33192e7fba419189481779d1b028efd57434512bab5963d9ecc839",
       "roles": [
         "index.html/img.srcset"
       ],
       "responsive_derivative": {
-        "source": "assets/images/site/hero/main.webp",
-        "source_sha256": "a2880e1ea25bd561718116f2b37ad2abc9e2aa75ca523bf8b1bcd1ecb6ceb07f",
-        "width": 1920,
-        "height": 1379,
-        "encoding": "lossless-webp"
+        "source": "home22 1.jpg",
+        "source_sha256": "58077fc4fa68e18e7fb0cd5a896b11a8f3a3104ccde58b8813302ab40bfdbaf1",
+        "width": 1664,
+        "height": 1006,
+        "encoding": "webp-quality-91-sharp-yuv"
       },
       "selections": [
         {
-          "requested": "assets/images/site/hero/main-1920.webp",
-          "chosen": "assets/images/site/hero/main-1920.webp",
-          "source_bytes": 2670608,
-          "selected_bytes": 2670608,
-          "source_sha256": "52cd38dbdad99bdf86378041bb99c3980d83804283866bff85da9c703414d2c2",
-          "selected_sha256": "52cd38dbdad99bdf86378041bb99c3980d83804283866bff85da9c703414d2c2"
+          "requested": "assets/images/site/hero/residence-aerial-1664.webp",
+          "chosen": "assets/images/site/hero/residence-aerial-1664.webp",
+          "source_bytes": 502194,
+          "selected_bytes": 502194,
+          "source_sha256": "8f065cdbef33192e7fba419189481779d1b028efd57434512bab5963d9ecc839",
+          "selected_sha256": "8f065cdbef33192e7fba419189481779d1b028efd57434512bab5963d9ecc839"
         }
       ]
     },
     {
-      "path": "assets/images/site/hero/main-780.webp",
-      "bytes": 476040,
-      "sha256": "bfbd0dfe01424698c3f57223f215326d335b2650568dc1781173c7d483edc82b",
+      "path": "assets/images/site/hero/residence-aerial-480.webp",
+      "bytes": 81604,
+      "sha256": "f5edb2d1b0cebf122a19ea8c98ecfaf7e40e55aafbb351389c94966668fac701",
       "roles": [
-        "index.html/source.srcset"
+        "index.html/img.srcset"
       ],
       "responsive_derivative": {
-        "source": "assets/images/site/hero/main.webp",
-        "source_sha256": "a2880e1ea25bd561718116f2b37ad2abc9e2aa75ca523bf8b1bcd1ecb6ceb07f",
-        "width": 780,
-        "height": 561,
-        "encoding": "lossless-webp"
+        "source": "home22 1.jpg",
+        "source_sha256": "58077fc4fa68e18e7fb0cd5a896b11a8f3a3104ccde58b8813302ab40bfdbaf1",
+        "width": 480,
+        "height": 290,
+        "encoding": "webp-quality-95-sharp-yuv"
       },
       "selections": [
         {
-          "requested": "assets/images/site/hero/main-780.webp",
-          "chosen": "assets/images/site/hero/main-780.webp",
-          "source_bytes": 476040,
-          "selected_bytes": 476040,
-          "source_sha256": "bfbd0dfe01424698c3f57223f215326d335b2650568dc1781173c7d483edc82b",
-          "selected_sha256": "bfbd0dfe01424698c3f57223f215326d335b2650568dc1781173c7d483edc82b"
+          "requested": "assets/images/site/hero/residence-aerial-480.webp",
+          "chosen": "assets/images/site/hero/residence-aerial-480.webp",
+          "source_bytes": 81604,
+          "selected_bytes": 81604,
+          "source_sha256": "f5edb2d1b0cebf122a19ea8c98ecfaf7e40e55aafbb351389c94966668fac701",
+          "selected_sha256": "f5edb2d1b0cebf122a19ea8c98ecfaf7e40e55aafbb351389c94966668fac701"
         }
       ]
     },
     {
-      "path": "assets/images/site/hero/main.webp",
-      "bytes": 4711724,
-      "sha256": "a2880e1ea25bd561718116f2b37ad2abc9e2aa75ca523bf8b1bcd1ecb6ceb07f",
+      "path": "assets/images/site/hero/residence-aerial-832.webp",
+      "bytes": 210554,
+      "sha256": "70f4abf476f513be4c55f8a553c3a36b6b9c114aa98c7c1a77b67051ff0fbbb6",
       "roles": [
         "index.html/img.src",
         "index.html/img.srcset"
       ],
+      "responsive_derivative": {
+        "source": "home22 1.jpg",
+        "source_sha256": "58077fc4fa68e18e7fb0cd5a896b11a8f3a3104ccde58b8813302ab40bfdbaf1",
+        "width": 832,
+        "height": 503,
+        "encoding": "webp-quality-95-sharp-yuv"
+      },
       "selections": [
         {
-          "requested": "assets/images/site/hero/main.webp",
-          "chosen": "assets/images/site/hero/main.webp",
-          "source_bytes": 6557234,
-          "selected_bytes": 4711724,
-          "source_sha256": "d003f37e23b0db0ed23202422d0326cb55c85ef49863a82ba66e002055a349e0",
-          "selected_sha256": "a2880e1ea25bd561718116f2b37ad2abc9e2aa75ca523bf8b1bcd1ecb6ceb07f"
+          "requested": "assets/images/site/hero/residence-aerial-832.webp",
+          "chosen": "assets/images/site/hero/residence-aerial-832.webp",
+          "source_bytes": 210554,
+          "selected_bytes": 210554,
+          "source_sha256": "70f4abf476f513be4c55f8a553c3a36b6b9c114aa98c7c1a77b67051ff0fbbb6",
+          "selected_sha256": "70f4abf476f513be4c55f8a553c3a36b6b9c114aa98c7c1a77b67051ff0fbbb6"
         }
       ]
+    },
+    {
+      "path": "assets/images/site/hero/residence-street-1664.webp",
+      "bytes": 441628,
+      "sha256": "74577936a0a83356e2fc90005c01befcd3686bba50d807fdaffc06cd353eabee",
+      "roles": [
+        "index.html/img.srcset"
+      ],
+      "responsive_derivative": {
+        "source": "home1 1.jpg",
+        "source_sha256": "e009dc1382c27a435391a26990c4755e1bb4cfdaa274a1306f1a82c3c0e65455",
+        "width": 1664,
+        "height": 1006,
+        "encoding": "webp-quality-91-sharp-yuv"
+      },
+      "selections": [
+        {
+          "requested": "assets/images/site/hero/residence-street-1664.webp",
+          "chosen": "assets/images/site/hero/residence-street-1664.webp",
+          "source_bytes": 441628,
+          "selected_bytes": 441628,
+          "source_sha256": "74577936a0a83356e2fc90005c01befcd3686bba50d807fdaffc06cd353eabee",
+          "selected_sha256": "74577936a0a83356e2fc90005c01befcd3686bba50d807fdaffc06cd353eabee"
+        }
+      ]
+    },
+    {
+      "path": "assets/images/site/hero/residence-street-480.webp",
+      "bytes": 71212,
+      "sha256": "28dfc5b2eb6c00180e7f10f8b16e61e4b7c74b2dc5c4e11e6a66ebc22cc7b58f",
+      "roles": [
+        "index.html/img.srcset"
+      ],
+      "responsive_derivative": {
+        "source": "home1 1.jpg",
+        "source_sha256": "e009dc1382c27a435391a26990c4755e1bb4cfdaa274a1306f1a82c3c0e65455",
+        "width": 480,
+        "height": 290,
+        "encoding": "webp-quality-95-sharp-yuv"
+      },
+      "selections": [
+        {
+          "requested": "assets/images/site/hero/residence-street-480.webp",
+          "chosen": "assets/images/site/hero/residence-street-480.webp",
+          "source_bytes": 71212,
+          "selected_bytes": 71212,
+          "source_sha256": "28dfc5b2eb6c00180e7f10f8b16e61e4b7c74b2dc5c4e11e6a66ebc22cc7b58f",
+          "selected_sha256": "28dfc5b2eb6c00180e7f10f8b16e61e4b7c74b2dc5c4e11e6a66ebc22cc7b58f"
+        }
+      ]
+    },
+    {
+      "path": "assets/images/site/hero/residence-street-832.webp",
+      "bytes": 180154,
+      "sha256": "5272038b7ec86952d74bf94a536074c0b5aeef807197c51f6e42dfcd025c3bc7",
+      "roles": [
+        "index.html/img.src",
+        "index.html/img.srcset"
+      ],
+      "responsive_derivative": {
+        "source": "home1 1.jpg",
+        "source_sha256": "e009dc1382c27a435391a26990c4755e1bb4cfdaa274a1306f1a82c3c0e65455",
+        "width": 832,
+        "height": 503,
+        "encoding": "webp-quality-95-sharp-yuv"
+      },
+      "selections": [
+        {
+          "requested": "assets/images/site/hero/residence-street-832.webp",
+          "chosen": "assets/images/site/hero/residence-street-832.webp",
+          "source_bytes": 180154,
+          "selected_bytes": 180154,
+          "source_sha256": "5272038b7ec86952d74bf94a536074c0b5aeef807197c51f6e42dfcd025c3bc7",
+          "selected_sha256": "5272038b7ec86952d74bf94a536074c0b5aeef807197c51f6e42dfcd025c3bc7"
+        }
+      ]
+    },
+    {
+      "path": "assets/images/site/hero/residence-street-compact-1080.webp",
+      "bytes": 226384,
+      "sha256": "9e2a28b2ca04aed4c5476eb2aa1871aa343baf54b2a1c95f16e58b1220ac3e10",
+      "roles": [
+        "index.html/source.srcset"
+      ],
+      "responsive_derivative": {
+        "source": "assets/sources/originals/site/hero/residence-street-compact.png",
+        "source_sha256": "a44bc5692a6e2a09132fc6136e7916aa242b46a5a76df2edc33e39b4908b0f18",
+        "width": 1080,
+        "height": 676,
+        "encoding": "webp-quality-93-sharp-yuv",
+        "crop": {
+          "x": 0,
+          "y": 128,
+          "width": 2688,
+          "height": 1682
+        }
+      },
+      "selections": [
+        {
+          "requested": "assets/images/site/hero/residence-street-compact-1080.webp",
+          "chosen": "assets/images/site/hero/residence-street-compact-1080.webp",
+          "source_bytes": 226384,
+          "selected_bytes": 226384,
+          "source_sha256": "9e2a28b2ca04aed4c5476eb2aa1871aa343baf54b2a1c95f16e58b1220ac3e10",
+          "selected_sha256": "9e2a28b2ca04aed4c5476eb2aa1871aa343baf54b2a1c95f16e58b1220ac3e10"
+        }
+      ]
+    },
+    {
+      "path": "assets/images/site/hero/residence.svg",
+      "bytes": 2956,
+      "sha256": "6aa4e8578f7c44f6ec68a336226999614338e50ff798867789f4f873249915a0",
+      "roles": [
+        "index.html/img.src"
+      ],
+      "selections": []
+    },
+    {
+      "path": "assets/images/site/hero/wordmark-cutout.webp",
+      "bytes": 994,
+      "sha256": "670b39d156306e2a859e4c0ca4a19d8d79d9807fa21850eacfc181874424b049",
+      "roles": [
+        "style/hero-title.css/url"
+      ],
+      "derived_mask": {
+        "source": "assets/sources/originals/site/hero/foreground.png",
+        "source_sha256": "0e47f20abab2110377c414871611d039eac010c2280bacf549b4032e5ebef613",
+        "resized_width": 1099,
+        "resized_height": 621,
+        "crop": {
+          "x": 0,
+          "y": 0,
+          "width": 564,
+          "height": 180
+        },
+        "encoding": "lossless-webp",
+        "alpha": "preserved exactly from resized source"
+      },
+      "selections": [
+        {
+          "requested": "assets/images/site/hero/wordmark-cutout.webp",
+          "chosen": "assets/images/site/hero/wordmark-cutout.webp",
+          "source_bytes": 994,
+          "selected_bytes": 994,
+          "source_sha256": "670b39d156306e2a859e4c0ca4a19d8d79d9807fa21850eacfc181874424b049",
+          "selected_sha256": "670b39d156306e2a859e4c0ca4a19d8d79d9807fa21850eacfc181874424b049"
+        }
+      ]
+    },
+    {
+      "path": "assets/images/site/hero/wordmark.svg",
+      "bytes": 6612,
+      "sha256": "f664ef562d55986eb14eb44fea4e92b81b439579f1b11e169083a36a4a03f687",
+      "roles": [
+        "site/hero/wordmark"
+      ],
+      "selections": []
     },
     {
       "path": "assets/images/site/location/neighborhood.jpg",
@@ -19438,15 +21498,6 @@
           }
         }
       ]
-    },
-    {
-      "path": "assets/images/site/hero/wordmark.svg",
-      "bytes": 6612,
-      "sha256": "f664ef562d55986eb14eb44fea4e92b81b439579f1b11e169083a36a4a03f687",
-      "roles": [
-        "site/hero/wordmark"
-      ],
-      "selections": []
     }
   ]
 }

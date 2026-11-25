@@ -127,6 +127,7 @@ export function openPropertyDetails(property, houseName) {
 
   const hasImage = typeof property.image === "string" && property.image.trim() !== "";
   state.dialog.dataset.hasImage = String(hasImage);
+  state.dialog.dataset.imageKind = hasImage && property.image === property.planImg ? "plan" : "photo";
   state.media.hidden = !hasImage;
   if (hasImage) {
     state.image.alt = `${text[type]} ${unit}`;

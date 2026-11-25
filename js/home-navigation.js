@@ -128,9 +128,9 @@ export function initializeHomeNavigation({ root, closeMenu, scrollTo }) {
         settled = true;
         observer.disconnect();
         if (frame !== undefined) cancelAnimationFrame(frame);
-        for (const event of interactionEvents) window.removeEventListener(event, stop);
+        for (const event of interactionEvents) window.removeEventListener(event, stop, true);
       };
-      for (const event of interactionEvents) window.addEventListener(event, stop, { passive: true });
+      for (const event of interactionEvents) window.addEventListener(event, stop, { capture: true, passive: true });
       const finish = () => {
         Promise.resolve(document.fonts?.ready).then(align);
         setTimeout(stop, 1000);

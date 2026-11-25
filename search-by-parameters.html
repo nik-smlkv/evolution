@@ -8,7 +8,7 @@
       html.catalog-loading body .section__body-title > .houses-plans_container { display: none !important; }
     </style>
     <link rel="stylesheet" href="./style/catalog-startup.css?v=1.0.7" />
-    <link rel="modulepreload" href="./js/apartments/requestt.js?v=1.0.61" />
+    <link rel="modulepreload" href="./js/apartments/requestt.js?v=1.0.62" />
     <title>Ponuda stanova na Voždovcu | Evolution Residence</title>
     <meta name="description" content="Pogledajte dostupne stanove u zgradama Tchaikovsky i Vivaldi na Voždovcu. Pretražite ponudu po lameli, spratu i površini ili pregledajte planove etaža." />
     <link rel="canonical" href="https://evolutionresidence.rs/search-by-parameters.html" />
@@ -20,7 +20,7 @@
     <meta property="og:url" content="https://evolutionresidence.rs/search-by-parameters.html" />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="sr_RS" />
-    <meta property="og:image" content="https://evolutionresidence.rs/assets/images/site/hero/main-1200.webp" />
+    <meta property="og:image" content="https://evolutionresidence.rs/assets/images/site/hero/aerial-compact.webp" />
     <meta name="twitter:card" content="summary_large_image" />
     <link
       rel="apple-touch-icon"
@@ -42,7 +42,7 @@
     <link rel="icon" type="image/png" href="./assets/images/shared/favicons/favicon.ico" />
     <link rel="manifest" href="./assets/images/shared/favicons/site.webmanifest" />
     <link rel="stylesheet" href="./style/globals.css?v=1.0.10" />
-    <link rel="stylesheet" href="./style/font.css?v=1.0.1" />
+    <link rel="stylesheet" href="./style/font.css?v=1.0.5" />
     <link rel="stylesheet" href="./style/variables.css" />
     <link rel="stylesheet" href="./style/style.min.css?v=1.0.6" />
     <link rel="stylesheet" href="./style/house-switcher.css?v=1.0.9" />
@@ -52,14 +52,15 @@
     <link rel="stylesheet" href="./style/fancybox.css?v=1.0.6" />
     <link rel="stylesheet" href="./style/odometer.min.css" />
     <link rel="stylesheet" href="./style/ion.rangeSlider.min.css?v=1.0.6" />
-    <link rel="stylesheet" href="./style/header-responsive.css?v=1.0.3" />
-    <link rel="stylesheet" href="./style/catalog-plan.css?v=1.0.20" />
-    <link rel="stylesheet" href="./style/catalog-responsive.css?v=1.0.12" />
+    <link rel="stylesheet" href="./style/header-responsive.css?v=1.0.5" />
+    <link rel="stylesheet" href="./style/catalog-plan.css?v=1.0.21" />
+    <link rel="stylesheet" href="./style/catalog-responsive.css?v=1.0.13" />
     <link rel="stylesheet" href="./style/price-request.css?v=1.0.4" />
     <link rel="stylesheet" href="./style/catalog-properties.css?v=1.0.9" />
     <link rel="stylesheet" href="./style/catalog-filter-accordion.css?v=1.0.3" />
-    <link rel="stylesheet" href="./style/property-dialogs.css?v=1.0.4" />
+    <link rel="stylesheet" href="./style/property-dialogs.css?v=1.0.5" />
     <link rel="stylesheet" href="./style/contact-form.css?v=1.0.3" />
+    <link rel="stylesheet" href="./style/render-gallery.css?v=1.0.3" />
     <link rel="stylesheet" href="./style/lead-form.css?v=1.0.1" />
     <script src="./js/jquery-3.6.4.min.js"></script>
     <script src="./js/printThis.js"></script>
@@ -201,7 +202,8 @@
     </noscript>
     <!-- /Yandex.Metrika counter -->
     <div class="wrapper" aria-busy="true">
-      <header class="dark-bg-block">
+      <!-- Shared site header generated from index.html -->
+      <header>
         <div class="header__body flex-style-row">
           <div class="header__menu flex-style-row">
             <a href="./" class="header__logo flex-style-row"
@@ -245,7 +247,9 @@
                     >Infrastruktura</a
                   >
                 </li>
-
+                <li class="menu__item">
+                  <a href="./gallery/" class="menu__item_link" data-key="link_gallery" data-target="render-gallery">Galerija</a>
+                </li>
                 <li class="menu__item">
                   <a
                     href="./financing/"
@@ -289,6 +293,7 @@
           </div>
         </div>
       </header>
+      <!-- End shared site header -->
       <main class="flex-style-column">
         <div class="main-gap flex-style-column" id="main">
           <section class="apartment__block padding-top" id="apartments">
@@ -3162,93 +3167,162 @@
               </div>
             </div>
           </section>
-          <div id="form" class="form__block block-center flex-style-column gap contact-form">
-            <div class="block-center flex-style-column title-gap">
-              <p
-                class="title title-dark tt-up split-text ezd-animtext"
-                data-key="p_callback"
-              >
-                <span class="callback-title__line">Kontaktirajte</span> <span class="callback-title__line">naš prodajni tim</span>
-              </p>
-              <p class="subtitle" data-key="p_short">
-                Popunite formular i kontaktiraćemo Vas u najkraćem roku
-              </p>
-            </div>
-            <div class="title-gap flex-style-column block-center block-form">
-              <form
-                class="flex-style-row form-flex quarter__form"
-                id="requestForm"
-                name="form-feedback"
-                method="post"
-                action="./lead.php"
-                novalidate
-              >
-                <label for="lead-callback-name" class="placeholder-container">
-                  <input
-                    type="text"
-                    name="name"
-                    id="lead-callback-name"
-                    class="input__name input-event input-style"
-                    required
-                    autocomplete="name" maxlength="80" aria-describedby="lead-callback-name-error"
-                  />
-                  <div class="flex-style-row input-placeholder">
-                    <span data-key="p_name">Ime</span
-                    ><span class="important-span">*</span>
-                  </div>
-                  <span id="lead-callback-name-error" class="place-name-error" aria-live="polite"></span>
-                </label>
-                <label for="lead-callback-phone" class="placeholder-container"
-                  ><input
-                    type="tel"
-                    name="phone"
-                    id="lead-callback-phone"
-                    class="input__number input-event input-style"
-                    required
-                    autocomplete="tel" maxlength="32" aria-describedby="lead-callback-phone-error"
-                  />
-                  <span class="input-placeholder"
-                    ><span class="text-dark">+381 </span>00 000 - 0000<span
-                      class="important-span"
-                      >*</span
-                    ></span
-                  >
-                  <span id="lead-callback-phone-error" class="place-phone-error" aria-live="polite"></span>
-                </label>
-                <label for="lead-callback-email" class="placeholder-container"
-                  ><input
-                    type="email"
-                    name="mail"
-                    id="lead-callback-email"
-                    class="input__mail input-event input-style"
-                    required
-                    autocomplete="email" maxlength="254" aria-describedby="lead-callback-email-error"
-                  />
-                  <div class="flex-style-row input-placeholder">
-                    <span data-key="p_mail">E-mail adresa</span>
-                    <span class="important-span">*</span>
-                  </div>
-                  <span id="lead-callback-email-error" class="place-email-error" aria-live="polite"></span>
-                </label>
-                <button
-                  type="submit" disabled
-                  class="btn-style btn-color flex-style-row blue-btn-hover form__button"
-                  data-key="btn_zayav1"
-                >
-                  Pošaljite upit
+        </div>
+        <!-- Shared render gallery generated from index.html -->
+        <section class="render-gallery" id="render-gallery" data-render-gallery aria-label="Evolution Residence">
+          <div class="render-gallery__stage">
+            <img class="render-gallery__image is-active" src="./assets/images/site/gallery/render-10-1280.webp"
+              srcset="./assets/images/site/gallery/render-10-800.webp 800w, ./assets/images/site/gallery/render-10-1280.webp 1280w, ./assets/images/site/gallery/render-10-1920.webp 1920w"
+              sizes="100vw" width="1280" height="715" alt="" decoding="async" loading="lazy" fetchpriority="low" />
+            <template data-render-frame>
+              <img class="render-gallery__image" src="./assets/images/site/gallery/render-11-1280.webp"
+                srcset="./assets/images/site/gallery/render-11-800.webp 800w, ./assets/images/site/gallery/render-11-1280.webp 1280w, ./assets/images/site/gallery/render-11-1920.webp 1920w"
+                sizes="100vw" width="1280" height="721" alt="" decoding="async" />
+            </template>
+            <template data-render-frame>
+              <img class="render-gallery__image" src="./assets/images/site/gallery/render-12-1280.webp"
+                srcset="./assets/images/site/gallery/render-12-800.webp 800w, ./assets/images/site/gallery/render-12-1280.webp 1280w, ./assets/images/site/gallery/render-12-1920.webp 1920w"
+                sizes="100vw" width="1280" height="716" alt="" decoding="async" />
+            </template>
+            <template data-render-frame>
+              <img class="render-gallery__image" src="./assets/images/site/gallery/render-13-1280.webp"
+                srcset="./assets/images/site/gallery/render-13-800.webp 800w, ./assets/images/site/gallery/render-13-1280.webp 1280w, ./assets/images/site/gallery/render-13-1920.webp 1920w"
+                sizes="100vw" width="1280" height="716" alt="" decoding="async" />
+            </template>
+            <template data-render-frame>
+              <img class="render-gallery__image" src="./assets/images/site/gallery/render-14-1280.webp"
+                srcset="./assets/images/site/gallery/render-14-800.webp 800w, ./assets/images/site/gallery/render-14-1280.webp 1280w, ./assets/images/site/gallery/render-14-1920.webp 1920w"
+                sizes="100vw" width="1280" height="774" alt="" decoding="async" />
+            </template>
+            <template data-render-frame>
+              <img class="render-gallery__image" src="./assets/images/site/gallery/render-15-1280.webp"
+                srcset="./assets/images/site/gallery/render-15-800.webp 800w, ./assets/images/site/gallery/render-15-1280.webp 1280w, ./assets/images/site/gallery/render-15-1920.webp 1920w"
+                sizes="100vw" width="1280" height="726" alt="" decoding="async" />
+            </template>
+            <template data-render-frame>
+              <img class="render-gallery__image" src="./assets/images/site/gallery/render-03.jpg"
+                srcset="./assets/images/site/gallery/render-03-800.webp 800w, ./assets/images/site/gallery/render-03-1280.webp 1280w, ./assets/images/site/gallery/render-03.jpg 1920w"
+                sizes="100vw" width="1920" height="1086" alt="" decoding="async" />
+            </template>
+            <template data-render-frame>
+              <img class="render-gallery__image" src="./assets/images/site/gallery/render-08.jpg"
+                srcset="./assets/images/site/gallery/render-08-800.webp 800w, ./assets/images/site/gallery/render-08-1280.webp 1280w, ./assets/images/site/gallery/render-08.jpg 1920w"
+                sizes="100vw" width="1920" height="1071" alt="" decoding="async" />
+            </template>
+            <template data-render-frame>
+              <img class="render-gallery__image" src="./assets/images/site/gallery/render-09.jpg"
+                srcset="./assets/images/site/gallery/render-09-800.webp 800w, ./assets/images/site/gallery/render-09-1280.webp 1280w, ./assets/images/site/gallery/render-09.jpg 1920w"
+                sizes="100vw" width="1920" height="1070" alt="" decoding="async" />
+            </template>
+            <template data-render-frame>
+              <img class="render-gallery__image" src="./assets/images/site/gallery/render-02.jpg"
+                srcset="./assets/images/site/gallery/render-02-800.webp 800w, ./assets/images/site/gallery/render-02-1280.webp 1280w, ./assets/images/site/gallery/render-02.jpg 1920w"
+                sizes="100vw" width="1920" height="1086" alt="" decoding="async" />
+            </template>
+            <div class="render-gallery__controls">
+              <div class="render-gallery__track" aria-hidden="true"><span class="render-gallery__thumb"></span></div>
+              <div class="render-gallery__navigation">
+                <button class="render-gallery__step" type="button" data-render-step="-1" aria-disabled="true">
+                  <span class="render-gallery__label" data-key="materials_previous">Prethodni slajd</span>
+                  <img src="./assets/images/shared/icons/chevron.svg" width="11" height="6" alt="" />
                 </button>
-              </form>
-              <div class="flex-style-row form__warn">
-                <span data-key="p_byclick_1"
-                  >Klikom na dugme prihvatate</span
-                >
-                <a
-                  href="./"
-                  class="td-underline link-hover"
-                  data-key="p_byclick_2"
-                  >uslove obrade ličnih podataka</a
-                >
+                <span class="render-gallery__count" aria-live="polite"></span>
+                <button class="render-gallery__step" type="button" data-render-step="1">
+                  <span class="render-gallery__label" data-key="materials_next">Sledeći slajd</span>
+                  <img src="./assets/images/shared/icons/chevron.svg" width="11" height="6" alt="" />
+                </button>
               </div>
+              <button class="render-gallery__skip" type="button" data-render-skip aria-controls="form" data-key="gallery_skip">Preskoči</button>
+            </div>
+          </div>
+        </section>
+        <!-- End shared render gallery -->
+        <div id="form" class="form__block block-center flex-style-column gap contact-form">
+          <div class="block-center flex-style-column title-gap">
+            <p
+              class="title title-dark tt-up split-text ezd-animtext"
+              data-key="p_callback"
+            >
+              <span class="callback-title__line">Kontaktirajte</span> <span class="callback-title__line">naš prodajni tim</span>
+            </p>
+            <p class="subtitle" data-key="p_short">
+              Popunite formular i kontaktiraćemo Vas u najkraćem roku
+            </p>
+          </div>
+          <div class="title-gap flex-style-column block-center block-form">
+            <form
+              class="flex-style-row form-flex quarter__form"
+              id="requestForm"
+              name="form-feedback"
+              method="post"
+              action="./lead.php"
+              novalidate
+            >
+              <label for="lead-callback-name" class="placeholder-container">
+                <input
+                  type="text"
+                  name="name"
+                  id="lead-callback-name"
+                  class="input__name input-event input-style"
+                  required
+                  autocomplete="name" maxlength="80" aria-describedby="lead-callback-name-error"
+                />
+                <div class="flex-style-row input-placeholder">
+                  <span data-key="p_name">Ime</span
+                  ><span class="important-span">*</span>
+                </div>
+                <span id="lead-callback-name-error" class="place-name-error" aria-live="polite"></span>
+              </label>
+              <label for="lead-callback-phone" class="placeholder-container"
+                ><input
+                  type="tel"
+                  name="phone"
+                  id="lead-callback-phone"
+                  class="input__number input-event input-style"
+                  required
+                  autocomplete="tel" maxlength="32" aria-describedby="lead-callback-phone-error"
+                />
+                <span class="input-placeholder"
+                  ><span class="text-dark">+381 </span>00 000 - 0000<span
+                    class="important-span"
+                    >*</span
+                  ></span
+                >
+                <span id="lead-callback-phone-error" class="place-phone-error" aria-live="polite"></span>
+              </label>
+              <label for="lead-callback-email" class="placeholder-container"
+                ><input
+                  type="email"
+                  name="mail"
+                  id="lead-callback-email"
+                  class="input__mail input-event input-style"
+                  required
+                  autocomplete="email" maxlength="254" aria-describedby="lead-callback-email-error"
+                />
+                <div class="flex-style-row input-placeholder">
+                  <span data-key="p_mail">E-mail adresa</span>
+                  <span class="important-span">*</span>
+                </div>
+                <span id="lead-callback-email-error" class="place-email-error" aria-live="polite"></span>
+              </label>
+              <button
+                type="submit" disabled
+                class="btn-style btn-color flex-style-row blue-btn-hover form__button"
+                data-key="btn_zayav1"
+              >
+                Pošaljite upit
+              </button>
+            </form>
+            <div class="flex-style-row form__warn">
+              <span data-key="p_byclick_1"
+                >Klikom na dugme prihvatate</span
+              >
+              <a
+                href="./"
+                class="td-underline link-hover"
+                data-key="p_byclick_2"
+                >uslove obrade ličnih podataka</a
+              >
             </div>
           </div>
         </div>
@@ -3607,14 +3681,15 @@
     <script src="./js/lenis.js?v=1.0.6"></script>
     <script src="./js/locomotive-scroll.min.js?v=1.0.6"></script>
     <script src="./js/splitting.min.js?v=1.0.6"></script>
-    <script type="module" src="./js/script.js?v=1.0.29"></script>
+    <script type="module" src="./js/script.js?v=1.0.33"></script>
     <script
       type="module"
-      src="./js/apartments/catalog-startup.js?v=1.0.20"
+      src="./js/apartments/catalog-startup.js?v=1.0.21"
       onerror="document.querySelector('.wrapper').setAttribute('aria-busy', 'false'); document.documentElement.classList.add('catalog-load-error')"
     ></script>
     <script src="./js/ion.rangeSlider.min.js?v=1.0.6"></script>
     <script type="module" src="./js/form.js?v=1.0.11"></script>
+    <script type="module" src="./js/render-gallery.js?v=1.0.6"></script>
     <script src="./js/house-menu.js?v=1.0.3"></script>
   </body>
 </html>

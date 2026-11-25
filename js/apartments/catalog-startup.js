@@ -21,7 +21,7 @@ const waitForImage = (image) => image.decode
   });
 
 try {
-  const { catalogReady, refreshCatalogLayout, initializeCatalogModalUrl } = await import("./requestt.js?v=1.0.61");
+  const { catalogReady, refreshCatalogLayout, initializeCatalogModalUrl } = await import("./requestt.js?v=1.0.62");
   await catalogReady;
   await document.fonts.ready;
 

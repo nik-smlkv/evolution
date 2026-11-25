@@ -58,7 +58,7 @@ export function initializeHeaderNavigation() {
     }
     header.dataset.visibleLinks = String(visible);
     header.style.setProperty('--header-height', `${header.getBoundingClientRect().height}px`);
-    if (visible === items.length) close();
+    if (visible === items.length && menu.classList.contains('active')) close();
 
     if (focusedItem && document.activeElement !== focused) {
       if (overflow.contains(focused) && overflow.inert) burger.focus({ preventScroll: true });

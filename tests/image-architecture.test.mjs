@@ -13,6 +13,15 @@ const tchaikovskyUnits = JSON.parse(tchaikovsky);
 const vivaldiUnits = JSON.parse(vivaldi);
 const noImagePath = "./assets/images/shared/placeholders/no-image.svg";
 
+test("the two responsive residence hero photos stay below one megabyte together", () => {
+  for (const width of [480, 832, 1664]) {
+    const size = (view) => statSync(new URL(`assets/images/site/hero/residence-${view}-${width}.webp`, root)).size;
+    const total = size("street") + size("aerial");
+    assert.ok(total < 1_000_000, `${width}px hero photos: ${total} bytes`);
+  }
+  assert.ok(statSync(new URL("assets/images/site/hero/residence-street-compact-1080.webp", root)).size < 1_000_000);
+});
+
 test("both complete catalogs reference reachable production images", () => {
   assert.equal(tchaikovskyUnits.length, 403);
   assert.equal(vivaldiUnits.length, 60);

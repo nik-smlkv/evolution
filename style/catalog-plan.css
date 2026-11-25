@@ -7,7 +7,7 @@ body.tchaikovsky-catalog .wrapper {
 }
 
 body.tchaikovsky-catalog .main-gap { gap: 0; }
-body.tchaikovsky-catalog #apartments { padding-top: 88px; gap: 0; }
+body.tchaikovsky-catalog #apartments { padding-top: var(--site-header-height, 88px); gap: 0; }
 body.tchaikovsky-catalog .block-search-parameters { padding: 40px 0 0; height: 224px; justify-content: center; }
 body.tchaikovsky-catalog .title__body { gap: 24px; overflow: visible; }
 body.tchaikovsky-catalog .title__content { align-items: center; flex-wrap: nowrap; }
@@ -15,9 +15,6 @@ body.tchaikovsky-catalog .title-apartment { font-size: 56px; line-height: 1.2; }
 body.tchaikovsky-catalog .catalog-plan-button { display: inline-flex; align-items: center; justify-content: center; min-height: 56px; min-width: 241px; cursor: pointer; transition: background-color 200ms ease, border-color 200ms ease; }
 body.tchaikovsky-catalog .catalog-plan-button:is(:hover:where(html[data-hover-enabled="true"] *), :focus-visible) { background-color: #0474dc; border-color: #0474dc; }
 body.tchaikovsky-catalog .catalog-plan-button:focus-visible { outline: 2px solid #fafafa; outline-offset: 3px; }
-body.tchaikovsky-catalog header .menu__item_link { transition: color 180ms ease; }
-body.tchaikovsky-catalog header .menu__item_link:is(:hover:where(html[data-hover-enabled="true"] *), :focus-visible) { color: #42b0f9; }
-body.tchaikovsky-catalog header .menu__item_link:focus-visible { outline: 2px solid #42b0f9; outline-offset: 4px; }
 body.tchaikovsky-plan-view .section__body-title { padding: 0; gap: 0; overflow: visible; }
 
 body.tchaikovsky-plan-view .houses-plans_container {
@@ -154,27 +151,6 @@ body.tchaikovsky-catalog .info_footer_content_block { flex: 0 0 auto; width: aut
 body.tchaikovsky-catalog .block-social { gap: 24px; }
 body.tchaikovsky-catalog .info__footer__content > span { flex: 0 0 260px; max-width: 260px; margin-left: auto; color: #d1d4d8; font-size: 16px; line-height: 24px; text-align: right; }
 
-@media (min-width: 1721px) {
-  body.tchaikovsky-catalog header,
-  body.tchaikovsky-catalog header .header__body { height: 88px; min-height: 88px; }
-  body.tchaikovsky-catalog header .header__menu { justify-content: flex-start; gap: 50px; }
-  body.tchaikovsky-catalog header .house-menu__toggle { min-width: 177px; min-height: 56px; padding-inline: 24px; }
-  body.tchaikovsky-catalog header .header__menu .header__nav .house-menu__list {
-    display: grid;
-    grid-template-rows: repeat(2, 56px);
-    width: 174px;
-    min-width: 174px;
-    height: 112px;
-    padding: 0;
-    gap: 0;
-  }
-  body.tchaikovsky-catalog header .house-menu__list a { display: flex; align-items: center; height: 56px; padding: 0 24px; font-size: 16px !important; line-height: 24px; text-transform: uppercase; }
-}
-
-@media (max-width: 1720px) {
-  body.tchaikovsky-catalog #apartments { padding-top: 90px; }
-}
-
 @media (max-width: 1500px) {
   body.tchaikovsky-plan-view .houses-plans_container { min-height: 0; padding-bottom: 80px; }
   body.tchaikovsky-plan-view .plan-compass { width: 72px; height: 72px; }
@@ -219,10 +195,6 @@ body.tchaikovsky-catalog .info__footer__content > span { flex: 0 0 260px; max-wi
   body.tchaikovsky-catalog .info__footer__content { right: 24px; left: 250px; }
 }
 
-@media (max-width: 767.99px) {
-  body.tchaikovsky-catalog #apartments { padding-top: 72px; }
-}
-
 @media (max-width: 600px) {
   body.tchaikovsky-catalog .title__content { align-items: start; flex-direction: column; gap: 20px; }
   body.tchaikovsky-catalog .title-apartment { align-self: center; width: 100%; max-width: 100%; text-align: center; font-weight: 400; font-variation-settings: "wght" 400; letter-spacing: 0; }
@@ -253,14 +225,6 @@ body.tchaikovsky-catalog .info__footer__content > span { flex: 0 0 260px; max-wi
 
 @media (max-width: 1000px) {
   html:has(body.tchaikovsky-plan-view) { scrollbar-width: none; }
-  body.tchaikovsky-plan-view header,
-  body.tchaikovsky-plan-view header .header__body { min-height: 88px; height: 88px; }
-  body.tchaikovsky-plan-view header .header__body { padding-inline: 32px; }
-  body.tchaikovsky-plan-view header .header-block { gap: 22px; }
-  body.tchaikovsky-plan-view header .content-header { gap: 25px; }
-  body.tchaikovsky-plan-view header .header__burger { margin-left: -5px; }
-  body.tchaikovsky-plan-view header .header__logo { flex-basis: 160px; width: 160px; max-width: 160px; }
-  body.tchaikovsky-plan-view #apartments { padding-top: 88px; }
   body.tchaikovsky-plan-view .block-search-parameters { height: 200px; padding: 0; }
   body.tchaikovsky-plan-view .title__body { padding-inline: 32px; }
   body.tchaikovsky-plan-view .title-apartment { font-size: 56px; }
@@ -309,14 +273,6 @@ body.tchaikovsky-catalog .info__footer__content > span { flex: 0 0 260px; max-wi
 }
 
 @media (max-width: 600px) {
-  body.tchaikovsky-plan-view header,
-  body.tchaikovsky-plan-view header .header__body { min-height: 72px; height: 72px; }
-  body.tchaikovsky-plan-view header .header__body { padding-inline: 20px; }
-  body.tchaikovsky-plan-view header .header-block { gap: 16px; }
-  body.tchaikovsky-plan-view header .header__logo { flex-basis: 120px; width: 120px; max-width: 120px; }
-  body.tchaikovsky-plan-view header .lang_switch_list { flex-basis: 80px; width: 80px; min-width: 80px; }
-  body.tchaikovsky-plan-view header .header__burger { width: 36px; margin-left: 0; }
-  body.tchaikovsky-plan-view #apartments { padding-top: 72px; }
   body.tchaikovsky-plan-view .block-search-parameters { height: 232px; padding: 40px 0 24px; }
   body.tchaikovsky-plan-view .title__body { padding-inline: 20px; }
   body.tchaikovsky-plan-view .title__content { align-items: center; gap: 16px; }

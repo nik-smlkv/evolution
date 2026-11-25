@@ -258,7 +258,7 @@ test("all offered Vivaldi floors display their assigned plans", async ({ page },
   await expect(plan.locator(".plan-load-error")).toHaveCount(0);
 });
 
-test("Tchaikovsky opens commercial and parking details from the selected category", async ({ page }) => {
+test("Tchaikovsky opens commercial and parking details from the selected category", async ({ page }, testInfo) => {
   await openCatalog(page, "tchaikovsky");
   await openFilters(page);
   for (const type of ["commercial", "parking"]) {
@@ -270,12 +270,32 @@ test("Tchaikovsky opens commercial and parking details from the selected categor
     const card = cards(page).first();
     await expect(card).toBeVisible();
     const unit = (await card.locator(".apartment-card-item__name").textContent()).trim();
+    if (type === "commercial") {
+      const preview = card.locator(".apartment-card-item__image img");
+      await expect(preview).toHaveAttribute("src", /\/commercial\/previews\//);
+      await expect.poll(() => preview.evaluate((image) => image.complete && Math.max(image.naturalWidth, image.naturalHeight))).toBe(640);
+    }
     await card.click();
     const details = page.locator(`.popup_type_property_${type}`);
     await expect(details).toHaveClass(/popup_is-opened/);
     await expect(details.locator(".property-dialog__title")).toHaveText(unit);
     await expect(details.getByText("Tchaikovsky", { exact: true })).toBeVisible();
     await expect(details.locator(".property-dialog__details")).toContainText("m²");
+    if (type === "commercial") {
+      const plan = details.locator(".property-dialog__image");
+      await expect(plan).toHaveAttribute("src", /\/commercial\/plans\//);
+      expect(new URL(await plan.getAttribute("src"), page.url()).pathname.split("/").pop())
+        .toMatch(new RegExp(`^${unit.toLowerCase()}\\.(webp|jpg)$`));
+      await expect.poll(() => plan.evaluate((image) => image.complete && image.naturalWidth > 640)).toBe(true);
+      await expect(plan).toHaveCSS("object-fit", "contain");
+      await expect.poll(() => details.locator(".property-dialog__panel").evaluate((panel) => panel.getAnimations().length)).toBe(0);
+      await plan.scrollIntoViewIfNeeded();
+      await expect.poll(() => plan.evaluate((image) => {
+        const bounds = image.getBoundingClientRect();
+        return bounds.top >= -1 && bounds.left >= -1 && bounds.right <= innerWidth + 1 && bounds.bottom <= innerHeight + 1;
+      })).toBe(true);
+      await page.screenshot({ path: testInfo.outputPath("commercial-plan.png") });
+    }
     await closeDetails(details);
   }
   await page.locator("[data-reset-filters]").click();

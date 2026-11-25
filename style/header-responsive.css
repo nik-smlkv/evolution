@@ -1,7 +1,15 @@
-/* One navigation and one set of actions across all viewport sizes. */
-header { min-height: 90px; }
+/* Shared by the homepage and the apartment catalog. */
+:root { --site-header-height: 88px; }
+.padding-top { padding-top: var(--site-header-height); }
+header {
+  min-height: var(--site-header-height);
+  background-color: #161d2d;
+  color: #fff;
+  font: 400 16px/1.5 "Manrope-Buttons", sans-serif;
+  font-variation-settings: normal;
+}
 header .header__body {
-  min-height: 90px;
+  min-height: var(--site-header-height);
   align-items: center;
   justify-content: space-between;
   flex-direction: row;
@@ -20,7 +28,7 @@ header .header__menu {
   width: auto;
   height: auto;
   padding: 0;
-  gap: clamp(16px, 2vw, 40px);
+  gap: clamp(16px, 2.61vw, 50px);
   overflow: visible;
   background: transparent;
 }
@@ -43,18 +51,28 @@ header .header__nav .header__nav_list {
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: clamp(10px, 1.15vw, 24px);
+  gap: clamp(10px, 1.25vw, 24px);
   width: max-content;
   margin: 0;
   padding: 0;
   white-space: nowrap;
 }
-header .header__menu .header__nav .header__nav_list { flex-direction: row; align-items: center; gap: clamp(10px, 1.15vw, 24px); }
+header .header__menu .header__nav .header__nav_list { flex-direction: row; align-items: center; }
 header .header__menu .header__nav .header__nav_list:empty { display: none; }
 header[data-visible-links="0"] .header__menu { gap: 0; }
 header .header__nav .menu__item { display: block; flex: 0 0 auto; width: auto; height: auto; text-align: left; }
 header .menu__item_link { font-size: 16px; text-transform: uppercase; }
-header .house-menu__toggle { min-height: 48px; padding: 0 16px; font-size: 16px; }
+header .menu__item_link:is(:hover:where(html[data-hover-enabled="true"] *), :focus-visible) { color: #42b0f9; }
+header .menu__item_link:focus-visible { outline: 2px solid #42b0f9; outline-offset: 4px; }
+header .house-menu__toggle {
+  min-width: 181px;
+  min-height: 56px;
+  gap: 10px;
+  padding: 0 23px;
+  font-size: inherit;
+  color: white;
+  border-color: white;
+}
 header .house-menu__toggle img { width: 11px; height: 6px; }
 header .house-menu__list a { font-size: 16px !important; }
 header .header-block { position: relative; z-index: 11; display: flex; flex: 0 0 auto; align-items: center; width: auto; gap: 24px; }
@@ -66,15 +84,23 @@ header .header-block .content-header {
   white-space: nowrap;
 }
 header .phone-link, header .js-scroll-form { display: inline-flex; font-size: 16px; }
+header .js-scroll-form {
+  align-items: center;
+  justify-content: center;
+  min-width: 196px;
+  min-height: 56px;
+  padding: 0 22px;
+  letter-spacing: 0;
+}
 
 header .lang_switch_list {
   position: relative;
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
-  flex: 0 0 82px;
-  width: 82px;
-  min-width: 82px;
+  flex: 0 0 83px;
+  width: 83px;
+  min-width: 83px;
   height: 28px;
   padding: 2px;
   gap: 0;
@@ -109,6 +135,15 @@ header .lang__item {
   transition: color .28s ease;
 }
 header .lang__item.active { color: #161d2d; }
+@media (min-width: 1440px) {
+  header .header__nav_list .menu__item_link,
+  header .header__nav_list .house-menu__toggle,
+  header .phone-link,
+  header .js-scroll-form {
+    font-size: 18px;
+    letter-spacing: -0.01em;
+  }
+}
 header .lang__item:focus-visible,
 header .header__burger:focus-visible { outline: 2px solid #42b0f9; outline-offset: 4px; }
 
@@ -141,12 +176,12 @@ header .header__menu.active ~ .header-block .header__burger .burger-line:nth-chi
 }
 header .header__nav .header__overflow_list {
   position: fixed;
-  top: var(--header-height, 90px);
+  top: var(--header-height, var(--site-header-height));
   right: 0;
   z-index: 2;
   display: block;
   width: min(420px, 100vw);
-  height: calc(100dvh - var(--header-height, 90px));
+  height: calc(100dvh - var(--header-height, var(--site-header-height)));
   margin: 0;
   padding: 32px 28px 210px;
   overflow-y: auto;
@@ -202,7 +237,7 @@ body.header-menu-open { overflow: hidden; }
 body.header-menu-open header::after {
   content: "";
   position: fixed;
-  inset: var(--header-height, 90px) 0 0;
+  inset: var(--header-height, var(--site-header-height)) 0 0;
   z-index: 1;
   background: rgba(7, 12, 22, .58);
 }
@@ -234,15 +269,13 @@ body.header-menu-open header::after {
 }
 
 @media (max-width: 600px) {
-  header { min-height: 72px; }
-  header .header__body { min-height: 72px; padding-inline: 20px; gap: 12px; }
+  :root { --site-header-height: 72px; }
+  header .header__body { padding-inline: 20px; gap: 12px; }
   header .header-block { gap: 16px; }
-  .padding-top { padding-top: 72px; }
   header .header__body .header__logo,
   header .header__menu .header__logo { flex-basis: 124px; width: 124px; max-width: 124px; }
   header .header__nav .header__overflow_list { width: 100vw; padding: 20px 24px 210px; }
   header .header-block .content-header { width: 100vw; }
-  body.header-menu-open header::after { inset-block-start: 72px; }
 }
 
 @media (max-width: 380px) {

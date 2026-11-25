@@ -57,6 +57,8 @@ body:has(.popup_type_property.popup_is-opened) .popup.popup_type_form_quarter { 
 .property-dialog__media { display: flex; min-width: 0; height: 100%; overflow: hidden; background: #f8edd9; }
 .property-dialog__media[hidden] { display: none; }
 .property-dialog__image { display: block; width: 100%; height: 100%; object-fit: cover; }
+.popup_type_property[data-image-kind="plan"] .property-dialog__media { background: #fff; }
+.popup_type_property[data-image-kind="plan"] .property-dialog__image { object-fit: contain; }
 .popup_type_property[data-has-image="true"] .property-dialog__body { gap: 64px; padding-inline: 40px; }
 .popup_type_property[data-has-image="true"] .property-dialog__details { grid-template-columns: minmax(0, 1fr); gap: 32px; }
 
@@ -114,6 +116,7 @@ body:has(.popup_type_property.popup_is-opened) .popup.popup_type_form_quarter { 
   .popup_type_property .property-dialog__request { font-size: 14px; }
   .property-dialog__media { flex: 0 0 auto; width: 100%; height: auto; }
   .property-dialog__image { height: auto; aspect-ratio: 4 / 3; object-fit: cover; }
+  .popup_type_property[data-image-kind="plan"] .property-dialog__image { aspect-ratio: auto; }
   .popup_type_property .property-dialog__close,
   .popup_type_property.popup_is-opened .property-dialog__close { position: absolute; top: 0; right: 0; width: 64px; height: 64px; transform: none; transition: none; transition-delay: 0s; }
   .popup_type_property:is(.popup_is-opened, .popup_is-closing) .property-dialog__close { visibility: visible; }
