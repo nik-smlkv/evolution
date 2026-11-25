@@ -92,6 +92,25 @@ async function getHouses() {
 // Пример использования
 
 const closeHeaderMenu = initializeHeaderNavigation();
+const heroCards = [...document.querySelectorAll(".residence-hero__card")];
+if (heroCards.length && "IntersectionObserver" in window &&
+    !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  const photos = heroCards.map((card) => card.querySelector(".residence-hero__photo"));
+  photos.forEach((photo) => { photo.dataset.maskReveal = "pending"; });
+
+  // Decode the pair first so the second photo cannot reveal before the first.
+  Promise.all(photos.map((photo) => photo.decode?.().catch(() => {}))).then(() => {
+    const photoObserver = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting || entry.intersectionRatio < 0.15) continue;
+        entry.target.querySelector(".residence-hero__photo").dataset.maskReveal = "visible";
+        photoObserver.unobserve(entry.target);
+      }
+    }, { threshold: 0.15 });
+    heroCards.forEach((card) => photoObserver.observe(card));
+  });
+}
+
 const heroTitle = document.querySelector(".residence-hero__title");
 if (heroTitle && "ResizeObserver" in window && "IntersectionObserver" in window) {
   heroTitle.dataset.revealed = "initial";
