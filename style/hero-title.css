@@ -132,28 +132,29 @@
 }
 
 @media (prefers-reduced-motion: no-preference) {
+  /* Start each next visual 100ms before the preceding reveal finishes. */
   .residence-hero[data-hero-reveal="playing"] .residence-hero__word img {
-    animation: residence-word-reveal 1s cubic-bezier(.77, 0, .175, 1) both;
+    animation: residence-word-reveal .8s cubic-bezier(.77, 0, .175, 1) both;
   }
 
   .residence-hero[data-hero-reveal="playing"] .residence-hero__word:last-child img {
-    animation-delay: 1s;
+    animation-delay: .7s;
   }
 
   .residence-hero[data-hero-reveal="playing"] .residence-hero__photo {
-    animation: residence-photo-reveal .85s cubic-bezier(.16, 1, .3, 1) 2s both;
+    animation: residence-photo-reveal .7s cubic-bezier(.16, 1, .3, 1) 1.4s both;
   }
 
   .residence-hero[data-hero-reveal="playing"] .residence-hero__card:nth-child(2) .residence-hero__photo {
-    animation-delay: 2.85s;
+    animation-delay: 2s;
   }
 
   .residence-hero[data-hero-reveal="playing"] .residence-hero__details {
-    animation: residence-details-reveal 0s 2.85s both;
+    animation: residence-details-reveal 0s 1.4s both;
   }
 
   .residence-hero[data-hero-reveal="playing"] .residence-hero__card:nth-child(2) .residence-hero__details {
-    animation-delay: 3.7s;
+    animation-delay: 2s;
   }
 }
 

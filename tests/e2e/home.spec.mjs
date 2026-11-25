@@ -439,7 +439,7 @@ test("the residence hero fits the wordmark and both cards at the design widths",
   }
 });
 
-test("the residence hero stays hidden on slow connections and reveals all four visuals consecutively", async ({ page }) => {
+test("the residence hero stays hidden on slow connections and reveals four visuals with a slight overlap", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "no-preference" });
   let releaseScript;
   let releasePhoto;
@@ -459,7 +459,11 @@ test("the residence hero stays hidden on slow connections and reveals all four v
       document.addEventListener(type, (event) => {
         if (!["residence-word-reveal", "residence-photo-reveal"].includes(event.animationName)) return;
         const images = [...document.querySelectorAll(".residence-hero img")];
-        window.heroAnimationEvents.push({ type, index: images.indexOf(event.target), time: performance.now() });
+        const details = [...document.querySelectorAll(".residence-hero__details")].map((element) => {
+          const { x, y } = element.getBoundingClientRect();
+          return { x, y: y + scrollY, transform: getComputedStyle(element).transform };
+        });
+        window.heroAnimationEvents.push({ type, index: images.indexOf(event.target), time: performance.now(), details });
       });
     }
   });
@@ -481,13 +485,20 @@ test("the residence hero stays hidden on slow connections and reveals all four v
   await expect(hero).toHaveAttribute("data-hero-reveal", "complete");
   const events = await page.evaluate(() => window.heroAnimationEvents);
   expect(events.map(({ type, index }) => [type, index])).toEqual([
-    ["animationstart", 0], ["animationend", 0],
-    ["animationstart", 1], ["animationend", 1],
-    ["animationstart", 2], ["animationend", 2],
-    ["animationstart", 3], ["animationend", 3],
+    ["animationstart", 0], ["animationstart", 1], ["animationend", 0],
+    ["animationstart", 2], ["animationend", 1],
+    ["animationstart", 3], ["animationend", 2], ["animationend", 3],
   ]);
-  for (const index of [2, 4, 6]) {
-    expect(events[index].time - events[index - 1].time).toBeLessThan(50);
+  for (const index of [1, 2, 3]) {
+    const start = events.find((event) => event.type === "animationstart" && event.index === index);
+    const previousEnd = events.find((event) => event.type === "animationend" && event.index === index - 1);
+    const overlap = previousEnd.time - start.time;
+    expect(overlap).toBeGreaterThan(40);
+    expect(overlap).toBeLessThan(160);
+  }
+  for (const event of events) {
+    expect(event.details).toEqual(events[0].details);
+    expect(event.details.map(({ transform }) => transform)).toEqual(["none", "none"]);
   }
   await expect(content).toBeVisible();
   for (const photo of await photos.all()) await expect(photo).toHaveCSS("clip-path", "none");
