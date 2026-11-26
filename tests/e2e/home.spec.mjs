@@ -393,13 +393,13 @@ test("the residence hero loads both photos and opens each localized house floor 
     await expect(title).toBeInViewport();
     await expect(cards).toHaveCount(2);
 
-    for (const [i, name] of ["Tchaikovsky", "Vivaldi"].entries()) {
+    for (const [i, name] of ["Vivaldi", "Tchaikovsky"].entries()) {
       const card = cards.nth(i);
       await expect(card.locator(".residence-hero__name")).toHaveText(new RegExp(name, "i"));
       const link = card.locator(".residence-hero__link");
       await expect(link).toHaveAttribute("href", `.${home}search-by-parameters.html?house=${name.toLowerCase()}&view=plan`);
       const image = card.locator(".residence-hero__photo");
-      const expected = i === 0
+      const expected = name === "Tchaikovsky"
         ? /\/(?:residence-street-(?:compact-1080|480|832|1664)\.webp|render-14-full\.jpg)$/
         : /\/residence-aerial-(?:(?:480|832|1664)\.webp|full\.jpg)$/;
       await expect.poll(() => image.evaluate((element) => element.naturalWidth ? new URL(element.currentSrc).pathname : "")).toMatch(expected);
@@ -407,7 +407,7 @@ test("the residence hero loads both photos and opens each localized house floor 
 
     await expect(hero.locator("video")).toHaveCount(0);
     expect(await hero.evaluate((element) => element.nextElementSibling.id)).toBe("about-project");
-    const house = selected === 0 ? "tchaikovsky" : "vivaldi";
+    const house = selected === 0 ? "vivaldi" : "tchaikovsky";
     await activate(cards.nth(selected).locator(".residence-hero__link"), isMobile);
     await expectRoute(page, `${home}search-by-parameters.html`, `?house=${house}&view=plan`);
     await expect(page.locator("body")).toHaveAttribute("data-catalog-house", house);
@@ -449,7 +449,7 @@ test("the residence hero stays hidden on slow connections and reveals four visua
     await scriptReady;
     await route.continue();
   });
-  await page.route("**/residence-aerial-*", async (route) => {
+  await page.route(/\/(?:residence-street-[^/?]+|render-14-full\.jpg)(?:\?.*)?$/, async (route) => {
     await photoReady;
     await route.continue();
   });
